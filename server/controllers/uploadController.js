@@ -165,6 +165,13 @@ export const uploadDriverDocuments = async (req, res) => {
     console.log('📝 Updating user with data:', JSON.stringify(updateData, null, 2));
     console.log('📝 File documents:', Object.keys(documents));
     console.log('📝 Documents values:', documents);
+    console.log('📝 UpdateData file fields check:', {
+      ktpFile: updateData.ktpFile ? `✅ ${updateData.ktpFile.substring(0, 50)}...` : '❌ missing',
+      simFile: updateData.simFile ? `✅ ${updateData.simFile.substring(0, 50)}...` : '❌ missing',
+      stnkFile: updateData.stnkFile ? `✅ ${updateData.stnkFile.substring(0, 50)}...` : '❌ missing',
+      selfieFile: updateData.selfieFile ? `✅ ${updateData.selfieFile.substring(0, 50)}...` : '❌ missing',
+      vehiclePhotoFile: updateData.vehiclePhotoFile ? `✅ ${updateData.vehiclePhotoFile.substring(0, 50)}...` : '❌ missing'
+    });
 
     const updatedUser = await updateUser(userId, updateData);
     

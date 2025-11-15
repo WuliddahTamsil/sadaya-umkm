@@ -120,8 +120,11 @@ export async function updateUser(id, updates) {
   await connectDB();
   
   // Hapus field undefined agar MongoDB tidak mengabaikan update
+  // Tapi tetap simpan field-file meskipun string kosong (untuk overwrite)
   const cleanUpdates = {};
   for (const [key, value] of Object.entries(updates)) {
+    // Simpan semua field yang bukan undefined
+    // Termasuk string kosong untuk field-file (bisa jadi URL kosong)
     if (value !== undefined) {
       cleanUpdates[key] = value;
     }
@@ -131,6 +134,13 @@ export async function updateUser(id, updates) {
   
   console.log('🔄 Updating user:', id);
   console.log('📝 Updates:', JSON.stringify(cleanUpdates, null, 2));
+  console.log('📝 File fields in updates:', {
+    ktpFile: cleanUpdates.ktpFile ? `✅ ${cleanUpdates.ktpFile.substring(0, 50)}...` : '❌ not in updates',
+    simFile: cleanUpdates.simFile ? `✅ ${cleanUpdates.simFile.substring(0, 50)}...` : '❌ not in updates',
+    stnkFile: cleanUpdates.stnkFile ? `✅ ${cleanUpdates.stnkFile.substring(0, 50)}...` : '❌ not in updates',
+    selfieFile: cleanUpdates.selfieFile ? `✅ ${cleanUpdates.selfieFile.substring(0, 50)}...` : '❌ not in updates',
+    vehiclePhotoFile: cleanUpdates.vehiclePhotoFile ? `✅ ${cleanUpdates.vehiclePhotoFile.substring(0, 50)}...` : '❌ not in updates'
+  });
   
   const user = await User.findOneAndUpdate(
     { id },
@@ -143,6 +153,14 @@ export async function updateUser(id, updates) {
   }
   
   console.log('✅ User updated successfully');
+  console.log('📋 File fields after update:', {
+    ktpFile: user.ktpFile ? `✅ ${user.ktpFile.substring(0, 50)}...` : '❌ null/undefined',
+    simFile: user.simFile ? `✅ ${user.simFile.substring(0, 50)}...` : '❌ null/undefined',
+    stnkFile: user.stnkFile ? `✅ ${user.stnkFile.substring(0, 50)}...` : '❌ null/undefined',
+    selfieFile: user.selfieFile ? `✅ ${user.selfieFile.substring(0, 50)}...` : '❌ null/undefined',
+    vehiclePhotoFile: user.vehiclePhotoFile ? `✅ ${user.vehiclePhotoFile.substring(0, 50)}...` : '❌ null/undefined'
+  });
+  
   return user;
 }
 
