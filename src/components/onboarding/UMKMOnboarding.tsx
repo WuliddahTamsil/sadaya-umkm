@@ -56,12 +56,31 @@ export function UMKMOnboarding() {
         body: uploadFormData, // Jangan set Content-Type, browser akan set otomatis dengan boundary
       });
 
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || 'Upload dokumen gagal');
+      // Cek content type sebelum parse JSON
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        const text = await response.text();
+        throw new Error(`Server error: ${response.status} ${response.statusText}. ${text || 'Response tidak valid'}`);
       }
 
-      const result = await response.json();
+      if (!response.ok) {
+        let errorMessage = 'Upload dokumen gagal';
+        try {
+          const error = await response.json();
+          errorMessage = error.error || error.message || errorMessage;
+        } catch (e) {
+          // Jika response bukan JSON valid
+          errorMessage = `Server error: ${response.status} ${response.statusText}`;
+        }
+        throw new Error(errorMessage);
+      }
+
+      let result;
+      try {
+        result = await response.json();
+      } catch (e) {
+        throw new Error('Response tidak valid dari server. Silakan coba lagi.');
+      }
       
       // Update user data dengan data terbaru dari backend (termasuk isOnboarded: true)
       await refreshUser();

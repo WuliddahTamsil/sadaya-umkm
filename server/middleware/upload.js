@@ -7,36 +7,46 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 // Konfigurasi storage
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    // Tentukan folder berdasarkan route (driver, umkm, atau products)
-    let route = 'general';
-    if (req.path.includes('/driver')) {
-      route = 'driver';
-    } else if (req.path.includes('/umkm')) {
-      route = 'umkm';
-    } else if (req.path.includes('/products')) {
-      route = 'products';
-    }
-    // Uploads should be in server/uploads to match server-combined.js
-    const uploadPath = join(__dirname, '../uploads', route);
-    
-    // Buat folder jika belum ada
-    if (!existsSync(uploadPath)) {
-      mkdirSync(uploadPath, { recursive: true });
-    }
-    
-    cb(null, uploadPath);
-  },
-  filename: (req, file, cb) => {
-    // Format: userId_timestamp_originalname
-    const userId = req.body.userId || 'unknown';
-    const timestamp = Date.now();
-    const originalName = file.originalname.replace(/[^a-zA-Z0-9.-]/g, '_');
-    const filename = `${userId}_${timestamp}_${originalName}`;
-    cb(null, filename);
-  }
-});
+// Di Vercel, file system read-only, jadi gunakan memory storage
+const isVercel = process.env.VERCEL || process.env.VERCEL_ENV;
+
+const storage = isVercel 
+  ? multer.memoryStorage() // Gunakan memory storage di Vercel
+  : multer.diskStorage({
+      destination: (req, file, cb) => {
+        // Tentukan folder berdasarkan route (driver, umkm, atau products)
+        let route = 'general';
+        if (req.path.includes('/driver')) {
+          route = 'driver';
+        } else if (req.path.includes('/umkm')) {
+          route = 'umkm';
+        } else if (req.path.includes('/products')) {
+          route = 'products';
+        }
+        // Uploads should be in server/uploads to match server-combined.js
+        const uploadPath = join(__dirname, '../uploads', route);
+        
+        // Buat folder jika belum ada
+        try {
+          if (!existsSync(uploadPath)) {
+            mkdirSync(uploadPath, { recursive: true });
+          }
+          cb(null, uploadPath);
+        } catch (error) {
+          // Jika error (misalnya read-only file system), gunakan memory storage
+          console.warn('⚠️ Cannot create upload directory, using memory storage:', error.message);
+          cb(null, '/tmp'); // Fallback ke /tmp atau memory
+        }
+      },
+      filename: (req, file, cb) => {
+        // Format: userId_timestamp_originalname
+        const userId = req.body.userId || 'unknown';
+        const timestamp = Date.now();
+        const originalName = file.originalname.replace(/[^a-zA-Z0-9.-]/g, '_');
+        const filename = `${userId}_${timestamp}_${originalName}`;
+        cb(null, filename);
+      }
+    });
 
 // Filter file type
 const fileFilter = (req, file, cb) => {

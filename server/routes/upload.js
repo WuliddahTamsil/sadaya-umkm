@@ -4,14 +4,47 @@ import { uploadDriverDocuments, uploadUMKMDocuments, uploadProductImageControlle
 
 const router = express.Router();
 
+// Wrapper untuk handle multer errors
+const handleUpload = (uploadMiddleware, controller) => {
+  return async (req, res, next) => {
+    try {
+      // Multer middleware akan populate req.files atau req.file
+      await new Promise((resolve, reject) => {
+        uploadMiddleware(req, res, (err) => {
+          if (err) {
+            console.error('Multer error:', err);
+            if (err.code === 'LIMIT_FILE_SIZE') {
+              return res.status(400).json({ error: 'File terlalu besar. Maksimal 5MB per file.' });
+            }
+            if (err.message && err.message.includes('Hanya file gambar dan PDF yang diizinkan')) {
+              return res.status(400).json({ error: err.message });
+            }
+            return res.status(400).json({ error: 'Error saat upload file: ' + (err.message || 'Unknown error') });
+          }
+          resolve();
+        });
+      });
+      
+      // Jika tidak ada error, lanjut ke controller
+      if (!res.headersSent) {
+        await controller(req, res, next);
+      }
+    } catch (error) {
+      if (!res.headersSent) {
+        next(error);
+      }
+    }
+  };
+};
+
 // POST /api/upload/driver - Upload dokumen driver
-router.post('/driver', uploadDriverDocs, uploadDriverDocuments);
+router.post('/driver', handleUpload(uploadDriverDocs, uploadDriverDocuments));
 
 // POST /api/upload/umkm - Upload dokumen UMKM
-router.post('/umkm', uploadUMKMDocs, uploadUMKMDocuments);
+router.post('/umkm', handleUpload(uploadUMKMDocs, uploadUMKMDocuments));
 
 // POST /api/upload/products - Upload gambar produk
-router.post('/products', uploadProductImage, uploadProductImageController);
+router.post('/products', handleUpload(uploadProductImage, uploadProductImageController));
 
 export default router;
 

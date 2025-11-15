@@ -56,6 +56,20 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'Backend API is running' });
 });
 
+// Error handling middleware - HARUS di akhir, setelah semua routes
+app.use((err, req, res, next) => {
+  console.error('Error middleware caught:', err);
+  console.error('Error stack:', err.stack);
+  
+  // Pastikan selalu return JSON
+  if (!res.headersSent) {
+    res.status(err.status || 500).json({
+      error: err.message || 'Terjadi kesalahan pada server',
+      details: process.env.NODE_ENV === 'development' ? err.stack : undefined
+    });
+  }
+});
+
 // Catch-all for unmatched routes (for debugging)
 app.use((req, res) => {
   console.log('Unmatched route:', req.method, req.path);

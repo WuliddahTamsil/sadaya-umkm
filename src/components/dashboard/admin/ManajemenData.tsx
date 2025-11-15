@@ -146,9 +146,16 @@ export function ManajemenData() {
   // Get image URL
   const getImageUrl = (filePath: string | undefined) => {
     if (!filePath) return null;
-    // Use relative path in production, localhost in development
+    
+    // Jika sudah full URL (dari Vercel Blob), langsung return
+    if (filePath.startsWith('http://') || filePath.startsWith('https://')) {
+      return filePath;
+    }
+    
+    // Jika path relatif (local development), tambahkan baseUrl
     const isProduction = import.meta.env.PROD;
     const baseUrl = isProduction ? '' : 'http://localhost:3000';
+    
     // Jika path sudah lengkap dengan uploads/, langsung gunakan
     if (filePath.startsWith('uploads/')) {
       return `${baseUrl}/${filePath}`;
