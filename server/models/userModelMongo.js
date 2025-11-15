@@ -43,7 +43,7 @@ const User = mongoose.models.User || mongoose.model('User', userSchema);
 let isConnected = false;
 
 async function connectDB() {
-  if (isConnected) {
+  if (isConnected && mongoose.connection.readyState === 1) {
     return;
   }
 
@@ -53,14 +53,27 @@ async function connectDB() {
       throw new Error('MONGODB_URI environment variable is not set');
     }
 
+    console.log('🔌 Attempting to connect to MongoDB...');
+    console.log('MongoDB URI:', mongoUri.replace(/:[^:@]+@/, ':****@')); // Hide password in logs
+    
+    // Close existing connection if any
+    if (mongoose.connection.readyState !== 0) {
+      await mongoose.connection.close();
+    }
+
     await mongoose.connect(mongoUri, {
-      dbName: 'aslibogor' // Nama database
+      serverSelectionTimeoutMS: 10000, // 10 seconds timeout
+      socketTimeoutMS: 45000,
     });
     
     isConnected = true;
-    console.log('✅ Connected to MongoDB');
+    console.log('✅ Connected to MongoDB successfully');
+    console.log('Database:', mongoose.connection.db.databaseName);
   } catch (error) {
     console.error('❌ MongoDB connection error:', error);
+    console.error('Error name:', error.name);
+    console.error('Error message:', error.message);
+    isConnected = false;
     throw error;
   }
 }
