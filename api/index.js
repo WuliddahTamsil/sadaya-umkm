@@ -56,6 +56,12 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'Backend API is running' });
 });
 
+// Catch-all for unmatched routes (for debugging)
+app.use((req, res) => {
+  console.log('Unmatched route:', req.method, req.path);
+  res.status(404).json({ error: 'Route not found', path: req.path, method: req.method });
+});
+
 // Vercel serverless function handler
 export default app;
 

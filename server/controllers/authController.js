@@ -143,11 +143,19 @@ export const loginUser = async (req, res) => {
     const { password: _, ...userWithoutPassword } = user;
     
     console.log('Sending success response');
-    res.json({
-      message: 'Login berhasil',
-      user: userWithoutPassword
-    });
-    console.log('=== LOGIN SUCCESS ===');
+    console.log('User data (without password):', JSON.stringify(userWithoutPassword, null, 2));
+    
+    try {
+      res.json({
+        message: 'Login berhasil',
+        user: userWithoutPassword
+      });
+      console.log('=== LOGIN SUCCESS ===');
+    } catch (responseError) {
+      console.error('Error sending response:', responseError);
+      console.error('Response error stack:', responseError.stack);
+      throw responseError;
+    }
   } catch (error) {
     console.error('Login error:', error);
     console.error('Error stack:', error.stack);
