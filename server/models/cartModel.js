@@ -2,6 +2,25 @@ import { readFile, writeFile, mkdir } from 'fs/promises';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 
+// Jika MONGODB_URI ada, gunakan MongoDB, jika tidak gunakan file JSON
+const useMongoDB = !!process.env.MONGODB_URI;
+
+// Lazy load MongoDB model
+let mongoCartModelPromise = null;
+async function getMongoModel() {
+  if (!useMongoDB) return null;
+  if (!mongoCartModelPromise) {
+    mongoCartModelPromise = import('./cartModelMongo.js').then(module => {
+      console.log('✅ Using MongoDB for cart storage');
+      return module;
+    }).catch(error => {
+      console.warn('⚠️ MongoDB import failed, falling back to JSON file:', error.message);
+      return null;
+    });
+  }
+  return await mongoCartModelPromise;
+}
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -41,18 +60,30 @@ async function writeCart(cartItems) {
 
 // Get all cart items by user ID
 export async function getCartByUserId(userId) {
+  const mongoModel = await getMongoModel();
+  if (mongoModel) {
+    return await mongoModel.getCartByUserId(userId);
+  }
   const cartItems = await readCart();
   return cartItems.filter(item => item.id_user === userId);
 }
 
 // Get cart item by ID
 export async function getCartItemById(id) {
+  const mongoModel = await getMongoModel();
+  if (mongoModel) {
+    return await mongoModel.getCartItemById(id);
+  }
   const cartItems = await readCart();
   return cartItems.find(item => item.id === id);
 }
 
 // Add item to cart (jika produk sudah ada, tambah jumlahnya)
 export async function addToCart(userId, productId, quantity, currentPrice) {
+  const mongoModel = await getMongoModel();
+  if (mongoModel) {
+    return await mongoModel.addToCart(userId, productId, quantity, currentPrice);
+  }
   const cartItems = await readCart();
   
   // Cek apakah produk sudah ada di keranjang user ini
@@ -86,6 +117,10 @@ export async function addToCart(userId, productId, quantity, currentPrice) {
 
 // Update cart item quantity
 export async function updateCartItem(id, updates) {
+  const mongoModel = await getMongoModel();
+  if (mongoModel) {
+    return await mongoModel.updateCartItem(id, updates);
+  }
   const cartItems = await readCart();
   const index = cartItems.findIndex(item => item.id === id);
   
@@ -105,6 +140,11 @@ export async function updateCartItem(id, updates) {
 
 // Remove item from cart
 export async function removeCartItem(id) {
+  const mongoModel = await getMongoModel();
+  if (mongoModel) {
+    const result = await mongoModel.deleteCartItem(id);
+    return result;
+  }
   const cartItems = await readCart();
   const filteredItems = cartItems.filter(item => item.id !== id);
   await writeCart(filteredItems);
@@ -113,6 +153,11 @@ export async function removeCartItem(id) {
 
 // Clear cart for a user
 export async function clearCart(userId) {
+  const mongoModel = await getMongoModel();
+  if (mongoModel) {
+    await mongoModel.deleteCartByUserId(userId);
+    return true;
+  }
   const cartItems = await readCart();
   const filteredItems = cartItems.filter(item => item.id_user !== userId);
   await writeCart(filteredItems);

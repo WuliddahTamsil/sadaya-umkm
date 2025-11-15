@@ -2,6 +2,25 @@ import { readFile, writeFile, mkdir } from 'fs/promises';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 
+// Jika MONGODB_URI ada, gunakan MongoDB, jika tidak gunakan file JSON
+const useMongoDB = !!process.env.MONGODB_URI;
+
+// Lazy load MongoDB model
+let mongoProductModelPromise = null;
+async function getMongoModel() {
+  if (!useMongoDB) return null;
+  if (!mongoProductModelPromise) {
+    mongoProductModelPromise = import('./productModelMongo.js').then(module => {
+      console.log('✅ Using MongoDB for product storage');
+      return module;
+    }).catch(error => {
+      console.warn('⚠️ MongoDB import failed, falling back to JSON file:', error.message);
+      return null;
+    });
+  }
+  return await mongoProductModelPromise;
+}
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -41,23 +60,39 @@ async function writeProducts(products) {
 
 // Get all products
 export async function getAllProducts() {
+  const mongoModel = await getMongoModel();
+  if (mongoModel) {
+    return await mongoModel.getAllProducts();
+  }
   return await readProducts();
 }
 
 // Get products by UMKM ID
 export async function getProductsByUMKM(umkmId) {
+  const mongoModel = await getMongoModel();
+  if (mongoModel) {
+    return await mongoModel.getProductsByUMKM(umkmId);
+  }
   const products = await readProducts();
   return products.filter(product => product.umkmId === umkmId);
 }
 
 // Get product by ID
 export async function getProductById(id) {
+  const mongoModel = await getMongoModel();
+  if (mongoModel) {
+    return await mongoModel.getProductById(id);
+  }
   const products = await readProducts();
   return products.find(product => product.id === id);
 }
 
 // Save new product
 export async function saveProduct(newProduct) {
+  const mongoModel = await getMongoModel();
+  if (mongoModel) {
+    return await mongoModel.saveProduct(newProduct);
+  }
   const products = await readProducts();
   products.push(newProduct);
   await writeProducts(products);
@@ -66,6 +101,10 @@ export async function saveProduct(newProduct) {
 
 // Update product
 export async function updateProduct(id, updates) {
+  const mongoModel = await getMongoModel();
+  if (mongoModel) {
+    return await mongoModel.updateProduct(id, updates);
+  }
   const products = await readProducts();
   const index = products.findIndex(product => product.id === id);
   
@@ -80,6 +119,11 @@ export async function updateProduct(id, updates) {
 
 // Delete product
 export async function deleteProduct(id) {
+  const mongoModel = await getMongoModel();
+  if (mongoModel) {
+    const result = await mongoModel.deleteProduct(id);
+    return result;
+  }
   const products = await readProducts();
   const filteredProducts = products.filter(product => product.id !== id);
   await writeProducts(filteredProducts);

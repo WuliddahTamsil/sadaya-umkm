@@ -2,6 +2,25 @@ import { readFile, writeFile, mkdir } from 'fs/promises';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 
+// Jika MONGODB_URI ada, gunakan MongoDB, jika tidak gunakan file JSON
+const useMongoDB = !!process.env.MONGODB_URI;
+
+// Lazy load MongoDB model
+let mongoWalletModelPromise = null;
+async function getMongoModel() {
+  if (!useMongoDB) return null;
+  if (!mongoWalletModelPromise) {
+    mongoWalletModelPromise = import('./walletModelMongo.js').then(module => {
+      console.log('✅ Using MongoDB for wallet storage');
+      return module;
+    }).catch(error => {
+      console.warn('⚠️ MongoDB import failed, falling back to JSON file:', error.message);
+      return null;
+    });
+  }
+  return await mongoWalletModelPromise;
+}
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -37,6 +56,10 @@ async function writeWallets(wallets) {
 
 // Get wallet by user ID (create if not exists)
 export async function getWalletByUserId(userId) {
+  const mongoModel = await getMongoModel();
+  if (mongoModel) {
+    return await mongoModel.getWalletByUserId(userId);
+  }
   const wallets = await readWallets();
   let wallet = wallets.find(w => w.userId === userId);
   
@@ -57,6 +80,10 @@ export async function getWalletByUserId(userId) {
 
 // Update wallet balance
 export async function updateWalletBalance(userId, amount, operation = 'add') {
+  const mongoModel = await getMongoModel();
+  if (mongoModel) {
+    return await mongoModel.updateWalletBalance(userId, amount, operation);
+  }
   const wallets = await readWallets();
   let wallet = wallets.find(w => w.userId === userId);
   

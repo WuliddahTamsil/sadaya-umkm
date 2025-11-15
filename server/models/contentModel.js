@@ -4,6 +4,25 @@ import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { mkdir } from 'fs/promises';
 
+// Jika MONGODB_URI ada, gunakan MongoDB, jika tidak gunakan file JSON
+const useMongoDB = !!process.env.MONGODB_URI;
+
+// Lazy load MongoDB model
+let mongoContentModelPromise = null;
+async function getMongoModel() {
+  if (!useMongoDB) return null;
+  if (!mongoContentModelPromise) {
+    mongoContentModelPromise = import('./contentModelMongo.js').then(module => {
+      console.log('✅ Using MongoDB for content storage');
+      return module;
+    }).catch(error => {
+      console.warn('⚠️ MongoDB import failed, falling back to JSON file:', error.message);
+      return null;
+    });
+  }
+  return await mongoContentModelPromise;
+}
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -19,6 +38,10 @@ const ensureDataDir = async () => {
 
 // Read all contents
 export const getAllContents = async () => {
+  const mongoModel = await getMongoModel();
+  if (mongoModel) {
+    return await mongoModel.getAllContents();
+  }
   try {
     await ensureDataDir();
     if (!existsSync(CONTENT_FILE)) {
@@ -34,18 +57,30 @@ export const getAllContents = async () => {
 
 // Get published contents only
 export const getPublishedContents = async () => {
+  const mongoModel = await getMongoModel();
+  if (mongoModel) {
+    return await mongoModel.getPublishedContents();
+  }
   const contents = await getAllContents();
   return contents.filter(content => content.status === 'published');
 };
 
 // Get content by ID
 export const getContentById = async (id) => {
+  const mongoModel = await getMongoModel();
+  if (mongoModel) {
+    return await mongoModel.getContentById(id);
+  }
   const contents = await getAllContents();
   return contents.find(content => content.id === id);
 };
 
 // Create new content
 export const createContent = async (contentData) => {
+  const mongoModel = await getMongoModel();
+  if (mongoModel) {
+    return await mongoModel.createContent(contentData);
+  }
   await ensureDataDir();
   const contents = await getAllContents();
   
@@ -66,6 +101,10 @@ export const createContent = async (contentData) => {
 
 // Update content
 export const updateContent = async (id, updates) => {
+  const mongoModel = await getMongoModel();
+  if (mongoModel) {
+    return await mongoModel.updateContent(id, updates);
+  }
   await ensureDataDir();
   const contents = await getAllContents();
   const index = contents.findIndex(content => content.id === id);
@@ -86,6 +125,11 @@ export const updateContent = async (id, updates) => {
 
 // Delete content
 export const deleteContent = async (id) => {
+  const mongoModel = await getMongoModel();
+  if (mongoModel) {
+    const result = await mongoModel.deleteContent(id);
+    return result;
+  }
   await ensureDataDir();
   const contents = await getAllContents();
   const filtered = contents.filter(content => content.id !== id);
@@ -96,6 +140,10 @@ export const deleteContent = async (id) => {
 
 // Increment views
 export const incrementViews = async (id) => {
+  const mongoModel = await getMongoModel();
+  if (mongoModel) {
+    return await mongoModel.incrementViews(id);
+  }
   const content = await getContentById(id);
   if (!content) return null;
   

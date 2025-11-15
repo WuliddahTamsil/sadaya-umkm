@@ -3,6 +3,25 @@ import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { v4 as uuidv4 } from 'uuid';
 
+// Jika MONGODB_URI ada, gunakan MongoDB, jika tidak gunakan file JSON
+const useMongoDB = !!process.env.MONGODB_URI;
+
+// Lazy load MongoDB model
+let mongoWalletTransactionModelPromise = null;
+async function getMongoModel() {
+  if (!useMongoDB) return null;
+  if (!mongoWalletTransactionModelPromise) {
+    mongoWalletTransactionModelPromise = import('./walletTransactionModelMongo.js').then(module => {
+      console.log('✅ Using MongoDB for wallet transaction storage');
+      return module;
+    }).catch(error => {
+      console.warn('⚠️ MongoDB import failed, falling back to JSON file:', error.message);
+      return null;
+    });
+  }
+  return await mongoWalletTransactionModelPromise;
+}
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -38,6 +57,10 @@ async function writeTransactions(transactions) {
 
 // Get transactions by user ID
 export async function getTransactionsByUserId(userId) {
+  const mongoModel = await getMongoModel();
+  if (mongoModel) {
+    return await mongoModel.getTransactionsByUserId(userId);
+  }
   const transactions = await readTransactions();
   return transactions
     .filter(t => t.userId === userId)
@@ -46,6 +69,10 @@ export async function getTransactionsByUserId(userId) {
 
 // Create new transaction
 export async function createTransaction(transactionData) {
+  const mongoModel = await getMongoModel();
+  if (mongoModel) {
+    return await mongoModel.createTransaction(transactionData);
+  }
   const transactions = await readTransactions();
   
   const newTransaction = {
