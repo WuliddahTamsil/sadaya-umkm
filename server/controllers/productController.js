@@ -7,6 +7,47 @@ import {
   updateProduct,
   deleteProduct
 } from '../models/productModel.js';
+import { getUserById, getAllUsers } from '../models/userModel.js';
+
+// Helper function untuk enrich produk dengan data UMKM
+async function enrichProductsWithUMKM(products) {
+  try {
+    // Ambil semua UMKM sekaligus untuk efisiensi
+    const allUsers = await getAllUsers();
+    const umkmMap = new Map();
+    
+    // Buat map UMKM berdasarkan ID
+    allUsers
+      .filter(user => user.role === 'umkm' && user.status === 'active')
+      .forEach(umkm => {
+        umkmMap.set(umkm.id, {
+          name: umkm.name || umkm.storeName || 'UMKM',
+          storeName: umkm.storeName || umkm.name || 'UMKM',
+          address: umkm.address || umkm.storeAddress || '',
+          phone: umkm.phone || ''
+        });
+      });
+
+    // Enrich setiap produk dengan data UMKM
+    return products.map(product => {
+      const umkmInfo = umkmMap.get(product.umkmId);
+      return {
+        ...product,
+        umkmName: product.umkmName || umkmInfo?.name || umkmInfo?.storeName || 'UMKM',
+        umkmStoreName: umkmInfo?.storeName || umkmInfo?.name || 'UMKM',
+        umkmAddress: umkmInfo?.address || '',
+        umkmPhone: umkmInfo?.phone || ''
+      };
+    });
+  } catch (error) {
+    console.error('Error enriching products with UMKM data:', error);
+    // Jika error, return produk tanpa enrich (fallback)
+    return products.map(product => ({
+      ...product,
+      umkmName: product.umkmName || 'UMKM'
+    }));
+  }
+}
 
 // Get all products (for buyer homepage)
 export const getAllProductsController = async (req, res) => {
@@ -32,7 +73,10 @@ export const getAllProductsController = async (req, res) => {
       products = products.filter(p => p.status === 'active');
     }
 
-    res.json(products);
+    // Enrich products with UMKM data
+    const enrichedProducts = await enrichProductsWithUMKM(products);
+
+    res.json(enrichedProducts);
   } catch (error) {
     console.error('Get all products error:', error);
     res.status(500).json({ error: 'Terjadi kesalahan saat mengambil data produk' });
@@ -43,8 +87,15 @@ export const getAllProductsController = async (req, res) => {
 export const getProductsByUMKMController = async (req, res) => {
   try {
     const { umkmId } = req.params;
-    const products = await getProductsByUMKM(umkmId);
-    res.json(products);
+    let products = await getProductsByUMKM(umkmId);
+    
+    // Filter hanya produk aktif untuk buyer
+    products = products.filter(p => p.status === 'active');
+    
+    // Enrich products with UMKM data
+    const enrichedProducts = await enrichProductsWithUMKM(products);
+    
+    res.json(enrichedProducts);
   } catch (error) {
     console.error('Get products by UMKM error:', error);
     res.status(500).json({ error: 'Terjadi kesalahan saat mengambil data produk' });
@@ -61,7 +112,11 @@ export const getProductByIdController = async (req, res) => {
       return res.status(404).json({ error: 'Produk tidak ditemukan' });
     }
 
-    res.json(product);
+    // Enrich product with UMKM data
+    const enrichedProducts = await enrichProductsWithUMKM([product]);
+    const enrichedProduct = enrichedProducts[0] || product;
+
+    res.json(enrichedProduct);
   } catch (error) {
     console.error('Get product by ID error:', error);
     res.status(500).json({ error: 'Terjadi kesalahan saat mengambil data produk' });
