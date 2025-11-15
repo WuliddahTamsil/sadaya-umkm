@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: asli-bogor-backend
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    rootDir: backend
+    envVars:
+      - key: NODE_ENV
+        value: production
+
