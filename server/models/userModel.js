@@ -2,6 +2,25 @@ import { readFile, writeFile } from 'fs/promises';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 
+// Jika MONGODB_URI ada, gunakan MongoDB, jika tidak gunakan file JSON
+const useMongoDB = !!process.env.MONGODB_URI;
+
+// Lazy load MongoDB model
+let mongoUserModelPromise = null;
+async function getMongoModel() {
+  if (!useMongoDB) return null;
+  if (!mongoUserModelPromise) {
+    mongoUserModelPromise = import('./userModelMongo.js').then(module => {
+      console.log('✅ Using MongoDB for user storage');
+      return module;
+    }).catch(error => {
+      console.warn('⚠️ MongoDB import failed, falling back to JSON file:', error.message);
+      return null;
+    });
+  }
+  return await mongoUserModelPromise;
+}
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -71,23 +90,39 @@ async function writeUsers(users) {
 
 // Get all users
 export async function getAllUsers() {
+  const mongoModel = await getMongoModel();
+  if (mongoModel) {
+    return await mongoModel.getAllUsers();
+  }
   return await readUsers();
 }
 
 // Get user by ID
 export async function getUserById(id) {
+  const mongoModel = await getMongoModel();
+  if (mongoModel) {
+    return await mongoModel.getUserById(id);
+  }
   const users = await readUsers();
   return users.find(user => user.id === id);
 }
 
 // Get user by email
 export async function getUserByEmail(email) {
+  const mongoModel = await getMongoModel();
+  if (mongoModel) {
+    return await mongoModel.getUserByEmail(email);
+  }
   const users = await readUsers();
   return users.find(user => user.email === email);
 }
 
 // Save new user
 export async function saveUser(newUser) {
+  const mongoModel = await getMongoModel();
+  if (mongoModel) {
+    return await mongoModel.saveUser(newUser);
+  }
   const users = await readUsers();
   users.push(newUser);
   await writeUsers(users);
@@ -96,6 +131,10 @@ export async function saveUser(newUser) {
 
 // Update user
 export async function updateUser(id, updates) {
+  const mongoModel = await getMongoModel();
+  if (mongoModel) {
+    return await mongoModel.updateUser(id, updates);
+  }
   const users = await readUsers();
   const index = users.findIndex(user => user.id === id);
   
@@ -110,6 +149,10 @@ export async function updateUser(id, updates) {
 
 // Delete user
 export async function deleteUser(id) {
+  const mongoModel = await getMongoModel();
+  if (mongoModel) {
+    return await mongoModel.deleteUser(id);
+  }
   const users = await readUsers();
   const filteredUsers = users.filter(user => user.id !== id);
   await writeUsers(filteredUsers);
