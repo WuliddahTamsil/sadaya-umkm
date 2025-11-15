@@ -118,10 +118,23 @@ export async function saveUser(newUser) {
 // Update user
 export async function updateUser(id, updates) {
   await connectDB();
-  updates.updatedAt = new Date();
+  
+  // Hapus field undefined agar MongoDB tidak mengabaikan update
+  const cleanUpdates = {};
+  for (const [key, value] of Object.entries(updates)) {
+    if (value !== undefined) {
+      cleanUpdates[key] = value;
+    }
+  }
+  
+  cleanUpdates.updatedAt = new Date();
+  
+  console.log('🔄 Updating user:', id);
+  console.log('📝 Updates:', JSON.stringify(cleanUpdates, null, 2));
+  
   const user = await User.findOneAndUpdate(
     { id },
-    updates,
+    { $set: cleanUpdates }, // Gunakan $set untuk memastikan semua field ter-update
     { new: true, lean: true }
   );
   
@@ -129,6 +142,7 @@ export async function updateUser(id, updates) {
     throw new Error('User tidak ditemukan');
   }
   
+  console.log('✅ User updated successfully');
   return user;
 }
 

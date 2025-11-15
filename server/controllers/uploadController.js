@@ -86,16 +86,30 @@ export const uploadDriverDocuments = async (req, res) => {
     }
 
     // Update user dengan data tambahan
+    // Hanya include field yang ada nilainya (jangan undefined)
     const updateData = {
-      ...documents,
-      phone: phoneNumber || undefined,
-      vehicleType: vehicleType || undefined,
-      vehiclePlate: vehiclePlate || undefined,
+      ...documents, // File URLs dari blob
       isOnboarded: true, // Set onboarding selesai
       updatedAt: new Date().toISOString()
     };
+    
+    // Hanya tambahkan field jika ada nilainya
+    if (phoneNumber) updateData.phone = phoneNumber;
+    if (vehicleType) updateData.vehicleType = vehicleType;
+    if (vehiclePlate) updateData.vehiclePlate = vehiclePlate;
+
+    console.log('📝 Updating user with data:', JSON.stringify(updateData, null, 2));
+    console.log('📝 File documents:', Object.keys(documents));
 
     const updatedUser = await updateUser(userId, updateData);
+    
+    console.log('✅ User updated. File fields:', {
+      ktpFile: updatedUser.ktpFile ? '✅' : '❌',
+      simFile: updatedUser.simFile ? '✅' : '❌',
+      stnkFile: updatedUser.stnkFile ? '✅' : '❌',
+      selfieFile: updatedUser.selfieFile ? '✅' : '❌',
+      vehiclePhotoFile: updatedUser.vehiclePhotoFile ? '✅' : '❌'
+    });
 
     // Hapus password dari response
     const { password, ...userWithoutPassword } = updatedUser;
@@ -171,17 +185,29 @@ export const uploadUMKMDocuments = async (req, res) => {
     }
 
     // Update user dengan data tambahan
+    // Hanya include field yang ada nilainya (jangan undefined)
     const updateData = {
-      ...documents,
-      storeName: storeName || undefined,
-      storeAddress: storeAddress || undefined,
-      storeDescription: storeDescription || undefined,
-      phone: phoneNumber || undefined,
+      ...documents, // File URLs dari blob
       isOnboarded: true, // Set onboarding selesai
       updatedAt: new Date().toISOString()
     };
+    
+    // Hanya tambahkan field jika ada nilainya
+    if (storeName) updateData.storeName = storeName;
+    if (storeAddress) updateData.storeAddress = storeAddress;
+    if (storeDescription) updateData.storeDescription = storeDescription;
+    if (phoneNumber) updateData.phone = phoneNumber;
+
+    console.log('📝 Updating UMKM user with data:', JSON.stringify(updateData, null, 2));
+    console.log('📝 File documents:', Object.keys(documents));
 
     const updatedUser = await updateUser(userId, updateData);
+    
+    console.log('✅ UMKM user updated. File fields:', {
+      ktpFile: updatedUser.ktpFile ? '✅' : '❌',
+      storePhotoFile: updatedUser.storePhotoFile ? '✅' : '❌',
+      businessPermitFile: updatedUser.businessPermitFile ? '✅' : '❌'
+    });
 
     // Hapus password dari response
     const { password, ...userWithoutPassword } = updatedUser;

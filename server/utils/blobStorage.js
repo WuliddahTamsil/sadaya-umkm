@@ -46,22 +46,38 @@ export async function uploadToBlob(buffer, filename, contentType, folder = 'gene
 export async function uploadMultipleToBlob(files, folder = 'general') {
   const results = {};
   
+  console.log(`📤 Uploading ${Object.keys(files).length} files to blob folder: ${folder}`);
+  
   for (const [fieldName, fileData] of Object.entries(files)) {
-    if (fileData && fileData.buffer) {
-      try {
-        const url = await uploadToBlob(
-          fileData.buffer,
-          fileData.filename || fileData.originalname || `${fieldName}.${fileData.mimetype?.split('/')[1] || 'file'}`,
-          fileData.mimetype || 'application/octet-stream',
-          folder
-        );
-        results[fieldName] = url;
-      } catch (error) {
-        console.error(`Error uploading ${fieldName}:`, error);
-        // Continue dengan file lain meskipun satu file gagal
-      }
+    if (!fileData) {
+      console.warn(`⚠️ File data is null/undefined for ${fieldName}`);
+      continue;
+    }
+    
+    if (!fileData.buffer) {
+      console.warn(`⚠️ File buffer is missing for ${fieldName}`);
+      continue;
+    }
+    
+    try {
+      console.log(`📤 Uploading ${fieldName}...`);
+      const url = await uploadToBlob(
+        fileData.buffer,
+        fileData.filename || fileData.originalname || `${fieldName}.${fileData.mimetype?.split('/')[1] || 'file'}`,
+        fileData.mimetype || 'application/octet-stream',
+        folder
+      );
+      results[fieldName] = url;
+      console.log(`✅ ${fieldName} uploaded successfully: ${url}`);
+    } catch (error) {
+      console.error(`❌ Error uploading ${fieldName}:`, error);
+      console.error(`Error details:`, error.message);
+      // Continue dengan file lain meskipun satu file gagal
     }
   }
+  
+  console.log(`✅ Upload complete. ${Object.keys(results).length} files uploaded successfully.`);
+  console.log(`📋 Uploaded files:`, Object.keys(results));
   
   return results;
 }
