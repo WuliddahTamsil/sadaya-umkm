@@ -12,6 +12,7 @@ import productsRoutes from '../server/routes/products.js';
 import cartRoutes from '../server/routes/cart.js';
 import walletRoutes from '../server/routes/wallet.js';
 import contentRoutes from '../server/routes/content.js';
+import setupRoutes from '../server/routes/setup.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -47,6 +48,7 @@ app.use('/api/products', productsRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/wallet', walletRoutes);
 app.use('/api/content', contentRoutes);
+app.use('/api/setup', setupRoutes);
 
 // Serve uploaded files
 app.use('/uploads', express.static(join(__dirname, '../server', 'uploads')));
