@@ -53,7 +53,20 @@ async function readUsers() {
 
 // Helper function untuk menulis data ke file
 async function writeUsers(users) {
-  await writeFile(DATA_FILE, JSON.stringify(users, null, 2), 'utf-8');
+  try {
+    await writeFile(DATA_FILE, JSON.stringify(users, null, 2), 'utf-8');
+    console.log('✅ Users berhasil disimpan ke:', DATA_FILE);
+  } catch (error) {
+    console.error('❌ Error writing users.json:', error);
+    console.error('Error code:', error.code);
+    console.error('Error message:', error.message);
+    
+    // Di Vercel, file system adalah read-only
+    if (error.code === 'EROFS' || error.code === 'EACCES') {
+      throw new Error('File system is read-only. Cannot write to file. Please use a database for production (MongoDB, PostgreSQL, etc.)');
+    }
+    throw error;
+  }
 }
 
 // Get all users

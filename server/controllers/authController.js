@@ -68,7 +68,18 @@ export const registerUser = async (req, res) => {
     });
   } catch (error) {
     console.error('Registration error:', error);
-    res.status(500).json({ error: 'Terjadi kesalahan saat registrasi' });
+    console.error('Error stack:', error.stack);
+    
+    // Berikan error message yang lebih informatif
+    let errorMessage = 'Terjadi kesalahan saat registrasi';
+    if (error.message && error.message.includes('read-only')) {
+      errorMessage = 'File system read-only. Database diperlukan untuk menyimpan data. Silakan hubungi administrator.';
+    }
+    
+    res.status(500).json({ 
+      error: errorMessage,
+      details: process.env.NODE_ENV === 'development' ? error.message : undefined
+    });
   }
 };
 
