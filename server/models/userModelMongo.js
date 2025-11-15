@@ -48,13 +48,20 @@ async function connectDB() {
   }
 
   try {
-    const mongoUri = process.env.MONGODB_URI;
+    let mongoUri = process.env.MONGODB_URI;
     if (!mongoUri) {
       throw new Error('MONGODB_URI environment variable is not set');
     }
 
+    // Trim whitespace and validate
+    mongoUri = mongoUri.trim();
+    if (!mongoUri.startsWith('mongodb://') && !mongoUri.startsWith('mongodb+srv://')) {
+      throw new Error(`Invalid MongoDB URI scheme. URI must start with "mongodb://" or "mongodb+srv://". Got: ${mongoUri.substring(0, 20)}...`);
+    }
+
     console.log('🔌 Attempting to connect to MongoDB...');
-    console.log('MongoDB URI:', mongoUri.replace(/:[^:@]+@/, ':****@')); // Hide password in logs
+    console.log('MongoDB URI (first 50 chars):', mongoUri.substring(0, 50) + '...');
+    console.log('MongoDB URI starts with:', mongoUri.substring(0, 15));
     
     // Close existing connection if any
     if (mongoose.connection.readyState !== 0) {
