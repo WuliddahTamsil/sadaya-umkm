@@ -13,10 +13,23 @@ function getRelativePath(fullPath) {
 
 // Helper untuk convert multer file ke format untuk blob upload
 function prepareFileForBlob(file) {
-  if (!file) return null;
+  if (!file) {
+    console.warn('⚠️ prepareFileForBlob: file is null/undefined');
+    return null;
+  }
+  
+  console.log('🔍 Preparing file for blob:', {
+    fieldname: file.fieldname,
+    originalname: file.originalname,
+    mimetype: file.mimetype,
+    size: file.size,
+    hasBuffer: !!file.buffer,
+    hasPath: !!file.path
+  });
   
   // Jika file dari memory storage (Vercel)
   if (file.buffer) {
+    console.log('✅ File has buffer, using memory storage format');
     return {
       buffer: file.buffer,
       filename: file.originalname,
@@ -26,8 +39,12 @@ function prepareFileForBlob(file) {
   }
   
   // Jika file dari disk storage (local)
-  // Baca file dari disk dan convert ke buffer
-  // Note: Di Vercel, kita selalu pakai memory storage
+  if (file.path) {
+    console.log('⚠️ File has path but no buffer - this should not happen in Vercel');
+    // Di Vercel, kita selalu pakai memory storage, jadi ini tidak seharusnya terjadi
+  }
+  
+  console.warn('⚠️ prepareFileForBlob: file has no buffer or path');
   return null;
 }
 
@@ -35,16 +52,36 @@ export const uploadDriverDocuments = async (req, res) => {
   try {
     const { userId, phoneNumber, vehicleType, vehiclePlate } = req.body;
 
+    console.log('=== UPLOAD DRIVER DOCUMENTS START ===');
+    console.log('User ID:', userId);
+    console.log('Request body:', { phoneNumber, vehicleType, vehiclePlate });
+
     if (!userId) {
       return res.status(400).json({ error: 'User ID diperlukan' });
     }
 
     const files = req.files || {};
+    console.log('📁 Files received:', Object.keys(files));
+    console.log('📁 Files details:', {
+      ktpFile: files.ktpFile ? `${files.ktpFile.length} file(s)` : 'none',
+      simFile: files.simFile ? `${files.simFile.length} file(s)` : 'none',
+      stnkFile: files.stnkFile ? `${files.stnkFile.length} file(s)` : 'none',
+      selfieFile: files.selfieFile ? `${files.selfieFile.length} file(s)` : 'none',
+      vehiclePhotoFile: files.vehiclePhotoFile ? `${files.vehiclePhotoFile.length} file(s)` : 'none'
+    });
+
     const documents = {};
 
     // Cek apakah di Vercel (perlu upload ke blob) atau local (simpan ke disk)
     const isVercel = process.env.VERCEL || process.env.VERCEL_ENV;
     const hasBlobToken = !!process.env.BLOB_READ_WRITE_TOKEN;
+
+    console.log('🔍 Environment check:', {
+      isVercel,
+      hasBlobToken,
+      VERCEL: process.env.VERCEL,
+      VERCEL_ENV: process.env.VERCEL_ENV
+    });
 
     if (isVercel && hasBlobToken) {
       // Upload ke Vercel Blob Storage
@@ -52,28 +89,55 @@ export const uploadDriverDocuments = async (req, res) => {
       
       const filesToUpload = {};
       if (files.ktpFile && files.ktpFile[0]) {
-        filesToUpload.ktpFile = prepareFileForBlob(files.ktpFile[0]);
+        const prepared = prepareFileForBlob(files.ktpFile[0]);
+        if (prepared) {
+          filesToUpload.ktpFile = prepared;
+          console.log('✅ Prepared ktpFile for upload');
+        } else {
+          console.warn('⚠️ Failed to prepare ktpFile');
+        }
       }
       if (files.simFile && files.simFile[0]) {
-        filesToUpload.simFile = prepareFileForBlob(files.simFile[0]);
+        const prepared = prepareFileForBlob(files.simFile[0]);
+        if (prepared) {
+          filesToUpload.simFile = prepared;
+          console.log('✅ Prepared simFile for upload');
+        }
       }
       if (files.stnkFile && files.stnkFile[0]) {
-        filesToUpload.stnkFile = prepareFileForBlob(files.stnkFile[0]);
+        const prepared = prepareFileForBlob(files.stnkFile[0]);
+        if (prepared) {
+          filesToUpload.stnkFile = prepared;
+          console.log('✅ Prepared stnkFile for upload');
+        }
       }
       if (files.selfieFile && files.selfieFile[0]) {
-        filesToUpload.selfieFile = prepareFileForBlob(files.selfieFile[0]);
+        const prepared = prepareFileForBlob(files.selfieFile[0]);
+        if (prepared) {
+          filesToUpload.selfieFile = prepared;
+          console.log('✅ Prepared selfieFile for upload');
+        }
       }
       if (files.vehiclePhotoFile && files.vehiclePhotoFile[0]) {
-        filesToUpload.vehiclePhotoFile = prepareFileForBlob(files.vehiclePhotoFile[0]);
+        const prepared = prepareFileForBlob(files.vehiclePhotoFile[0]);
+        if (prepared) {
+          filesToUpload.vehiclePhotoFile = prepared;
+          console.log('✅ Prepared vehiclePhotoFile for upload');
+        }
       }
+
+      console.log('📤 Files to upload:', Object.keys(filesToUpload));
 
       // Upload semua file ke blob
       const blobUrls = await uploadMultipleToBlob(filesToUpload, 'driver');
+      
+      console.log('📋 Blob URLs received:', blobUrls);
       
       // Simpan URL blob ke documents
       Object.assign(documents, blobUrls);
       
       console.log('✅ Driver documents uploaded to blob:', Object.keys(blobUrls));
+      console.log('📝 Documents object:', documents);
     } else if (!isVercel) {
       // Local development: simpan path file
       if (files.ktpFile && files.ktpFile[0]?.path) documents.ktpFile = getRelativePath(files.ktpFile[0].path);
@@ -100,16 +164,19 @@ export const uploadDriverDocuments = async (req, res) => {
 
     console.log('📝 Updating user with data:', JSON.stringify(updateData, null, 2));
     console.log('📝 File documents:', Object.keys(documents));
+    console.log('📝 Documents values:', documents);
 
     const updatedUser = await updateUser(userId, updateData);
     
     console.log('✅ User updated. File fields:', {
-      ktpFile: updatedUser.ktpFile ? '✅' : '❌',
-      simFile: updatedUser.simFile ? '✅' : '❌',
-      stnkFile: updatedUser.stnkFile ? '✅' : '❌',
-      selfieFile: updatedUser.selfieFile ? '✅' : '❌',
-      vehiclePhotoFile: updatedUser.vehiclePhotoFile ? '✅' : '❌'
+      ktpFile: updatedUser.ktpFile ? `✅ ${updatedUser.ktpFile.substring(0, 50)}...` : '❌',
+      simFile: updatedUser.simFile ? `✅ ${updatedUser.simFile.substring(0, 50)}...` : '❌',
+      stnkFile: updatedUser.stnkFile ? `✅ ${updatedUser.stnkFile.substring(0, 50)}...` : '❌',
+      selfieFile: updatedUser.selfieFile ? `✅ ${updatedUser.selfieFile.substring(0, 50)}...` : '❌',
+      vehiclePhotoFile: updatedUser.vehiclePhotoFile ? `✅ ${updatedUser.vehiclePhotoFile.substring(0, 50)}...` : '❌'
     });
+    
+    console.log('=== UPLOAD DRIVER DOCUMENTS END ===');
 
     // Hapus password dari response
     const { password, ...userWithoutPassword } = updatedUser;

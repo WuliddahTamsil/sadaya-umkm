@@ -8,11 +8,15 @@ const router = express.Router();
 const handleUpload = (uploadMiddleware, controller) => {
   return async (req, res, next) => {
     try {
+      console.log('📥 Upload route hit:', req.path);
+      console.log('📥 Request method:', req.method);
+      console.log('📥 Content-Type:', req.headers['content-type']);
+      
       // Multer middleware akan populate req.files atau req.file
       await new Promise((resolve, reject) => {
         uploadMiddleware(req, res, (err) => {
           if (err) {
-            console.error('Multer error:', err);
+            console.error('❌ Multer error:', err);
             if (err.code === 'LIMIT_FILE_SIZE') {
               return res.status(400).json({ error: 'File terlalu besar. Maksimal 5MB per file.' });
             }
@@ -21,6 +25,15 @@ const handleUpload = (uploadMiddleware, controller) => {
             }
             return res.status(400).json({ error: 'Error saat upload file: ' + (err.message || 'Unknown error') });
           }
+          
+          // Log files setelah multer process
+          console.log('✅ Multer processed files:', {
+            hasFiles: !!req.files,
+            hasFile: !!req.file,
+            filesKeys: req.files ? Object.keys(req.files) : 'none',
+            filesCount: req.files ? Object.values(req.files).flat().length : 0
+          });
+          
           resolve();
         });
       });
@@ -30,6 +43,7 @@ const handleUpload = (uploadMiddleware, controller) => {
         await controller(req, res, next);
       }
     } catch (error) {
+      console.error('❌ Error in handleUpload:', error);
       if (!res.headersSent) {
         next(error);
       }
