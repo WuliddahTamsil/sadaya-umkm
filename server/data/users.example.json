@@ -1,0 +1,22 @@
+[
+  {
+    "id": "admin-001",
+    "name": "Admin Asli Bogor",
+    "email": "admin@gmail.com",
+    "password": "$2a$10$RJG2sw8NeLeVFVBmUxN1AumsdSbyQE3W/SHLHxenQ6BCOzm.jj9Py",
+    "role": "admin",
+    "phone": null,
+    "address": null,
+    "description": null,
+    "status": "active",
+    "isVerified": true,
+    "isOnboarded": true,
+    "joinDate": "2025-01-01",
+    "totalOrders": 0,
+    "rating": 0,
+    "createdAt": "2025-01-01T00:00:00.000Z",
+    "updatedAt": "2025-01-01T00:00:00.000Z"
+  }
+]
+
+

@@ -1,0 +1,35 @@
+[
+  {
+    "id": "320b6dc3-98f2-4cbd-a5ee-5772f578d987",
+    "userId": "af3583a6-707b-4d54-b235-114208187f28",
+    "type": "topup",
+    "amount": 200000,
+    "description": "Top Up via Transfer Bank",
+    "orderId": null,
+    "status": "completed",
+    "createdAt": "2025-11-14T12:10:37.495Z",
+    "updatedAt": "2025-11-14T12:10:37.495Z"
+  },
+  {
+    "id": "43d2f632-3761-4f0d-9053-ab9ac98b10bd",
+    "userId": "af3583a6-707b-4d54-b235-114208187f28",
+    "type": "topup",
+    "amount": 500000,
+    "description": "Top Up via Transfer Bank",
+    "orderId": null,
+    "status": "completed",
+    "createdAt": "2025-11-14T12:10:42.921Z",
+    "updatedAt": "2025-11-14T12:10:42.921Z"
+  },
+  {
+    "id": "f039ba38-e2fc-4b48-9f74-12f9b75e0fbd",
+    "userId": "af3583a6-707b-4d54-b235-114208187f28",
+    "type": "payment",
+    "amount": 130000,
+    "description": "Pembayaran Order ORD-1763122302171-EK377KS28",
+    "orderId": "ORD-1763122302171-EK377KS28",
+    "status": "completed",
+    "createdAt": "2025-11-14T12:11:42.248Z",
+    "updatedAt": "2025-11-14T12:11:42.248Z"
+  }
+]
