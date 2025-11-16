@@ -1,8 +1,15 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
+import { readFile } from 'fs/promises';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+import { getAllProducts as getMongoProducts, saveProduct as saveMongoProduct } from '../models/productModelMongo.js';
 
 const router = express.Router();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 // User Schema
 const userSchema = new mongoose.Schema({
@@ -98,6 +105,156 @@ router.post('/setup-admin', async (req, res) => {
     console.error('Setup admin error:', error);
     return res.status(500).json({
       error: 'Failed to setup admin',
+      details: process.env.NODE_ENV === 'development' ? error.message : undefined
+    });
+  }
+});
+
+// Migrate products from JSON file to MongoDB
+router.post('/migrate-products', async (req, res) => {
+  try {
+    // Check MongoDB URI
+    const mongoUri = process.env.MONGODB_URI;
+    if (!mongoUri) {
+      return res.status(500).json({ error: 'MONGODB_URI not configured' });
+    }
+
+    // Connect to MongoDB
+    if (mongoose.connection.readyState !== 1) {
+      await mongoose.connect(mongoUri.trim(), {
+        serverSelectionTimeoutMS: 30000,
+        socketTimeoutMS: 45000,
+      });
+    }
+
+    // Read products from JSON file
+    const productsJsonPath = join(__dirname, '../data/products.json');
+    let productsFromJson = [];
+    
+    try {
+      const jsonData = await readFile(productsJsonPath, 'utf-8');
+      productsFromJson = JSON.parse(jsonData);
+    } catch (error) {
+      console.error('Error reading products.json:', error.message);
+      // If file doesn't exist or can't be read (e.g., in Vercel), return error with instructions
+      return res.status(404).json({
+        error: 'Cannot read products.json file',
+        message: 'This endpoint should be called from localhost or provide products data in request body',
+        hint: 'You can also POST products array to this endpoint in the request body'
+      });
+    }
+
+    // Get existing products from MongoDB
+    const existingProducts = await getMongoProducts();
+    const existingIds = new Set(existingProducts.map(p => p.id));
+
+    // Migrate products
+    let migrated = 0;
+    let skipped = 0;
+    let errors = [];
+
+    for (const product of productsFromJson) {
+      try {
+        // Skip if product already exists
+        if (existingIds.has(product.id)) {
+          skipped++;
+          continue;
+        }
+
+        // Save to MongoDB
+        await saveMongoProduct(product);
+        migrated++;
+      } catch (error) {
+        console.error(`Error migrating product ${product.id}:`, error.message);
+        errors.push({ id: product.id, name: product.name, error: error.message });
+      }
+    }
+
+    return res.json({
+      success: true,
+      message: 'Product migration completed',
+      stats: {
+        total: productsFromJson.length,
+        migrated,
+        skipped,
+        errors: errors.length
+      },
+      errors: errors.length > 0 ? errors : undefined
+    });
+  } catch (error) {
+    console.error('Migrate products error:', error);
+    return res.status(500).json({
+      error: 'Failed to migrate products',
+      details: process.env.NODE_ENV === 'development' ? error.message : undefined
+    });
+  }
+});
+
+// Alternative: Accept products in request body for migration (works in Vercel)
+router.post('/migrate-products-from-body', async (req, res) => {
+  try {
+    // Check MongoDB URI
+    const mongoUri = process.env.MONGODB_URI;
+    if (!mongoUri) {
+      return res.status(500).json({ error: 'MONGODB_URI not configured' });
+    }
+
+    // Connect to MongoDB
+    if (mongoose.connection.readyState !== 1) {
+      await mongoose.connect(mongoUri.trim(), {
+        serverSelectionTimeoutMS: 30000,
+        socketTimeoutMS: 45000,
+      });
+    }
+
+    // Get products from request body
+    const productsFromBody = req.body.products || req.body;
+    
+    if (!Array.isArray(productsFromBody)) {
+      return res.status(400).json({ error: 'Products must be an array' });
+    }
+
+    // Get existing products from MongoDB
+    const existingProducts = await getMongoProducts();
+    const existingIds = new Set(existingProducts.map(p => p.id));
+
+    // Migrate products
+    let migrated = 0;
+    let skipped = 0;
+    let errors = [];
+
+    for (const product of productsFromBody) {
+      try {
+        // Skip if product already exists
+        if (existingIds.has(product.id)) {
+          skipped++;
+          continue;
+        }
+
+        // Save to MongoDB
+        await saveMongoProduct(product);
+        migrated++;
+      } catch (error) {
+        console.error(`Error migrating product ${product.id}:`, error.message);
+        errors.push({ id: product.id, name: product.name, error: error.message });
+      }
+    }
+
+    return res.json({
+      success: true,
+      message: 'Product migration completed',
+      stats: {
+        total: productsFromBody.length,
+        migrated,
+        skipped,
+        errors: errors.length
+      },
+      errors: errors.length > 0 ? errors : undefined
+    });
+  } catch (error) {
+    console.error('Migrate products error:', error);
+    return res.status(500).json({
+      error: 'Failed to migrate products',
       details: process.env.NODE_ENV === 'development' ? error.message : undefined
     });
   }

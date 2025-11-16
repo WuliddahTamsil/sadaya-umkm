@@ -8,5 +8,15 @@
     "tanggal_ditambahkan": "2025-11-14T12:16:40.814Z",
     "createdAt": "2025-11-14T12:16:40.814Z",
     "updatedAt": "2025-11-14T12:16:40.814Z"
+  },
+  {
+    "id": "cart-1763261993490-btuw6htqe",
+    "id_user": "7c31ebb1-1d62-45cf-9868-7bf092bca650",
+    "id_produk": "lapis-talas-original-001",
+    "jumlah": 1,
+    "harga_saat_ini": 45000,
+    "tanggal_ditambahkan": "2025-11-16T02:59:53.490Z",
+    "createdAt": "2025-11-16T02:59:53.490Z",
+    "updatedAt": "2025-11-16T02:59:53.490Z"
   }
 ]
