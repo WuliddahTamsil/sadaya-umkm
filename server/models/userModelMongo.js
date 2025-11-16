@@ -170,6 +170,17 @@ export async function updateUser(id, updates) {
     businessPermitFile: cleanUpdates.businessPermitFile ? `✅ ${cleanUpdates.businessPermitFile.substring(0, 50)}...` : '❌ not in cleanUpdates'
   });
   
+  // PASTIKAN $set berisi field-file sebelum update
+  console.log('🔍 Verifying $set contains file fields:', {
+    hasKtpFile: '$set' in updateQuery && 'ktpFile' in updateQuery.$set,
+    hasStorePhotoFile: '$set' in updateQuery && 'storePhotoFile' in updateQuery.$set,
+    hasBusinessPermitFile: '$set' in updateQuery && 'businessPermitFile' in updateQuery.$set,
+    hasSimFile: '$set' in updateQuery && 'simFile' in updateQuery.$set,
+    hasStnkFile: '$set' in updateQuery && 'stnkFile' in updateQuery.$set,
+    hasSelfieFile: '$set' in updateQuery && 'selfieFile' in updateQuery.$set,
+    hasVehiclePhotoFile: '$set' in updateQuery && 'vehiclePhotoFile' in updateQuery.$set
+  });
+  
   const user = await User.findOneAndUpdate(
     { id }, // Cari berdasarkan id (bukan _id MongoDB)
     updateQuery, // Gunakan $set untuk memastikan semua field ter-update, termasuk file URLs
