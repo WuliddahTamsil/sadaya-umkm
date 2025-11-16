@@ -18,11 +18,18 @@ async function enrichProductWithUMKM(product) {
     const allUsers = await getAllUsers();
     const umkmMap = new Map();
     
-    // Buat map UMKM berdasarkan ID
+    // Buat map UMKM berdasarkan ID (case-insensitive role check)
     allUsers
-      .filter(user => user.role === 'umkm' && user.status === 'active')
+      .filter(user => {
+        const userRole = user.role?.toString().toLowerCase().trim();
+        const userStatus = user.status?.toString().toLowerCase().trim();
+        return userRole === 'umkm' && userStatus === 'active';
+      })
       .forEach(umkm => {
-        umkmMap.set(umkm.id, {
+        // Normalize UMKM ID untuk key map (case-insensitive)
+        const normalizedId = umkm.id?.toString().trim();
+        umkmMap.set(normalizedId, {
+          id: normalizedId, // Simpan ID yang sudah dinormalisasi
           name: umkm.name || umkm.storeName || 'UMKM',
           storeName: umkm.storeName || umkm.name || 'UMKM',
           address: umkm.address || umkm.storeAddress || '',
@@ -30,11 +37,26 @@ async function enrichProductWithUMKM(product) {
         });
       });
 
-    // Enrich produk dengan data UMKM
-    const umkmInfo = umkmMap.get(product.umkmId);
+    // Enrich produk dengan data UMKM (case-insensitive lookup)
+    const normalizedProductUmkmId = product.umkmId?.toString().trim();
+    let umkmInfo = umkmMap.get(normalizedProductUmkmId);
+    
+    // Jika tidak ditemukan dengan exact match, coba case-insensitive lookup
+    if (!umkmInfo && normalizedProductUmkmId) {
+      for (const [umkmId, umkmData] of umkmMap.entries()) {
+        if (umkmId?.toLowerCase() === normalizedProductUmkmId.toLowerCase()) {
+          umkmInfo = umkmData;
+          console.log(`✅ UMKM ditemukan dengan case-insensitive lookup: ${umkmId} untuk product ${product.id}`);
+          break;
+        }
+      }
+    }
+    // Gunakan umkmId yang sudah dinormalisasi dari umkmInfo jika ada, atau gunakan product.umkmId
+    const finalUmkmId = umkmInfo?.id || normalizedProductUmkmId || product.umkmId;
+    
     return {
       ...product,
-      umkmId: product.umkmId, // Pastikan umkmId ada
+      umkmId: finalUmkmId, // Gunakan ID yang sudah dinormalisasi
       umkmName: product.umkmName || umkmInfo?.name || umkmInfo?.storeName || 'UMKM',
       umkmStoreName: umkmInfo?.storeName || umkmInfo?.name || 'UMKM',
       umkmAddress: umkmInfo?.address || '',

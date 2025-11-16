@@ -122,7 +122,13 @@ export const createOrder = async (req, res) => {
     // Normalize UMKM ID untuk menghindari masalah whitespace atau case sensitivity
     const normalizedUmkmId = umkmId?.toString().trim();
     
+    console.log(`🔍 Mencari UMKM dengan ID: "${normalizedUmkmId}" (original: "${umkmId}")`);
+    
     let umkm = await getUserById(normalizedUmkmId);
+    
+    if (umkm) {
+      console.log(`✅ UMKM ditemukan langsung: ${umkm.id} (${umkm.name || umkm.storeName || 'N/A'})`);
+    }
     
     // Jika UMKM tidak ditemukan dengan ID, coba cari alternatif (case-insensitive atau ID serupa)
     if (!umkm) {
@@ -131,7 +137,11 @@ export const createOrder = async (req, res) => {
       // Cek apakah ada UMKM lain di database untuk debugging dan pencarian alternatif
       try {
         const allUsers = await getAllUsersModel();
-        const allUmkm = allUsers.filter(u => u.role === 'umkm' || u.role === 'UMKM');
+        // Filter dengan case-insensitive role check
+        const allUmkm = allUsers.filter(u => {
+          const userRole = u.role?.toString().toLowerCase().trim();
+          return userRole === 'umkm';
+        });
         console.error(`Total UMKM di database: ${allUmkm.length}`);
         
         if (allUmkm.length > 0) {

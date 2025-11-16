@@ -299,15 +299,19 @@ export function Keranjang() {
         const itemsTotal = items.reduce((sum, item) => sum + item.harga_saat_ini * item.jumlah, 0);
         const orderTotal = itemsTotal + perGroupShipping;
         
-        // Ambil UMKM ID dari product - pastikan ada
-        const umkmId = items[0]?.product?.umkmId;
+        // Ambil UMKM ID dari product - pastikan ada dan normalize
+        const rawUmkmId = items[0]?.product?.umkmId;
         
-        if (!umkmId) {
+        if (!rawUmkmId) {
           const errorMsg = `Produk dari "${storeName}" tidak memiliki informasi UMKM. Silakan refresh halaman.`;
           console.error('Missing UMKM ID for store:', storeName, 'Items:', items);
           toast.error(errorMsg);
           throw new Error(errorMsg);
         }
+
+        // Normalize UMKM ID (trim whitespace)
+        const umkmId = rawUmkmId.toString().trim();
+        console.log(`📦 Creating order for UMKM ID: "${umkmId}" (store: ${storeName})`);
 
         // Create order via API
         const orderResponse = await fetch(api.orders.create, {
