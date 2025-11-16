@@ -29,6 +29,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { api } from '../../../config/api';
 import { toast } from 'sonner';
 import { ExternalLink, FileText, Image as ImageIcon } from 'lucide-react';
+import { ImageWithFallback } from '../../figma/ImageWithFallback';
 
 interface DataItem {
   id: string;
@@ -143,28 +144,40 @@ export function ManajemenData() {
     fetchUsers();
   };
 
-  // Get image URL
-  const getImageUrl = (filePath: string | undefined) => {
+  // Get image URL - handle Vercel Blob, local files, dan relative paths
+  const getImageUrl = (filePath: string | undefined | null): string | null => {
     if (!filePath) return null;
     
     // Jika sudah full URL (dari Vercel Blob atau external), langsung return
     if (filePath.startsWith('http://') || filePath.startsWith('https://')) {
+      console.log('🔗 Using full URL (Vercel Blob):', filePath);
       return filePath;
     }
     
-    // Jika path relatif (local development atau Vercel), tambahkan baseUrl
+    // Jika path relatif (local development atau production dengan local storage)
+    // Path biasanya: uploads/filename.jpg atau /uploads/filename.jpg
+    
+    // Normalize path - hapus leading slash jika ada
+    let cleanPath = filePath.startsWith('/') ? filePath.slice(1) : filePath;
+    
+    // Jika path belum mengandung 'uploads/', tambahkan
+    if (!cleanPath.startsWith('uploads/')) {
+      cleanPath = `uploads/${cleanPath}`;
+    }
+    
     const isProduction = import.meta.env.PROD;
+    let baseUrl = '';
     
-    // Di production (Vercel), gunakan API base URL
-    // Di development, gunakan localhost:3000
-    const baseUrl = isProduction 
-      ? (import.meta.env.VITE_API_BASE_URL || '/api').replace('/api', '') // Hapus /api jika ada
-      : 'http://localhost:3000';
+    if (isProduction) {
+      // Di production (Vercel), gunakan root domain
+      baseUrl = window.location.origin;
+    } else {
+      // Di development, gunakan localhost:3000
+      baseUrl = 'http://localhost:3000';
+    }
     
-    // Pastikan path tidak double slash
-    const cleanPath = filePath.startsWith('/') ? filePath.slice(1) : filePath;
-    const url = baseUrl ? `${baseUrl}/${cleanPath}` : `/${cleanPath}`;
-    
+    const url = `${baseUrl}/${cleanPath}`;
+    console.log('🔗 Generated image URL:', { filePath, cleanPath, baseUrl, url });
     return url;
   };
 
@@ -733,105 +746,161 @@ export function ManajemenData() {
                     {selectedUser.ktpFile && (
                       <div className="space-y-2">
                         <Label className="body-3">Foto KTP</Label>
-                        <div className="border rounded-lg p-2">
-                          <img 
-                            src={getImageUrl(selectedUser.ktpFile) || ''} 
-                            alt="KTP" 
-                            className="w-full h-48 object-contain rounded"
-                          />
-                          <a 
-                            href={getImageUrl(selectedUser.ktpFile) || '#'} 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="mt-2 text-sm text-blue-600 hover:underline flex items-center gap-1"
-                          >
-                            <ExternalLink size={14} />
-                            Buka di tab baru
-                          </a>
+                        <div className="border rounded-lg p-2 bg-gray-50">
+                          {getImageUrl(selectedUser.ktpFile) ? (
+                            <>
+                              <ImageWithFallback
+                                src={getImageUrl(selectedUser.ktpFile) || ''}
+                                alt="KTP"
+                                className="w-full h-48 object-contain rounded bg-white"
+                                onError={(e) => {
+                                  console.error('Error loading KTP image:', selectedUser.ktpFile);
+                                  console.error('Generated URL:', getImageUrl(selectedUser.ktpFile));
+                                }}
+                              />
+                              <a 
+                                href={getImageUrl(selectedUser.ktpFile) || '#'} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="mt-2 inline-flex items-center gap-1 text-sm text-blue-600 hover:underline"
+                              >
+                                <ExternalLink size={14} />
+                                Buka di tab baru
+                              </a>
+                            </>
+                          ) : (
+                            <div className="w-full h-48 flex items-center justify-center bg-gray-100 rounded">
+                              <p className="text-sm text-gray-500">URL tidak valid</p>
+                            </div>
+                          )}
                         </div>
                       </div>
                     )}
                     {selectedUser.simFile && (
                       <div className="space-y-2">
                         <Label className="body-3">Foto SIM</Label>
-                        <div className="border rounded-lg p-2">
-                          <img 
-                            src={getImageUrl(selectedUser.simFile) || ''} 
-                            alt="SIM" 
-                            className="w-full h-48 object-contain rounded"
-                          />
-                          <a 
-                            href={getImageUrl(selectedUser.simFile) || '#'} 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="mt-2 text-sm text-blue-600 hover:underline flex items-center gap-1"
-                          >
-                            <ExternalLink size={14} />
-                            Buka di tab baru
-                          </a>
+                        <div className="border rounded-lg p-2 bg-gray-50">
+                          {getImageUrl(selectedUser.simFile) ? (
+                            <>
+                              <ImageWithFallback
+                                src={getImageUrl(selectedUser.simFile) || ''}
+                                alt="SIM"
+                                className="w-full h-48 object-contain rounded bg-white"
+                                onError={(e) => {
+                                  console.error('Error loading SIM image:', selectedUser.simFile);
+                                }}
+                              />
+                              <a 
+                                href={getImageUrl(selectedUser.simFile) || '#'} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="mt-2 inline-flex items-center gap-1 text-sm text-blue-600 hover:underline"
+                              >
+                                <ExternalLink size={14} />
+                                Buka di tab baru
+                              </a>
+                            </>
+                          ) : (
+                            <div className="w-full h-48 flex items-center justify-center bg-gray-100 rounded">
+                              <p className="text-sm text-gray-500">URL tidak valid</p>
+                            </div>
+                          )}
                         </div>
                       </div>
                     )}
                     {selectedUser.stnkFile && (
                       <div className="space-y-2">
                         <Label className="body-3">Foto STNK</Label>
-                        <div className="border rounded-lg p-2">
-                          <img 
-                            src={getImageUrl(selectedUser.stnkFile) || ''} 
-                            alt="STNK" 
-                            className="w-full h-48 object-contain rounded"
-                          />
-                          <a 
-                            href={getImageUrl(selectedUser.stnkFile) || '#'} 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="mt-2 text-sm text-blue-600 hover:underline flex items-center gap-1"
-                          >
-                            <ExternalLink size={14} />
-                            Buka di tab baru
-                          </a>
+                        <div className="border rounded-lg p-2 bg-gray-50">
+                          {getImageUrl(selectedUser.stnkFile) ? (
+                            <>
+                              <ImageWithFallback
+                                src={getImageUrl(selectedUser.stnkFile) || ''}
+                                alt="STNK"
+                                className="w-full h-48 object-contain rounded bg-white"
+                                onError={(e) => {
+                                  console.error('Error loading STNK image:', selectedUser.stnkFile);
+                                }}
+                              />
+                              <a 
+                                href={getImageUrl(selectedUser.stnkFile) || '#'} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="mt-2 inline-flex items-center gap-1 text-sm text-blue-600 hover:underline"
+                              >
+                                <ExternalLink size={14} />
+                                Buka di tab baru
+                              </a>
+                            </>
+                          ) : (
+                            <div className="w-full h-48 flex items-center justify-center bg-gray-100 rounded">
+                              <p className="text-sm text-gray-500">URL tidak valid</p>
+                            </div>
+                          )}
                         </div>
                       </div>
                     )}
                     {selectedUser.selfieFile && (
                       <div className="space-y-2">
                         <Label className="body-3">Foto Selfie</Label>
-                        <div className="border rounded-lg p-2">
-                          <img 
-                            src={getImageUrl(selectedUser.selfieFile) || ''} 
-                            alt="Selfie" 
-                            className="w-full h-48 object-contain rounded"
-                          />
-                          <a 
-                            href={getImageUrl(selectedUser.selfieFile) || '#'} 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="mt-2 text-sm text-blue-600 hover:underline flex items-center gap-1"
-                          >
-                            <ExternalLink size={14} />
-                            Buka di tab baru
-                          </a>
+                        <div className="border rounded-lg p-2 bg-gray-50">
+                          {getImageUrl(selectedUser.selfieFile) ? (
+                            <>
+                              <ImageWithFallback
+                                src={getImageUrl(selectedUser.selfieFile) || ''}
+                                alt="Selfie"
+                                className="w-full h-48 object-contain rounded bg-white"
+                                onError={(e) => {
+                                  console.error('Error loading Selfie image:', selectedUser.selfieFile);
+                                }}
+                              />
+                              <a 
+                                href={getImageUrl(selectedUser.selfieFile) || '#'} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="mt-2 inline-flex items-center gap-1 text-sm text-blue-600 hover:underline"
+                              >
+                                <ExternalLink size={14} />
+                                Buka di tab baru
+                              </a>
+                            </>
+                          ) : (
+                            <div className="w-full h-48 flex items-center justify-center bg-gray-100 rounded">
+                              <p className="text-sm text-gray-500">URL tidak valid</p>
+                            </div>
+                          )}
                         </div>
                       </div>
                     )}
                     {selectedUser.vehiclePhotoFile && (
                       <div className="space-y-2 col-span-2">
                         <Label className="body-3">Foto Kendaraan</Label>
-                        <div className="border rounded-lg p-2">
-                          <img 
-                            src={getImageUrl(selectedUser.vehiclePhotoFile) || ''} 
-                            alt="Kendaraan" 
-                            className="w-full h-64 object-contain rounded"
-                          />
-                          <a 
-                            href={getImageUrl(selectedUser.vehiclePhotoFile) || '#'} 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="mt-2 text-sm text-blue-600 hover:underline flex items-center gap-1"
-                          >
-                            <ExternalLink size={14} />
-                            Buka di tab baru
-                          </a>
+                        <div className="border rounded-lg p-2 bg-gray-50">
+                          {getImageUrl(selectedUser.vehiclePhotoFile) ? (
+                            <>
+                              <ImageWithFallback
+                                src={getImageUrl(selectedUser.vehiclePhotoFile) || ''}
+                                alt="Kendaraan"
+                                className="w-full h-64 object-contain rounded bg-white"
+                                onError={(e) => {
+                                  console.error('Error loading Vehicle image:', selectedUser.vehiclePhotoFile);
+                                }}
+                              />
+                              <a 
+                                href={getImageUrl(selectedUser.vehiclePhotoFile) || '#'} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="mt-2 inline-flex items-center gap-1 text-sm text-blue-600 hover:underline"
+                              >
+                                <ExternalLink size={14} />
+                                Buka di tab baru
+                              </a>
+                            </>
+                          ) : (
+                            <div className="w-full h-64 flex items-center justify-center bg-gray-100 rounded">
+                              <p className="text-sm text-gray-500">URL tidak valid</p>
+                            </div>
+                          )}
                         </div>
                       </div>
                     )}
@@ -847,80 +916,114 @@ export function ManajemenData() {
                     {selectedUser.ktpFile && (
                       <div className="space-y-2">
                         <Label className="body-3">Foto KTP Pemilik</Label>
-                        <div className="border rounded-lg p-2">
-                          <img 
-                            src={getImageUrl(selectedUser.ktpFile) || ''} 
-                            alt="KTP" 
-                            className="w-full h-48 object-contain rounded"
-                          />
-                          <a 
-                            href={getImageUrl(selectedUser.ktpFile) || '#'} 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="mt-2 text-sm text-blue-600 hover:underline flex items-center gap-1"
-                          >
-                            <ExternalLink size={14} />
-                            Buka di tab baru
-                          </a>
+                        <div className="border rounded-lg p-2 bg-gray-50">
+                          {getImageUrl(selectedUser.ktpFile) ? (
+                            <>
+                              <ImageWithFallback
+                                src={getImageUrl(selectedUser.ktpFile) || ''}
+                                alt="KTP Pemilik"
+                                className="w-full h-48 object-contain rounded bg-white"
+                                onError={(e) => {
+                                  console.error('Error loading UMKM KTP image:', selectedUser.ktpFile);
+                                }}
+                              />
+                              <a 
+                                href={getImageUrl(selectedUser.ktpFile) || '#'} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="mt-2 inline-flex items-center gap-1 text-sm text-blue-600 hover:underline"
+                              >
+                                <ExternalLink size={14} />
+                                Buka di tab baru
+                              </a>
+                            </>
+                          ) : (
+                            <div className="w-full h-48 flex items-center justify-center bg-gray-100 rounded">
+                              <p className="text-sm text-gray-500">URL tidak valid</p>
+                            </div>
+                          )}
                         </div>
                       </div>
                     )}
                     {selectedUser.storePhotoFile && (
                       <div className="space-y-2">
                         <Label className="body-3">Foto Tempat Usaha</Label>
-                        <div className="border rounded-lg p-2">
-                          <img 
-                            src={getImageUrl(selectedUser.storePhotoFile) || ''} 
-                            alt="Toko" 
-                            className="w-full h-48 object-contain rounded"
-                          />
-                          <a 
-                            href={getImageUrl(selectedUser.storePhotoFile) || '#'} 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="mt-2 text-sm text-blue-600 hover:underline flex items-center gap-1"
-                          >
-                            <ExternalLink size={14} />
-                            Buka di tab baru
-                          </a>
-                        </div>
-                      </div>
-                    )}
-                    {selectedUser.businessPermitFile && (
-                      <div className="space-y-2 col-span-2">
-                        <Label className="body-3">Izin Usaha</Label>
-                        <div className="border rounded-lg p-4 text-center">
-                          {selectedUser.businessPermitFile.endsWith('.pdf') ? (
-                            <div className="space-y-2">
-                              <FileText size={48} className="mx-auto" style={{ color: '#858585' }} />
-                              <p className="body-3" style={{ color: '#858585' }}>File PDF</p>
-                              <a 
-                                href={getImageUrl(selectedUser.businessPermitFile) || '#'} 
-                                target="_blank" 
-                                rel="noopener noreferrer"
-                                className="text-sm text-blue-600 hover:underline flex items-center justify-center gap-1"
-                              >
-                                <ExternalLink size={14} />
-                                Buka PDF di tab baru
-                              </a>
-                            </div>
-                          ) : (
+                        <div className="border rounded-lg p-2 bg-gray-50">
+                          {getImageUrl(selectedUser.storePhotoFile) ? (
                             <>
-                              <img 
-                                src={getImageUrl(selectedUser.businessPermitFile) || ''} 
-                                alt="Izin Usaha" 
-                                className="w-full h-64 object-contain rounded mx-auto"
+                              <ImageWithFallback
+                                src={getImageUrl(selectedUser.storePhotoFile) || ''}
+                                alt="Foto Tempat Usaha"
+                                className="w-full h-48 object-contain rounded bg-white"
+                                onError={(e) => {
+                                  console.error('Error loading Store Photo image:', selectedUser.storePhotoFile);
+                                }}
                               />
                               <a 
-                                href={getImageUrl(selectedUser.businessPermitFile) || '#'} 
+                                href={getImageUrl(selectedUser.storePhotoFile) || '#'} 
                                 target="_blank" 
                                 rel="noopener noreferrer"
-                                className="mt-2 text-sm text-blue-600 hover:underline flex items-center justify-center gap-1"
+                                className="mt-2 inline-flex items-center gap-1 text-sm text-blue-600 hover:underline"
                               >
                                 <ExternalLink size={14} />
                                 Buka di tab baru
                               </a>
                             </>
+                          ) : (
+                            <div className="w-full h-48 flex items-center justify-center bg-gray-100 rounded">
+                              <p className="text-sm text-gray-500">URL tidak valid</p>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                    {selectedUser.businessPermitFile && (
+                      <div className="space-y-2 col-span-2">
+                        <Label className="body-3">Izin Usaha / SIUP</Label>
+                        <div className="border rounded-lg p-4 bg-gray-50">
+                          {getImageUrl(selectedUser.businessPermitFile) ? (
+                            <>
+                              {selectedUser.businessPermitFile.toLowerCase().endsWith('.pdf') || 
+                               selectedUser.businessPermitFile.toLowerCase().includes('.pdf') ? (
+                                <div className="space-y-3 text-center">
+                                  <FileText size={48} className="mx-auto" style={{ color: '#858585' }} />
+                                  <p className="body-3" style={{ color: '#858585' }}>File PDF</p>
+                                  <a 
+                                    href={getImageUrl(selectedUser.businessPermitFile) || '#'} 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center justify-center gap-1 text-sm text-blue-600 hover:underline"
+                                  >
+                                    <ExternalLink size={14} />
+                                    Buka PDF di tab baru
+                                  </a>
+                                </div>
+                              ) : (
+                                <>
+                                  <ImageWithFallback
+                                    src={getImageUrl(selectedUser.businessPermitFile) || ''}
+                                    alt="Izin Usaha"
+                                    className="w-full h-64 object-contain rounded bg-white mx-auto"
+                                    onError={(e) => {
+                                      console.error('Error loading Business Permit image:', selectedUser.businessPermitFile);
+                                    }}
+                                  />
+                                  <a 
+                                    href={getImageUrl(selectedUser.businessPermitFile) || '#'} 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    className="mt-2 inline-flex items-center justify-center gap-1 text-sm text-blue-600 hover:underline"
+                                  >
+                                    <ExternalLink size={14} />
+                                    Buka di tab baru
+                                  </a>
+                                </>
+                              )}
+                            </>
+                          ) : (
+                            <div className="w-full h-64 flex items-center justify-center bg-gray-100 rounded">
+                              <p className="text-sm text-gray-500">URL tidak valid</p>
+                            </div>
                           )}
                         </div>
                       </div>
@@ -929,10 +1032,31 @@ export function ManajemenData() {
                 </div>
               )}
 
-              {(!selectedUser.ktpFile && !selectedUser.storePhotoFile && !selectedUser.simFile) && (
-                <p className="body-3 text-center" style={{ color: '#858585' }}>
-                  Belum ada dokumen yang diupload
-                </p>
+              {/* Pesan jika tidak ada dokumen */}
+              {selectedUser.role === 'Driver' && 
+               !selectedUser.ktpFile && 
+               !selectedUser.simFile && 
+               !selectedUser.stnkFile && 
+               !selectedUser.selfieFile && 
+               !selectedUser.vehiclePhotoFile && (
+                <div className="text-center py-4 border rounded-lg bg-gray-50">
+                  <ImageIcon size={32} className="mx-auto mb-2" style={{ color: '#858585' }} />
+                  <p className="body-3" style={{ color: '#858585' }}>
+                    Belum ada dokumen yang diupload oleh Driver ini
+                  </p>
+                </div>
+              )}
+
+              {selectedUser.role === 'UMKM' && 
+               !selectedUser.ktpFile && 
+               !selectedUser.storePhotoFile && 
+               !selectedUser.businessPermitFile && (
+                <div className="text-center py-4 border rounded-lg bg-gray-50">
+                  <ImageIcon size={32} className="mx-auto mb-2" style={{ color: '#858585' }} />
+                  <p className="body-3" style={{ color: '#858585' }}>
+                    Belum ada dokumen yang diupload oleh UMKM ini
+                  </p>
+                </div>
               )}
             </div>
           )}

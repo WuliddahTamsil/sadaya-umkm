@@ -100,10 +100,14 @@ export async function getUserById(id) {
   return user;
 }
 
-// Get user by email
+// Get user by email (case-insensitive)
 export async function getUserByEmail(email) {
   await connectDB();
-  const user = await User.findOne({ email }).lean();
+  // Email comparison should be case-insensitive
+  const normalizedEmail = email?.toLowerCase().trim();
+  const user = await User.findOne({ 
+    email: { $regex: new RegExp(`^${normalizedEmail.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'i') }
+  }).lean();
   return user;
 }
 

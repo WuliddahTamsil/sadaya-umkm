@@ -4,7 +4,7 @@ import { saveUser, getUserByEmail, getAllUsers } from '../models/userModel.js';
 
 export const registerUser = async (req, res) => {
   try {
-    const { name, email, password, role, phone, address, description, businessName } = req.body;
+    let { name, email, password, role, phone, address, description, businessName } = req.body;
 
     // Validasi input
     if (!name && !businessName) {
@@ -13,6 +13,10 @@ export const registerUser = async (req, res) => {
     if (!email || !password || !role) {
       return res.status(400).json({ error: 'Email, password, dan role harus diisi' });
     }
+
+    // Normalize email (lowercase and trim) untuk case-insensitive comparison
+    email = email.toLowerCase().trim();
+    password = password.trim();
 
     // Cegah registrasi dengan email admin
     if (email === 'admin@gmail.com') {
@@ -89,12 +93,16 @@ export const loginUser = async (req, res) => {
     console.log('Request body:', JSON.stringify(req.body));
     console.log('Request headers:', req.headers);
     
-    const { email, password } = req.body;
+    let { email, password } = req.body;
 
     if (!email || !password) {
       console.log('Validation failed: email or password missing');
       return res.status(400).json({ error: 'Email dan password harus diisi' });
     }
+    
+    // Normalize email (lowercase and trim) untuk case-insensitive comparison
+    email = email.toLowerCase().trim();
+    password = password.trim(); // Trim password juga
     
     console.log('Looking for user with email:', email);
 

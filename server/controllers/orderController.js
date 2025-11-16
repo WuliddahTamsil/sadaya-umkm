@@ -112,24 +112,82 @@ export const createOrder = async (req, res) => {
 
     // Validasi user dan UMKM
     const user = await getUserById(userId);
-    const umkm = await getUserById(umkmId);
-
+    
     if (!user) {
+      console.error(`User tidak ditemukan: userId=${userId}`);
       return res.status(404).json({ error: 'User tidak ditemukan' });
     }
 
-    if (!umkm || umkm.role !== 'umkm') {
-      return res.status(404).json({ error: 'UMKM tidak ditemukan' });
+    // Validasi UMKM dengan logging yang lebih detail
+    let umkm = await getUserById(umkmId);
+    
+    // Jika UMKM tidak ditemukan dengan ID, coba cari alternatif (case-insensitive atau ID serupa)
+    if (!umkm) {
+      console.error(`UMKM tidak ditemukan dengan ID: umkmId=${umkmId}`);
+      
+      // Cek apakah ada UMKM lain di database untuk debugging
+      try {
+        const allUsers = await getAllUsersModel();
+        const allUmkm = allUsers.filter(u => u.role === 'umkm');
+        console.error(`Total UMKM di database: ${allUmkm.length}`);
+        
+        if (allUmkm.length > 0) {
+          console.error(`Contoh UMKM IDs: ${allUmkm.slice(0, 5).map(u => `${u.id} (${u.name || u.storeName || 'N/A'})`).join(', ')}`);
+          
+          // Coba cari dengan case-insensitive atau ID yang mirip
+          const foundUmkm = allUmkm.find(u => 
+            u.id.toLowerCase() === umkmId.toLowerCase() || 
+            u.id === umkmId ||
+            (storeName && (u.storeName?.toLowerCase() === storeName.toLowerCase() || u.name?.toLowerCase() === storeName.toLowerCase()))
+          );
+          
+          if (foundUmkm) {
+            console.warn(`UMKM ditemukan dengan pencarian alternatif: ${foundUmkm.id}`);
+            umkm = foundUmkm;
+          }
+        } else {
+          console.error('Tidak ada UMKM sama sekali di database!');
+          return res.status(404).json({ 
+            error: 'Tidak ada UMKM terdaftar di database. Silakan hubungi administrator.' 
+          });
+        }
+      } catch (debugError) {
+        console.error('Error saat debugging UMKM:', debugError);
+      }
+      
+      // Jika masih tidak ditemukan setelah pencarian alternatif
+      if (!umkm) {
+        return res.status(404).json({ 
+          error: `UMKM dengan ID "${umkmId}" tidak ditemukan di database. Pastikan UMKM sudah terdaftar dan aktif.` 
+        });
+      }
     }
 
-    // Buat order baru
+    // Validasi role UMKM
+    if (umkm.role !== 'umkm') {
+      console.error(`User ditemukan tapi bukan UMKM: umkmId=${umkmId}, role=${umkm.role}`);
+      return res.status(404).json({ 
+        error: `User dengan ID "${umkmId}" bukan merupakan UMKM. Role: ${umkm.role}` 
+      });
+    }
+
+    // Pastikan UMKM aktif (opsional - tetap izinkan order meskipun tidak aktif)
+    if (umkm.status && umkm.status !== 'active') {
+      console.warn(`UMKM tidak aktif: umkmId=${umkmId}, status=${umkm.status}`);
+      // Tetap izinkan order (bisa diubah jika ingin memblokir UMKM tidak aktif)
+    }
+
+    console.log(`✅ UMKM validasi berhasil: umkmId=${umkm.id}, name=${umkm.name || umkm.storeName || 'N/A'}, role=${umkm.role}, status=${umkm.status || 'active'}`);
+
+    // Buat order baru - gunakan umkm.id yang sudah divalidasi (bisa berbeda dari umkmId yang dikirim jika ditemukan via pencarian alternatif)
     const orderId = `ORD-${Date.now()}-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
+    const validatedUmkmId = umkm.id; // Gunakan ID yang benar dari UMKM yang ditemukan
     const newOrder = {
       id: orderId,
       userId,
       userName: user.name,
       userEmail: user.email,
-      umkmId,
+      umkmId: validatedUmkmId, // Gunakan ID yang sudah divalidasi
       storeName: storeName || umkm.storeName || umkm.name,
       storeAddress: storeAddress || umkm.storeAddress || umkm.address,
       items,
@@ -151,10 +209,10 @@ export const createOrder = async (req, res) => {
     // Simpan order
     const savedOrder = await saveOrderModel(newOrder);
 
-    // Buat notifikasi untuk UMKM
+    // Buat notifikasi untuk UMKM - gunakan validatedUmkmId
     await saveNotificationModel({
       id: uuidv4(),
-      userId: umkmId,
+      userId: validatedUmkmId,
       type: 'order',
       title: 'Pesanan Baru! 🎉',
       message: `Pesanan baru dari ${user.name} - Total: Rp ${total.toLocaleString('id-ID')}`,

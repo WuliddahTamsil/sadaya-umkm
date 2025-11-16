@@ -107,14 +107,16 @@ export async function getUserById(id) {
   return users.find(user => user.id === id);
 }
 
-// Get user by email
+// Get user by email (case-insensitive)
 export async function getUserByEmail(email) {
   const mongoModel = await getMongoModel();
   if (mongoModel) {
     return await mongoModel.getUserByEmail(email);
   }
   const users = await readUsers();
-  return users.find(user => user.email === email);
+  // Email comparison should be case-insensitive
+  const normalizedEmail = email?.toLowerCase().trim();
+  return users.find(user => user.email?.toLowerCase().trim() === normalizedEmail);
 }
 
 // Save new user

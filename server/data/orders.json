@@ -328,5 +328,36 @@
       "updatedAt": "2025-11-14T17:24:28.834Z"
     },
     "deliveredAt": "2025-11-14T17:24:41.790Z"
+  },
+  {
+    "id": "ORD-1763316688948-9K2CD099B",
+    "userId": "af3583a6-707b-4d54-b235-114208187f28",
+    "userName": "Wuliddah Tamsil",
+    "userEmail": "wuliddahtamsilbarokah19@gmail.com",
+    "umkmId": "4fb06afa-fd54-4d28-aace-d40af516f40a",
+    "storeName": "Lapis Bogor Sangkuriang",
+    "storeAddress": "Bogor, Jawa Barat",
+    "items": [
+      {
+        "id": "lapis-talas-original-001",
+        "name": "Lapis Talas Original",
+        "quantity": 1,
+        "price": 45000
+      }
+    ],
+    "subtotal": 45000,
+    "deliveryFee": 10000,
+    "total": 55000,
+    "deliveryAddress": "Jl. Pajajaran No. 45, Bogor",
+    "paymentMethod": "wallet",
+    "paymentStatus": "paid",
+    "notes": null,
+    "status": "ready",
+    "driverId": null,
+    "driverName": null,
+    "trackingNumber": "TRK-1763316731109-J71J3X",
+    "createdAt": "2025-11-16T18:11:28.949Z",
+    "updatedAt": "2025-11-16T18:12:11.126Z",
+    "paidAt": "2025-11-16T18:11:29.231Z"
   }
 ]

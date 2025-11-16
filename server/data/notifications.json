@@ -330,5 +330,40 @@
     "read": true,
     "createdAt": "2025-11-14T17:24:41.790Z",
     "readAt": "2025-11-14T19:48:09.470Z"
+  },
+  {
+    "id": "ffe32612-2670-418a-ad89-1c3b3c2f8723",
+    "userId": "4fb06afa-fd54-4d28-aace-d40af516f40a",
+    "type": "order",
+    "title": "Pesanan Baru! 🎉",
+    "message": "Pesanan baru dari Wuliddah Tamsil - Total: Rp 55.000",
+    "orderId": "ORD-1763316688948-9K2CD099B",
+    "status": "pending",
+    "read": true,
+    "createdAt": "2025-11-16T18:11:29.186Z",
+    "readAt": "2025-11-16T18:12:07.478Z"
+  },
+  {
+    "id": "b0150667-3017-4bc8-862f-a09dabbfed70",
+    "userId": "4fb06afa-fd54-4d28-aace-d40af516f40a",
+    "type": "order",
+    "title": "Pembayaran Diterima! 💰",
+    "message": "Pembayaran order ORD-1763316688948-9K2CD099B telah diterima - Rp 55.000",
+    "orderId": "ORD-1763316688948-9K2CD099B",
+    "status": "processing",
+    "read": true,
+    "createdAt": "2025-11-16T18:11:29.238Z",
+    "readAt": "2025-11-16T18:12:06.367Z"
+  },
+  {
+    "id": "604f25ff-6972-48f8-9b7f-d74760c0f8fc",
+    "userId": "af3583a6-707b-4d54-b235-114208187f28",
+    "type": "order",
+    "title": "Pesanan Diproses UMKM ✓",
+    "message": "Status pesanan ORD-1763316688948-9K2CD099B telah diupdate",
+    "orderId": "ORD-1763316688948-9K2CD099B",
+    "status": "processing",
+    "read": false,
+    "createdAt": "2025-11-16T18:12:11.127Z"
   }
 ]

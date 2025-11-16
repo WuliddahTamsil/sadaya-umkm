@@ -7,6 +7,49 @@ import {
   clearCart
 } from '../models/cartModel.js';
 import { getProductById } from '../models/productModel.js';
+import { getAllUsers } from '../models/userModel.js';
+
+// Helper function untuk enrich produk dengan data UMKM
+async function enrichProductWithUMKM(product) {
+  if (!product) return null;
+  
+  try {
+    // Ambil semua UMKM sekaligus untuk efisiensi
+    const allUsers = await getAllUsers();
+    const umkmMap = new Map();
+    
+    // Buat map UMKM berdasarkan ID
+    allUsers
+      .filter(user => user.role === 'umkm' && user.status === 'active')
+      .forEach(umkm => {
+        umkmMap.set(umkm.id, {
+          name: umkm.name || umkm.storeName || 'UMKM',
+          storeName: umkm.storeName || umkm.name || 'UMKM',
+          address: umkm.address || umkm.storeAddress || '',
+          phone: umkm.phone || ''
+        });
+      });
+
+    // Enrich produk dengan data UMKM
+    const umkmInfo = umkmMap.get(product.umkmId);
+    return {
+      ...product,
+      umkmId: product.umkmId, // Pastikan umkmId ada
+      umkmName: product.umkmName || umkmInfo?.name || umkmInfo?.storeName || 'UMKM',
+      umkmStoreName: umkmInfo?.storeName || umkmInfo?.name || 'UMKM',
+      umkmAddress: umkmInfo?.address || '',
+      umkmPhone: umkmInfo?.phone || ''
+    };
+  } catch (error) {
+    console.error('Error enriching product with UMKM data:', error);
+    // Jika error, return produk dengan umkmId minimal
+    return {
+      ...product,
+      umkmId: product.umkmId || null,
+      umkmName: product.umkmName || 'UMKM'
+    };
+  }
+}
 
 // Get cart items by user ID
 export const getCartController = async (req, res) => {
@@ -19,14 +62,25 @@ export const getCartController = async (req, res) => {
     
     const cartItems = await getCartByUserId(userId);
     
-    // Enrich dengan data produk
+    // Enrich dengan data produk dan UMKM
     const enrichedCartItems = await Promise.all(
       cartItems.map(async (item) => {
         try {
           const product = await getProductById(item.id_produk);
+          if (!product) {
+            console.warn(`Product ${item.id_produk} not found for cart item ${item.id}`);
+            return {
+              ...item,
+              product: null
+            };
+          }
+          
+          // Enrich produk dengan data UMKM
+          const enrichedProduct = await enrichProductWithUMKM(product);
+          
           return {
             ...item,
-            product: product || null
+            product: enrichedProduct
           };
         } catch (error) {
           console.error(`Error fetching product ${item.id_produk}:`, error);

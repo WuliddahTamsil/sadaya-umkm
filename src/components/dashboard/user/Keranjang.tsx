@@ -42,7 +42,7 @@ interface CartItem {
 
 export function Keranjang() {
   const { user } = useAuth();
-  const { createOrder } = useOrderContext();
+  const { createOrder, refreshOrders } = useOrderContext();
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [updatingItem, setUpdatingItem] = useState<string | null>(null);
@@ -241,6 +241,15 @@ export function Keranjang() {
       return;
     }
     
+    // Validasi bahwa semua item yang dipilih memiliki produk dan UMKM yang valid
+    const invalidItems = selectedItems.filter(item => !item.product || !item.product.umkmId);
+    if (invalidItems.length > 0) {
+      toast.error('Beberapa produk tidak valid atau UMKM tidak ditemukan. Silakan refresh halaman atau hapus item yang bermasalah.');
+      // Refresh cart untuk mendapatkan data terbaru
+      await fetchCart();
+      return;
+    }
+    
     // Fetch wallet balance before checkout
     if (user) {
       await fetchWalletBalance();
@@ -276,17 +285,28 @@ export function Keranjang() {
       const groupCount = Object.keys(groupedByStore).length || 1;
       const perGroupShipping = shippingFee / groupCount;
 
+      // Validasi ulang bahwa semua item memiliki produk dan UMKM yang valid
+      const invalidItems = selectedItems.filter(item => !item.product || !item.product.umkmId);
+      if (invalidItems.length > 0) {
+        toast.error('Beberapa produk tidak memiliki informasi UMKM. Silakan refresh halaman atau hapus item yang bermasalah.');
+        setIsProcessingPayment(false);
+        await fetchCart(); // Refresh untuk mendapatkan data terbaru
+        return;
+      }
+
       // Buat orders untuk setiap store
       const orderPromises = Object.entries(groupedByStore).map(async ([storeName, items]) => {
         const itemsTotal = items.reduce((sum, item) => sum + item.harga_saat_ini * item.jumlah, 0);
         const orderTotal = itemsTotal + perGroupShipping;
         
-        // Ambil UMKM ID dari product
+        // Ambil UMKM ID dari product - pastikan ada
         const umkmId = items[0]?.product?.umkmId;
         
         if (!umkmId) {
-          toast.error(`UMKM "${storeName}" tidak ditemukan`);
-          throw new Error(`UMKM "${storeName}" tidak ditemukan`);
+          const errorMsg = `Produk dari "${storeName}" tidak memiliki informasi UMKM. Silakan refresh halaman.`;
+          console.error('Missing UMKM ID for store:', storeName, 'Items:', items);
+          toast.error(errorMsg);
+          throw new Error(errorMsg);
         }
 
         // Create order via API
@@ -394,6 +414,11 @@ export function Keranjang() {
       }
       setCartItems(items => items.filter(item => !item.selected));
       await fetchCart(); // Refresh cart after checkout
+      
+      // Refresh orders agar pesanan baru muncul di halaman Riwayat Pesanan dan Tracking
+      if (refreshOrders) {
+        await refreshOrders();
+      }
     } catch (error: any) {
       console.error('Checkout error:', error);
       toast.error(error.message || 'Gagal membuat pesanan. Silakan coba lagi.');
