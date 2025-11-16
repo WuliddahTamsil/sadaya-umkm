@@ -18,41 +18,68 @@ async function enrichProductWithUMKM(product) {
     const allUsers = await getAllUsers();
     const umkmMap = new Map();
     
-    // Buat map UMKM berdasarkan ID (case-insensitive role check)
+    // Buat map UMKM berdasarkan ID - TIDAK filter berdasarkan status untuk memastikan semua UMKM terdeteksi
+    // Filter hanya berdasarkan role, status akan divalidasi saat checkout
     allUsers
       .filter(user => {
         const userRole = user.role?.toString().toLowerCase().trim();
-        const userStatus = user.status?.toString().toLowerCase().trim();
-        return userRole === 'umkm' && userStatus === 'active';
+        return userRole === 'umkm';
       })
       .forEach(umkm => {
-        // Normalize UMKM ID untuk key map (case-insensitive)
+        // Normalize UMKM ID untuk key map - gunakan multiple keys untuk memastikan ditemukan
         const normalizedId = umkm.id?.toString().trim();
-        umkmMap.set(normalizedId, {
+        const lowerId = normalizedId?.toLowerCase();
+        
+        const umkmData = {
           id: normalizedId, // Simpan ID yang sudah dinormalisasi
           name: umkm.name || umkm.storeName || 'UMKM',
           storeName: umkm.storeName || umkm.name || 'UMKM',
           address: umkm.address || umkm.storeAddress || '',
-          phone: umkm.phone || ''
-        });
+          phone: umkm.phone || '',
+          status: umkm.status || 'active',
+          role: umkm.role || 'umkm'
+        };
+        
+        // Set dengan multiple keys untuk memastikan lookup berhasil
+        umkmMap.set(normalizedId, umkmData);
+        if (lowerId && lowerId !== normalizedId) {
+          umkmMap.set(lowerId, umkmData);
+        }
       });
 
-    // Enrich produk dengan data UMKM (case-insensitive lookup)
+    // Enrich produk dengan data UMKM (case-insensitive lookup dengan multiple attempts)
     const normalizedProductUmkmId = product.umkmId?.toString().trim();
-    let umkmInfo = umkmMap.get(normalizedProductUmkmId);
+    let umkmInfo = null;
     
-    // Jika tidak ditemukan dengan exact match, coba case-insensitive lookup
-    if (!umkmInfo && normalizedProductUmkmId) {
-      for (const [umkmId, umkmData] of umkmMap.entries()) {
-        if (umkmId?.toLowerCase() === normalizedProductUmkmId.toLowerCase()) {
-          umkmInfo = umkmData;
-          console.log(`✅ UMKM ditemukan dengan case-insensitive lookup: ${umkmId} untuk product ${product.id}`);
-          break;
+    if (normalizedProductUmkmId) {
+      // 1. Try exact match
+      umkmInfo = umkmMap.get(normalizedProductUmkmId);
+      
+      // 2. Try case-insensitive match
+      if (!umkmInfo) {
+        umkmInfo = umkmMap.get(normalizedProductUmkmId.toLowerCase());
+      }
+      
+      // 3. Try case-insensitive lookup dari entries
+      if (!umkmInfo) {
+        for (const [umkmId, umkmData] of umkmMap.entries()) {
+          const umkmIdNormalized = umkmId?.toString().trim();
+          if (umkmIdNormalized?.toLowerCase() === normalizedProductUmkmId.toLowerCase()) {
+            umkmInfo = umkmData;
+            console.log(`✅ UMKM ditemukan dengan case-insensitive lookup: ${umkmId} untuk product ${product.id}`);
+            break;
+          }
         }
       }
     }
+    
     // Gunakan umkmId yang sudah dinormalisasi dari umkmInfo jika ada, atau gunakan product.umkmId
     const finalUmkmId = umkmInfo?.id || normalizedProductUmkmId || product.umkmId;
+    
+    // Log jika UMKM tidak ditemukan untuk debugging
+    if (!umkmInfo && normalizedProductUmkmId) {
+      console.warn(`⚠️ UMKM dengan ID "${normalizedProductUmkmId}" tidak ditemukan untuk product ${product.id}. Total UMKM di map: ${umkmMap.size}`);
+    }
     
     return {
       ...product,
@@ -60,7 +87,8 @@ async function enrichProductWithUMKM(product) {
       umkmName: product.umkmName || umkmInfo?.name || umkmInfo?.storeName || 'UMKM',
       umkmStoreName: umkmInfo?.storeName || umkmInfo?.name || 'UMKM',
       umkmAddress: umkmInfo?.address || '',
-      umkmPhone: umkmInfo?.phone || ''
+      umkmPhone: umkmInfo?.phone || '',
+      umkmStatus: umkmInfo?.status || 'active' // Include status untuk validasi di frontend
     };
   } catch (error) {
     console.error('Error enriching product with UMKM data:', error);

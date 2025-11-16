@@ -286,13 +286,31 @@ export function Keranjang() {
       const perGroupShipping = shippingFee / groupCount;
 
       // Validasi ulang bahwa semua item memiliki produk dan UMKM yang valid
-      const invalidItems = selectedItems.filter(item => !item.product || !item.product.umkmId);
+      const invalidItems = selectedItems.filter(item => {
+        const hasProduct = item.product;
+        const hasUmkmId = item.product?.umkmId;
+        const umkmIdValid = hasUmkmId && item.product.umkmId.toString().trim().length > 0;
+        return !hasProduct || !hasUmkmId || !umkmIdValid;
+      });
+      
       if (invalidItems.length > 0) {
-        toast.error('Beberapa produk tidak memiliki informasi UMKM. Silakan refresh halaman atau hapus item yang bermasalah.');
+        console.error('❌ Invalid items found:', invalidItems.map(item => ({
+          id: item.id,
+          productId: item.id_produk,
+          hasProduct: !!item.product,
+          umkmId: item.product?.umkmId,
+          umkmName: item.product?.umkmName
+        })));
+        toast.error('Beberapa produk tidak memiliki informasi UMKM yang valid. Silakan refresh halaman atau hapus item yang bermasalah.');
         setIsProcessingPayment(false);
         await fetchCart(); // Refresh untuk mendapatkan data terbaru
         return;
       }
+      
+      // Log semua UMKM IDs yang akan digunakan untuk debugging
+      const umkmIds = selectedItems.map(item => item.product?.umkmId).filter(Boolean);
+      console.log(`📦 Checkout dengan ${selectedItems.length} items dari ${Object.keys(groupedByStore).length} store(s)`);
+      console.log(`📋 UMKM IDs yang akan digunakan:`, [...new Set(umkmIds)]);
 
       // Buat orders untuk setiap store
       const orderPromises = Object.entries(groupedByStore).map(async ([storeName, items]) => {
