@@ -93,11 +93,27 @@ export async function getAllUsers() {
   return users;
 }
 
-// Get user by ID
+// Get user by ID (case-insensitive, whitespace trimmed)
 export async function getUserById(id) {
+  if (!id) return null;
   await connectDB();
-  const user = await User.findOne({ id }).lean();
-  return user;
+  
+  // Normalize ID untuk perbandingan
+  const normalizedId = id.toString().trim();
+  
+  // Coba exact match dulu
+  let user = await User.findOne({ id: normalizedId }).lean();
+  
+  // Jika tidak ditemukan, coba case-insensitive match menggunakan regex
+  if (!user) {
+    // Escape special characters untuk regex
+    const escapedId = normalizedId.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    user = await User.findOne({ 
+      id: { $regex: new RegExp(`^${escapedId}$`, 'i') }
+    }).lean();
+  }
+  
+  return user || null;
 }
 
 // Get user by email (case-insensitive)

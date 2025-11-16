@@ -119,55 +119,84 @@ export const createOrder = async (req, res) => {
     }
 
     // Validasi UMKM dengan logging yang lebih detail
-    let umkm = await getUserById(umkmId);
+    // Normalize UMKM ID untuk menghindari masalah whitespace atau case sensitivity
+    const normalizedUmkmId = umkmId?.toString().trim();
+    
+    let umkm = await getUserById(normalizedUmkmId);
     
     // Jika UMKM tidak ditemukan dengan ID, coba cari alternatif (case-insensitive atau ID serupa)
     if (!umkm) {
-      console.error(`UMKM tidak ditemukan dengan ID: umkmId=${umkmId}`);
+      console.error(`UMKM tidak ditemukan dengan ID: umkmId=${normalizedUmkmId} (original: ${umkmId})`);
       
-      // Cek apakah ada UMKM lain di database untuk debugging
+      // Cek apakah ada UMKM lain di database untuk debugging dan pencarian alternatif
       try {
         const allUsers = await getAllUsersModel();
-        const allUmkm = allUsers.filter(u => u.role === 'umkm');
+        const allUmkm = allUsers.filter(u => u.role === 'umkm' || u.role === 'UMKM');
         console.error(`Total UMKM di database: ${allUmkm.length}`);
         
         if (allUmkm.length > 0) {
-          console.error(`Contoh UMKM IDs: ${allUmkm.slice(0, 5).map(u => `${u.id} (${u.name || u.storeName || 'N/A'})`).join(', ')}`);
+          // Log semua UMKM IDs untuk debugging
+          console.error(`Semua UMKM IDs: ${allUmkm.map(u => `"${u.id}" (${u.name || u.storeName || 'N/A'})`).join(', ')}`);
           
-          // Coba cari dengan case-insensitive atau ID yang mirip
-          const foundUmkm = allUmkm.find(u => 
-            u.id.toLowerCase() === umkmId.toLowerCase() || 
-            u.id === umkmId ||
-            (storeName && (u.storeName?.toLowerCase() === storeName.toLowerCase() || u.name?.toLowerCase() === storeName.toLowerCase()))
-          );
+          // Coba cari dengan berbagai metode:
+          // 1. Case-insensitive exact match
+          // 2. Trim whitespace comparison
+          // 3. Store name match (fallback)
+          const foundUmkm = allUmkm.find(u => {
+            const uId = u.id?.toString().trim();
+            const searchId = normalizedUmkmId?.toLowerCase();
+            return (
+              uId?.toLowerCase() === searchId ||
+              uId === normalizedUmkmId ||
+              u.id === umkmId ||
+              (storeName && (
+                u.storeName?.toLowerCase().trim() === storeName.toLowerCase().trim() || 
+                u.name?.toLowerCase().trim() === storeName.toLowerCase().trim()
+              ))
+            );
+          });
           
           if (foundUmkm) {
-            console.warn(`UMKM ditemukan dengan pencarian alternatif: ${foundUmkm.id}`);
+            console.warn(`✅ UMKM ditemukan dengan pencarian alternatif: ${foundUmkm.id} (${foundUmkm.name || foundUmkm.storeName || 'N/A'})`);
             umkm = foundUmkm;
+          } else {
+            // Jika masih tidak ditemukan, coba cari dengan partial match atau ID yang mirip
+            const similarUmkm = allUmkm.find(u => {
+              const uId = u.id?.toString().trim().toLowerCase();
+              const searchId = normalizedUmkmId?.toLowerCase();
+              return uId?.includes(searchId) || searchId?.includes(uId);
+            });
+            
+            if (similarUmkm) {
+              console.warn(`⚠️ UMKM ditemukan dengan pencarian partial match: ${similarUmkm.id} (${similarUmkm.name || similarUmkm.storeName || 'N/A'})`);
+              umkm = similarUmkm;
+            }
           }
         } else {
-          console.error('Tidak ada UMKM sama sekali di database!');
+          console.error('❌ Tidak ada UMKM sama sekali di database!');
           return res.status(404).json({ 
             error: 'Tidak ada UMKM terdaftar di database. Silakan hubungi administrator.' 
           });
         }
       } catch (debugError) {
-        console.error('Error saat debugging UMKM:', debugError);
+        console.error('❌ Error saat debugging UMKM:', debugError);
       }
       
       // Jika masih tidak ditemukan setelah pencarian alternatif
       if (!umkm) {
+        console.error(`❌ UMKM dengan ID "${normalizedUmkmId}" tidak ditemukan setelah semua pencarian alternatif`);
         return res.status(404).json({ 
-          error: `UMKM dengan ID "${umkmId}" tidak ditemukan di database. Pastikan UMKM sudah terdaftar dan aktif.` 
+          error: `UMKM dengan ID "${normalizedUmkmId}" tidak ditemukan di database. Pastikan UMKM sudah terdaftar dan aktif.` 
         });
       }
     }
 
-    // Validasi role UMKM
-    if (umkm.role !== 'umkm') {
-      console.error(`User ditemukan tapi bukan UMKM: umkmId=${umkmId}, role=${umkm.role}`);
+    // Validasi role UMKM (case-insensitive)
+    const userRole = umkm.role?.toString().toLowerCase().trim();
+    if (userRole !== 'umkm') {
+      console.error(`User ditemukan tapi bukan UMKM: umkmId=${normalizedUmkmId}, role=${umkm.role}`);
       return res.status(404).json({ 
-        error: `User dengan ID "${umkmId}" bukan merupakan UMKM. Role: ${umkm.role}` 
+        error: `User dengan ID "${normalizedUmkmId}" bukan merupakan UMKM. Role: ${umkm.role}` 
       });
     }
 
