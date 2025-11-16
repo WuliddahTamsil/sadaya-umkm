@@ -150,28 +150,19 @@ export const uploadDriverDocuments = async (req, res) => {
     }
 
     // Update user dengan data tambahan
-    // PASTIKAN field-file selalu diset, bahkan jika kosong
+    // PASTIKAN field-file SELALU diset ke updateData, tidak peduli ada atau tidak
     const updateData = {
       isOnboarded: true, // Set onboarding selesai
       updatedAt: new Date().toISOString()
     };
     
-    // PASTIKAN field-file diset dari documents (jika ada)
-    if (documents.ktpFile) {
-      updateData.ktpFile = documents.ktpFile;
-    }
-    if (documents.simFile) {
-      updateData.simFile = documents.simFile;
-    }
-    if (documents.stnkFile) {
-      updateData.stnkFile = documents.stnkFile;
-    }
-    if (documents.selfieFile) {
-      updateData.selfieFile = documents.selfieFile;
-    }
-    if (documents.vehiclePhotoFile) {
-      updateData.vehiclePhotoFile = documents.vehiclePhotoFile;
-    }
+    // PASTIKAN field-file SELALU diset dari documents
+    // Jika ada di documents, gunakan nilainya. Jika tidak, tetap set tapi null
+    updateData.ktpFile = documents.ktpFile || null;
+    updateData.simFile = documents.simFile || null;
+    updateData.stnkFile = documents.stnkFile || null;
+    updateData.selfieFile = documents.selfieFile || null;
+    updateData.vehiclePhotoFile = documents.vehiclePhotoFile || null;
     
     // Hanya tambahkan field jika ada nilainya
     if (phoneNumber) updateData.phone = phoneNumber;
@@ -180,17 +171,24 @@ export const uploadDriverDocuments = async (req, res) => {
 
     console.log('📝 Documents object:', documents);
     console.log('📝 Documents keys:', Object.keys(documents));
+    console.log('📝 Documents values:', {
+      ktpFile: documents.ktpFile ? `✅ ${documents.ktpFile.substring(0, 50)}...` : '❌ not in documents',
+      simFile: documents.simFile ? `✅ ${documents.simFile.substring(0, 50)}...` : '❌ not in documents',
+      stnkFile: documents.stnkFile ? `✅ ${documents.stnkFile.substring(0, 50)}...` : '❌ not in documents',
+      selfieFile: documents.selfieFile ? `✅ ${documents.selfieFile.substring(0, 50)}...` : '❌ not in documents',
+      vehiclePhotoFile: documents.vehiclePhotoFile ? `✅ ${documents.vehiclePhotoFile.substring(0, 50)}...` : '❌ not in documents'
+    });
     console.log('📝 Updating user with data:', JSON.stringify(updateData, null, 2));
     console.log('📝 UpdateData file fields check:', {
-      ktpFile: updateData.ktpFile ? `✅ ${updateData.ktpFile.substring(0, 50)}...` : '❌ missing',
-      simFile: updateData.simFile ? `✅ ${updateData.simFile.substring(0, 50)}...` : '❌ missing',
-      stnkFile: updateData.stnkFile ? `✅ ${updateData.stnkFile.substring(0, 50)}...` : '❌ missing',
-      selfieFile: updateData.selfieFile ? `✅ ${updateData.selfieFile.substring(0, 50)}...` : '❌ missing',
-      vehiclePhotoFile: updateData.vehiclePhotoFile ? `✅ ${updateData.vehiclePhotoFile.substring(0, 50)}...` : '❌ missing'
+      ktpFile: updateData.ktpFile ? `✅ ${updateData.ktpFile.substring(0, 50)}...` : '❌ null',
+      simFile: updateData.simFile ? `✅ ${updateData.simFile.substring(0, 50)}...` : '❌ null',
+      stnkFile: updateData.stnkFile ? `✅ ${updateData.stnkFile.substring(0, 50)}...` : '❌ null',
+      selfieFile: updateData.selfieFile ? `✅ ${updateData.selfieFile.substring(0, 50)}...` : '❌ null',
+      vehiclePhotoFile: updateData.vehiclePhotoFile ? `✅ ${updateData.vehiclePhotoFile.substring(0, 50)}...` : '❌ null'
     });
     
-    // PASTIKAN setidaknya ada satu file field sebelum update
-    if (!updateData.ktpFile && !updateData.simFile && !updateData.stnkFile && !updateData.selfieFile && !updateData.vehiclePhotoFile) {
+    // PASTIKAN setidaknya ada satu file field yang berhasil diupload sebelum update
+    if (!documents.ktpFile && !documents.simFile && !documents.stnkFile && !documents.selfieFile && !documents.vehiclePhotoFile) {
       console.error('❌ ERROR: No file fields to save! Documents object is empty or invalid.');
       console.error('❌ Documents:', documents);
       console.error('❌ Files received:', files);
@@ -322,22 +320,17 @@ export const uploadUMKMDocuments = async (req, res) => {
     }
 
     // Update user dengan data tambahan
-    // PASTIKAN field-file selalu diset, bahkan jika kosong
+    // PASTIKAN field-file SELALU diset ke updateData, tidak peduli ada atau tidak
     const updateData = {
       isOnboarded: true, // Set onboarding selesai
       updatedAt: new Date().toISOString()
     };
     
-    // PASTIKAN field-file diset dari documents (jika ada)
-    if (documents.ktpFile) {
-      updateData.ktpFile = documents.ktpFile;
-    }
-    if (documents.storePhotoFile) {
-      updateData.storePhotoFile = documents.storePhotoFile;
-    }
-    if (documents.businessPermitFile) {
-      updateData.businessPermitFile = documents.businessPermitFile;
-    }
+    // PASTIKAN field-file SELALU diset dari documents
+    // Jika ada di documents, gunakan nilainya. Jika tidak, tetap set tapi null
+    updateData.ktpFile = documents.ktpFile || null;
+    updateData.storePhotoFile = documents.storePhotoFile || null;
+    updateData.businessPermitFile = documents.businessPermitFile || null;
     
     // Hanya tambahkan field jika ada nilainya
     if (storeName) updateData.storeName = storeName;
@@ -347,15 +340,20 @@ export const uploadUMKMDocuments = async (req, res) => {
 
     console.log('📝 Documents object:', documents);
     console.log('📝 Documents keys:', Object.keys(documents));
+    console.log('📝 Documents values:', {
+      ktpFile: documents.ktpFile ? `✅ ${documents.ktpFile.substring(0, 50)}...` : '❌ not in documents',
+      storePhotoFile: documents.storePhotoFile ? `✅ ${documents.storePhotoFile.substring(0, 50)}...` : '❌ not in documents',
+      businessPermitFile: documents.businessPermitFile ? `✅ ${documents.businessPermitFile.substring(0, 50)}...` : '❌ not in documents'
+    });
     console.log('📝 Updating UMKM user with data:', JSON.stringify(updateData, null, 2));
     console.log('📝 UpdateData file fields check:', {
-      ktpFile: updateData.ktpFile ? `✅ ${updateData.ktpFile.substring(0, 50)}...` : '❌ missing',
-      storePhotoFile: updateData.storePhotoFile ? `✅ ${updateData.storePhotoFile.substring(0, 50)}...` : '❌ missing',
-      businessPermitFile: updateData.businessPermitFile ? `✅ ${updateData.businessPermitFile.substring(0, 50)}...` : '❌ missing'
+      ktpFile: updateData.ktpFile ? `✅ ${updateData.ktpFile.substring(0, 50)}...` : '❌ null',
+      storePhotoFile: updateData.storePhotoFile ? `✅ ${updateData.storePhotoFile.substring(0, 50)}...` : '❌ null',
+      businessPermitFile: updateData.businessPermitFile ? `✅ ${updateData.businessPermitFile.substring(0, 50)}...` : '❌ null'
     });
     
-    // PASTIKAN setidaknya ada satu file field sebelum update
-    if (!updateData.ktpFile && !updateData.storePhotoFile && !updateData.businessPermitFile) {
+    // PASTIKAN setidaknya ada satu file field yang berhasil diupload sebelum update
+    if (!documents.ktpFile && !documents.storePhotoFile && !documents.businessPermitFile) {
       console.error('❌ ERROR: No file fields to save! Documents object is empty or invalid.');
       console.error('❌ Documents:', documents);
       console.error('❌ Files received:', files);

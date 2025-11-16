@@ -126,11 +126,11 @@ export async function updateUser(id, updates) {
   }
   
   // Hapus field undefined agar MongoDB tidak mengabaikan update
-  // Tapi tetap simpan field-file meskipun string kosong (untuk overwrite)
+  // TAPI PASTIKAN field-file SELALU diset, bahkan jika null
   const cleanUpdates = {};
   for (const [key, value] of Object.entries(updates)) {
     // Simpan semua field yang bukan undefined
-    // Termasuk string kosong untuk field-file (bisa jadi URL kosong)
+    // Termasuk null untuk field-file (field harus ada di MongoDB)
     if (value !== undefined) {
       cleanUpdates[key] = value;
     }
@@ -138,6 +138,10 @@ export async function updateUser(id, updates) {
   
   // Pastikan updatedAt selalu di-update
   cleanUpdates.updatedAt = new Date();
+  
+  // PASTIKAN field-file yang ada di updates benar-benar diset, termasuk null
+  // MongoDB akan menyimpan field bahkan jika nilainya null
+  // Ini memastikan field-file ada di document MongoDB
   
   console.log('🔄 Updating user:', id);
   console.log('📝 Updates keys:', Object.keys(cleanUpdates));
