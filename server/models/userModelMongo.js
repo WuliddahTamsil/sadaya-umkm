@@ -119,6 +119,12 @@ export async function saveUser(newUser) {
 export async function updateUser(id, updates) {
   await connectDB();
   
+  // Pastikan ID tidak diubah atau dihapus dari updates
+  if (updates.id && updates.id !== id) {
+    console.warn('⚠️ Attempted to change user ID, ignoring...');
+    delete updates.id;
+  }
+  
   // Hapus field undefined agar MongoDB tidak mengabaikan update
   // Tapi tetap simpan field-file meskipun string kosong (untuk overwrite)
   const cleanUpdates = {};
@@ -130,36 +136,75 @@ export async function updateUser(id, updates) {
     }
   }
   
+  // Pastikan updatedAt selalu di-update
   cleanUpdates.updatedAt = new Date();
   
   console.log('🔄 Updating user:', id);
-  console.log('📝 Updates:', JSON.stringify(cleanUpdates, null, 2));
+  console.log('📝 Updates keys:', Object.keys(cleanUpdates));
   console.log('📝 File fields in updates:', {
     ktpFile: cleanUpdates.ktpFile ? `✅ ${cleanUpdates.ktpFile.substring(0, 50)}...` : '❌ not in updates',
     simFile: cleanUpdates.simFile ? `✅ ${cleanUpdates.simFile.substring(0, 50)}...` : '❌ not in updates',
     stnkFile: cleanUpdates.stnkFile ? `✅ ${cleanUpdates.stnkFile.substring(0, 50)}...` : '❌ not in updates',
     selfieFile: cleanUpdates.selfieFile ? `✅ ${cleanUpdates.selfieFile.substring(0, 50)}...` : '❌ not in updates',
-    vehiclePhotoFile: cleanUpdates.vehiclePhotoFile ? `✅ ${cleanUpdates.vehiclePhotoFile.substring(0, 50)}...` : '❌ not in updates'
+    vehiclePhotoFile: cleanUpdates.vehiclePhotoFile ? `✅ ${cleanUpdates.vehiclePhotoFile.substring(0, 50)}...` : '❌ not in updates',
+    storePhotoFile: cleanUpdates.storePhotoFile ? `✅ ${cleanUpdates.storePhotoFile.substring(0, 50)}...` : '❌ not in updates',
+    businessPermitFile: cleanUpdates.businessPermitFile ? `✅ ${cleanUpdates.businessPermitFile.substring(0, 50)}...` : '❌ not in updates'
+  });
+  
+  // PASTIKAN field-file tersimpan dengan benar
+  // Gunakan $set untuk memastikan semua field ter-update
+  const updateQuery = { $set: cleanUpdates };
+  
+  console.log('🔄 MongoDB update query:', JSON.stringify(updateQuery, null, 2));
+  console.log('🔄 File fields in cleanUpdates:', {
+    ktpFile: cleanUpdates.ktpFile ? `✅ ${cleanUpdates.ktpFile.substring(0, 50)}...` : '❌ not in cleanUpdates',
+    simFile: cleanUpdates.simFile ? `✅ ${cleanUpdates.simFile.substring(0, 50)}...` : '❌ not in cleanUpdates',
+    stnkFile: cleanUpdates.stnkFile ? `✅ ${cleanUpdates.stnkFile.substring(0, 50)}...` : '❌ not in cleanUpdates',
+    selfieFile: cleanUpdates.selfieFile ? `✅ ${cleanUpdates.selfieFile.substring(0, 50)}...` : '❌ not in cleanUpdates',
+    vehiclePhotoFile: cleanUpdates.vehiclePhotoFile ? `✅ ${cleanUpdates.vehiclePhotoFile.substring(0, 50)}...` : '❌ not in cleanUpdates',
+    storePhotoFile: cleanUpdates.storePhotoFile ? `✅ ${cleanUpdates.storePhotoFile.substring(0, 50)}...` : '❌ not in cleanUpdates',
+    businessPermitFile: cleanUpdates.businessPermitFile ? `✅ ${cleanUpdates.businessPermitFile.substring(0, 50)}...` : '❌ not in cleanUpdates'
   });
   
   const user = await User.findOneAndUpdate(
-    { id },
-    { $set: cleanUpdates }, // Gunakan $set untuk memastikan semua field ter-update
-    { new: true, lean: true }
+    { id }, // Cari berdasarkan id (bukan _id MongoDB)
+    updateQuery, // Gunakan $set untuk memastikan semua field ter-update, termasuk file URLs
+    { 
+      new: true, // Return document setelah update
+      lean: true, // Return plain object, bukan Mongoose document
+      runValidators: false, // Skip validation untuk menghindari error pada update
+      upsert: false // Jangan buat document baru jika tidak ada
+    }
   );
   
   if (!user) {
-    throw new Error('User tidak ditemukan');
+    throw new Error(`User dengan ID ${id} tidak ditemukan`);
   }
   
+  // Verifikasi bahwa field-file benar-benar tersimpan
   console.log('✅ User updated successfully');
+  console.log('📋 User ID after update:', user.id);
+  console.log('📋 All user fields:', Object.keys(user));
   console.log('📋 File fields after update:', {
     ktpFile: user.ktpFile ? `✅ ${user.ktpFile.substring(0, 50)}...` : '❌ null/undefined',
-    simFile: user.simFile ? `✅ ${user.simFile.substring(0, 50)}...` : '❌ null/undefined',
-    stnkFile: user.stnkFile ? `✅ ${user.stnkFile.substring(0, 50)}...` : '❌ null/undefined',
-    selfieFile: user.selfieFile ? `✅ ${user.selfieFile.substring(0, 50)}...` : '❌ null/undefined',
-    vehiclePhotoFile: user.vehiclePhotoFile ? `✅ ${user.vehiclePhotoFile.substring(0, 50)}...` : '❌ null/undefined'
+    simFile: user.simFile ? `✅ ${user.simFile ? user.simFile.substring(0, 50) + '...' : 'null/undefined'}` : '❌ null/undefined',
+    stnkFile: user.stnkFile ? `✅ ${user.stnkFile ? user.stnkFile.substring(0, 50) + '...' : 'null/undefined'}` : '❌ null/undefined',
+    selfieFile: user.selfieFile ? `✅ ${user.selfieFile ? user.selfieFile.substring(0, 50) + '...' : 'null/undefined'}` : '❌ null/undefined',
+    vehiclePhotoFile: user.vehiclePhotoFile ? `✅ ${user.vehiclePhotoFile ? user.vehiclePhotoFile.substring(0, 50) + '...' : 'null/undefined'}` : '❌ null/undefined',
+    storePhotoFile: user.storePhotoFile ? `✅ ${user.storePhotoFile.substring(0, 50)}...` : '❌ null/undefined',
+    businessPermitFile: user.businessPermitFile ? `✅ ${user.businessPermitFile.substring(0, 50)}...` : '❌ null/undefined'
   });
+  
+  // Jika field-file tidak tersimpan padahal ada di cleanUpdates, throw error
+  if (cleanUpdates.ktpFile && !user.ktpFile) {
+    console.error('❌ CRITICAL: ktpFile tidak tersimpan padahal ada di cleanUpdates!');
+  }
+  if (cleanUpdates.storePhotoFile && !user.storePhotoFile) {
+    console.error('❌ CRITICAL: storePhotoFile tidak tersimpan padahal ada di cleanUpdates!');
+  }
+  if (cleanUpdates.businessPermitFile && !user.businessPermitFile) {
+    console.error('❌ CRITICAL: businessPermitFile tidak tersimpan padahal ada di cleanUpdates!');
+  }
   
   return user;
 }

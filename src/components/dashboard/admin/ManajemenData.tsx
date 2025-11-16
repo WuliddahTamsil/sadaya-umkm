@@ -147,20 +147,25 @@ export function ManajemenData() {
   const getImageUrl = (filePath: string | undefined) => {
     if (!filePath) return null;
     
-    // Jika sudah full URL (dari Vercel Blob), langsung return
+    // Jika sudah full URL (dari Vercel Blob atau external), langsung return
     if (filePath.startsWith('http://') || filePath.startsWith('https://')) {
       return filePath;
     }
     
-    // Jika path relatif (local development), tambahkan baseUrl
+    // Jika path relatif (local development atau Vercel), tambahkan baseUrl
     const isProduction = import.meta.env.PROD;
-    const baseUrl = isProduction ? '' : 'http://localhost:3000';
     
-    // Jika path sudah lengkap dengan uploads/, langsung gunakan
-    if (filePath.startsWith('uploads/')) {
-      return `${baseUrl}/${filePath}`;
-    }
-    return `${baseUrl}/${filePath}`;
+    // Di production (Vercel), gunakan API base URL
+    // Di development, gunakan localhost:3000
+    const baseUrl = isProduction 
+      ? (import.meta.env.VITE_API_BASE_URL || '/api').replace('/api', '') // Hapus /api jika ada
+      : 'http://localhost:3000';
+    
+    // Pastikan path tidak double slash
+    const cleanPath = filePath.startsWith('/') ? filePath.slice(1) : filePath;
+    const url = baseUrl ? `${baseUrl}/${cleanPath}` : `/${cleanPath}`;
+    
+    return url;
   };
 
   // Handle view detail

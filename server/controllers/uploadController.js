@@ -150,21 +150,37 @@ export const uploadDriverDocuments = async (req, res) => {
     }
 
     // Update user dengan data tambahan
-    // Hanya include field yang ada nilainya (jangan undefined)
+    // PASTIKAN field-file selalu diset, bahkan jika kosong
     const updateData = {
-      ...documents, // File URLs dari blob
       isOnboarded: true, // Set onboarding selesai
       updatedAt: new Date().toISOString()
     };
+    
+    // PASTIKAN field-file diset dari documents (jika ada)
+    if (documents.ktpFile) {
+      updateData.ktpFile = documents.ktpFile;
+    }
+    if (documents.simFile) {
+      updateData.simFile = documents.simFile;
+    }
+    if (documents.stnkFile) {
+      updateData.stnkFile = documents.stnkFile;
+    }
+    if (documents.selfieFile) {
+      updateData.selfieFile = documents.selfieFile;
+    }
+    if (documents.vehiclePhotoFile) {
+      updateData.vehiclePhotoFile = documents.vehiclePhotoFile;
+    }
     
     // Hanya tambahkan field jika ada nilainya
     if (phoneNumber) updateData.phone = phoneNumber;
     if (vehicleType) updateData.vehicleType = vehicleType;
     if (vehiclePlate) updateData.vehiclePlate = vehiclePlate;
 
+    console.log('📝 Documents object:', documents);
+    console.log('📝 Documents keys:', Object.keys(documents));
     console.log('📝 Updating user with data:', JSON.stringify(updateData, null, 2));
-    console.log('📝 File documents:', Object.keys(documents));
-    console.log('📝 Documents values:', documents);
     console.log('📝 UpdateData file fields check:', {
       ktpFile: updateData.ktpFile ? `✅ ${updateData.ktpFile.substring(0, 50)}...` : '❌ missing',
       simFile: updateData.simFile ? `✅ ${updateData.simFile.substring(0, 50)}...` : '❌ missing',
@@ -172,16 +188,33 @@ export const uploadDriverDocuments = async (req, res) => {
       selfieFile: updateData.selfieFile ? `✅ ${updateData.selfieFile.substring(0, 50)}...` : '❌ missing',
       vehiclePhotoFile: updateData.vehiclePhotoFile ? `✅ ${updateData.vehiclePhotoFile.substring(0, 50)}...` : '❌ missing'
     });
+    
+    // PASTIKAN setidaknya ada satu file field sebelum update
+    if (!updateData.ktpFile && !updateData.simFile && !updateData.stnkFile && !updateData.selfieFile && !updateData.vehiclePhotoFile) {
+      console.error('❌ ERROR: No file fields to save! Documents object is empty or invalid.');
+      console.error('❌ Documents:', documents);
+      console.error('❌ Files received:', files);
+      return res.status(400).json({ 
+        error: 'Tidak ada file yang berhasil diupload. Pastikan file valid dan BLOB_READ_WRITE_TOKEN terkonfigurasi dengan benar.' 
+      });
+    }
 
     const updatedUser = await updateUser(userId, updateData);
     
     console.log('✅ User updated. File fields:', {
-      ktpFile: updatedUser.ktpFile ? `✅ ${updatedUser.ktpFile.substring(0, 50)}...` : '❌',
-      simFile: updatedUser.simFile ? `✅ ${updatedUser.simFile.substring(0, 50)}...` : '❌',
-      stnkFile: updatedUser.stnkFile ? `✅ ${updatedUser.stnkFile.substring(0, 50)}...` : '❌',
-      selfieFile: updatedUser.selfieFile ? `✅ ${updatedUser.selfieFile.substring(0, 50)}...` : '❌',
-      vehiclePhotoFile: updatedUser.vehiclePhotoFile ? `✅ ${updatedUser.vehiclePhotoFile.substring(0, 50)}...` : '❌'
+      ktpFile: updatedUser.ktpFile ? `✅ ${updatedUser.ktpFile.substring(0, 50)}...` : '❌ null/undefined',
+      simFile: updatedUser.simFile ? `✅ ${updatedUser.simFile.substring(0, 50)}...` : '❌ null/undefined',
+      stnkFile: updatedUser.stnkFile ? `✅ ${updatedUser.stnkFile.substring(0, 50)}...` : '❌ null/undefined',
+      selfieFile: updatedUser.selfieFile ? `✅ ${updatedUser.selfieFile.substring(0, 50)}...` : '❌ null/undefined',
+      vehiclePhotoFile: updatedUser.vehiclePhotoFile ? `✅ ${updatedUser.vehiclePhotoFile.substring(0, 50)}...` : '❌ null/undefined'
     });
+    
+    // Verifikasi bahwa file benar-benar tersimpan
+    if (!updatedUser.ktpFile && !updatedUser.simFile && !updatedUser.stnkFile && !updatedUser.selfieFile && !updatedUser.vehiclePhotoFile) {
+      console.error('❌ WARNING: No file fields saved to user!');
+      console.error('❌ Documents object:', documents);
+      console.error('❌ UpdateData:', updateData);
+    }
     
     console.log('=== UPLOAD DRIVER DOCUMENTS END ===');
 
@@ -230,25 +263,55 @@ export const uploadUMKMDocuments = async (req, res) => {
     if (isVercel && hasBlobToken) {
       // Upload ke Vercel Blob Storage
       console.log('📤 Uploading UMKM documents to Vercel Blob...');
+      console.log('📁 Files received:', Object.keys(files));
+      console.log('📁 Files details:', {
+        ktpFile: files.ktpFile ? `${files.ktpFile.length} file(s)` : 'none',
+        storePhotoFile: files.storePhotoFile ? `${files.storePhotoFile.length} file(s)` : 'none',
+        businessPermitFile: files.businessPermitFile ? `${files.businessPermitFile.length} file(s)` : 'none'
+      });
       
       const filesToUpload = {};
       if (files.ktpFile && files.ktpFile[0]) {
-        filesToUpload.ktpFile = prepareFileForBlob(files.ktpFile[0]);
+        const prepared = prepareFileForBlob(files.ktpFile[0]);
+        if (prepared) {
+          filesToUpload.ktpFile = prepared;
+          console.log('✅ Prepared ktpFile for upload');
+        } else {
+          console.warn('⚠️ Failed to prepare ktpFile');
+        }
       }
       if (files.storePhotoFile && files.storePhotoFile[0]) {
-        filesToUpload.storePhotoFile = prepareFileForBlob(files.storePhotoFile[0]);
+        const prepared = prepareFileForBlob(files.storePhotoFile[0]);
+        if (prepared) {
+          filesToUpload.storePhotoFile = prepared;
+          console.log('✅ Prepared storePhotoFile for upload');
+        } else {
+          console.warn('⚠️ Failed to prepare storePhotoFile');
+        }
       }
       if (files.businessPermitFile && files.businessPermitFile[0]) {
-        filesToUpload.businessPermitFile = prepareFileForBlob(files.businessPermitFile[0]);
+        const prepared = prepareFileForBlob(files.businessPermitFile[0]);
+        if (prepared) {
+          filesToUpload.businessPermitFile = prepared;
+          console.log('✅ Prepared businessPermitFile for upload');
+        } else {
+          console.warn('⚠️ Failed to prepare businessPermitFile');
+        }
       }
+
+      console.log('📤 Files to upload:', Object.keys(filesToUpload));
 
       // Upload semua file ke blob
       const blobUrls = await uploadMultipleToBlob(filesToUpload, 'umkm');
+      
+      console.log('📋 Blob URLs received:', blobUrls);
+      console.log('📋 Blob URLs keys:', Object.keys(blobUrls));
       
       // Simpan URL blob ke documents
       Object.assign(documents, blobUrls);
       
       console.log('✅ UMKM documents uploaded to blob:', Object.keys(blobUrls));
+      console.log('📝 Documents object after assign:', documents);
     } else if (!isVercel) {
       // Local development: simpan path file
       if (files.ktpFile && files.ktpFile[0]?.path) documents.ktpFile = getRelativePath(files.ktpFile[0].path);
@@ -259,12 +322,22 @@ export const uploadUMKMDocuments = async (req, res) => {
     }
 
     // Update user dengan data tambahan
-    // Hanya include field yang ada nilainya (jangan undefined)
+    // PASTIKAN field-file selalu diset, bahkan jika kosong
     const updateData = {
-      ...documents, // File URLs dari blob
       isOnboarded: true, // Set onboarding selesai
       updatedAt: new Date().toISOString()
     };
+    
+    // PASTIKAN field-file diset dari documents (jika ada)
+    if (documents.ktpFile) {
+      updateData.ktpFile = documents.ktpFile;
+    }
+    if (documents.storePhotoFile) {
+      updateData.storePhotoFile = documents.storePhotoFile;
+    }
+    if (documents.businessPermitFile) {
+      updateData.businessPermitFile = documents.businessPermitFile;
+    }
     
     // Hanya tambahkan field jika ada nilainya
     if (storeName) updateData.storeName = storeName;
@@ -272,16 +345,39 @@ export const uploadUMKMDocuments = async (req, res) => {
     if (storeDescription) updateData.storeDescription = storeDescription;
     if (phoneNumber) updateData.phone = phoneNumber;
 
+    console.log('📝 Documents object:', documents);
+    console.log('📝 Documents keys:', Object.keys(documents));
     console.log('📝 Updating UMKM user with data:', JSON.stringify(updateData, null, 2));
-    console.log('📝 File documents:', Object.keys(documents));
+    console.log('📝 UpdateData file fields check:', {
+      ktpFile: updateData.ktpFile ? `✅ ${updateData.ktpFile.substring(0, 50)}...` : '❌ missing',
+      storePhotoFile: updateData.storePhotoFile ? `✅ ${updateData.storePhotoFile.substring(0, 50)}...` : '❌ missing',
+      businessPermitFile: updateData.businessPermitFile ? `✅ ${updateData.businessPermitFile.substring(0, 50)}...` : '❌ missing'
+    });
+    
+    // PASTIKAN setidaknya ada satu file field sebelum update
+    if (!updateData.ktpFile && !updateData.storePhotoFile && !updateData.businessPermitFile) {
+      console.error('❌ ERROR: No file fields to save! Documents object is empty or invalid.');
+      console.error('❌ Documents:', documents);
+      console.error('❌ Files received:', files);
+      return res.status(400).json({ 
+        error: 'Tidak ada file yang berhasil diupload. Pastikan file valid dan BLOB_READ_WRITE_TOKEN terkonfigurasi dengan benar.' 
+      });
+    }
 
     const updatedUser = await updateUser(userId, updateData);
     
     console.log('✅ UMKM user updated. File fields:', {
-      ktpFile: updatedUser.ktpFile ? '✅' : '❌',
-      storePhotoFile: updatedUser.storePhotoFile ? '✅' : '❌',
-      businessPermitFile: updatedUser.businessPermitFile ? '✅' : '❌'
+      ktpFile: updatedUser.ktpFile ? `✅ ${updatedUser.ktpFile.substring(0, 50)}...` : '❌ null/undefined',
+      storePhotoFile: updatedUser.storePhotoFile ? `✅ ${updatedUser.storePhotoFile.substring(0, 50)}...` : '❌ null/undefined',
+      businessPermitFile: updatedUser.businessPermitFile ? `✅ ${updatedUser.businessPermitFile.substring(0, 50)}...` : '❌ null/undefined'
     });
+    
+    // Verifikasi bahwa file benar-benar tersimpan
+    if (!updatedUser.ktpFile && !updatedUser.storePhotoFile && !updatedUser.businessPermitFile) {
+      console.error('❌ WARNING: No file fields saved to user!');
+      console.error('❌ Documents object:', documents);
+      console.error('❌ UpdateData:', updateData);
+    }
 
     // Hapus password dari response
     const { password, ...userWithoutPassword } = updatedUser;
