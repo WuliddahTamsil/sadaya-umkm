@@ -35,11 +35,16 @@ export const getAllOrders = async (req, res) => {
     // Filter by driverId - khusus untuk driver
     // Driver bisa lihat: 
     // 1. Orders dengan status "ready" (belum ada driverId) - order baru yang siap diambil
-    // 2. Orders dengan status "pickup" atau "delivered" yang driverId-nya sesuai - order yang sudah diambil driver tersebut
+    // 2. Orders dengan status "preparing" yang sudah dibayar (paymentStatus = 'paid') - order yang sedang disiapkan UMKM
+    // 3. Orders dengan status "pickup" atau "delivered" yang driverId-nya sesuai - order yang sudah diambil driver tersebut
     if (driverId && driverId !== 'all') {
       orders = orders.filter(order => {
         // Order siap diambil (ready) dan belum ada driver
         if (order.status === 'ready' && !order.driverId) {
+          return true;
+        }
+        // Order yang sudah dibayar dan sedang disiapkan (preparing) - driver bisa lihat untuk persiapan
+        if (order.status === 'preparing' && order.paymentStatus === 'paid' && !order.driverId) {
           return true;
         }
         // Order yang sudah diambil oleh driver ini (status pickup atau delivered)
@@ -124,81 +129,76 @@ export const createOrder = async (req, res) => {
     
     console.log(`🔍 Mencari UMKM dengan ID: "${normalizedUmkmId}" (original: "${umkmId}")`);
     
-    let umkm = await getUserById(normalizedUmkmId);
-    
-    if (umkm) {
-      console.log(`✅ UMKM ditemukan langsung: ${umkm.id} (${umkm.name || umkm.storeName || 'N/A'})`);
-    }
-    
-    // Jika UMKM tidak ditemukan dengan ID, coba cari alternatif (case-insensitive atau ID serupa)
-    if (!umkm) {
-      console.error(`UMKM tidak ditemukan dengan ID: umkmId=${normalizedUmkmId} (original: ${umkmId})`);
+    // SELALU cari dari semua users untuk memastikan menemukan UMKM
+    let umkm = null;
+    try {
+      const allUsers = await getAllUsersModel();
+      // Filter dengan case-insensitive role check
+      const allUmkm = allUsers.filter(u => {
+        const userRole = u.role?.toString().toLowerCase().trim();
+        return userRole === 'umkm';
+      });
+      console.log(`📊 Total UMKM di database: ${allUmkm.length}`);
       
-      // Cek apakah ada UMKM lain di database untuk debugging dan pencarian alternatif
-      try {
-        const allUsers = await getAllUsersModel();
-        // Filter dengan case-insensitive role check
-        const allUmkm = allUsers.filter(u => {
-          const userRole = u.role?.toString().toLowerCase().trim();
-          return userRole === 'umkm';
-        });
-        console.error(`Total UMKM di database: ${allUmkm.length}`);
+      if (allUmkm.length > 0) {
+        // Log semua UMKM IDs untuk debugging
+        console.log(`📋 Semua UMKM IDs: ${allUmkm.map(u => `"${u.id}" (${u.name || u.storeName || 'N/A'})`).join(', ')}`);
         
-        if (allUmkm.length > 0) {
-          // Log semua UMKM IDs untuk debugging
-          console.error(`Semua UMKM IDs: ${allUmkm.map(u => `"${u.id}" (${u.name || u.storeName || 'N/A'})`).join(', ')}`);
-          
-          // Coba cari dengan berbagai metode:
-          // 1. Case-insensitive exact match
-          // 2. Trim whitespace comparison
-          // 3. Store name match (fallback)
-          const foundUmkm = allUmkm.find(u => {
+        // Coba cari dengan berbagai metode:
+        // 1. Exact match (case-sensitive)
+        umkm = allUmkm.find(u => u.id === normalizedUmkmId || u.id === umkmId);
+        
+        // 2. Case-insensitive exact match
+        if (!umkm) {
+          umkm = allUmkm.find(u => {
             const uId = u.id?.toString().trim();
-            const searchId = normalizedUmkmId?.toLowerCase();
-            return (
-              uId?.toLowerCase() === searchId ||
-              uId === normalizedUmkmId ||
-              u.id === umkmId ||
-              (storeName && (
-                u.storeName?.toLowerCase().trim() === storeName.toLowerCase().trim() || 
-                u.name?.toLowerCase().trim() === storeName.toLowerCase().trim()
-              ))
-            );
-          });
-          
-          if (foundUmkm) {
-            console.warn(`✅ UMKM ditemukan dengan pencarian alternatif: ${foundUmkm.id} (${foundUmkm.name || foundUmkm.storeName || 'N/A'})`);
-            umkm = foundUmkm;
-          } else {
-            // Jika masih tidak ditemukan, coba cari dengan partial match atau ID yang mirip
-            const similarUmkm = allUmkm.find(u => {
-              const uId = u.id?.toString().trim().toLowerCase();
-              const searchId = normalizedUmkmId?.toLowerCase();
-              return uId?.includes(searchId) || searchId?.includes(uId);
-            });
-            
-            if (similarUmkm) {
-              console.warn(`⚠️ UMKM ditemukan dengan pencarian partial match: ${similarUmkm.id} (${similarUmkm.name || similarUmkm.storeName || 'N/A'})`);
-              umkm = similarUmkm;
-            }
-          }
-        } else {
-          console.error('❌ Tidak ada UMKM sama sekali di database!');
-          return res.status(404).json({ 
-            error: 'Tidak ada UMKM terdaftar di database. Silakan hubungi administrator.' 
+            return uId?.toLowerCase() === normalizedUmkmId?.toLowerCase();
           });
         }
-      } catch (debugError) {
-        console.error('❌ Error saat debugging UMKM:', debugError);
-      }
-      
-      // Jika masih tidak ditemukan setelah pencarian alternatif
-      if (!umkm) {
-        console.error(`❌ UMKM dengan ID "${normalizedUmkmId}" tidak ditemukan setelah semua pencarian alternatif`);
+        
+        // 3. Store name match (fallback)
+        if (!umkm && storeName) {
+          umkm = allUmkm.find(u => {
+            const uStoreName = u.storeName?.toString().trim().toLowerCase();
+            const uName = u.name?.toString().trim().toLowerCase();
+            const searchStoreName = storeName.toString().trim().toLowerCase();
+            return uStoreName === searchStoreName || uName === searchStoreName;
+          });
+        }
+        
+        // 4. Partial match (last resort)
+        if (!umkm) {
+          umkm = allUmkm.find(u => {
+            const uId = u.id?.toString().trim().toLowerCase();
+            const searchId = normalizedUmkmId?.toLowerCase();
+            return uId?.includes(searchId) || searchId?.includes(uId);
+          });
+        }
+        
+        if (umkm) {
+          console.log(`✅ UMKM ditemukan: ${umkm.id} (${umkm.name || umkm.storeName || 'N/A'})`);
+        } else {
+          console.error(`❌ UMKM dengan ID "${normalizedUmkmId}" tidak ditemukan di database`);
+        }
+      } else {
+        console.error('❌ Tidak ada UMKM sama sekali di database!');
         return res.status(404).json({ 
-          error: `UMKM dengan ID "${normalizedUmkmId}" tidak ditemukan di database. Pastikan UMKM sudah terdaftar dan aktif.` 
+          error: 'Tidak ada UMKM terdaftar di database. Silakan hubungi administrator.' 
         });
       }
+    } catch (debugError) {
+      console.error('❌ Error saat mencari UMKM:', debugError);
+      return res.status(500).json({ 
+        error: 'Terjadi kesalahan saat mencari UMKM di database.' 
+      });
+    }
+    
+    // Jika masih tidak ditemukan setelah semua pencarian
+    if (!umkm) {
+      console.error(`❌ UMKM dengan ID "${normalizedUmkmId}" tidak ditemukan setelah semua pencarian alternatif`);
+      return res.status(404).json({ 
+        error: `UMKM dengan ID "${normalizedUmkmId}" tidak ditemukan di database. Pastikan UMKM sudah terdaftar dan aktif.` 
+      });
     }
 
     // Validasi role UMKM (case-insensitive)
@@ -247,23 +247,30 @@ export const createOrder = async (req, res) => {
 
     // Simpan order
     const savedOrder = await saveOrderModel(newOrder);
+    console.log(`✅ Order berhasil dibuat: ${savedOrder.id} untuk UMKM ${validatedUmkmId}`);
 
     // Buat notifikasi untuk UMKM - gunakan validatedUmkmId
-    await saveNotificationModel({
-      id: uuidv4(),
-      userId: validatedUmkmId,
-      type: 'order',
-      title: 'Pesanan Baru! 🎉',
-      message: `Pesanan baru dari ${user.name} - Total: Rp ${total.toLocaleString('id-ID')}`,
-      orderId: savedOrder.id,
-      status: 'pending',
-      read: false,
-      createdAt: new Date().toISOString()
-    });
+    try {
+      await saveNotificationModel({
+        id: uuidv4(),
+        userId: validatedUmkmId,
+        type: 'order',
+        title: 'Pesanan Baru! 🎉',
+        message: `Pesanan baru dari ${user.name} - Total: Rp ${total.toLocaleString('id-ID')}`,
+        orderId: savedOrder.id,
+        status: 'pending',
+        read: false,
+        createdAt: new Date().toISOString()
+      });
+      console.log(`✅ Notifikasi berhasil dikirim ke UMKM ${validatedUmkmId}`);
+    } catch (notifError) {
+      console.error('⚠️ Error mengirim notifikasi ke UMKM:', notifError);
+      // Jangan gagalkan order jika notifikasi gagal
+    }
 
     res.status(201).json({
       success: true,
-      message: 'Order berhasil dibuat',
+      message: 'Order berhasil dibuat dan notifikasi telah dikirim ke UMKM',
       data: savedOrder
     });
   } catch (error) {

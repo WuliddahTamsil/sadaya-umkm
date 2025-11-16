@@ -340,11 +340,13 @@ export function Keranjang() {
 
         if (!orderResponse.ok) {
           const error = await orderResponse.json();
+          console.error('❌ Error creating order:', error);
           throw new Error(error.error || 'Gagal membuat pesanan');
         }
 
         const orderData = await orderResponse.json();
         const order = orderData.data;
+        console.log(`✅ Order berhasil dibuat: ${order.id} untuk store ${storeName}`);
 
         // Process payment
         if (paymentMethod === 'wallet') {
@@ -369,10 +371,14 @@ export function Keranjang() {
 
         if (!paymentResponse.ok) {
           const error = await paymentResponse.json();
+          console.error('❌ Error processing payment:', error);
           throw new Error(error.error || 'Gagal memproses pembayaran');
         }
 
-        toast.info(`Pesanan baru terkirim ke ${storeName}.`);
+        const paymentData = await paymentResponse.json();
+        console.log(`✅ Payment berhasil: ${paymentData.message || 'Pembayaran berhasil'}`);
+        
+        toast.success(`✅ Pesanan berhasil dibuat dan pembayaran berhasil! Pesanan telah dikirim ke ${storeName}.`);
         return order;
       });
 
@@ -391,7 +397,10 @@ export function Keranjang() {
                                  paymentMethod === 'ovo' ? 'OVO' :
                                  paymentMethod === 'qris' ? 'QRIS' :
                                  paymentMethod === 'transfer' ? 'Transfer Bank' : 'COD';
-      toast.success(`Pembayaran berhasil (${paymentMethodLabel}).`);
+      
+      // Pesan sukses sudah ditampilkan di dalam loop orderPromises
+      // Hanya tampilkan summary di sini
+      console.log(`✅ Semua pesanan berhasil dibuat: ${createdOrders.length} pesanan`);
 
       // Refresh wallet balance if using wallet
       if (paymentMethod === 'wallet') {
