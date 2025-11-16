@@ -93,36 +93,54 @@ export function ManajemenData() {
       const result = await response.json();
       
       // Transform data dari backend ke format yang diharapkan
-      const transformedData: DataItem[] = result.data.map((user: any) => ({
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        role: user.role === 'umkm' ? 'UMKM' : user.role === 'driver' ? 'Driver' : 'User',
-        status: user.status || 'pending',
-        joinDate: user.joinDate || user.createdAt?.split('T')[0] || new Date().toISOString().split('T')[0],
-        totalOrders: user.totalOrders || 0,
-        rating: user.rating || 0,
-        phone: user.phone,
-        address: user.address,
-        description: user.description,
-        storeName: user.storeName,
-        storeAddress: user.storeAddress,
-        storeDescription: user.storeDescription,
-        vehicleType: user.vehicleType,
-        vehiclePlate: user.vehiclePlate,
-        isVerified: user.isVerified,
-        isOnboarded: user.isOnboarded,
-        createdAt: user.createdAt,
-        updatedAt: user.updatedAt,
-        ktpFile: user.ktpFile,
-        simFile: user.simFile,
-        stnkFile: user.stnkFile,
-        selfieFile: user.selfieFile,
-        vehiclePhotoFile: user.vehiclePhotoFile,
-        storePhotoFile: user.storePhotoFile,
-        businessPermitFile: user.businessPermitFile,
-      }));
+      const transformedData: DataItem[] = result.data.map((user: any) => {
+        // Normalize role untuk memastikan konsistensi
+        let normalizedRole: 'UMKM' | 'Driver' | 'User' = 'User';
+        const userRole = user.role?.toString().toLowerCase().trim();
+        if (userRole === 'umkm') {
+          normalizedRole = 'UMKM';
+        } else if (userRole === 'driver') {
+          normalizedRole = 'Driver';
+        }
+        
+        // Normalize status
+        const normalizedStatus = user.status?.toString().toLowerCase().trim() || 'pending';
+        const finalStatus: 'active' | 'inactive' | 'pending' = 
+          normalizedStatus === 'active' ? 'active' :
+          normalizedStatus === 'inactive' ? 'inactive' : 'pending';
+        
+        return {
+          id: user.id,
+          name: user.name || 'N/A',
+          email: user.email || 'N/A',
+          role: normalizedRole,
+          status: finalStatus,
+          joinDate: user.joinDate || user.createdAt?.split('T')[0] || new Date().toISOString().split('T')[0],
+          totalOrders: user.totalOrders || 0,
+          rating: user.rating || 0,
+          phone: user.phone,
+          address: user.address,
+          description: user.description,
+          storeName: user.storeName,
+          storeAddress: user.storeAddress,
+          storeDescription: user.storeDescription,
+          vehicleType: user.vehicleType,
+          vehiclePlate: user.vehiclePlate,
+          isVerified: user.isVerified || false,
+          isOnboarded: user.isOnboarded || false,
+          createdAt: user.createdAt,
+          updatedAt: user.updatedAt,
+          ktpFile: user.ktpFile,
+          simFile: user.simFile,
+          stnkFile: user.stnkFile,
+          selfieFile: user.selfieFile,
+          vehiclePhotoFile: user.vehiclePhotoFile,
+          storePhotoFile: user.storePhotoFile,
+          businessPermitFile: user.businessPermitFile,
+        };
+      });
 
+      console.log(`✅ [ManajemenData] Data loaded: ${transformedData.length} users, ${transformedData.filter(u => u.role === 'UMKM').length} UMKM`);
       setData(transformedData);
     } catch (error) {
       console.error('Error fetching users:', error);
@@ -137,6 +155,15 @@ export function ManajemenData() {
   useEffect(() => {
     fetchUsers();
   }, [filterRole, filterStatus]);
+
+  // Log data untuk debugging
+  useEffect(() => {
+    if (data.length > 0) {
+      const umkmCount = data.filter(item => item.role === 'UMKM').length;
+      const activeUmkmCount = data.filter(item => item.role === 'UMKM' && item.status === 'active').length;
+      console.log(`📊 [ManajemenData] Total data: ${data.length}, UMKM: ${umkmCount}, Active UMKM: ${activeUmkmCount}`);
+    }
+  }, [data]);
 
   // Handle refresh
   const handleRefresh = () => {
@@ -313,10 +340,30 @@ export function ManajemenData() {
         transition={{ delay: 0.2 }}
       >
         {[
-          { label: 'Total UMKM', value: 342, color: '#FF8D28', change: '+18' },
-          { label: 'Total Driver', value: 156, color: '#2196F3', change: '+12' },
-          { label: 'Total User', value: 12847, color: '#4CAF50', change: '+342' },
-          { label: 'Pending Approval', value: 23, color: '#FF9800', change: '-5' }
+          { 
+            label: 'Total UMKM', 
+            value: data.filter(item => item.role === 'UMKM').length, 
+            color: '#FF8D28', 
+            change: '' 
+          },
+          { 
+            label: 'Total Driver', 
+            value: data.filter(item => item.role === 'Driver').length, 
+            color: '#2196F3', 
+            change: '' 
+          },
+          { 
+            label: 'Total User', 
+            value: data.filter(item => item.role === 'User').length, 
+            color: '#4CAF50', 
+            change: '' 
+          },
+          { 
+            label: 'Pending Approval', 
+            value: data.filter(item => item.status === 'pending').length, 
+            color: '#FF9800', 
+            change: '' 
+          }
         ].map((stat, index) => (
           <motion.div
             key={index}
@@ -328,17 +375,19 @@ export function ManajemenData() {
               <CardContent className="p-4">
                 <div className="flex items-center justify-between mb-2">
                   <div className="w-3 h-3 rounded-full" style={{ backgroundColor: stat.color }} />
-                  <Badge
-                    variant="outline"
-                    style={{
-                      fontSize: '10px',
-                      backgroundColor: stat.change.startsWith('+') ? '#C8E6C920' : '#FFE0B220',
-                      color: stat.change.startsWith('+') ? '#4CAF50' : '#FF9800',
-                      borderColor: stat.change.startsWith('+') ? '#4CAF50' : '#FF9800'
-                    }}
-                  >
-                    {stat.change}
-                  </Badge>
+                  {stat.change && (
+                    <Badge
+                      variant="outline"
+                      style={{
+                        fontSize: '10px',
+                        backgroundColor: stat.change.startsWith('+') ? '#C8E6C920' : '#FFE0B220',
+                        color: stat.change.startsWith('+') ? '#4CAF50' : '#FF9800',
+                        borderColor: stat.change.startsWith('+') ? '#4CAF50' : '#FF9800'
+                      }}
+                    >
+                      {stat.change}
+                    </Badge>
+                  )}
                 </div>
                 <p className="body-3 mb-1" style={{ color: '#858585', fontSize: '11px' }}>
                   {stat.label}
