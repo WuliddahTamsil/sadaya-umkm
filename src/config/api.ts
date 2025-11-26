@@ -13,11 +13,14 @@ export const api = {
     getAll: `${API_BASE_URL}/users`,
     getById: (id: string) => `${API_BASE_URL}/users/${id}`,
     updateStatus: (id: string) => `${API_BASE_URL}/users/${id}/status`,
+    updateProfile: (id: string) => `${API_BASE_URL}/users/${id}`,
+    delete: (id: string) => `${API_BASE_URL}/users/${id}`,
   },
   upload: {
     driver: `${API_BASE_URL}/upload/driver`,
     umkm: `${API_BASE_URL}/upload/umkm`,
     productImage: `${API_BASE_URL}/upload/products`,
+    profilePhoto: `${API_BASE_URL}/upload/profile`,
   },
   orders: {
     getAll: `${API_BASE_URL}/orders`,
@@ -67,6 +70,18 @@ export const api = {
     create: `${API_BASE_URL}/content`,
     update: (id: string) => `${API_BASE_URL}/content/${id}`,
     delete: (id: string) => `${API_BASE_URL}/content/${id}`,
+    like: (id: string) => `${API_BASE_URL}/content/${id}/like`,
+  },
+  comments: {
+    getByContentId: (contentId: string) => `${API_BASE_URL}/comments/${contentId}`,
+    create: `${API_BASE_URL}/comments`,
+    delete: (id: string) => `${API_BASE_URL}/comments/${id}`,
+  },
+  admin: {
+    getRecentActivities: `${API_BASE_URL}/admin/activities`,
+  },
+  chat: {
+    send: `${API_BASE_URL}/chat`,
   },
 };
 

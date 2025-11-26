@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
@@ -7,11 +7,17 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '..
 import { MessageCircle, Phone, Mail, HelpCircle, Send, Search } from 'lucide-react';
 import { toast } from 'sonner';
 import { useAuth } from '../../contexts/AuthContext';
+import { LiveChat } from './LiveChat';
 
 export function HelpPage() {
   const { user } = useAuth();
   const [searchQuery, setSearchQuery] = useState('');
   const [message, setMessage] = useState('');
+  const [isChatOpen, setIsChatOpen] = useState(false);
+
+  useEffect(() => {
+    console.log('HelpPage - isChatOpen state changed to:', isChatOpen);
+  }, [isChatOpen]);
 
   const getFAQs = () => {
     const commonFAQs = [
@@ -90,7 +96,7 @@ export function HelpPage() {
     <div className="space-y-6">
       {/* Quick Contact */}
       <div className="grid md:grid-cols-3 gap-4">
-        <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+        <Card className="hover:shadow-lg transition-shadow">
           <CardContent className="p-6 text-center">
             <div 
               className="w-14 h-14 rounded-full mx-auto mb-3 flex items-center justify-center"
@@ -106,6 +112,19 @@ export function HelpPage() {
               className="mt-3" 
               size="sm"
               style={{ backgroundColor: '#4CAF50', color: '#FFFFFF' }}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log('=== MULAI CHAT CLICKED ===');
+                console.log('Current isChatOpen state BEFORE:', isChatOpen);
+                setIsChatOpen(true);
+                console.log('setIsChatOpen(true) called');
+                // Force a re-render check
+                setTimeout(() => {
+                  console.log('After 100ms, isChatOpen should be true');
+                }, 100);
+              }}
+              type="button"
             >
               Mulai Chat
             </Button>
@@ -229,6 +248,12 @@ export function HelpPage() {
           </Button>
         </CardContent>
       </Card>
+
+      {/* Live Chat Component */}
+      <LiveChat isOpen={isChatOpen} onClose={() => {
+        console.log('Closing chat...');
+        setIsChatOpen(false);
+      }} />
     </div>
   );
 }

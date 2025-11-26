@@ -152,3 +152,17 @@ export const incrementViews = async (id) => {
   });
 };
 
+// Increment likes
+export const incrementLikes = async (id) => {
+  const mongoModel = await getMongoModel();
+  if (mongoModel) {
+    return await mongoModel.incrementLikes(id);
+  }
+  const content = await getContentById(id);
+  if (!content) return null;
+  
+  return await updateContent(id, {
+    likes: (content.likes || 0) + 1
+  });
+};
+

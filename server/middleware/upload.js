@@ -85,3 +85,6 @@ export const uploadUMKMDocs = upload.fields([
 // Middleware untuk upload gambar produk
 export const uploadProductImage = upload.single('productImage');
 
+// Middleware untuk upload foto profil
+export const uploadProfilePhoto = upload.single('profilePhoto');
+

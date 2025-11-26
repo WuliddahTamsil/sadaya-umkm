@@ -1,9 +1,39 @@
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../../ui/card';
-import { Users, Store, Bike, TrendingUp, DollarSign, Package } from 'lucide-react';
+import { Users, Store, Bike, TrendingUp, DollarSign, Package, Loader2, RefreshCw } from 'lucide-react';
 import { PersonalizedGreeting } from '../../PersonalizedGreeting';
 import { Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, ComposedChart } from 'recharts';
+import { api } from '../../../config/api';
+import { motion, AnimatePresence } from 'framer-motion';
+
+interface Activity {
+  type: string;
+  id: string;
+  name: string;
+  timeAgo: string;
+  timestamp: string;
+  status: 'pending' | 'approved' | 'completed';
+  role?: string;
+  email?: string;
+  orderId?: string;
+  userName?: string;
+  storeName?: string;
+  total?: number;
+}
 
 export function AdminDashboard() {
+  const [activities, setActivities] = useState<Activity[]>([]);
+  const [isLoadingActivities, setIsLoadingActivities] = useState(true);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [stats, setStats] = useState({
+    totalUsers: 0,
+    totalUMKM: 0,
+    totalDriver: 0,
+    ordersToday: 0,
+    revenueThisMonth: 0,
+    growth: '+12.5%'
+  });
+
   // Data transaksi 7 hari terakhir
   const transactionData7Days = [
     { day: 'Sen', transaksi: 234, revenue: 3510000 },
@@ -15,21 +45,135 @@ export function AdminDashboard() {
     { day: 'Min', transaksi: 298, revenue: 4470000 }
   ];
 
-  const stats = [
-    { label: 'Total User', value: '1,234', icon: Users, color: '#2196F3' },
-    { label: 'Total UMKM', value: '156', icon: Store, color: '#FF8D28' },
-    { label: 'Total Driver', value: '89', icon: Bike, color: '#4CAF50' },
-    { label: 'Pesanan Hari Ini', value: '342', icon: Package, color: '#9C27B0' },
-    { label: 'Transaksi Bulan Ini', value: 'Rp 45.5M', icon: DollarSign, color: '#FF6B6B' },
-    { label: 'Pertumbuhan', value: '+12.5%', icon: TrendingUp, color: '#4CAF50' }
+  // Fetch recent activities
+  const fetchActivities = async () => {
+    try {
+      setIsRefreshing(true);
+      const response = await fetch(`${api.admin.getRecentActivities}?limit=20&hours=24`);
+      
+      if (!response.ok) {
+        throw new Error('Gagal mengambil aktivitas terbaru');
+      }
+
+      const result = await response.json();
+      if (result.success && result.data) {
+        setActivities(result.data);
+      }
+    } catch (error) {
+      console.error('Error fetching activities:', error);
+    } finally {
+      setIsLoadingActivities(false);
+      setIsRefreshing(false);
+    }
+  };
+
+  // Fetch stats
+  const fetchStats = async () => {
+    try {
+      // Fetch users
+      const usersResponse = await fetch(api.users.getAll);
+      if (usersResponse.ok) {
+        const usersResult = await usersResponse.json();
+        const users = usersResult.data || [];
+        
+        const totalUsers = users.filter((u: any) => u.role === 'user').length;
+        const totalUMKM = users.filter((u: any) => u.role === 'umkm').length;
+        const totalDriver = users.filter((u: any) => u.role === 'driver').length;
+
+        // Fetch orders for today
+        const ordersResponse = await fetch(api.orders.getAll);
+        if (ordersResponse.ok) {
+          const ordersResult = await ordersResponse.json();
+          const orders = ordersResult.data || [];
+          
+          const today = new Date();
+          today.setHours(0, 0, 0, 0);
+          
+          const ordersToday = orders.filter((order: any) => {
+            const orderDate = new Date(order.createdAt);
+            return orderDate >= today;
+          }).length;
+
+          // Calculate revenue this month
+          const thisMonth = new Date();
+          thisMonth.setDate(1);
+          thisMonth.setHours(0, 0, 0, 0);
+          
+          const revenueThisMonth = orders
+            .filter((order: any) => {
+              const orderDate = new Date(order.createdAt);
+              return orderDate >= thisMonth && (order.status === 'completed' || order.status === 'delivered');
+            })
+            .reduce((sum: number, order: any) => sum + (order.total || 0), 0);
+
+          setStats({
+            totalUsers,
+            totalUMKM,
+            totalDriver,
+            ordersToday,
+            revenueThisMonth,
+            growth: '+12.5%'
+          });
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching stats:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchActivities();
+    fetchStats();
+
+    // Auto-refresh activities every 30 seconds
+    const interval = setInterval(() => {
+      fetchActivities();
+    }, 30000);
+
+    // Auto-refresh stats every 5 minutes
+    const statsInterval = setInterval(() => {
+      fetchStats();
+    }, 300000);
+
+    return () => {
+      clearInterval(interval);
+      clearInterval(statsInterval);
+    };
+  }, []);
+
+  const statsCards = [
+    { label: 'Total User', value: stats.totalUsers.toLocaleString('id-ID'), icon: Users, color: '#2196F3' },
+    { label: 'Total UMKM', value: stats.totalUMKM.toLocaleString('id-ID'), icon: Store, color: '#FF8D28' },
+    { label: 'Total Driver', value: stats.totalDriver.toLocaleString('id-ID'), icon: Bike, color: '#4CAF50' },
+    { label: 'Pesanan Hari Ini', value: stats.ordersToday.toLocaleString('id-ID'), icon: Package, color: '#9C27B0' },
+    { 
+      label: 'Transaksi Bulan Ini', 
+      value: `Rp ${(stats.revenueThisMonth / 1000000).toFixed(1)}M`, 
+      icon: DollarSign, 
+      color: '#FF6B6B' 
+    },
+    { label: 'Pertumbuhan', value: stats.growth, icon: TrendingUp, color: '#4CAF50' }
   ];
 
-  const recentActivities = [
-    { type: 'UMKM Baru', name: 'Tahu Gejrot Pak Haji', time: '5 menit yang lalu', status: 'pending' },
-    { type: 'Driver Baru', name: 'Ahmad Fauzi', time: '15 menit yang lalu', status: 'pending' },
-    { type: 'Pesanan', name: 'Order #1234', time: '20 menit yang lalu', status: 'completed' },
-    { type: 'UMKM Disetujui', name: 'Kerajinan Bambu Ibu Siti', time: '1 jam yang lalu', status: 'approved' }
-  ];
+  const getStatusBadge = (status: string) => {
+    const styles: Record<string, { bg: string; text: string; label: string }> = {
+      pending: { bg: '#FDE08E', text: '#F57C00', label: 'Pending' },
+      approved: { bg: '#C8E6C9', text: '#2E7D32', label: 'Disetujui' },
+      completed: { bg: '#E3F2FD', text: '#1976D2', label: 'Selesai' }
+    };
+    const style = styles[status] || styles.pending;
+    return (
+      <span 
+        className="px-3 py-1 rounded-full body-3 text-xs font-medium"
+        style={{ 
+          backgroundColor: style.bg,
+          color: style.text
+        }}
+      >
+        {style.label}
+      </span>
+    );
+  };
 
   return (
     <div className="space-y-6">
@@ -38,25 +182,32 @@ export function AdminDashboard() {
 
       {/* Stats Grid */}
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {stats.map((stat, index) => {
+        {statsCards.map((stat, index) => {
           const Icon = stat.icon;
           return (
-            <Card key={index}>
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="body-3" style={{ color: '#858585' }}>{stat.label}</p>
-                    <h3 style={{ color: '#2F4858' }} className="mt-2">{stat.value}</h3>
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+            >
+              <Card>
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="body-3" style={{ color: '#858585' }}>{stat.label}</p>
+                      <h3 style={{ color: '#2F4858' }} className="mt-2">{stat.value}</h3>
+                    </div>
+                    <div 
+                      className="w-12 h-12 rounded-lg flex items-center justify-center"
+                      style={{ backgroundColor: stat.color + '20' }}
+                    >
+                      <Icon size={24} style={{ color: stat.color }} />
+                    </div>
                   </div>
-                  <div 
-                    className="w-12 h-12 rounded-lg flex items-center justify-center"
-                    style={{ backgroundColor: stat.color + '20' }}
-                  >
-                    <Icon size={24} style={{ color: stat.color }} />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            </motion.div>
           );
         })}
       </div>
@@ -177,32 +328,71 @@ export function AdminDashboard() {
         </Card>
       </div>
 
-      {/* Recent Activities */}
+      {/* Recent Activities - Real-time */}
       <Card>
         <CardHeader>
-          <CardTitle style={{ color: '#2F4858' }}>Aktivitas Terbaru</CardTitle>
+          <div className="flex items-center justify-between">
+            <CardTitle style={{ color: '#2F4858' }}>Aktivitas Terbaru</CardTitle>
+            <button
+              onClick={fetchActivities}
+              disabled={isRefreshing}
+              className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+              title="Refresh"
+            >
+              <RefreshCw 
+                size={18} 
+                style={{ color: '#858585' }}
+                className={isRefreshing ? 'animate-spin' : ''}
+              />
+            </button>
+          </div>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
-            {recentActivities.map((activity, index) => (
-              <div key={index} className="flex items-center justify-between p-4 rounded-lg" style={{ backgroundColor: '#F5F5F5' }}>
-                <div>
-                  <p className="body-3" style={{ color: '#2F4858', fontWeight: 600 }}>{activity.type}</p>
-                  <p className="body-3" style={{ color: '#858585' }}>{activity.name}</p>
-                  <p className="body-3" style={{ color: '#CCCCCC', fontSize: '12px' }}>{activity.time}</p>
-                </div>
-                <span 
-                  className="px-3 py-1 rounded-full body-3"
-                  style={{ 
-                    backgroundColor: activity.status === 'pending' ? '#FDE08E' : activity.status === 'approved' ? '#C8E6C9' : '#E3F2FD',
-                    color: activity.status === 'pending' ? '#F57C00' : activity.status === 'approved' ? '#2E7D32' : '#1976D2'
-                  }}
-                >
-                  {activity.status === 'pending' ? 'Pending' : activity.status === 'approved' ? 'Disetujui' : 'Selesai'}
-                </span>
-              </div>
-            ))}
-          </div>
+          {isLoadingActivities ? (
+            <div className="flex items-center justify-center py-12">
+              <Loader2 className="animate-spin" size={32} style={{ color: '#FF8D28' }} />
+            </div>
+          ) : activities.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="body-3" style={{ color: '#858585' }}>
+                Belum ada aktivitas terbaru
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              <AnimatePresence>
+                {activities.map((activity, index) => (
+                  <motion.div
+                    key={`${activity.id}-${activity.timestamp}`}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ delay: index * 0.05 }}
+                    className="flex items-center justify-between p-4 rounded-lg hover:bg-gray-50 transition-colors"
+                    style={{ backgroundColor: '#F5F5F5' }}
+                  >
+                    <div className="flex-1">
+                      <p className="body-3" style={{ color: '#2F4858', fontWeight: 600 }}>
+                        {activity.type}
+                      </p>
+                      <p className="body-3" style={{ color: '#858585' }}>
+                        {activity.name}
+                        {activity.orderId && activity.total && (
+                          <span className="ml-2" style={{ color: '#858585', fontSize: '12px' }}>
+                            (Rp {activity.total.toLocaleString('id-ID')})
+                          </span>
+                        )}
+                      </p>
+                      <p className="body-3" style={{ color: '#CCCCCC', fontSize: '12px' }}>
+                        {activity.timeAgo}
+                      </p>
+                    </div>
+                    {getStatusBadge(activity.status)}
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </div>
+          )}
         </CardContent>
       </Card>
     </div>

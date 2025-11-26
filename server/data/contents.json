@@ -4,17 +4,17 @@
     "type": "article",
     "title": "10 UMKM Terbaik di Bogor yang Wajib Dikunjungi",
     "excerpt": "Temukan berbagai UMKM lokal Bogor dengan produk unggulan dan kualitas terjamin. Dari kuliner khas hingga kerajinan tangan, semua ada di sini.",
-    "content": "<h2>10 UMKM Terbaik di Bogor</h2><p>Bogor memiliki banyak UMKM yang menawarkan produk berkualitas tinggi. Berikut adalah 10 UMKM terbaik yang wajib Anda kunjungi:</p><ol><li><strong>Lapis Bogor Sangkuriang</strong> - Menyajikan lapis talas dengan berbagai varian rasa yang menggugah selera.</li><li><strong>Roti Unyil Venus</strong> - Roti unyil dengan berbagai isian yang lezat dan terjangkau.</li><li><strong>Asinan Sedap Gedung Dalam</strong> - Asinan segar dengan kuah cuka khas Bogor.</li><li><strong>PIA Apple Pie</strong> - Apple pie renyah dengan rasa yang autentik.</li><li><strong>Bika Bogor Talubi</strong> - Bika ambon dengan bahan dasar talas yang lembut dan kenyal.</li><li><strong>Macaroni Panggang (MP)</strong> - Makaroni skotel panggang dengan keju dan sosis melimpah.</li><li><strong>Jumbo Bakery</strong> - Pusat strudel Bogor dengan pastry renyah.</li><li><strong>Chocomory</strong> - Bolu gulung premium dengan isian cokelat lumer.</li><li><strong>Kacang Bogor Istana</strong> - Kacang bogor renyah dan gurih dengan kemasan premium.</li><li><strong>Bir Kotjok Si Abah</strong> - Minuman tradisional Bogor non-alkohol dari jahe dan rempah-rempah.</li></ol><p>Semua UMKM ini telah terverifikasi dan menjamin kualitas produk mereka. Dukung ekonomi lokal dengan membeli produk dari UMKM Bogor!</p>",
+    "content": "<h2>10 UMKM Terbaik di Bogor</h2><p>Bogor memiliki banyak UMKM yang menawarkan produk berkualitas tinggi. Berikut adalah 10 UMKM terbaik yang wajib Anda kunjungi:</p><ol><li><strong>Lapis Bogor Sangkuriang</strong> - Menyajikan lapis talas dengan berbagai varian rasa yang menggugah selera.</li><li><strong>Roti Unyil Venus</strong> - Roti unyil dengan berbagai isian yang lezat dan terjangkau.</li><li><strong>Asinan Sedap Gedung Dalam</strong> - Asinan segar dengan kuah cuka khas Bogor.</li><li><strong>PIA Apple Pie</strong> - Apple pie renyah dengan rasa yang autentik.</li><li><strong>Bika Bogor Talubi</strong> - Bika ambon dengan bahan dasar talas yang lembut dan kenyal.</li><li><strong>Macaroni Panggang (MP)</strong> - Makaroni skotel panggang dengan keju dan sosis melimpah.</li><li><strong>Jumbo Bakery</strong> - Pusat strudel Bogor dengan pastry renyah.</li><li><strong>Chocomory</strong> - Bolu gulung premium dengan isian cokelat lumer.</li><li><strong>Kacang Bogor Istana</strong> - Kacang bogor renyah dan gurih dengan kemasan premium.</li><li><strong>Bir Kotjok Si Abah</strong> - Minuman tradisional Bogor non-alkohol dari jahe dan rempah-rempah.</li></ol><p>Semua UMKM ini telah terverifikasi dan menjamin kualitas produk mereka. Dukung AKU ekonomi lokal dengan membeli produk dari UMKM Bogor!</p>",
     "author": "Admin Asli Bogor",
     "date": "2024-11-08",
     "status": "published",
-    "views": 1235,
+    "views": 1243,
     "likes": 89,
     "comments": 23,
     "thumbnail": "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400",
     "category": "Kuliner",
     "createdAt": "2024-11-08T10:00:00.000Z",
-    "updatedAt": "2025-11-14T20:20:38.239Z"
+    "updatedAt": "2025-11-26T18:57:07.899Z"
   },
   {
     "id": "content-2",
@@ -42,13 +42,13 @@
     "author": "Tim Redaksi",
     "date": "2024-11-06",
     "status": "published",
-    "views": 892,
+    "views": 893,
     "likes": 67,
     "comments": 12,
     "thumbnail": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400",
     "category": "Budaya",
     "createdAt": "2024-11-06T08:00:00.000Z",
-    "updatedAt": "2024-11-06T08:00:00.000Z"
+    "updatedAt": "2025-11-26T18:46:48.139Z"
   },
   {
     "id": "content-4",
@@ -66,5 +66,22 @@
     "category": "Update",
     "createdAt": "2024-11-05T07:00:00.000Z",
     "updatedAt": "2024-11-05T07:00:00.000Z"
+  },
+  {
+    "id": "content-1764182229703-h149v2rz1",
+    "type": "announcement",
+    "status": "published",
+    "category": "TEK",
+    "title": "TEKOM",
+    "excerpt": "TEK",
+    "content": "TEK",
+    "thumbnail": "aa",
+    "author": "Admin Asli Bogor",
+    "date": "2025-11-26T18:37:09.691Z",
+    "createdAt": "2025-11-26T18:37:09.703Z",
+    "updatedAt": "2025-11-26T18:37:50.907Z",
+    "views": 0,
+    "likes": 0,
+    "comments": 0
   }
 ]

@@ -4,7 +4,6 @@ import { DashboardLayout } from './DashboardLayout';
 
 // Admin Components
 import { AdminDashboard } from './admin/AdminDashboard';
-import { ManajemenPersetujuan } from './admin/ManajemenPersetujuan';
 import { AdminAnalyticsPage } from './admin/AdminAnalyticsPage';
 import { PersebaranUMKM } from './admin/PersebaranUMKM';
 import { ManajemenData } from './admin/ManajemenData';
@@ -106,14 +105,12 @@ export function DashboardWrapper() {
           return <AdminAnalyticsPage />;
         case 'persebaran':
           return <PersebaranUMKM />;
-        case 'persetujuan':
-          return <ManajemenPersetujuan />;
         case 'manajemen-data':
           return <ManajemenData />;
         case 'manajemen-order':
           return <ManajemenOrder />;
         case 'konten':
-          return <ManajemenKonten />;
+          return <ManajemenKonten isReadOnly={false} />;
         case 'laporan':
           return <LayananLaporan />;
         case 'keuangan':
@@ -146,6 +143,8 @@ export function DashboardWrapper() {
           return <TrackingPesanan />;
         case 'dompet':
           return <DompetPage />;
+        case 'konten':
+          return <ManajemenKonten isReadOnly={true} />;
         case 'info':
           if (infoDetailId) {
             return <InfoDetailPage contentId={infoDetailId} onBack={() => setInfoDetailId(null)} />;
@@ -179,6 +178,8 @@ export function DashboardWrapper() {
           return <ManajemenPesanan />;
         case 'keuangan':
           return <KeuanganToko />;
+        case 'konten':
+          return <ManajemenKonten isReadOnly={true} />;
         case 'info':
           if (infoDetailId) {
             return <InfoDetailPage contentId={infoDetailId} onBack={() => setInfoDetailId(null)} />;
@@ -210,6 +211,8 @@ export function DashboardWrapper() {
           return <RiwayatPengiriman />;
         case 'keuangan':
           return <KeuanganDriver />;
+        case 'konten':
+          return <ManajemenKonten isReadOnly={true} />;
         case 'info':
           if (infoDetailId) {
             return <InfoDetailPage contentId={infoDetailId} onBack={() => setInfoDetailId(null)} />;

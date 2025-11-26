@@ -15,6 +15,9 @@ export interface User {
   address?: string;
   description?: string;
   storeName?: string;
+  profilePhoto?: string;
+  joinDate?: string;
+  createdAt?: string;
 }
 
 interface RegisterData {
@@ -77,6 +80,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         address: data.user.address,
         description: data.user.description,
         storeName: data.user.storeName,
+        profilePhoto: data.user.profilePhoto,
+        joinDate: data.user.joinDate,
+        createdAt: data.user.createdAt,
       });
     } catch (error: any) {
       console.error('Login error:', error);
@@ -126,6 +132,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         phone: result.user.phone,
         address: result.user.address,
         description: result.user.description,
+        profilePhoto: result.user.profilePhoto,
+        joinDate: result.user.joinDate,
+        createdAt: result.user.createdAt,
       });
     } catch (error: any) {
       console.error('Registration error:', error);
@@ -167,6 +176,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             phone: updatedUser.phone,
             address: updatedUser.address,
             description: updatedUser.description,
+            profilePhoto: updatedUser.profilePhoto,
+            joinDate: updatedUser.joinDate,
+            createdAt: updatedUser.createdAt,
           });
         }
       } catch (error) {
@@ -201,6 +213,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         phone: updatedUser.phone,
         address: updatedUser.address,
         description: updatedUser.description,
+        profilePhoto: updatedUser.profilePhoto,
+        joinDate: updatedUser.joinDate,
+        createdAt: updatedUser.createdAt,
       });
     } catch (error) {
       console.error('Error refreshing user data:', error);
@@ -229,6 +244,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           phone: updatedUser.phone,
           address: updatedUser.address,
           description: updatedUser.description,
+          profilePhoto: updatedUser.profilePhoto,
+          joinDate: updatedUser.joinDate,
+          createdAt: updatedUser.createdAt,
         });
       } catch (error) {
         console.error('Error refreshing user data:', error);

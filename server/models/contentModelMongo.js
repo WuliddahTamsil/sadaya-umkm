@@ -94,3 +94,13 @@ export async function incrementViews(id) {
   return content;
 }
 
+export async function incrementLikes(id) {
+  await connectDB();
+  const content = await Content.findOneAndUpdate(
+    { id },
+    { $inc: { likes: 1 }, updatedAt: new Date() },
+    { new: true }
+  ).lean();
+  return content;
+}
+

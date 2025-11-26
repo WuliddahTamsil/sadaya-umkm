@@ -11,7 +11,10 @@ import productsRoutes from './routes/products.js';
 import cartRoutes from './routes/cart.js';
 import walletRoutes from './routes/wallet.js';
 import contentRoutes from './routes/content.js';
+import commentRoutes from './routes/comments.js';
 import setupRoutes from './routes/setup.js';
+import adminRoutes from './routes/admin.js';
+import chatRoutes from './routes/chat.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -55,7 +58,10 @@ app.use('/api/products', productsRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/wallet', walletRoutes);
 app.use('/api/content', contentRoutes);
+app.use('/api/comments', commentRoutes);
 app.use('/api/setup', setupRoutes);
+app.use('/api/admin', adminRoutes);
+app.use('/api/chat', chatRoutes);
 
 // Serve uploaded files
 app.use('/uploads', express.static(join(__dirname, 'uploads')));

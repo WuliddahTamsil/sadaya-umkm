@@ -5,7 +5,8 @@ import {
   createContent,
   updateContent,
   deleteContent,
-  incrementViews
+  incrementViews,
+  incrementLikes
 } from '../models/contentModel.js';
 
 // Get all contents (admin only - includes drafts)
@@ -101,6 +102,31 @@ export const deleteContentController = async (req, res) => {
   } catch (error) {
     console.error('Delete content error:', error);
     res.status(500).json({ error: 'Terjadi kesalahan saat menghapus konten' });
+  }
+};
+
+// Like content
+export const likeContentController = async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log('Like content request for ID:', id);
+    
+    const updatedContent = await incrementLikes(id);
+    
+    if (!updatedContent) {
+      console.error('Content not found for ID:', id);
+      return res.status(404).json({ error: 'Konten tidak ditemukan' });
+    }
+    
+    console.log('Content liked successfully. New like count:', updatedContent.likes);
+    res.json({ success: true, data: updatedContent });
+  } catch (error) {
+    console.error('Like content error:', error);
+    console.error('Error stack:', error.stack);
+    res.status(500).json({ 
+      error: 'Terjadi kesalahan saat menyukai konten',
+      details: process.env.NODE_ENV === 'development' ? error.message : undefined
+    });
   }
 };
 

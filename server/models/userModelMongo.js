@@ -18,6 +18,8 @@ const userSchema = new mongoose.Schema({
   rating: { type: Number, default: 0 },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
+  // Profile photo untuk semua role
+  profilePhoto: { type: String, default: null },
   // Fields khusus UMKM
   storeName: { type: String, default: null },
   storeAddress: { type: String, default: null },

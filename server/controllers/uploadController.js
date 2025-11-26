@@ -544,3 +544,81 @@ export const uploadProductImageController = async (req, res) => {
   }
 };
 
+export const uploadProfilePhotoController = async (req, res) => {
+  try {
+    const { userId } = req.body;
+
+    if (!userId) {
+      return res.status(400).json({ error: 'User ID diperlukan' });
+    }
+
+    if (!req.file) {
+      return res.status(400).json({ error: 'File foto profil diperlukan' });
+    }
+
+    console.log('=== UPLOAD PROFILE PHOTO START ===');
+    console.log('User ID:', userId);
+
+    const isVercel = process.env.VERCEL || process.env.VERCEL_ENV;
+    const hasBlobToken = !!process.env.BLOB_READ_WRITE_TOKEN;
+
+    let profilePhotoUrl;
+
+    if (isVercel && hasBlobToken) {
+      // Upload ke Vercel Blob Storage
+      const fileData = prepareFileForBlob(req.file);
+      if (!fileData) {
+        return res.status(400).json({ error: 'File tidak valid' });
+      }
+      
+      profilePhotoUrl = await uploadToBlob(
+        fileData.buffer,
+        fileData.filename,
+        fileData.mimetype,
+        'profiles'
+      );
+      console.log('✅ Profile photo uploaded to blob:', profilePhotoUrl);
+    } else if (!isVercel) {
+      // Local development: gunakan path relatif
+      const imagePath = getRelativePath(req.file.path);
+      const baseUrl = 'http://localhost:3000';
+      profilePhotoUrl = `${baseUrl}/${imagePath}`;
+    } else {
+      return res.status(500).json({ error: 'BLOB_READ_WRITE_TOKEN tidak dikonfigurasi' });
+    }
+
+    // Update user dengan profile photo URL
+    const updateData = {
+      profilePhoto: profilePhotoUrl,
+      updatedAt: new Date().toISOString()
+    };
+
+    const updatedUser = await updateUser(userId, updateData);
+    
+    console.log('✅ User profile photo updated');
+    console.log('=== UPLOAD PROFILE PHOTO END ===');
+
+    // Hapus password dari response
+    const { password, ...userWithoutPassword } = updatedUser;
+
+    res.json({
+      success: true,
+      message: 'Foto profil berhasil diupload',
+      profilePhotoUrl: profilePhotoUrl,
+      data: userWithoutPassword
+    });
+  } catch (error) {
+    console.error('Upload profile photo error:', error);
+    console.error('Error stack:', error.stack);
+    
+    // Pastikan response belum dikirim
+    if (!res.headersSent) {
+      const errorMessage = error.message || 'Terjadi kesalahan saat upload foto profil';
+      res.status(500).json({ 
+        error: errorMessage,
+        details: process.env.NODE_ENV === 'development' ? error.stack : undefined
+      });
+    }
+  }
+};
+

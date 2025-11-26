@@ -3,7 +3,7 @@
     "id": "admin-001",
     "name": "Admin Asli Bogor",
     "email": "admin@gmail.com",
-    "password": "$2a$10$A75Q51BnZ6vD3O4FgpZaCeqF88zBQ9bv9SlWe4BPNnBZfPCcUevtC",
+    "password": "$2a$10$Hxh2dhrJr9bakO6lmKNCt.2ALuHYsQUEKEFxPoaBjuuylFwFh63xC",
     "role": "admin",
     "phone": null,
     "address": null,
@@ -15,7 +15,8 @@
     "totalOrders": 0,
     "rating": 0,
     "createdAt": "2025-01-01T00:00:00.000Z",
-    "updatedAt": "2025-01-01T00:00:00.000Z"
+    "updatedAt": "2025-11-26T16:08:09.872Z",
+    "profilePhoto": "http://localhost:3000/uploads/general/unknown_1764173289722_IMG_3590.JPG"
   },
   {
     "id": "7c31ebb1-1d62-45cf-9868-7bf092bca650",
@@ -419,14 +420,14 @@
     "phone": "(0251) 8327456",
     "address": "Jl. Pajajaran No.3F, RT.02/RW.01, Babakan, Kecamatan Bogor Tengah, Kota Bogor, Jawa Barat 16128",
     "description": "Pelopor oleh-oleh Strudel khas Bogor dengan isian unik khas lokal",
-    "status": "active",
+    "status": "inactive",
     "isVerified": true,
     "isOnboarded": true,
     "joinDate": "2025-11-14",
     "totalOrders": 0,
     "rating": 0,
     "createdAt": "2025-11-14T09:37:24.648Z",
-    "updatedAt": "2025-11-14T09:37:24.648Z",
+    "updatedAt": "2025-11-26T14:46:19.793Z",
     "storeName": "Jumbo Bakery (Pusat Strudel Bogor)",
     "storeAddress": "Jl. Pajajaran No.3F, RT.02/RW.01, Babakan, Kecamatan Bogor Tengah, Kota Bogor, Jawa Barat 16128",
     "storeDescription": "Jumbo (akronim dari Jumpa Bogor) adalah pelopor oleh-oleh Strudel khas Bogor. Berbeda dari strudel biasa, Jumbo menawarkan isian unik khas lokal seperti talas, asinan, dan apel, yang dibalut dengan pastry renyah. Toko ini juga berfungsi sebagai pusat oleh-oleh lengkap yang menjual produk UMKM lain."
@@ -643,7 +644,7 @@
   },
   {
     "id": "672dd0db-3ec8-48f1-9cd0-08bc15f71ef8",
-    "name": "Galeri Dekranasda Kota Bogor",
+    "name": "Galeri Dekranasda Kota Bogorr",
     "email": "galeridekranasda@gmail.com",
     "password": "$2a$10$/FHRn7nHOEKGVf5p6HKSq.BYecSd1WIbv89RuwB4ax1MlfU74lQxS",
     "role": "umkm",
@@ -657,7 +658,7 @@
     "totalOrders": 0,
     "rating": 0,
     "createdAt": "2025-11-14T09:37:24.649Z",
-    "updatedAt": "2025-11-14T09:37:24.649Z",
+    "updatedAt": "2025-11-26T18:25:34.026Z",
     "storeName": "Galeri Dekranasda Kota Bogor",
     "storeAddress": "Jl. Bina Marga No.1D, RT.04/RW.11, Baranangsiang, Kec. Bogor Tim., Kota Bogor",
     "storeDescription": "Ini bukan satu UMKM, tapi galeri yang menaungi banyak UMKM pengrajin. Fokusnya adalah kerajinan tangan khas Bogor, terutama miniatur Tugu Kujang yang ikonik (terbuat dari kayu, logam, fiber). Tempat ini juga menjual kerajinan anyaman, fashion, dan produk lokal lainnya."
@@ -721,5 +722,29 @@
     "rating": 0,
     "createdAt": "2025-11-14T19:00:49.687Z",
     "updatedAt": "2025-11-14T19:00:49.687Z"
+  },
+  {
+    "id": "df6283e4-229f-4cc9-9e95-f7707eb13950",
+    "name": "umkm10",
+    "email": "umkm10@gmail.com",
+    "password": "$2a$10$A6WpRI1R2/hkjpE0Mx7RCOC8mBtvR5oyqgfnWbJHl.pY10PISsqX.",
+    "role": "umkm",
+    "phone": "000000",
+    "address": "Bogor",
+    "description": "haha\n\n",
+    "status": "active",
+    "isVerified": true,
+    "isOnboarded": true,
+    "joinDate": "2025-11-26",
+    "totalOrders": 0,
+    "rating": 0,
+    "createdAt": "2025-11-26T18:10:23.198Z",
+    "updatedAt": "2025-11-26T18:25:12.887Z",
+    "ktpFile": "uploads/umkm/df6283e4-229f-4cc9-9e95-f7707eb13950_1764180651647_Simple_Green_Leaf_Design__1_.png",
+    "storePhotoFile": "uploads/umkm/df6283e4-229f-4cc9-9e95-f7707eb13950_1764180651716_Hijau_Putih_Modern_Minimalis_Es_Teh_Logo.png",
+    "businessPermitFile": "uploads/umkm/df6283e4-229f-4cc9-9e95-f7707eb13950_1764180651728_Merah_dan_Kuning_Geometric_Strategi_Keuangan_Presentasi__1_.pdf",
+    "storeName": "TOKO TEKOM",
+    "storeAddress": "hh",
+    "storeDescription": "h"
   }
 ]

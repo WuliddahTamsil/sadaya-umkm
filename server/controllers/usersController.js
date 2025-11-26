@@ -1,4 +1,4 @@
-import { getAllUsers as getAllUsersModel, getUserById as getUserByIdModel, updateUser } from '../models/userModel.js';
+import { getAllUsers as getAllUsersModel, getUserById as getUserByIdModel, updateUser, deleteUser as deleteUserModel } from '../models/userModel.js';
 
 export const getAllUsers = async (req, res) => {
   try {
@@ -97,6 +97,84 @@ export const updateUserStatus = async (req, res) => {
   } catch (error) {
     console.error('Update user status error:', error);
     res.status(500).json({ error: 'Terjadi kesalahan saat update status user' });
+  }
+};
+
+// Update user profile (untuk semua role)
+export const updateUserProfile = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { 
+      name, 
+      phone, 
+      address, 
+      description,
+      storeName,
+      storeAddress,
+      storeDescription,
+      vehicleType,
+      vehiclePlate
+    } = req.body;
+
+    const user = await getUserByIdModel(id);
+    if (!user) {
+      return res.status(404).json({ error: 'User tidak ditemukan' });
+    }
+
+    // Build update data
+    const updateData = {
+      updatedAt: new Date().toISOString()
+    };
+
+    if (name !== undefined) updateData.name = name;
+    if (phone !== undefined) updateData.phone = phone;
+    if (address !== undefined) updateData.address = address;
+    if (description !== undefined) updateData.description = description;
+    
+    // UMKM specific fields
+    if (storeName !== undefined) updateData.storeName = storeName;
+    if (storeAddress !== undefined) updateData.storeAddress = storeAddress;
+    if (storeDescription !== undefined) updateData.storeDescription = storeDescription;
+    
+    // Driver specific fields
+    if (vehicleType !== undefined) updateData.vehicleType = vehicleType;
+    if (vehiclePlate !== undefined) updateData.vehiclePlate = vehiclePlate;
+
+    const updatedUser = await updateUser(id, updateData);
+
+    // Hapus password dari response
+    const { password, ...userWithoutPassword } = updatedUser;
+
+    res.json({
+      success: true,
+      message: 'Profil berhasil diperbarui',
+      data: userWithoutPassword
+    });
+  } catch (error) {
+    console.error('Update user profile error:', error);
+    res.status(500).json({ error: 'Terjadi kesalahan saat update profil' });
+  }
+};
+
+// Delete user (untuk admin)
+export const deleteUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const user = await getUserByIdModel(id);
+    if (!user) {
+      return res.status(404).json({ error: 'User tidak ditemukan' });
+    }
+
+    await deleteUserModel(id);
+
+    res.json({
+      success: true,
+      message: 'User berhasil dihapus'
+    });
+  } catch (error) {
+    console.error('Delete user error:', error);
+    res.status(500).json({ error: 'Terjadi kesalahan saat menghapus user' });
   }
 };
 

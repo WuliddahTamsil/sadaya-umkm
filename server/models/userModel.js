@@ -109,9 +109,20 @@ export async function getUserById(id) {
 
 // Get user by email
 export async function getUserByEmail(email) {
-  const mongoModel = await getMongoModel();
-  if (mongoModel) {
-    return await mongoModel.getUserByEmail(email);
+  try {
+    const mongoModel = await getMongoModel();
+    if (mongoModel) {
+      try {
+        return await mongoModel.getUserByEmail(email);
+      } catch (mongoError) {
+        console.warn('⚠️ MongoDB getUserByEmail failed, falling back to JSON file:', mongoError.message);
+        // Fallback to JSON file if MongoDB fails
+        const users = await readUsers();
+        return users.find(user => user.email === email);
+      }
+    }
+  } catch (error) {
+    console.warn('⚠️ MongoDB model import failed, using JSON file:', error.message);
   }
   const users = await readUsers();
   return users.find(user => user.email === email);

@@ -5,7 +5,8 @@ import {
   getContentByIdController,
   createContentController,
   updateContentController,
-  deleteContentController
+  deleteContentController,
+  likeContentController
 } from '../controllers/contentController.js';
 
 const router = express.Router();
@@ -15,6 +16,9 @@ router.get('/', getAllContentsController);
 
 // GET /api/content/published - Get published contents only (for all users)
 router.get('/published', getPublishedContentsController);
+
+// POST /api/content/:id/like - Like content (must be before /:id route)
+router.post('/:id/like', likeContentController);
 
 // GET /api/content/:id - Get content by ID
 router.get('/:id', getContentByIdController);

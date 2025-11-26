@@ -4,7 +4,11 @@ import { Card, CardContent } from '../../ui/card';
 import { Button } from '../../ui/button';
 import { Badge } from '../../ui/badge';
 import { Input } from '../../ui/input';
+import { Label } from '../../ui/label';
+import { Textarea } from '../../ui/textarea';
 import { Tabs, TabsList, TabsTrigger } from '../../ui/tabs';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '../../ui/dialog';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../ui/select';
 import {
   FileText,
   Megaphone,
@@ -18,15 +22,21 @@ import {
   Search,
   Filter,
   TrendingUp,
-  Loader2
+  Loader2,
+  Send,
+  Trash2,
+  User
 } from 'lucide-react';
 import { api } from '../../../config/api';
+import { toast } from 'sonner';
+import { useAuth } from '../../../contexts/AuthContext';
 
 interface Content {
   id: string;
   type: 'article' | 'announcement' | 'promotion';
   title: string;
   excerpt: string;
+  content?: string;
   author: string;
   date: string;
   status: 'published' | 'draft' | 'scheduled';
@@ -35,13 +45,36 @@ interface Content {
   comments: number;
   thumbnail: string;
   category: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
-export function ManajemenKonten() {
+interface ManajemenKontenProps {
+  isReadOnly?: boolean;
+}
+
+export function ManajemenKonten({ isReadOnly = false }: ManajemenKontenProps) {
+  const { user } = useAuth();
   const [activeTab, setActiveTab] = useState<'all' | 'article' | 'announcement' | 'promotion'>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [contents, setContents] = useState<Content[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [isDetailDialogOpen, setIsDetailDialogOpen] = useState(false);
+  const [selectedContent, setSelectedContent] = useState<Content | null>(null);
+  const [editingContent, setEditingContent] = useState<Partial<Content>>({
+    type: 'article',
+    status: 'draft',
+    category: '',
+    title: '',
+    excerpt: '',
+    content: '',
+    thumbnail: '',
+  });
+  const [comments, setComments] = useState<any[]>([]);
+  const [newComment, setNewComment] = useState('');
+  const [isLoadingComments, setIsLoadingComments] = useState(false);
 
   useEffect(() => {
     fetchContents();
@@ -50,7 +83,9 @@ export function ManajemenKonten() {
   const fetchContents = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch(api.content.getAll);
+      // Untuk read-only, hanya ambil konten yang published
+      const url = isReadOnly ? api.content.getPublished : api.content.getAll;
+      const response = await fetch(url);
       if (response.ok) {
         const data = await response.json();
         setContents(data.data || []);
@@ -65,6 +100,268 @@ export function ManajemenKonten() {
   const handleTabChange = (value: string) => {
     if (value === 'all' || value === 'article' || value === 'announcement' || value === 'promotion') {
       setActiveTab(value);
+    }
+  };
+
+  const handleCreateNew = () => {
+    setEditingContent({
+      type: 'article',
+      status: 'draft',
+      category: '',
+      title: '',
+      excerpt: '',
+      content: '',
+      thumbnail: '',
+    });
+    setIsCreateDialogOpen(true);
+  };
+
+  const handleEdit = (content: Content) => {
+    setEditingContent({
+      ...content,
+      content: content.content || content.excerpt,
+    });
+    setIsEditDialogOpen(true);
+  };
+
+  const handleViewDetail = async (content: Content) => {
+    try {
+      // Fetch full content details from API
+      const response = await fetch(api.content.getById(content.id));
+      if (response.ok) {
+        const result = await response.json();
+        setSelectedContent(result.data || content);
+      } else {
+        setSelectedContent(content);
+      }
+      
+      // Fetch comments
+      await fetchComments(content.id);
+    } catch (error) {
+      console.error('Error fetching content detail:', error);
+      setSelectedContent(content);
+    }
+    setIsDetailDialogOpen(true);
+  };
+
+  const fetchComments = async (contentId: string) => {
+    try {
+      setIsLoadingComments(true);
+      const response = await fetch(api.comments.getByContentId(contentId));
+      if (response.ok) {
+        const result = await response.json();
+        setComments(result.data || []);
+      }
+    } catch (error) {
+      console.error('Error fetching comments:', error);
+      setComments([]);
+    } finally {
+      setIsLoadingComments(false);
+    }
+  };
+
+  const handleAddComment = async () => {
+    if (!newComment.trim() || !selectedContent || !user) {
+      if (!user) {
+        toast.error('Anda harus login untuk menambahkan komentar');
+      } else if (!newComment.trim()) {
+        toast.error('Komentar tidak boleh kosong');
+      }
+      return;
+    }
+
+    const commentData = {
+      contentId: selectedContent.id,
+      userId: user.id,
+      userName: user.name,
+      userEmail: user.email,
+      userRole: user.role,
+      text: newComment.trim(),
+    };
+
+    console.log('Sending comment:', commentData);
+    console.log('API URL:', api.comments.create);
+
+    try {
+      const response = await fetch(api.comments.create, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(commentData),
+      });
+
+      console.log('Comment response status:', response.status);
+      console.log('Comment response ok:', response.ok);
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        console.error('Comment error data:', errorData);
+        throw new Error(errorData.error || `Gagal menambahkan komentar (${response.status})`);
+      }
+
+      const result = await response.json();
+      console.log('Comment success:', result);
+
+      toast.success('Komentar berhasil ditambahkan');
+      setNewComment('');
+      await fetchComments(selectedContent.id);
+      fetchContents(); // Refresh content list to update comment count
+    } catch (error: any) {
+      console.error('Add comment error:', error);
+      console.error('Error stack:', error.stack);
+      toast.error(error.message || 'Gagal menambahkan komentar');
+    }
+  };
+
+  const handleLike = async () => {
+    if (!selectedContent || !user) {
+      toast.error('Anda harus login untuk menyukai konten');
+      return;
+    }
+
+    const likeUrl = api.content.like(selectedContent.id);
+    console.log('Like URL:', likeUrl);
+    console.log('Content ID:', selectedContent.id);
+
+    try {
+      const response = await fetch(likeUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      console.log('Like response status:', response.status);
+      console.log('Like response ok:', response.ok);
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        console.error('Like error data:', errorData);
+        throw new Error(errorData.error || `Gagal menyukai konten (${response.status})`);
+      }
+
+      const result = await response.json();
+      console.log('Like success:', result);
+
+      if (result.data && selectedContent) {
+        setSelectedContent({
+          ...selectedContent,
+          likes: result.data.likes || selectedContent.likes + 1
+        });
+      }
+      fetchContents(); // Refresh content list to update like count
+      toast.success('Konten berhasil disukai');
+    } catch (error: any) {
+      console.error('Like content error:', error);
+      console.error('Error stack:', error.stack);
+      toast.error(error.message || 'Gagal menyukai konten');
+    }
+  };
+
+  const handleDeleteComment = async (commentId: string) => {
+    if (!confirm('Apakah Anda yakin ingin menghapus komentar ini?')) {
+      return;
+    }
+
+    try {
+      const response = await fetch(api.comments.delete(commentId), {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        throw new Error('Gagal menghapus komentar');
+      }
+
+      toast.success('Komentar berhasil dihapus');
+      if (selectedContent) {
+        await fetchComments(selectedContent.id);
+        fetchContents(); // Refresh content list to update comment count
+      }
+    } catch (error) {
+      console.error('Delete comment error:', error);
+      toast.error('Gagal menghapus komentar');
+    }
+  };
+
+  const handleSaveCreate = async () => {
+    if (!editingContent.title || !editingContent.type) {
+      toast.error('Judul dan tipe konten wajib diisi');
+      return;
+    }
+
+    try {
+      const response = await fetch(api.content.create, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...editingContent,
+          author: user?.name || 'Admin Asli Bogor',
+          date: new Date().toISOString(),
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Gagal membuat konten');
+      }
+
+      toast.success('Konten berhasil dibuat');
+      setIsCreateDialogOpen(false);
+      setEditingContent({
+        type: 'article',
+        status: 'draft',
+        category: '',
+        title: '',
+        excerpt: '',
+        content: '',
+        thumbnail: '',
+      });
+      fetchContents();
+    } catch (error) {
+      console.error('Create content error:', error);
+      toast.error('Gagal membuat konten');
+    }
+  };
+
+  const handleSaveEdit = async () => {
+    if (!editingContent.id || !editingContent.title || !editingContent.type) {
+      toast.error('Judul dan tipe konten wajib diisi');
+      return;
+    }
+
+    try {
+      const response = await fetch(api.content.update(editingContent.id), {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...editingContent,
+          updatedAt: new Date().toISOString(),
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Gagal mengupdate konten');
+      }
+
+      toast.success('Konten berhasil diupdate');
+      setIsEditDialogOpen(false);
+      setEditingContent({
+        type: 'article',
+        status: 'draft',
+        category: '',
+        title: '',
+        excerpt: '',
+        content: '',
+        thumbnail: '',
+      });
+      fetchContents();
+    } catch (error) {
+      console.error('Update content error:', error);
+      toast.error('Gagal mengupdate konten');
     }
   };
 
@@ -155,7 +452,12 @@ export function ManajemenKonten() {
     }
   ];
 
+  // Filter: untuk read-only, hanya tampilkan published content
   const filteredContents = (contents.length > 0 ? contents : mockContents).filter(content => {
+    // Read-only hanya tampilkan published
+    if (isReadOnly && content.status !== 'published') {
+      return false;
+    }
     const matchesTab = activeTab === 'all' || content.type === activeTab;
     const matchesSearch = 
       content.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -216,55 +518,65 @@ export function ManajemenKonten() {
         className="flex items-center justify-between"
       >
         <div>
-          <h3 style={{ color: '#2F4858' }}>Manajemen Konten</h3>
+          <h3 style={{ color: '#2F4858' }}>{isReadOnly ? 'Konten' : 'Manajemen Konten'}</h3>
           <p className="body-3 mt-2" style={{ color: '#858585' }}>
-            Kelola artikel, pengumuman, dan promosi untuk platform Asli Bogor
+            {isReadOnly 
+              ? 'Lihat artikel, pengumuman, dan promosi dari platform Asli Bogor'
+              : 'Kelola artikel, pengumuman, dan promosi untuk platform Asli Bogor'
+            }
           </p>
         </div>
-        <Button style={{ backgroundColor: '#FF8D28' }}>
-          <Plus size={16} className="mr-2" />
-          Buat Konten Baru
-        </Button>
+        {!isReadOnly && (
+          <Button 
+            style={{ backgroundColor: '#FF8D28' }}
+            onClick={handleCreateNew}
+          >
+            <Plus size={16} className="mr-2" />
+            Buat Konten Baru
+          </Button>
+        )}
       </motion.div>
 
-      {/* Stats */}
-      <motion.div
-        className="grid md:grid-cols-4 gap-4"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
-      >
-        {stats.map((stat, index) => {
-          const Icon = stat.icon;
-          return (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.3 + index * 0.05 }}
-            >
-              <Card className="hover-scale">
-                <CardContent className="p-4">
-                  <div className="flex items-center gap-3 mb-2">
-                    <div
-                      className="w-10 h-10 rounded-lg flex items-center justify-center"
-                      style={{ backgroundColor: stat.color + '20' }}
-                    >
-                      <Icon size={20} style={{ color: stat.color }} />
+      {/* Stats - Only show for admin */}
+      {!isReadOnly && (
+        <motion.div
+          className="grid md:grid-cols-4 gap-4"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+        >
+          {stats.map((stat, index) => {
+            const Icon = stat.icon;
+            return (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.3 + index * 0.05 }}
+              >
+                <Card className="hover-scale">
+                  <CardContent className="p-4">
+                    <div className="flex items-center gap-3 mb-2">
+                      <div
+                        className="w-10 h-10 rounded-lg flex items-center justify-center"
+                        style={{ backgroundColor: stat.color + '20' }}
+                      >
+                        <Icon size={20} style={{ color: stat.color }} />
+                      </div>
                     </div>
-                  </div>
-                  <p className="body-3 mb-1" style={{ color: '#858585', fontSize: '11px' }}>
-                    {stat.label}
-                  </p>
-                  <h3 style={{ color: stat.color }}>
-                    {typeof stat.value === 'number' ? stat.value.toLocaleString('id-ID') : stat.value}
-                  </h3>
-                </CardContent>
-              </Card>
-            </motion.div>
-          );
-        })}
-      </motion.div>
+                    <p className="body-3 mb-1" style={{ color: '#858585', fontSize: '11px' }}>
+                      {stat.label}
+                    </p>
+                    <h3 style={{ color: stat.color }}>
+                      {typeof stat.value === 'number' ? stat.value.toLocaleString('id-ID') : stat.value}
+                    </h3>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            );
+          })}
+        </motion.div>
+      )}
 
       {/* Filters */}
       <motion.div
@@ -294,9 +606,11 @@ export function ManajemenKonten() {
                     className="pl-9"
                   />
                 </div>
-                <Button variant="outline" size="icon">
-                  <Filter size={16} />
-                </Button>
+                {!isReadOnly && (
+                  <Button variant="outline" size="icon">
+                    <Filter size={16} />
+                  </Button>
+                )}
               </div>
             </div>
           </CardContent>
@@ -325,7 +639,10 @@ export function ManajemenKonten() {
               exit={{ opacity: 0, scale: 0.9 }}
               transition={{ delay: index * 0.05 }}
             >
-              <Card className="hover-scale overflow-hidden group">
+              <Card 
+                className="hover-scale overflow-hidden group cursor-pointer"
+                onClick={() => handleViewDetail(content)}
+              >
                 {/* Thumbnail */}
                 <div className="relative h-48 overflow-hidden">
                   <motion.img
@@ -342,23 +659,61 @@ export function ManajemenKonten() {
                     {getStatusBadge(content.status)}
                   </div>
 
-                  {/* Overlay on Hover */}
-                  <motion.div
-                    className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 flex items-center justify-center gap-2"
-                    initial={false}
-                    style={{ opacity: 0 }}
-                    whileHover={{ opacity: 1 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <Button size="sm" variant="secondary">
-                      <Edit size={14} className="mr-1" />
-                      Edit
-                    </Button>
-                    <Button size="sm" variant="secondary">
-                      <Eye size={14} className="mr-1" />
-                      View
-                    </Button>
-                  </motion.div>
+                  {/* Overlay on Hover - Only show if not read-only */}
+                  {!isReadOnly && (
+                    <motion.div
+                      className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 flex items-center justify-center gap-2"
+                      initial={false}
+                      style={{ opacity: 0 }}
+                      whileHover={{ opacity: 1 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <Button 
+                        size="sm" 
+                        variant="secondary"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleEdit(content);
+                        }}
+                      >
+                        <Edit size={14} className="mr-1" />
+                        Edit
+                      </Button>
+                      <Button 
+                        size="sm" 
+                        variant="secondary"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleViewDetail(content);
+                        }}
+                      >
+                        <Eye size={14} className="mr-1" />
+                        View
+                      </Button>
+                    </motion.div>
+                  )}
+                  {/* Read-only: Show view button on hover */}
+                  {isReadOnly && (
+                    <motion.div
+                      className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 flex items-center justify-center"
+                      initial={false}
+                      style={{ opacity: 0 }}
+                      whileHover={{ opacity: 1 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <Button 
+                        size="sm" 
+                        variant="secondary"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleViewDetail(content);
+                        }}
+                      >
+                        <Eye size={14} className="mr-1" />
+                        Lihat Detail
+                      </Button>
+                    </motion.div>
+                  )}
                 </div>
 
                 <CardContent className="p-4">
@@ -437,6 +792,481 @@ export function ManajemenKonten() {
           </p>
         </motion.div>
       )}
+
+      {/* Create Content Dialog */}
+      <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
+        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle style={{ color: '#2F4858' }}>Buat Konten Baru</DialogTitle>
+            <DialogDescription>
+              Buat artikel, pengumuman, atau promosi baru
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label>Tipe Konten</Label>
+                <Select
+                  value={editingContent.type}
+                  onValueChange={(value) => setEditingContent({ ...editingContent, type: value as any })}
+                >
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="article">Artikel</SelectItem>
+                    <SelectItem value="announcement">Pengumuman</SelectItem>
+                    <SelectItem value="promotion">Promosi</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <Label>Status</Label>
+                <Select
+                  value={editingContent.status}
+                  onValueChange={(value) => setEditingContent({ ...editingContent, status: value as any })}
+                >
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="draft">Draft</SelectItem>
+                    <SelectItem value="published">Published</SelectItem>
+                    <SelectItem value="scheduled">Scheduled</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <div>
+              <Label>Judul</Label>
+              <Input
+                value={editingContent.title}
+                onChange={(e) => setEditingContent({ ...editingContent, title: e.target.value })}
+                placeholder="Masukkan judul konten"
+              />
+            </div>
+            <div>
+              <Label>Kategori</Label>
+              <Input
+                value={editingContent.category}
+                onChange={(e) => setEditingContent({ ...editingContent, category: e.target.value })}
+                placeholder="Masukkan kategori (contoh: Kuliner, Budaya, dll)"
+              />
+            </div>
+            <div>
+              <Label>Ringkasan (Excerpt)</Label>
+              <Textarea
+                value={editingContent.excerpt}
+                onChange={(e) => setEditingContent({ ...editingContent, excerpt: e.target.value })}
+                placeholder="Masukkan ringkasan konten"
+                rows={3}
+              />
+            </div>
+            <div>
+              <Label>Konten Lengkap</Label>
+              <Textarea
+                value={editingContent.content}
+                onChange={(e) => setEditingContent({ ...editingContent, content: e.target.value })}
+                placeholder="Masukkan konten lengkap"
+                rows={8}
+              />
+            </div>
+            <div>
+              <Label>Thumbnail URL</Label>
+              <Input
+                value={editingContent.thumbnail}
+                onChange={(e) => setEditingContent({ ...editingContent, thumbnail: e.target.value })}
+                placeholder="Masukkan URL gambar thumbnail"
+              />
+            </div>
+            <div className="flex justify-end gap-2 pt-4">
+              <Button
+                variant="outline"
+                onClick={() => setIsCreateDialogOpen(false)}
+              >
+                Batal
+              </Button>
+              <Button
+                onClick={handleSaveCreate}
+                style={{ backgroundColor: '#FF8D28', color: '#FFFFFF' }}
+              >
+                Simpan
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Edit Content Dialog */}
+      <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle style={{ color: '#2F4858' }}>Edit Konten</DialogTitle>
+            <DialogDescription>
+              Edit artikel, pengumuman, atau promosi
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label>Tipe Konten</Label>
+                <Select
+                  value={editingContent.type}
+                  onValueChange={(value) => setEditingContent({ ...editingContent, type: value as any })}
+                >
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="article">Artikel</SelectItem>
+                    <SelectItem value="announcement">Pengumuman</SelectItem>
+                    <SelectItem value="promotion">Promosi</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <Label>Status</Label>
+                <Select
+                  value={editingContent.status}
+                  onValueChange={(value) => setEditingContent({ ...editingContent, status: value as any })}
+                >
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="draft">Draft</SelectItem>
+                    <SelectItem value="published">Published</SelectItem>
+                    <SelectItem value="scheduled">Scheduled</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <div>
+              <Label>Judul</Label>
+              <Input
+                value={editingContent.title}
+                onChange={(e) => setEditingContent({ ...editingContent, title: e.target.value })}
+                placeholder="Masukkan judul konten"
+              />
+            </div>
+            <div>
+              <Label>Kategori</Label>
+              <Input
+                value={editingContent.category}
+                onChange={(e) => setEditingContent({ ...editingContent, category: e.target.value })}
+                placeholder="Masukkan kategori"
+              />
+            </div>
+            <div>
+              <Label>Ringkasan (Excerpt)</Label>
+              <Textarea
+                value={editingContent.excerpt}
+                onChange={(e) => setEditingContent({ ...editingContent, excerpt: e.target.value })}
+                placeholder="Masukkan ringkasan konten"
+                rows={3}
+              />
+            </div>
+            <div>
+              <Label>Konten Lengkap</Label>
+              <Textarea
+                value={editingContent.content}
+                onChange={(e) => setEditingContent({ ...editingContent, content: e.target.value })}
+                placeholder="Masukkan konten lengkap"
+                rows={8}
+              />
+            </div>
+            <div>
+              <Label>Thumbnail URL</Label>
+              <Input
+                value={editingContent.thumbnail}
+                onChange={(e) => setEditingContent({ ...editingContent, thumbnail: e.target.value })}
+                placeholder="Masukkan URL gambar thumbnail"
+              />
+            </div>
+            <div className="flex justify-end gap-2 pt-4">
+              <Button
+                variant="outline"
+                onClick={() => setIsEditDialogOpen(false)}
+              >
+                Batal
+              </Button>
+              <Button
+                onClick={handleSaveEdit}
+                style={{ backgroundColor: '#FF8D28', color: '#FFFFFF' }}
+              >
+                Simpan Perubahan
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Detail Content Dialog */}
+      <Dialog open={isDetailDialogOpen} onOpenChange={setIsDetailDialogOpen}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle style={{ color: '#2F4858' }}>Detail Konten</DialogTitle>
+            <DialogDescription>
+              Informasi lengkap tentang konten
+            </DialogDescription>
+          </DialogHeader>
+          {selectedContent && (
+            <div className="space-y-6">
+              {/* Thumbnail */}
+              {selectedContent.thumbnail && (
+                <div className="w-full h-64 overflow-hidden rounded-lg">
+                  <img
+                    src={selectedContent.thumbnail}
+                    alt={selectedContent.title}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              )}
+
+              {/* Header Info */}
+              <div className="flex items-start justify-between">
+                <div className="flex-1">
+                  <div className="flex items-center gap-3 mb-3">
+                    {getTypeBadge(selectedContent.type)}
+                    {getStatusBadge(selectedContent.status)}
+                    <Badge variant="outline">{selectedContent.category}</Badge>
+                  </div>
+                  <h2 className="text-2xl font-bold mb-2" style={{ color: '#2F4858' }}>
+                    {selectedContent.title}
+                  </h2>
+                  <p className="text-sm mb-4" style={{ color: '#858585' }}>
+                    {selectedContent.excerpt}
+                  </p>
+                </div>
+              </div>
+
+              {/* Meta Info */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 rounded-lg" style={{ backgroundColor: '#F5F5F5' }}>
+                <div>
+                  <p className="text-xs mb-1" style={{ color: '#858585' }}>Author</p>
+                  <p className="font-semibold" style={{ color: '#2F4858' }}>{selectedContent.author}</p>
+                </div>
+                <div>
+                  <p className="text-xs mb-1" style={{ color: '#858585' }}>Tanggal</p>
+                  <p className="font-semibold" style={{ color: '#2F4858' }}>
+                    {new Date(selectedContent.date).toLocaleDateString('id-ID', { 
+                      day: 'numeric', 
+                      month: 'long', 
+                      year: 'numeric' 
+                    })}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-xs mb-1" style={{ color: '#858585' }}>Views</p>
+                  <p className="font-semibold" style={{ color: '#2F4858' }}>
+                    {selectedContent.views.toLocaleString('id-ID')}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-xs mb-2" style={{ color: '#858585' }}>Likes</p>
+                  <div className="flex items-center gap-3">
+                    <p className="font-semibold text-lg" style={{ color: '#2F4858' }}>
+                      {selectedContent.likes}
+                    </p>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={handleLike}
+                      className="flex items-center gap-1 hover:bg-red-50 transition-colors"
+                      style={{ 
+                        borderColor: '#FF6B6B',
+                        color: '#FF6B6B'
+                      }}
+                    >
+                      <Heart size={16} className="fill-current" />
+                      Like
+                    </Button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Full Content - Improved Formatting */}
+              {selectedContent.content && (
+                <div>
+                  <h3 className="text-lg font-semibold mb-4" style={{ color: '#2F4858' }}>
+                    Konten Lengkap
+                  </h3>
+                  <div 
+                    className="prose max-w-none"
+                    style={{ 
+                      color: '#2F4858', 
+                      lineHeight: '1.8',
+                      fontSize: '15px'
+                    }}
+                  >
+                    {(() => {
+                      // Parse HTML if exists, otherwise format plain text
+                      const content = selectedContent.content || '';
+                      // Check if content contains HTML tags
+                      if (content.includes('<') && content.includes('>')) {
+                        // Parse HTML content
+                        return (
+                          <div 
+                            dangerouslySetInnerHTML={{ __html: content }}
+                            style={{
+                              lineHeight: '1.8',
+                              wordBreak: 'break-word'
+                            }}
+                          />
+                        );
+                      } else {
+                        // Format plain text with proper line breaks
+                        return content.split('\n').map((paragraph, index) => {
+                          if (!paragraph.trim()) return <br key={index} />;
+                          // Detect and format links
+                          const linkRegex = /(https?:\/\/[^\s]+)/g;
+                          const parts = paragraph.split(linkRegex);
+                          return (
+                            <p key={index} className="mb-4" style={{ textAlign: 'justify' }}>
+                              {parts.map((part, partIndex) => {
+                                if (part.match(linkRegex)) {
+                                  return (
+                                    <a
+                                      key={partIndex}
+                                      href={part}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      style={{ 
+                                        color: '#2196F3',
+                                        textDecoration: 'underline',
+                                        wordBreak: 'break-all'
+                                      }}
+                                    >
+                                      {part}
+                                    </a>
+                                  );
+                                }
+                                return part;
+                              })}
+                            </p>
+                          );
+                        });
+                      }
+                    })()}
+                  </div>
+                </div>
+              )}
+
+              {/* Comments Section */}
+              <div className="pt-6 border-t">
+                <div className="flex items-center gap-2 mb-4">
+                  <MessageSquare size={20} style={{ color: '#2F4858' }} />
+                  <h3 className="text-lg font-semibold" style={{ color: '#2F4858' }}>
+                    Komentar ({comments.length})
+                  </h3>
+                </div>
+
+                {/* Add Comment Form */}
+                <div className="mb-6 p-4 rounded-lg" style={{ backgroundColor: '#F5F5F5' }}>
+                  <Textarea
+                    value={newComment}
+                    onChange={(e) => setNewComment(e.target.value)}
+                    placeholder="Tulis komentar Anda di sini..."
+                    rows={3}
+                    className="mb-3"
+                  />
+                  <div className="flex justify-end">
+                    <Button
+                      onClick={handleAddComment}
+                      disabled={!newComment.trim()}
+                      style={{ backgroundColor: '#FF8D28', color: '#FFFFFF' }}
+                    >
+                      <Send size={16} className="mr-2" />
+                      Kirim Komentar
+                    </Button>
+                  </div>
+                </div>
+
+                {/* Comments List */}
+                {isLoadingComments ? (
+                  <div className="flex items-center justify-center py-8">
+                    <Loader2 className="animate-spin" size={24} style={{ color: '#FF8D28' }} />
+                  </div>
+                ) : comments.length === 0 ? (
+                  <div className="text-center py-8">
+                    <MessageSquare size={48} style={{ color: '#CCCCCC', margin: '0 auto 12px' }} />
+                    <p style={{ color: '#858585' }}>Belum ada komentar. Jadilah yang pertama!</p>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {comments.map((comment) => (
+                      <motion.div
+                        key={comment.id}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="p-4 rounded-lg border"
+                        style={{ 
+                          borderColor: '#E0E0E0',
+                          backgroundColor: '#FFFFFF'
+                        }}
+                      >
+                        <div className="flex items-start justify-between mb-2">
+                          <div className="flex items-center gap-3">
+                            <div 
+                              className="w-10 h-10 rounded-full flex items-center justify-center"
+                              style={{ backgroundColor: '#FF8D28' + '20' }}
+                            >
+                              <User size={20} style={{ color: '#FF8D28' }} />
+                            </div>
+                            <div>
+                              <p className="font-semibold text-sm" style={{ color: '#2F4858' }}>
+                                {comment.userName}
+                              </p>
+                              <p className="text-xs" style={{ color: '#858585' }}>
+                                {comment.userRole} • {new Date(comment.createdAt).toLocaleDateString('id-ID', {
+                                  day: 'numeric',
+                                  month: 'long',
+                                  year: 'numeric',
+                                  hour: '2-digit',
+                                  minute: '2-digit'
+                                })}
+                              </p>
+                            </div>
+                          </div>
+                          {(user?.role === 'admin' || user?.id === comment.userId) && (
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleDeleteComment(comment.id)}
+                              className="text-red-600 hover:text-red-700"
+                            >
+                              <Trash2 size={16} />
+                            </Button>
+                          )}
+                        </div>
+                        <p className="text-sm ml-13" style={{ color: '#2F4858', lineHeight: '1.6' }}>
+                          {comment.text}
+                        </p>
+                      </motion.div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Actions for Admin */}
+              {!isReadOnly && (
+                <div className="flex justify-end gap-2 pt-4 border-t">
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      handleEdit(selectedContent);
+                      setIsDetailDialogOpen(false);
+                    }}
+                  >
+                    <Edit size={16} className="mr-2" />
+                    Edit
+                  </Button>
+                </div>
+              )}
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

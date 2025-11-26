@@ -1,6 +1,6 @@
 import express from 'express';
-import { uploadDriverDocs, uploadUMKMDocs, uploadProductImage } from '../middleware/upload.js';
-import { uploadDriverDocuments, uploadUMKMDocuments, uploadProductImageController } from '../controllers/uploadController.js';
+import { uploadDriverDocs, uploadUMKMDocs, uploadProductImage, uploadProfilePhoto } from '../middleware/upload.js';
+import { uploadDriverDocuments, uploadUMKMDocuments, uploadProductImageController, uploadProfilePhotoController } from '../controllers/uploadController.js';
 
 const router = express.Router();
 
@@ -59,6 +59,9 @@ router.post('/umkm', handleUpload(uploadUMKMDocs, uploadUMKMDocuments));
 
 // POST /api/upload/products - Upload gambar produk
 router.post('/products', handleUpload(uploadProductImage, uploadProductImageController));
+
+// POST /api/upload/profile - Upload foto profil (untuk semua role)
+router.post('/profile', handleUpload(uploadProfilePhoto, uploadProfilePhotoController));
 
 export default router;
 
