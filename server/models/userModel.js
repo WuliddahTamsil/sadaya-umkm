@@ -97,17 +97,34 @@ export async function getAllUsers() {
   return await readUsers();
 }
 
-// Get user by ID
+// Get user by ID (case-insensitive, whitespace trimmed)
 export async function getUserById(id) {
+  if (!id) return null;
+  
   const mongoModel = await getMongoModel();
   if (mongoModel) {
     return await mongoModel.getUserById(id);
   }
+  
   const users = await readUsers();
-  return users.find(user => user.id === id);
+  // Normalize ID untuk perbandingan (trim whitespace dan case-insensitive)
+  const normalizedId = id.toString().trim();
+  
+  // Coba exact match dulu
+  let user = users.find(user => user.id === normalizedId);
+  
+  // Jika tidak ditemukan, coba case-insensitive match
+  if (!user) {
+    user = users.find(user => {
+      const userId = user.id?.toString().trim();
+      return userId?.toLowerCase() === normalizedId.toLowerCase();
+    });
+  }
+  
+  return user || null;
 }
 
-// Get user by email
+// Get user by email (case-insensitive)
 export async function getUserByEmail(email) {
   try {
     const mongoModel = await getMongoModel();
@@ -125,7 +142,9 @@ export async function getUserByEmail(email) {
     console.warn('⚠️ MongoDB model import failed, using JSON file:', error.message);
   }
   const users = await readUsers();
-  return users.find(user => user.email === email);
+  // Email comparison should be case-insensitive
+  const normalizedEmail = email?.toLowerCase().trim();
+  return users.find(user => user.email?.toLowerCase().trim() === normalizedEmail);
 }
 
 // Save new user

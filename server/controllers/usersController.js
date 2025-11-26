@@ -5,19 +5,36 @@ export const getAllUsers = async (req, res) => {
     const { role, status } = req.query;
     let users = await getAllUsersModel();
 
-    // Filter by role jika ada
+    // Filter by role jika ada (case-insensitive)
     if (role && role !== 'all') {
       users = users.filter(user => {
-        const userRole = user.role === 'umkm' ? 'UMKM' : 
-                        user.role === 'driver' ? 'Driver' : 
-                        user.role === 'user' ? 'User' : user.role;
-        return userRole === role;
+        const userRole = user.role?.toString().toLowerCase().trim();
+        const normalizedRole = role.toString().toLowerCase().trim();
+        
+        // Map role untuk matching
+        const roleMap = {
+          'umkm': 'umkm',
+          'driver': 'driver',
+          'user': 'user',
+          'UMKM': 'umkm',
+          'Driver': 'driver',
+          'User': 'user'
+        };
+        
+        const mappedUserRole = roleMap[userRole] || userRole;
+        const mappedFilterRole = roleMap[normalizedRole] || normalizedRole;
+        
+        return mappedUserRole === mappedFilterRole;
       });
     }
 
-    // Filter by status jika ada
+    // Filter by status jika ada (case-insensitive)
     if (status && status !== 'all') {
-      users = users.filter(user => user.status === status);
+      users = users.filter(user => {
+        const userStatus = user.status?.toString().toLowerCase().trim();
+        const normalizedStatus = status.toString().toLowerCase().trim();
+        return userStatus === normalizedStatus;
+      });
     }
 
     // Hapus password dari response

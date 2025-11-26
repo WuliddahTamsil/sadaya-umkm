@@ -42,7 +42,7 @@ interface CartItem {
 
 export function Keranjang() {
   const { user } = useAuth();
-  const { createOrder } = useOrderContext();
+  const { createOrder, refreshOrders } = useOrderContext();
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [updatingItem, setUpdatingItem] = useState<string | null>(null);
@@ -241,6 +241,15 @@ export function Keranjang() {
       return;
     }
     
+    // Validasi bahwa semua item yang dipilih memiliki produk dan UMKM yang valid
+    const invalidItems = selectedItems.filter(item => !item.product || !item.product.umkmId);
+    if (invalidItems.length > 0) {
+      toast.error('Beberapa produk tidak valid atau UMKM tidak ditemukan. Silakan refresh halaman atau hapus item yang bermasalah.');
+      // Refresh cart untuk mendapatkan data terbaru
+      await fetchCart();
+      return;
+    }
+    
     // Fetch wallet balance before checkout
     if (user) {
       await fetchWalletBalance();
@@ -276,18 +285,51 @@ export function Keranjang() {
       const groupCount = Object.keys(groupedByStore).length || 1;
       const perGroupShipping = shippingFee / groupCount;
 
+      // Validasi ulang bahwa semua item memiliki produk dan UMKM yang valid
+      const invalidItems = selectedItems.filter(item => {
+        const hasProduct = item.product;
+        const hasUmkmId = item.product?.umkmId;
+        const umkmIdValid = hasUmkmId && item.product.umkmId.toString().trim().length > 0;
+        return !hasProduct || !hasUmkmId || !umkmIdValid;
+      });
+      
+      if (invalidItems.length > 0) {
+        console.error('❌ Invalid items found:', invalidItems.map(item => ({
+          id: item.id,
+          productId: item.id_produk,
+          hasProduct: !!item.product,
+          umkmId: item.product?.umkmId,
+          umkmName: item.product?.umkmName
+        })));
+        toast.error('Beberapa produk tidak memiliki informasi UMKM yang valid. Silakan refresh halaman atau hapus item yang bermasalah.');
+        setIsProcessingPayment(false);
+        await fetchCart(); // Refresh untuk mendapatkan data terbaru
+        return;
+      }
+      
+      // Log semua UMKM IDs yang akan digunakan untuk debugging
+      const umkmIds = selectedItems.map(item => item.product?.umkmId).filter(Boolean);
+      console.log(`📦 Checkout dengan ${selectedItems.length} items dari ${Object.keys(groupedByStore).length} store(s)`);
+      console.log(`📋 UMKM IDs yang akan digunakan:`, [...new Set(umkmIds)]);
+
       // Buat orders untuk setiap store
       const orderPromises = Object.entries(groupedByStore).map(async ([storeName, items]) => {
         const itemsTotal = items.reduce((sum, item) => sum + item.harga_saat_ini * item.jumlah, 0);
         const orderTotal = itemsTotal + perGroupShipping;
         
-        // Ambil UMKM ID dari product
-        const umkmId = items[0]?.product?.umkmId;
+        // Ambil UMKM ID dari product - pastikan ada dan normalize
+        const rawUmkmId = items[0]?.product?.umkmId;
         
-        if (!umkmId) {
-          toast.error(`UMKM "${storeName}" tidak ditemukan`);
-          throw new Error(`UMKM "${storeName}" tidak ditemukan`);
+        if (!rawUmkmId) {
+          const errorMsg = `Produk dari "${storeName}" tidak memiliki informasi UMKM. Silakan refresh halaman.`;
+          console.error('Missing UMKM ID for store:', storeName, 'Items:', items);
+          toast.error(errorMsg);
+          throw new Error(errorMsg);
         }
+
+        // Normalize UMKM ID (trim whitespace)
+        const umkmId = rawUmkmId.toString().trim();
+        console.log(`📦 Creating order for UMKM ID: "${umkmId}" (store: ${storeName})`);
 
         // Create order via API
         const orderResponse = await fetch(api.orders.create, {
@@ -316,11 +358,13 @@ export function Keranjang() {
 
         if (!orderResponse.ok) {
           const error = await orderResponse.json();
+          console.error('❌ Error creating order:', error);
           throw new Error(error.error || 'Gagal membuat pesanan');
         }
 
         const orderData = await orderResponse.json();
         const order = orderData.data;
+        console.log(`✅ Order berhasil dibuat: ${order.id} untuk store ${storeName}`);
 
         // Process payment
         if (paymentMethod === 'wallet') {
@@ -345,10 +389,14 @@ export function Keranjang() {
 
         if (!paymentResponse.ok) {
           const error = await paymentResponse.json();
+          console.error('❌ Error processing payment:', error);
           throw new Error(error.error || 'Gagal memproses pembayaran');
         }
 
-        toast.info(`Pesanan baru terkirim ke ${storeName}.`);
+        const paymentData = await paymentResponse.json();
+        console.log(`✅ Payment berhasil: ${paymentData.message || 'Pembayaran berhasil'}`);
+        
+        toast.success(`✅ Pesanan berhasil dibuat dan pembayaran berhasil! Pesanan telah dikirim ke ${storeName}.`);
         return order;
       });
 
@@ -367,7 +415,10 @@ export function Keranjang() {
                                  paymentMethod === 'ovo' ? 'OVO' :
                                  paymentMethod === 'qris' ? 'QRIS' :
                                  paymentMethod === 'transfer' ? 'Transfer Bank' : 'COD';
-      toast.success(`Pembayaran berhasil (${paymentMethodLabel}).`);
+      
+      // Pesan sukses sudah ditampilkan di dalam loop orderPromises
+      // Hanya tampilkan summary di sini
+      console.log(`✅ Semua pesanan berhasil dibuat: ${createdOrders.length} pesanan`);
 
       // Refresh wallet balance if using wallet
       if (paymentMethod === 'wallet') {
@@ -394,6 +445,11 @@ export function Keranjang() {
       }
       setCartItems(items => items.filter(item => !item.selected));
       await fetchCart(); // Refresh cart after checkout
+      
+      // Refresh orders agar pesanan baru muncul di halaman Riwayat Pesanan dan Tracking
+      if (refreshOrders) {
+        await refreshOrders();
+      }
     } catch (error: any) {
       console.error('Checkout error:', error);
       toast.error(error.message || 'Gagal membuat pesanan. Silakan coba lagi.');

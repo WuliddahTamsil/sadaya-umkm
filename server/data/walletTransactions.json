@@ -31,5 +31,16 @@
     "status": "completed",
     "createdAt": "2025-11-14T12:11:42.248Z",
     "updatedAt": "2025-11-14T12:11:42.248Z"
+  },
+  {
+    "id": "55e612b1-0d0d-4dc7-8e0a-68d569afd1c8",
+    "userId": "af3583a6-707b-4d54-b235-114208187f28",
+    "type": "payment",
+    "amount": 55000,
+    "description": "Pembayaran Order ORD-1763316688948-9K2CD099B",
+    "orderId": "ORD-1763316688948-9K2CD099B",
+    "status": "completed",
+    "createdAt": "2025-11-16T18:11:29.228Z",
+    "updatedAt": "2025-11-16T18:11:29.228Z"
   }
 ]

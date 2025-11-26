@@ -302,5 +302,21 @@
     "status": "active",
     "createdAt": "2025-11-14T17:53:37.496Z",
     "updatedAt": "2025-11-14T17:53:37.496Z"
+  },
+  {
+    "id": "eaa9d52f-0177-48b4-a275-385daf5e054c",
+    "name": "Brownies ",
+    "price": 45000,
+    "stock": 12,
+    "category": "Minuman",
+    "description": "Brownies ",
+    "image": "https://down-id.img.susercontent.com/file/3dfd0fb7ad574a924b078ebef11cd5c7",
+    "umkmId": "4fb06afa-fd54-4d28-aace-d40af516f40a",
+    "umkmName": "Lapis Bogor Sangkuriang",
+    "sold": 0,
+    "rating": 0,
+    "status": "active",
+    "createdAt": "2025-11-16T18:10:24.295Z",
+    "updatedAt": "2025-11-16T18:10:24.295Z"
   }
 ]

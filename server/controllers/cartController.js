@@ -7,6 +7,99 @@ import {
   clearCart
 } from '../models/cartModel.js';
 import { getProductById } from '../models/productModel.js';
+import { getAllUsers } from '../models/userModel.js';
+
+// Helper function untuk enrich produk dengan data UMKM
+async function enrichProductWithUMKM(product) {
+  if (!product) return null;
+  
+  try {
+    // Ambil semua UMKM sekaligus untuk efisiensi
+    const allUsers = await getAllUsers();
+    const umkmMap = new Map();
+    
+    // Buat map UMKM berdasarkan ID - TIDAK filter berdasarkan status untuk memastikan semua UMKM terdeteksi
+    // Filter hanya berdasarkan role, status akan divalidasi saat checkout
+    allUsers
+      .filter(user => {
+        const userRole = user.role?.toString().toLowerCase().trim();
+        return userRole === 'umkm';
+      })
+      .forEach(umkm => {
+        // Normalize UMKM ID untuk key map - gunakan multiple keys untuk memastikan ditemukan
+        const normalizedId = umkm.id?.toString().trim();
+        const lowerId = normalizedId?.toLowerCase();
+        
+        const umkmData = {
+          id: normalizedId, // Simpan ID yang sudah dinormalisasi
+          name: umkm.name || umkm.storeName || 'UMKM',
+          storeName: umkm.storeName || umkm.name || 'UMKM',
+          address: umkm.address || umkm.storeAddress || '',
+          phone: umkm.phone || '',
+          status: umkm.status || 'active',
+          role: umkm.role || 'umkm'
+        };
+        
+        // Set dengan multiple keys untuk memastikan lookup berhasil
+        umkmMap.set(normalizedId, umkmData);
+        if (lowerId && lowerId !== normalizedId) {
+          umkmMap.set(lowerId, umkmData);
+        }
+      });
+
+    // Enrich produk dengan data UMKM (case-insensitive lookup dengan multiple attempts)
+    const normalizedProductUmkmId = product.umkmId?.toString().trim();
+    let umkmInfo = null;
+    
+    if (normalizedProductUmkmId) {
+      // 1. Try exact match
+      umkmInfo = umkmMap.get(normalizedProductUmkmId);
+      
+      // 2. Try case-insensitive match
+      if (!umkmInfo) {
+        umkmInfo = umkmMap.get(normalizedProductUmkmId.toLowerCase());
+      }
+      
+      // 3. Try case-insensitive lookup dari entries
+      if (!umkmInfo) {
+        for (const [umkmId, umkmData] of umkmMap.entries()) {
+          const umkmIdNormalized = umkmId?.toString().trim();
+          if (umkmIdNormalized?.toLowerCase() === normalizedProductUmkmId.toLowerCase()) {
+            umkmInfo = umkmData;
+            console.log(`✅ UMKM ditemukan dengan case-insensitive lookup: ${umkmId} untuk product ${product.id}`);
+            break;
+          }
+        }
+      }
+    }
+    
+    // Gunakan umkmId yang sudah dinormalisasi dari umkmInfo jika ada, atau gunakan product.umkmId
+    const finalUmkmId = umkmInfo?.id || normalizedProductUmkmId || product.umkmId;
+    
+    // Log jika UMKM tidak ditemukan untuk debugging
+    if (!umkmInfo && normalizedProductUmkmId) {
+      console.warn(`⚠️ UMKM dengan ID "${normalizedProductUmkmId}" tidak ditemukan untuk product ${product.id}. Total UMKM di map: ${umkmMap.size}`);
+    }
+    
+    return {
+      ...product,
+      umkmId: finalUmkmId, // Gunakan ID yang sudah dinormalisasi
+      umkmName: product.umkmName || umkmInfo?.name || umkmInfo?.storeName || 'UMKM',
+      umkmStoreName: umkmInfo?.storeName || umkmInfo?.name || 'UMKM',
+      umkmAddress: umkmInfo?.address || '',
+      umkmPhone: umkmInfo?.phone || '',
+      umkmStatus: umkmInfo?.status || 'active' // Include status untuk validasi di frontend
+    };
+  } catch (error) {
+    console.error('Error enriching product with UMKM data:', error);
+    // Jika error, return produk dengan umkmId minimal
+    return {
+      ...product,
+      umkmId: product.umkmId || null,
+      umkmName: product.umkmName || 'UMKM'
+    };
+  }
+}
 
 // Get cart items by user ID
 export const getCartController = async (req, res) => {
@@ -19,14 +112,25 @@ export const getCartController = async (req, res) => {
     
     const cartItems = await getCartByUserId(userId);
     
-    // Enrich dengan data produk
+    // Enrich dengan data produk dan UMKM
     const enrichedCartItems = await Promise.all(
       cartItems.map(async (item) => {
         try {
           const product = await getProductById(item.id_produk);
+          if (!product) {
+            console.warn(`Product ${item.id_produk} not found for cart item ${item.id}`);
+            return {
+              ...item,
+              product: null
+            };
+          }
+          
+          // Enrich produk dengan data UMKM
+          const enrichedProduct = await enrichProductWithUMKM(product);
+          
           return {
             ...item,
-            product: product || null
+            product: enrichedProduct
           };
         } catch (error) {
           console.error(`Error fetching product ${item.id_produk}:`, error);
