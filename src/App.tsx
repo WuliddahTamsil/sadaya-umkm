@@ -4,12 +4,11 @@ import { NotificationProvider } from "./contexts/NotificationContext";
 import { WeatherProvider } from "./contexts/WeatherContext";
 import { OrderProvider } from "./contexts/OrderContext";
 import { LandingNavbar } from "./components/LandingNavbar";
-import { NewHeroSection } from "./components/NewHeroSection";
-import { DirectorySection } from "./components/DirectorySection";
-import { AuthSectionLanding } from "./components/AuthSectionLanding";
-import { AboutSection } from "./components/AboutSection";
-import { FeaturesSection } from "./components/FeaturesSection";
 import { Footer } from "./components/Footer";
+import { BerandaPage } from "./pages/BerandaPage";
+import { DirektoriPage } from "./pages/DirektoriPage";
+import { TentangPage } from "./pages/TentangPage";
+import { FiturPage } from "./pages/FiturPage";
 import { UMKMDetailPage } from "./components/UMKMDetailPage";
 import { ShopPage } from "./components/ShopPage";
 import { RoleSelectionPage } from "./components/auth/RoleSelectionPage";
@@ -49,11 +48,14 @@ type AuthView =
   | 'user-login'
   | 'user-register';
 
+type LandingPage = 'beranda' | 'direktori' | 'tentang' | 'fitur';
+
 function AppContent() {
   const { user } = useAuth();
   const [selectedUMKM, setSelectedUMKM] = useState<UMKMItem | null>(null);
   const [shopUMKM, setShopUMKM] = useState<UMKMItem | null>(null);
   const [authView, setAuthView] = useState<AuthView>(null);
+  const [currentPage, setCurrentPage] = useState<LandingPage>('beranda');
 
   const handleSelectUMKM = (umkm: UMKMItem) => {
     setSelectedUMKM(umkm);
@@ -62,12 +64,13 @@ function AppContent() {
 
   const handleBackToDirectory = () => {
     setSelectedUMKM(null);
-    setTimeout(() => {
-      const element = document.getElementById('direktori');
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
-    }, 100);
+    setCurrentPage('direktori');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleNavigateToPage = (page: LandingPage) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleBackFromShop = () => {
@@ -210,26 +213,37 @@ function AppContent() {
     );
   }
 
-  // Show landing page
+  // Show landing pages (multi-page)
   return (
-    <div className="min-h-screen">
-      <LandingNavbar onRoleSelect={handleRoleSelect} />
-      <NewHeroSection />
-      <div className="mt-8 lg:mt-12">
-      <DirectorySection onSelectUMKM={handleSelectUMKM} />
-      </div>
-      <div className="mt-8 lg:mt-12">
-      <AuthSectionLanding onRoleSelect={handleRoleSelect} />
-      </div>
-      <div className="mt-8 lg:mt-12">
-      <AboutSection />
-      </div>
-      <div className="mt-8 lg:mt-12">
-      <FeaturesSection />
-      </div>
-      <div className="mt-8 lg:mt-12">
+    <div className="min-h-screen bg-white">
+      <LandingNavbar 
+        onRoleSelect={handleRoleSelect}
+        currentPage={currentPage}
+        onNavigateToPage={handleNavigateToPage}
+      />
+      
+      {/* Render current page */}
+      {currentPage === 'beranda' && (
+        <BerandaPage 
+          onRoleSelect={handleRoleSelect}
+          onNavigateToDirectory={() => handleNavigateToPage('direktori')}
+        />
+      )}
+      
+      {currentPage === 'direktori' && (
+        <DirektoriPage onSelectUMKM={handleSelectUMKM} />
+      )}
+      
+      {currentPage === 'tentang' && (
+        <TentangPage />
+      )}
+      
+      {currentPage === 'fitur' && (
+        <FiturPage />
+      )}
+      
+      {/* Footer */}
       <Footer />
-      </div>
     </div>
   );
 }

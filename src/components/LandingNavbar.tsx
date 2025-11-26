@@ -4,11 +4,15 @@ import { AsliBogorLogo } from "./ui/asli-bogor-logo";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
+type LandingPage = 'beranda' | 'direktori' | 'tentang' | 'fitur';
+
 interface LandingNavbarProps {
   onRoleSelect?: (role: 'user' | 'umkm' | 'driver') => void;
+  currentPage?: LandingPage;
+  onNavigateToPage?: (page: LandingPage) => void;
 }
 
-export function LandingNavbar({ onRoleSelect }: LandingNavbarProps) {
+export function LandingNavbar({ onRoleSelect, currentPage = 'beranda', onNavigateToPage }: LandingNavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -20,38 +24,27 @@ export function LandingNavbar({ onRoleSelect }: LandingNavbarProps) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToSection = (id: string) => {
-    // Close mobile menu first
+  const handleNavClick = (page: LandingPage) => {
     setMobileMenuOpen(false);
-    
-    // Small delay to ensure menu closes before scrolling
-    setTimeout(() => {
-      const element = document.getElementById(id);
-      if (element) {
-        // Calculate offset for fixed navbar (navbar height + some padding)
-        const navbarHeight = 80;
-        const extraPadding = 20;
-        const offset = navbarHeight + extraPadding;
-        
-        const elementPosition = element.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - offset;
-
-        window.scrollTo({
-          top: Math.max(0, offsetPosition),
-          behavior: 'smooth'
-        });
-      } else {
-        console.warn(`Section with id "${id}" not found`);
-      }
-    }, 150);
+    if (onNavigateToPage) {
+      onNavigateToPage(page);
+    }
   };
 
   const handleAuthClick = () => {
-    scrollToSection('auth-section');
+    if (onNavigateToPage) {
+      onNavigateToPage('beranda');
+      setTimeout(() => {
+        const element = document.getElementById('auth-section');
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    }
   };
 
-  const navItems = [
-    { id: 'hero', label: 'Beranda' },
+  const navItems: Array<{ id: LandingPage; label: string }> = [
+    { id: 'beranda', label: 'Beranda' },
     { id: 'direktori', label: 'Direktori' },
     { id: 'tentang', label: 'Tentang' },
     { id: 'fitur', label: 'Fitur' },
@@ -70,7 +63,7 @@ export function LandingNavbar({ onRoleSelect }: LandingNavbarProps) {
           {/* Logo */}
           <motion.div
             className="flex items-center cursor-pointer z-10"
-            onClick={() => scrollToSection('hero')}
+            onClick={() => handleNavClick('beranda')}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
@@ -88,11 +81,11 @@ export function LandingNavbar({ onRoleSelect }: LandingNavbarProps) {
               {navItems.map((item, index) => (
                 <motion.button
                   key={item.id}
-                  onClick={() => scrollToSection(item.id)}
+                  onClick={() => handleNavClick(item.id)}
                   className="relative px-6 py-2 rounded-full body-3 transition-all whitespace-nowrap"
                   style={{ 
-                    color: '#2F4858',
-                    fontWeight: 500
+                    color: currentPage === item.id ? '#FF8D28' : '#2F4858',
+                    fontWeight: currentPage === item.id ? 600 : 500
                   }}
                   whileHover={{ 
                     color: '#FF8D28',
@@ -101,12 +94,21 @@ export function LandingNavbar({ onRoleSelect }: LandingNavbarProps) {
                   whileTap={{ scale: 0.95 }}
                 >
                   {item.label}
-                  <motion.div
-                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#FF8D28] to-[#FFB84D] rounded-full"
-                    initial={{ scaleX: 0 }}
-                    whileHover={{ scaleX: 1 }}
-                    transition={{ duration: 0.2 }}
-                  />
+                  {currentPage === item.id ? (
+                    <motion.div
+                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#FF8D28] to-[#FFB84D] rounded-full"
+                      initial={{ scaleX: 0 }}
+                      animate={{ scaleX: 1 }}
+                      transition={{ duration: 0.2 }}
+                    />
+                  ) : (
+                    <motion.div
+                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#FF8D28] to-[#FFB84D] rounded-full"
+                      initial={{ scaleX: 0 }}
+                      whileHover={{ scaleX: 1 }}
+                      transition={{ duration: 0.2 }}
+                    />
+                  )}
                 </motion.button>
               ))}
             </div>
@@ -178,13 +180,13 @@ export function LandingNavbar({ onRoleSelect }: LandingNavbarProps) {
             {navItems.map((item, index) => (
               <motion.button
                 key={item.id}
-                onClick={() => scrollToSection(item.id)}
+                onClick={() => handleNavClick(item.id)}
                 className="w-full text-left px-5 py-3.5 rounded-xl body-3 transition-all shadow-sm"
                 style={{ 
-                  color: '#2F4858',
-                  fontWeight: 600,
-                  backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                  border: '1px solid rgba(255, 141, 40, 0.15)'
+                  color: currentPage === item.id ? '#FF8D28' : '#2F4858',
+                  fontWeight: currentPage === item.id ? 700 : 600,
+                  backgroundColor: currentPage === item.id ? 'rgba(255, 141, 40, 0.15)' : 'rgba(255, 255, 255, 0.95)',
+                  border: `1px solid ${currentPage === item.id ? 'rgba(255, 141, 40, 0.3)' : 'rgba(255, 141, 40, 0.15)'}`
                 }}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ 

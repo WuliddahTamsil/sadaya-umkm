@@ -42,20 +42,20 @@ export function FeaturesSection() {
   ];
 
   return (
-    <section id="fitur" className="py-24 lg:py-32 relative" style={{ background: 'linear-gradient(to bottom, #FFFFFF 0%, #FFF4E6 100%)' }}>
+    <section id="fitur" className="py-20 lg:py-28 relative" style={{ background: 'linear-gradient(to bottom, #FFFFFF 0%, #FFF4E6 100%)' }}>
       {/* Background Pattern */}
       <div className="absolute inset-0 bg-pattern-leaves opacity-5" />
       
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-4 lg:px-6 relative z-10">
         {/* Title */}
         <motion.div 
-          className="text-center mb-16"
+          className="text-center mb-12 lg:mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 style={{ color: '#2F4858' }} className="mb-4">
+          <h2 style={{ color: '#2F4858' }} className="mb-3 lg:mb-4 text-3xl lg:text-4xl font-bold">
             Kenapa Harus Asli Bogor
           </h2>
           <p style={{ color: '#4A4A4A', fontSize: '18px' }} className="max-w-2xl mx-auto">

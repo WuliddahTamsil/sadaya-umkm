@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
-import { Search, MapPin, Star, ChevronLeft, ChevronRight } from "lucide-react";
+import { Search, MapPin, Star, ChevronLeft, ChevronRight, Sparkles, Store, TrendingUp, Users, Award } from "lucide-react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 
 interface UMKMItem {
@@ -264,6 +264,14 @@ const umkmData: UMKMItem[] = [
 
 const categories = ["Semua", "Makanan", "Minuman", "Jasa", "Kerajinan"];
 
+// Helper function to ensure HD image quality
+const getHDImageUrl = (url: string): string => {
+  if (!url) return url;
+  // If it's an external URL, try to add quality parameters if supported
+  // For now, return as-is since most URLs already have quality settings
+  return url;
+};
+
 interface DirectorySectionProps {
   onSelectUMKM: (umkm: UMKMItem) => void;
 }
@@ -306,131 +314,474 @@ export function DirectorySection({ onSelectUMKM }: DirectorySectionProps) {
   };
 
   return (
-    <section id="direktori" className="py-24 lg:py-32 relative" style={{ background: 'linear-gradient(to bottom, #FFFFFF 0%, #FFF4E6 100%)' }}>
-      <div className="container mx-auto px-4">
-        {/* Title */}
+    <section id="direktori" className="pb-16 lg:pb-24 relative overflow-hidden" style={{ paddingTop: '100px' }}>
+      {/* Background with gradient */}
+      <div 
+        className="absolute inset-0"
+        style={{ 
+          background: 'linear-gradient(135deg, #FFFFFF 0%, #FFF4E6 30%, #FFE5CC 100%)'
+        }}
+      />
+      
+      {/* Animated decorative elements */}
+      <motion.div 
+        className="absolute top-20 right-10 w-64 h-64 rounded-full opacity-10 blur-3xl" 
+        style={{ background: '#FF8D28' }}
+        animate={{
+          scale: [1, 1.3, 1],
+          x: [0, 30, 0],
+          y: [0, -20, 0],
+          rotate: [0, 90, 0],
+        }}
+        transition={{
+          duration: 15,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
+      <motion.div 
+        className="absolute bottom-20 left-10 w-96 h-96 rounded-full opacity-10 blur-3xl" 
+        style={{ background: '#4CAF50' }}
+        animate={{
+          scale: [1, 1.2, 1],
+          x: [0, -30, 0],
+          y: [0, 20, 0],
+          rotate: [0, -90, 0],
+        }}
+        transition={{
+          duration: 20,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
+      <motion.div 
+        className="absolute top-1/2 left-1/2 w-80 h-80 rounded-full opacity-5 blur-3xl transform -translate-x-1/2 -translate-y-1/2" 
+        style={{ background: '#2196F3' }}
+        animate={{
+          scale: [1, 1.4, 1],
+          rotate: [0, 180, 360],
+        }}
+        transition={{
+          duration: 18,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+      />
+
+      {/* Floating Sparkles */}
+      {Array.from({ length: 15 }).map((_, i) => (
+        <motion.div
+          key={i}
+          className="absolute pointer-events-none"
+          style={{
+            left: `${Math.random() * 100}%`,
+            top: `${Math.random() * 100}%`,
+          }}
+          animate={{
+            y: [0, -40, 0],
+            opacity: [0, 0.8, 0],
+            scale: [0, 1.2, 0],
+            rotate: [0, 180, 360],
+          }}
+          transition={{
+            duration: 4 + Math.random() * 3,
+            repeat: Infinity,
+            delay: Math.random() * 2,
+            ease: "easeInOut"
+          }}
+        >
+          <Sparkles size={16 + Math.random() * 8} style={{ color: '#FF8D28', opacity: 0.6 }} />
+        </motion.div>
+      ))}
+      
+      <div className="container mx-auto px-4 lg:px-6 relative z-10" style={{ paddingTop: '20px' }}>
+        {/* Title Section - Enhanced */}
         <motion.div 
-          className="text-center mb-12"
-          initial={{ opacity: 0, y: 20 }}
+          className="text-center max-w-4xl mx-auto mb-12 lg:mb-16"
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8 }}
         >
-          <h2 style={{ color: '#2F4858' }} className="mb-4">
-            Temukan UMKM Lokal
-          </h2>
-          <p style={{ color: '#4A4A4A', fontSize: '18px' }}>
-            Jelajahi berbagai produk dan jasa dari UMKM terbaik di Bogor
-          </p>
+          <motion.div
+            className="inline-flex items-center gap-3 mb-6"
+            animate={{
+              scale: [1, 1.1, 1],
+            }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          >
+            <motion.div
+              className="w-16 h-16 rounded-2xl flex items-center justify-center shadow-xl"
+              style={{ background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)' }}
+              whileHover={{ scale: 1.2, rotate: 360 }}
+              transition={{ duration: 0.6, type: "spring" }}
+            >
+              <Store size={32} className="text-white" />
+            </motion.div>
+            <motion.div
+              className="w-16 h-16 rounded-2xl flex items-center justify-center shadow-xl"
+              style={{ background: 'linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%)' }}
+              whileHover={{ scale: 1.2, rotate: -360 }}
+              transition={{ duration: 0.6, type: "spring" }}
+            >
+              <TrendingUp size={32} className="text-white" />
+            </motion.div>
+          </motion.div>
+
+          <motion.h1 
+            className="text-4xl lg:text-5xl font-bold mb-6"
+            style={{ color: '#2F4858' }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+          >
+            Direktori UMKM
+          </motion.h1>
+          <motion.p 
+            className="text-xl lg:text-2xl mb-8 font-semibold" 
+            style={{ color: '#4A4A4A' }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3, duration: 0.6 }}
+          >
+            Temukan UMKM Lokal Terbaik
+          </motion.p>
+          <motion.p 
+            className="text-lg" 
+            style={{ color: '#858585', maxWidth: '800px', margin: '0 auto' }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+          >
+            Jelajahi berbagai produk dan jasa dari UMKM terbaik di Bogor dengan kualitas premium
+          </motion.p>
         </motion.div>
 
-        {/* Search Bar */}
+        {/* Quick Stats - New */}
+        <motion.div
+          className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-12 max-w-4xl mx-auto"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.5, duration: 0.6 }}
+        >
+          {[
+            { icon: Store, value: "500+", label: "UMKM", color: "#FF8D28" },
+            { icon: Users, value: "10K+", label: "Pengguna", color: "#4CAF50" },
+            { icon: TrendingUp, value: "50+", label: "Driver", color: "#2196F3" },
+            { icon: Award, value: "4.8", label: "Rating", color: "#FFB84D" },
+          ].map((stat, index) => {
+            const Icon = stat.icon;
+            return (
+              <motion.div
+                key={index}
+                className="bg-white/80 backdrop-blur-sm p-4 rounded-2xl shadow-lg border-2 border-orange-100 text-center"
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.6 + index * 0.1, duration: 0.5, type: "spring" }}
+                whileHover={{ scale: 1.05, y: -5 }}
+              >
+                <div 
+                  className="w-12 h-12 mx-auto mb-2 rounded-xl flex items-center justify-center"
+                  style={{ background: `linear-gradient(135deg, ${stat.color} 0%, ${stat.color}CC 100%)` }}
+                >
+                  <Icon size={20} className="text-white" />
+                </div>
+                <h3 className="text-xl font-bold mb-1" style={{ color: stat.color }}>
+                  {stat.value}
+                </h3>
+                <p className="text-xs font-medium" style={{ color: '#4A4A4A' }}>
+                  {stat.label}
+                </p>
+              </motion.div>
+            );
+          })}
+        </motion.div>
+
+        {/* Search Bar - Premium Design */}
         <motion.div 
-          className="max-w-2xl mx-auto mb-8"
+          className="max-w-4xl mx-auto mb-12"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.1, duration: 0.6 }}
         >
-          <div className="relative">
-            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2" style={{ color: '#858585' }} size={20} />
-            <Input
-              placeholder="Cari berdasarkan nama UMKM..."
-              value={searchQuery}
-              onChange={(e) => handleSearchChange(e.target.value)}
-              className="pl-12 py-6 body-3 border-orange-200 focus:border-orange-400"
+          <div className="relative group">
+            {/* Decorative background */}
+            <div 
+              className="absolute -inset-1 rounded-3xl opacity-75 blur-xl transition duration-300 group-hover:opacity-100"
+              style={{ 
+                background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 50%, #4CAF50 100%)'
+              }}
             />
+            
+            {/* Search container */}
+            <div className="relative bg-white rounded-3xl shadow-2xl border-2 border-transparent group-hover:border-[#FF8D28]/30 transition-all">
+              <div className="flex items-center gap-4 p-2">
+                {/* Search icon */}
+                <div 
+                  className="flex-shrink-0 w-14 h-14 rounded-2xl flex items-center justify-center ml-2"
+                  style={{ 
+                    background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)'
+                  }}
+                >
+                  <Search className="text-white" size={24} />
+                </div>
+                
+                {/* Input */}
+                <Input
+                  placeholder="Cari UMKM berdasarkan nama, kategori, atau lokasi..."
+                  value={searchQuery}
+                  onChange={(e) => handleSearchChange(e.target.value)}
+                  className="flex-1 border-0 focus:ring-0 text-base py-6 px-0 bg-transparent"
+                  style={{ 
+                    color: '#2F4858',
+                    fontSize: '16px'
+                  }}
+                />
+                
+                {/* Search button */}
+                {searchQuery && (
+                  <motion.button
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="px-6 py-3 rounded-xl font-semibold text-sm mr-2"
+                    style={{ 
+                      background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)',
+                      color: '#FFFFFF'
+                    }}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    Cari
+                  </motion.button>
+                )}
+              </div>
+            </div>
           </div>
         </motion.div>
 
-        {/* Filter Buttons */}
+        {/* Filter Buttons - Premium Design */}
         <motion.div 
-          className="flex flex-wrap justify-center gap-3 mb-12"
+          className="flex flex-wrap justify-center gap-4 mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2, duration: 0.6 }}
         >
-          {categories.map((category, index) => (
-            <motion.div
-              key={category}
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3 + index * 0.05, duration: 0.3 }}
-            >
-              <Button
+          {categories.map((category, index) => {
+            const getCategoryGradient = (cat: string) => {
+              switch(cat) {
+                case 'Semua':
+                  return 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)';
+                case 'Makanan':
+                  return 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)';
+                case 'Minuman':
+                  return 'linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%)';
+                case 'Jasa':
+                  return 'linear-gradient(135deg, #2196F3 0%, #1976D2 100%)';
+                case 'Kerajinan':
+                  return 'linear-gradient(135deg, #9C27B0 0%, #E91E63 100%)';
+                default:
+                  return 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)';
+              }
+            };
+            
+            return (
+              <motion.button
+                key={category}
                 onClick={() => handleCategoryChange(category)}
-                variant={activeCategory === category ? "default" : "outline"}
+                initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                whileHover={{ scale: 1.08, y: -4 }}
+                whileTap={{ scale: 0.95 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 + index * 0.05, duration: 0.3, type: "spring", stiffness: 300 }}
+                className={`relative px-8 py-4 rounded-2xl font-bold text-sm transition-all overflow-hidden ${
+                  activeCategory === category ? 'shadow-2xl' : 'shadow-lg hover:shadow-xl'
+                }`}
                 style={
                   activeCategory === category
-                    ? { background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)', color: '#FFFFFF', border: 'none' }
-                    : { borderColor: '#E0E0E0', color: '#2F4858' }
+                    ? { 
+                        background: getCategoryGradient(category), 
+                        color: '#FFFFFF', 
+                        border: 'none',
+                        boxShadow: '0 8px 25px rgba(255, 141, 40, 0.5)',
+                        transform: 'scale(1.05)'
+                      }
+                    : { 
+                        backgroundColor: '#FFFFFF', 
+                        borderColor: '#FFE5CC', 
+                        borderWidth: '2px',
+                        color: '#2F4858',
+                        boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)'
+                      }
                 }
-                className="body-3 hover-lift"
               >
-                {category}
-              </Button>
-            </motion.div>
-          ))}
+                {/* Shine effect for active */}
+                {activeCategory === category && (
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                    animate={{
+                      x: ['-100%', '200%'],
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      repeatDelay: 1,
+                      ease: "linear"
+                    }}
+                  />
+                )}
+                <span className="relative z-10">{category}</span>
+              </motion.button>
+            );
+          })}
         </motion.div>
 
-        {/* UMKM Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        {/* UMKM Grid - Enhanced Design */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-10">
           {currentUMKM.map((umkm, index) => (
             <motion.div
               key={umkm.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1, duration: 0.5 }}
+              initial={{ opacity: 0, y: 50, scale: 0.9, rotateX: -15 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ 
+                delay: index * 0.1, 
+                duration: 0.6,
+                type: "spring",
+                stiffness: 100
+              }}
+              whileHover={{ 
+                y: -12, 
+                scale: 1.02,
+                rotateY: 2,
+                transition: { duration: 0.3 }
+              }}
             >
               <Card 
-                className="overflow-hidden hover-lift cursor-pointer border-2 border-transparent hover:border-orange-300 transition-all"
+                className="overflow-hidden cursor-pointer border-2 border-gray-100 hover:border-gray-200 shadow-xl hover:shadow-2xl transition-all duration-300 bg-white group relative"
                 onClick={() => onSelectUMKM(umkm)}
+                style={{ borderRadius: '20px' }}
               >
-                <div className="relative">
-                  <ImageWithFallback
-                    src={umkm.image}
-                    alt={umkm.name}
-                    className="w-full h-48 object-cover"
-                  />
-                  {/* Rating Badge */}
-                  <div className="absolute top-3 right-3 bg-white rounded-full px-3 py-1 flex items-center space-x-1 shadow-lg">
-                    <Star size={14} className="text-yellow-500 fill-current" />
-                    <span className="body-3" style={{ color: '#2F4858', fontWeight: 600 }}>4.8</span>
+                <div className="relative overflow-hidden">
+                  {/* Image with HD quality */}
+                  <div className="relative h-64 lg:h-72 overflow-hidden bg-gray-100">
+                    <ImageWithFallback
+                      src={getHDImageUrl(umkm.image)}
+                      alt={umkm.name}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      style={{ 
+                        imageRendering: 'high-quality',
+                        objectFit: 'cover',
+                        objectPosition: 'center',
+                        minHeight: '256px'
+                      }}
+                      loading="lazy"
+                    />
+                    {/* Gradient overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    {/* Shine effect on hover */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
                   </div>
-                </div>
-                <CardContent className="p-6">
+                  
+                  {/* Category Badge - Top Left */}
                   <div 
-                    className="inline-block px-3 py-1 rounded-full mb-3" 
+                    className="absolute top-4 left-4 px-4 py-2 rounded-full shadow-lg backdrop-blur-sm"
                     style={{ 
-                      background: umkm.category === 'Makanan' ? 'linear-gradient(135deg, #FFE5CC 0%, #FFD4A3 100%)' :
-                                 umkm.category === 'Minuman' ? 'linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%)' :
-                                 'linear-gradient(135deg, #FFF4E6 0%, #FFE0B2 100%)'
+                      background: umkm.category === 'Makanan' 
+                        ? 'linear-gradient(135deg, rgba(255, 141, 40, 0.95) 0%, rgba(255, 184, 77, 0.95) 100%)' :
+                        umkm.category === 'Minuman' 
+                        ? 'linear-gradient(135deg, rgba(76, 175, 80, 0.95) 0%, rgba(46, 125, 50, 0.95) 100%)' :
+                        umkm.category === 'Kerajinan'
+                        ? 'linear-gradient(135deg, rgba(33, 150, 243, 0.95) 0%, rgba(25, 118, 210, 0.95) 100%)'
+                        : 'linear-gradient(135deg, rgba(255, 184, 77, 0.95) 0%, rgba(255, 141, 40, 0.95) 100%)'
                     }}
                   >
-                    <span className="body-3" style={{ color: '#2F4858', fontWeight: 600 }}>{umkm.category}</span>
+                    <span className="text-xs font-bold text-white">{umkm.category}</span>
                   </div>
-                  <h4 style={{ color: '#2F4858' }} className="mb-2">
+                  
+                  {/* Rating Badge - Top Right */}
+                  <div 
+                    className="absolute top-4 right-4 bg-white/95 backdrop-blur-sm rounded-full px-3 py-1.5 flex items-center space-x-1 shadow-lg"
+                  >
+                    <Star size={16} className="text-yellow-500 fill-current" />
+                    <span className="text-sm font-bold" style={{ color: '#2F4858' }}>4.8</span>
+                  </div>
+                </div>
+                
+                <CardContent className="p-6 relative z-10">
+                  {/* UMKM Name */}
+                  <motion.h4 
+                    style={{ 
+                      color: '#2F4858',
+                      fontSize: '20px',
+                      fontWeight: 700,
+                      lineHeight: 1.3
+                    }} 
+                    className="mb-3 group-hover:text-[#FF8D28] transition-colors"
+                    whileHover={{ x: 5 }}
+                    transition={{ duration: 0.2 }}
+                  >
                     {umkm.name}
-                  </h4>
-                  <div className="flex items-start gap-2">
-                    <MapPin size={16} style={{ color: '#858585' }} className="mt-1 flex-shrink-0" />
-                    <p className="body-3" style={{ color: '#858585' }}>
+                  </motion.h4>
+                  
+                  {/* Description */}
+                  <p 
+                    className="text-sm mb-4 line-clamp-2" 
+                    style={{ 
+                      color: '#4A4A4A',
+                      lineHeight: 1.5
+                    }}
+                  >
+                    {umkm.description}
+                  </p>
+                  
+                  {/* Address */}
+                  <div className="flex items-start gap-2 pt-3 border-t" style={{ borderColor: '#FFE5CC' }}>
+                    <MapPin size={18} style={{ color: '#FF8D28' }} className="mt-0.5 flex-shrink-0" />
+                    <p className="text-sm line-clamp-2" style={{ color: '#858585' }}>
                       {umkm.address}
                     </p>
                   </div>
+                  
+                  {/* View Button - Appears on Hover */}
+                  <motion.div 
+                    className="mt-4 opacity-0 group-hover:opacity-100 transition-opacity"
+                    initial={{ y: 10 }}
+                    whileHover={{ y: 0 }}
+                  >
+                    <motion.div 
+                      className="w-full py-2.5 rounded-xl text-center font-semibold text-sm cursor-pointer"
+                      style={{ 
+                        background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)',
+                        color: '#FFFFFF'
+                      }}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      Lihat Detail →
+                    </motion.div>
+                  </motion.div>
                 </CardContent>
               </Card>
             </motion.div>
           ))}
         </div>
 
-        {/* Pagination Controls */}
+        {/* Pagination Controls - Enhanced */}
         {filteredUMKM.length > itemsPerPage && (
           <motion.div 
-            className="flex items-center justify-center gap-4 mt-8"
+            className="flex items-center justify-center gap-4 mt-12"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -440,20 +791,28 @@ export function DirectorySection({ onSelectUMKM }: DirectorySectionProps) {
               onClick={handlePrevious}
               disabled={currentPage === 1}
               variant="outline"
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all"
               style={{
                 borderColor: currentPage === 1 ? '#E0E0E0' : '#FF8D28',
-                color: currentPage === 1 ? '#858585' : '#2F4858',
+                borderWidth: '2px',
+                color: currentPage === 1 ? '#858585' : '#FF8D28',
+                backgroundColor: currentPage === 1 ? '#F5F5F5' : '#FFFFFF',
                 cursor: currentPage === 1 ? 'not-allowed' : 'pointer'
               }}
             >
               <ChevronLeft size={20} />
-              <span>Previous</span>
+              <span>Sebelumnya</span>
             </Button>
             
-            <div className="flex items-center gap-2">
-              <span className="body-3" style={{ color: '#2F4858' }}>
-                Halaman {currentPage} dari {totalPages}
+            <div 
+              className="px-6 py-3 rounded-xl"
+              style={{ 
+                backgroundColor: '#FFF4E6',
+                border: '2px solid #FFE5CC'
+              }}
+            >
+              <span className="text-sm font-semibold" style={{ color: '#2F4858' }}>
+                Halaman <span style={{ color: '#FF8D28' }}>{currentPage}</span> dari {totalPages}
               </span>
             </div>
 
@@ -461,14 +820,16 @@ export function DirectorySection({ onSelectUMKM }: DirectorySectionProps) {
               onClick={handleNext}
               disabled={currentPage === totalPages}
               variant="outline"
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all"
               style={{
                 borderColor: currentPage === totalPages ? '#E0E0E0' : '#FF8D28',
-                color: currentPage === totalPages ? '#858585' : '#2F4858',
+                borderWidth: '2px',
+                color: currentPage === totalPages ? '#858585' : '#FF8D28',
+                backgroundColor: currentPage === totalPages ? '#F5F5F5' : '#FFFFFF',
                 cursor: currentPage === totalPages ? 'not-allowed' : 'pointer'
               }}
             >
-              <span>Next</span>
+              <span>Selanjutnya</span>
               <ChevronRight size={20} />
             </Button>
           </motion.div>
@@ -476,12 +837,22 @@ export function DirectorySection({ onSelectUMKM }: DirectorySectionProps) {
 
         {filteredUMKM.length === 0 && (
           <motion.div 
-            className="text-center py-12"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            className="text-center py-16"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.3 }}
           >
-            <p style={{ color: '#858585' }}>
-              Tidak ada UMKM yang ditemukan. Coba kata kunci lain.
+            <div 
+              className="inline-block p-6 rounded-2xl mb-4"
+              style={{ backgroundColor: '#FFF4E6' }}
+            >
+              <Search size={48} style={{ color: '#FF8D28' }} />
+            </div>
+            <h3 style={{ color: '#2F4858', fontSize: '24px', fontWeight: 600 }} className="mb-2">
+              Tidak ada UMKM yang ditemukan
+            </h3>
+            <p style={{ color: '#858585', fontSize: '16px' }}>
+              Coba gunakan kata kunci lain atau pilih kategori yang berbeda
             </p>
           </motion.div>
         )}

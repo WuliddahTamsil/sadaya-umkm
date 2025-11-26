@@ -22,8 +22,8 @@ export function AboutSection() {
   ];
 
   return (
-    <section id="tentang" className="py-24 lg:py-32 relative" style={{ background: 'linear-gradient(to bottom, #FFF4E6 0%, #FFFFFF 100%)' }}>
-      <div className="container mx-auto px-4">
+    <section id="tentang" className="py-20 lg:py-28 relative" style={{ background: 'linear-gradient(to bottom, #FFF4E6 0%, #FFFFFF 100%)' }}>
+      <div className="container mx-auto px-4 lg:px-6">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left: Illustration */}
           <motion.div 
@@ -55,6 +55,7 @@ export function AboutSection() {
           >
             <motion.h2 
               style={{ color: '#2F4858' }}
+              className="text-3xl lg:text-4xl font-bold mb-4"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}

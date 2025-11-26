@@ -10,21 +10,23 @@ export function AuthSectionLanding({ onRoleSelect }: AuthSectionLandingProps) {
   return (
     <section 
       id="auth-section" 
-      className="py-24 lg:py-32 relative overflow-hidden"
+      className="py-20 lg:py-28 relative overflow-hidden"
       style={{
         background: 'linear-gradient(135deg, #FFFFFF 0%, #FFF4E6 100%)',
       }}
     >
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 lg:px-6">
         <motion.div
-          className="text-center mb-12"
+          className="text-center mb-10 lg:mb-12"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 style={{ color: '#2F4858' }}>Mulai Bersama Kami</h2>
-          <p className="mt-4 text-gray-600" style={{ fontSize: '18px' }}>
+          <h2 style={{ color: '#2F4858' }} className="text-3xl lg:text-4xl font-bold mb-3 lg:mb-4">
+            Mulai Bersama Kami
+          </h2>
+          <p className="text-gray-600" style={{ fontSize: '18px', maxWidth: '600px', margin: '0 auto' }}>
             Pilih cara Anda bergabung dengan ekosistem Asli Bogor
           </p>
         </motion.div>
