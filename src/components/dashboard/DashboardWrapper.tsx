@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, ErrorInfo, ReactNode } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { DashboardLayout } from './DashboardLayout';
+import { Button } from '../ui/button';
 
 // Admin Components
 import { AdminDashboard } from './admin/AdminDashboard';
@@ -58,6 +59,51 @@ function PlaceholderPage({ title }: { title: string }) {
   );
 }
 
+// Error Boundary Component
+class ErrorBoundary extends React.Component<
+  { children: ReactNode; fallback?: ReactNode },
+  { hasError: boolean; error: Error | null }
+> {
+  constructor(props: { children: ReactNode; fallback?: ReactNode }) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  static getDerivedStateFromError(error: Error) {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    console.error('Error caught by boundary:', error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback || (
+        <Card>
+          <CardContent className="p-12 text-center">
+            <h3 style={{ color: '#D32F2F' }} className="mb-4">Terjadi Kesalahan</h3>
+            <p style={{ color: '#858585' }} className="mb-4">
+              {this.state.error?.message || 'Terjadi kesalahan saat memuat halaman'}
+            </p>
+            <Button
+              onClick={() => {
+                this.setState({ hasError: false, error: null });
+                window.location.reload();
+              }}
+              style={{ backgroundColor: '#FF8D28', color: '#FFFFFF' }}
+            >
+              Muat Ulang Halaman
+            </Button>
+          </CardContent>
+        </Card>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
 export function DashboardWrapper() {
   const { user, refreshUser } = useAuth();
   const [activeMenu, setActiveMenu] = useState(() => {
@@ -96,7 +142,11 @@ export function DashboardWrapper() {
         case 'persebaran':
           return <PersebaranUMKM />;
         case 'manajemen-data':
-          return <ManajemenData />;
+          return (
+            <ErrorBoundary>
+              <ManajemenData />
+            </ErrorBoundary>
+          );
         case 'manajemen-order':
           return <ManajemenOrder />;
         case 'konten':

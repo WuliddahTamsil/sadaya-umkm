@@ -92,6 +92,7 @@ export function ManajemenData() {
   const [data, setData] = useState<DataItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [selectedItem, setSelectedItem] = useState<DataItem | null>(null);
   const [isDetailDialogOpen, setIsDetailDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
@@ -120,6 +121,9 @@ export function ManajemenData() {
   const fetchUsers = async () => {
     try {
       setIsLoading(true);
+      setError(null);
+      console.log('Fetching users from:', api.users.getAll);
+      
       const response = await fetch(api.users.getAll, {
         method: 'GET',
         headers: {
@@ -128,17 +132,24 @@ export function ManajemenData() {
         credentials: 'include', // Include cookies for authentication
       });
       
+      console.log('Response status:', response.status, response.statusText);
+      
       if (!response.ok) {
         const errorText = await response.text();
         console.error('API Error Response:', response.status, errorText);
-        throw new Error(`Gagal mengambil data users: ${response.status} ${response.statusText}`);
+        const errorMsg = `Gagal mengambil data users: ${response.status} ${response.statusText}`;
+        setError(errorMsg);
+        throw new Error(errorMsg);
       }
 
       const result = await response.json();
+      console.log('API Response:', result);
       
       // Validate response structure
       if (!result || typeof result !== 'object') {
-        throw new Error('Format response tidak valid dari server');
+        const errorMsg = 'Format response tidak valid dari server';
+        setError(errorMsg);
+        throw new Error(errorMsg);
       }
       
       const users = Array.isArray(result.data) ? result.data : (Array.isArray(result) ? result : []);
@@ -180,9 +191,11 @@ export function ManajemenData() {
       }).filter((item): item is DataItem => item !== null);
       
       setData(transformedData);
+      setError(null);
     } catch (error: any) {
       console.error('Error fetching users:', error);
       const errorMessage = error.message || 'Gagal mengambil data users';
+      setError(errorMessage);
       toast.error(errorMessage);
       // Fallback to empty data
       setData([]);
@@ -202,6 +215,7 @@ export function ManajemenData() {
   };
 
   useEffect(() => {
+    console.log('ManajemenData component mounted, fetching users...');
     fetchUsers();
   }, []);
 
@@ -316,6 +330,25 @@ export function ManajemenData() {
     if (!window.confirm(`Apakah Anda yakin ingin menghapus ${item.name}?`)) {
       return;
     }
+
+    try {
+      const response = await fetch(api.users.delete(item.id), {
+        method: 'DELETE',
+        credentials: 'include',
+      });
+
+      if (!response.ok) {
+        throw new Error('Gagal menghapus user');
+      }
+
+      toast.success('User berhasil dihapus');
+      fetchUsers();
+    } catch (error) {
+      console.error('Delete error:', error);
+      toast.error('Gagal menghapus user');
+    }
+  };
+
   const resetNewUserForm = () => {
     setNewUser(initialNewUserState);
   };
@@ -355,6 +388,7 @@ export function ManajemenData() {
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify(payload),
       });
 
@@ -375,28 +409,15 @@ export function ManajemenData() {
     }
   };
 
-    try {
-      const response = await fetch(api.users.delete(item.id), {
-        method: 'DELETE',
-        credentials: 'include',
-      });
+  // Safe data calculation - ensure data is always an array (must be defined before use)
+  const safeData = Array.isArray(data) ? data : [];
 
-      if (!response.ok) {
-        throw new Error('Gagal menghapus user');
-      }
-
-      toast.success('User berhasil dihapus');
-      fetchUsers();
-    } catch (error) {
-      console.error('Delete error:', error);
-      toast.error('Gagal menghapus user');
-    }
-  };
-
-  const filteredData = data.filter(item => {
+  const filteredData = safeData.filter(item => {
+    if (!item || typeof item !== 'object') return false;
+    
     const matchesSearch = 
-      item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.email.toLowerCase().includes(searchQuery.toLowerCase());
+      (item.name?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
+      (item.email?.toLowerCase() || '').includes(searchQuery.toLowerCase());
     
     const matchesRole = filterRole === 'all' || item.role === filterRole;
     const matchesStatus = filterStatus === 'all' || item.status === filterStatus;
@@ -428,11 +449,12 @@ export function ManajemenData() {
     currentPage * itemsPerPage
   );
 
+  // Stats calculation using safeData
   const stats = {
-    totalUMKM: data.filter(item => item.role === 'UMKM').length,
-    totalDriver: data.filter(item => item.role === 'Driver').length,
-    totalUser: data.filter(item => item.role === 'User').length,
-    pending: data.filter(item => item.status === 'pending').length,
+    totalUMKM: safeData.filter(item => item?.role === 'UMKM').length,
+    totalDriver: safeData.filter(item => item?.role === 'Driver').length,
+    totalUser: safeData.filter(item => item?.role === 'User').length,
+    pending: safeData.filter(item => item?.status === 'pending').length,
   };
 
   const getRoleBadge = (role: string) => {
@@ -478,6 +500,7 @@ export function ManajemenData() {
     });
   };
 
+  // Always render something, even if there's an error
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -501,6 +524,30 @@ export function ManajemenData() {
           + Tambah Pengguna
         </Button>
       </motion.div>
+
+      {/* Error Message */}
+      {error && (
+        <Card>
+          <CardContent className="p-4">
+            <div className="flex items-center gap-3 p-3 rounded" style={{ backgroundColor: '#FFEBEE' }}>
+              <X size={20} style={{ color: '#D32F2F' }} />
+              <div>
+                <p style={{ color: '#D32F2F', fontWeight: 600 }}>Error</p>
+                <p style={{ color: '#858585', fontSize: '14px' }}>{error}</p>
+                <Button
+                  onClick={fetchUsers}
+                  variant="outline"
+                  size="sm"
+                  className="mt-2"
+                >
+                  <RefreshCw size={14} className="mr-2" />
+                  Coba Lagi
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Stats Overview */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
