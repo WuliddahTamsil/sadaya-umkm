@@ -22,6 +22,12 @@ const __dirname = dirname(__filename);
 
 const app = express();
 
+// Middleware - Logging untuk debugging di Vercel
+app.use((req, res, next) => {
+  console.log(`[${req.method}] ${req.path} | Original: ${req.originalUrl}`);
+  next();
+});
+
 // Middleware
 const corsOptions = {
   origin: function (origin, callback) {
@@ -79,11 +85,14 @@ app.use((err, req, res, next) => {
 });
 
 // Catch-all for unmatched routes (for debugging)
-app.use((req, res) => {
-  console.log('Unmatched route:', req.method, req.path);
-  res.status(404).json({ error: 'Route not found', path: req.path, method: req.method });
+// Only match if path starts with /api to avoid catching static files
+app.use('/api/*', (req, res) => {
+  console.log('Unmatched API route:', req.method, req.path, req.originalUrl);
+  res.status(404).json({ error: 'Route not found', path: req.path, method: req.method, originalUrl: req.originalUrl });
 });
 
 // Vercel serverless function handler
+// Vercel passes the request directly to the Express app
+// The path in req.path will be the full path including /api
 export default app;
 
