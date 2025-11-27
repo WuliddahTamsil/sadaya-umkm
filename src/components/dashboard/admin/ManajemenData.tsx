@@ -164,7 +164,8 @@ export function ManajemenData() {
         name: user.name || 'N/A',
         email: user.email || 'N/A',
         role: user.role === 'umkm' ? 'UMKM' : user.role === 'driver' ? 'Driver' : 'User',
-        status: user.isVerified ? 'active' : user.isOnboarded ? 'pending' : 'inactive',
+        // Use user.status if available, otherwise derive from isVerified/isOnboarded
+        status: user.status || (user.isVerified ? 'active' : user.isOnboarded ? 'pending' : 'inactive'),
         joinDate: user.createdAt || new Date().toISOString(),
         totalOrders: user.totalOrders || 0,
         rating: user.rating || 0,
@@ -239,8 +240,18 @@ export function ManajemenData() {
   };
 
   const handleApprove = async (item: DataItem) => {
+    if (!item || !item.id) {
+      toast.error('Data user tidak valid');
+      return;
+    }
+    
     try {
-      const response = await fetch(api.users.updateStatus(item.id), {
+      const url = api.users.updateStatus(item.id);
+      console.log('Approve - URL:', url);
+      console.log('Approve - Item ID:', item.id);
+      console.log('Approve - Item:', item);
+      
+      const response = await fetch(url, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -249,12 +260,24 @@ export function ManajemenData() {
         body: JSON.stringify({ status: 'active' }),
       });
 
+      console.log('Approve - Response status:', response.status);
+      console.log('Approve - Response ok:', response.ok);
+
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.error || errorData.message || 'Gagal menyetujui user');
+        let errorData;
+        try {
+          errorData = await response.json();
+          console.error('Approve - Error data:', errorData);
+        } catch (e) {
+          const errorText = await response.text();
+          console.error('Approve - Error text:', errorText);
+          errorData = { error: errorText || `Server error: ${response.status} ${response.statusText}` };
+        }
+        throw new Error(errorData.error || errorData.message || `Gagal menyetujui user: ${response.status}`);
       }
 
       const result = await response.json();
+      console.log('Approve - Success result:', result);
       toast.success(result.message || 'User berhasil disetujui');
       fetchUsers();
     } catch (error) {
@@ -265,8 +288,18 @@ export function ManajemenData() {
   };
 
   const handleReject = async (item: DataItem) => {
+    if (!item || !item.id) {
+      toast.error('Data user tidak valid');
+      return;
+    }
+    
     try {
-      const response = await fetch(api.users.updateStatus(item.id), {
+      const url = api.users.updateStatus(item.id);
+      console.log('Reject - URL:', url);
+      console.log('Reject - Item ID:', item.id);
+      console.log('Reject - Item:', item);
+      
+      const response = await fetch(url, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -275,12 +308,24 @@ export function ManajemenData() {
         body: JSON.stringify({ status: 'inactive' }),
       });
 
+      console.log('Reject - Response status:', response.status);
+      console.log('Reject - Response ok:', response.ok);
+
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.error || errorData.message || 'Gagal menolak user');
+        let errorData;
+        try {
+          errorData = await response.json();
+          console.error('Reject - Error data:', errorData);
+        } catch (e) {
+          const errorText = await response.text();
+          console.error('Reject - Error text:', errorText);
+          errorData = { error: errorText || `Server error: ${response.status} ${response.statusText}` };
+        }
+        throw new Error(errorData.error || errorData.message || `Gagal menolak user: ${response.status}`);
       }
 
       const result = await response.json();
+      console.log('Reject - Success result:', result);
       toast.success(result.message || 'User berhasil ditolak');
       fetchUsers();
     } catch (error) {
@@ -299,31 +344,48 @@ export function ManajemenData() {
     if (!editingItem) return;
 
     try {
-      const response = await fetch(api.users.updateProfile(editingItem.id), {
+      const url = api.users.updateProfile(editingItem.id);
+      const payload = {
+        name: editingItem.name,
+        phone: editingItem.phone,
+        address: editingItem.address,
+        description: editingItem.description,
+        storeName: editingItem.storeName,
+        storeAddress: editingItem.storeAddress,
+        storeDescription: editingItem.storeDescription,
+        vehicleType: editingItem.vehicleType,
+        vehiclePlate: editingItem.vehiclePlate,
+      };
+      
+      console.log('Edit - URL:', url);
+      console.log('Edit - Payload:', payload);
+      
+      const response = await fetch(url, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
         credentials: 'include',
-        body: JSON.stringify({
-          name: editingItem.name,
-          phone: editingItem.phone,
-          address: editingItem.address,
-          description: editingItem.description,
-          storeName: editingItem.storeName,
-          storeAddress: editingItem.storeAddress,
-          storeDescription: editingItem.storeDescription,
-          vehicleType: editingItem.vehicleType,
-          vehiclePlate: editingItem.vehiclePlate,
-        }),
+        body: JSON.stringify(payload),
       });
 
+      console.log('Edit - Response status:', response.status);
+
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.error || errorData.message || 'Gagal mengupdate user');
+        let errorData;
+        try {
+          errorData = await response.json();
+          console.error('Edit - Error data:', errorData);
+        } catch (e) {
+          const errorText = await response.text();
+          console.error('Edit - Error text:', errorText);
+          errorData = { error: errorText || `Server error: ${response.status} ${response.statusText}` };
+        }
+        throw new Error(errorData.error || errorData.message || `Gagal mengupdate user: ${response.status}`);
       }
 
       const result = await response.json();
+      console.log('Edit - Success result:', result);
       toast.success(result.message || 'User berhasil diupdate');
       setIsEditDialogOpen(false);
       setEditingItem(null);
@@ -336,22 +398,46 @@ export function ManajemenData() {
   };
 
   const handleDelete = async (item: DataItem) => {
+    if (!item || !item.id) {
+      toast.error('Data user tidak valid');
+      return;
+    }
+    
     if (!window.confirm(`Apakah Anda yakin ingin menghapus ${item.name}?`)) {
       return;
     }
 
     try {
-      const response = await fetch(api.users.delete(item.id), {
+      const url = api.users.delete(item.id);
+      console.log('Delete - URL:', url);
+      console.log('Delete - Item ID:', item.id);
+      console.log('Delete - Item:', item);
+      
+      const response = await fetch(url, {
         method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
         credentials: 'include',
       });
 
+      console.log('Delete - Response status:', response.status);
+
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.error || errorData.message || 'Gagal menghapus user');
+        let errorData;
+        try {
+          errorData = await response.json();
+          console.error('Delete - Error data:', errorData);
+        } catch (e) {
+          const errorText = await response.text();
+          console.error('Delete - Error text:', errorText);
+          errorData = { error: errorText || `Server error: ${response.status} ${response.statusText}` };
+        }
+        throw new Error(errorData.error || errorData.message || `Gagal menghapus user: ${response.status}`);
       }
 
       const result = await response.json();
+      console.log('Delete - Success result:', result);
       toast.success(result.message || 'User berhasil dihapus');
       fetchUsers();
     } catch (error) {
