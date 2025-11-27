@@ -11,6 +11,7 @@ export const api = {
   },
   users: {
     getAll: `${API_BASE_URL}/users`,
+    create: `${API_BASE_URL}/users`,
     getById: (id: string) => `${API_BASE_URL}/users/${id}`,
     updateStatus: (id: string) => `${API_BASE_URL}/users/${id}/status`,
     updateProfile: (id: string) => `${API_BASE_URL}/users/${id}`,
