@@ -67,8 +67,24 @@ export function ProfilePage() {
       });
 
       if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || 'Gagal upload foto profil');
+        let errorMessage = 'Gagal upload foto profil';
+        try {
+          const error = await response.json();
+          errorMessage = error.error || error.message || errorMessage;
+          console.error('Upload error response:', error);
+        } catch (e) {
+          const errorText = await response.text().catch(() => '');
+          console.error('Upload error text:', errorText);
+          if (errorText) {
+            try {
+              const parsed = JSON.parse(errorText);
+              errorMessage = parsed.error || parsed.message || errorMessage;
+            } catch {
+              errorMessage = errorText || errorMessage;
+            }
+          }
+        }
+        throw new Error(errorMessage);
       }
 
       const result = await response.json();
@@ -81,7 +97,18 @@ export function ProfilePage() {
       }
     } catch (error: any) {
       console.error('Error uploading profile photo:', error);
-      toast.error(error.message || 'Gagal upload foto profil');
+      console.error('Error details:', {
+        message: error.message,
+        stack: error.stack,
+        name: error.name
+      });
+      
+      // Handle network errors
+      if (error.name === 'TypeError' && error.message.includes('fetch')) {
+        toast.error('Tidak dapat terhubung ke server. Pastikan koneksi internet Anda aktif.');
+      } else {
+        toast.error(error.message || 'Gagal upload foto profil. Silakan coba lagi.');
+      }
     } finally {
       setUploadingPhoto(false);
       // Reset file input

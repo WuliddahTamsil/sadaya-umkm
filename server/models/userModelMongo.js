@@ -168,6 +168,7 @@ export async function updateUser(id, updates) {
   console.log('🔄 Updating user:', id);
   console.log('📝 Updates keys:', Object.keys(cleanUpdates));
   console.log('📝 File fields in updates:', {
+    profilePhoto: cleanUpdates.profilePhoto ? `✅ ${cleanUpdates.profilePhoto.substring(0, 50)}...` : '❌ not in updates',
     ktpFile: cleanUpdates.ktpFile ? `✅ ${cleanUpdates.ktpFile.substring(0, 50)}...` : '❌ not in updates',
     simFile: cleanUpdates.simFile ? `✅ ${cleanUpdates.simFile.substring(0, 50)}...` : '❌ not in updates',
     stnkFile: cleanUpdates.stnkFile ? `✅ ${cleanUpdates.stnkFile.substring(0, 50)}...` : '❌ not in updates',
@@ -183,6 +184,7 @@ export async function updateUser(id, updates) {
   
   console.log('🔄 MongoDB update query:', JSON.stringify(updateQuery, null, 2));
   console.log('🔄 File fields in cleanUpdates:', {
+    profilePhoto: cleanUpdates.profilePhoto ? `✅ ${cleanUpdates.profilePhoto.substring(0, 50)}...` : '❌ not in cleanUpdates',
     ktpFile: cleanUpdates.ktpFile ? `✅ ${cleanUpdates.ktpFile.substring(0, 50)}...` : '❌ not in cleanUpdates',
     simFile: cleanUpdates.simFile ? `✅ ${cleanUpdates.simFile.substring(0, 50)}...` : '❌ not in cleanUpdates',
     stnkFile: cleanUpdates.stnkFile ? `✅ ${cleanUpdates.stnkFile.substring(0, 50)}...` : '❌ not in cleanUpdates',
@@ -194,6 +196,7 @@ export async function updateUser(id, updates) {
   
   // PASTIKAN $set berisi field-file sebelum update
   console.log('🔍 Verifying $set contains file fields:', {
+    hasProfilePhoto: '$set' in updateQuery && 'profilePhoto' in updateQuery.$set,
     hasKtpFile: '$set' in updateQuery && 'ktpFile' in updateQuery.$set,
     hasStorePhotoFile: '$set' in updateQuery && 'storePhotoFile' in updateQuery.$set,
     hasBusinessPermitFile: '$set' in updateQuery && 'businessPermitFile' in updateQuery.$set,
@@ -223,6 +226,7 @@ export async function updateUser(id, updates) {
   console.log('📋 User ID after update:', user.id);
   console.log('📋 All user fields:', Object.keys(user));
   console.log('📋 File fields after update:', {
+    profilePhoto: user.profilePhoto ? `✅ ${user.profilePhoto.substring(0, 50)}...` : '❌ null/undefined',
     ktpFile: user.ktpFile ? `✅ ${user.ktpFile.substring(0, 50)}...` : '❌ null/undefined',
     simFile: user.simFile ? `✅ ${user.simFile ? user.simFile.substring(0, 50) + '...' : 'null/undefined'}` : '❌ null/undefined',
     stnkFile: user.stnkFile ? `✅ ${user.stnkFile ? user.stnkFile.substring(0, 50) + '...' : 'null/undefined'}` : '❌ null/undefined',
@@ -233,6 +237,10 @@ export async function updateUser(id, updates) {
   });
   
   // Jika field-file tidak tersimpan padahal ada di cleanUpdates, throw error
+  if (cleanUpdates.profilePhoto && !user.profilePhoto) {
+    console.error('❌ CRITICAL: profilePhoto tidak tersimpan padahal ada di cleanUpdates!');
+    throw new Error('Gagal menyimpan profilePhoto ke database');
+  }
   if (cleanUpdates.ktpFile && !user.ktpFile) {
     console.error('❌ CRITICAL: ktpFile tidak tersimpan padahal ada di cleanUpdates!');
   }
