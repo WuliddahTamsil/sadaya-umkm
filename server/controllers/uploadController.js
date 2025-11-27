@@ -558,6 +558,12 @@ export const uploadProfilePhotoController = async (req, res) => {
 
     console.log('=== UPLOAD PROFILE PHOTO START ===');
     console.log('User ID:', userId);
+    console.log('File details:', {
+      originalname: req.file.originalname,
+      mimetype: req.file.mimetype,
+      size: req.file.size,
+      fieldname: req.file.fieldname
+    });
 
     const isVercel = process.env.VERCEL || process.env.VERCEL_ENV;
     const hasBlobToken = !!process.env.BLOB_READ_WRITE_TOKEN;

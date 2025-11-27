@@ -50,11 +50,25 @@ const storage = isVercel
 
 // Filter file type
 const fileFilter = (req, file, cb) => {
-  // Allow images and PDFs
-  if (file.mimetype.startsWith('image/') || file.mimetype === 'application/pdf') {
+  // Allow images (PNG, JPG, JPEG, GIF, WEBP) and PDFs
+  const allowedMimeTypes = [
+    'image/png',
+    'image/jpeg',
+    'image/jpg',
+    'image/gif',
+    'image/webp',
+    'application/pdf'
+  ];
+  
+  const isImage = file.mimetype.startsWith('image/');
+  const isAllowed = allowedMimeTypes.includes(file.mimetype.toLowerCase());
+  
+  if (isImage || isAllowed) {
+    console.log('✅ File type allowed:', file.mimetype);
     cb(null, true);
   } else {
-    cb(new Error('Hanya file gambar dan PDF yang diizinkan'), false);
+    console.error('❌ File type not allowed:', file.mimetype);
+    cb(new Error(`Hanya file gambar (PNG, JPG, JPEG, GIF, WEBP) dan PDF yang diizinkan. File yang diupload: ${file.mimetype}`), false);
   }
 };
 

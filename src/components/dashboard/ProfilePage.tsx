@@ -42,9 +42,12 @@ export function ProfilePage() {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // Validate file type
-    if (!file.type.startsWith('image/')) {
-      toast.error('Hanya file gambar yang diizinkan');
+    // Validate file type - allow PNG, JPG, JPEG, GIF, WEBP
+    const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif', 'image/webp'];
+    const fileType = file.type.toLowerCase();
+    
+    if (!allowedTypes.includes(fileType) && !file.type.startsWith('image/')) {
+      toast.error('Hanya file gambar (PNG, JPG, JPEG, GIF, WEBP) yang diizinkan');
       return;
     }
 

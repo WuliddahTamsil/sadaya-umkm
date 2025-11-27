@@ -166,6 +166,13 @@ export async function updateUser(id, updates) {
   // MongoDB akan menyimpan field bahkan jika nilainya null
   // Ini memastikan field-file ada di document MongoDB
   
+  // PASTIKAN profilePhoto selalu diset jika ada di updates
+  // Ini memastikan field profilePhoto ada di document MongoDB
+  if (cleanUpdates.profilePhoto !== undefined) {
+    // Field sudah ada di cleanUpdates, tidak perlu dilakukan apa-apa
+    console.log('✅ profilePhoto akan di-update:', cleanUpdates.profilePhoto ? 'ada URL' : 'null');
+  }
+  
   console.log('🔄 Updating user:', id);
   console.log('📝 Updates keys:', Object.keys(cleanUpdates));
   console.log('📝 File fields in updates:', {
