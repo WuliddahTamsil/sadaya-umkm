@@ -35,7 +35,8 @@ const userSchema = new mongoose.Schema({
   selfieFile: { type: String, default: null },
   vehiclePhotoFile: { type: String, default: null }
 }, {
-  timestamps: false // Kita handle manual
+  timestamps: false, // Kita handle manual
+  strict: false // Allow fields not in schema (untuk backward compatibility)
 });
 
 // Model
