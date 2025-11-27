@@ -151,9 +151,16 @@ export function ManajemenKonten({ isReadOnly = false }: ManajemenKontenProps) {
       if (response.ok) {
         const result = await response.json();
         setComments(result.data || []);
+      } else {
+        console.error('Failed to fetch comments:', response.status, response.statusText);
+        setComments([]);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error fetching comments:', error);
+      // Handle network errors gracefully
+      if (error.name === 'TypeError' && error.message.includes('fetch')) {
+        console.error('Network error: Cannot connect to server');
+      }
       setComments([]);
     } finally {
       setIsLoadingComments(false);
@@ -195,9 +202,24 @@ export function ManajemenKonten({ isReadOnly = false }: ManajemenKontenProps) {
       console.log('Comment response ok:', response.ok);
 
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        console.error('Comment error data:', errorData);
-        throw new Error(errorData.error || `Gagal menambahkan komentar (${response.status})`);
+        let errorMessage = `Gagal menambahkan komentar (${response.status})`;
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.error || errorMessage;
+          console.error('Comment error data:', errorData);
+        } catch (e) {
+          const errorText = await response.text().catch(() => '');
+          console.error('Comment error text:', errorText);
+          if (errorText) {
+            try {
+              const parsed = JSON.parse(errorText);
+              errorMessage = parsed.error || errorMessage;
+            } catch {
+              errorMessage = errorText || errorMessage;
+            }
+          }
+        }
+        throw new Error(errorMessage);
       }
 
       const result = await response.json();
@@ -210,7 +232,13 @@ export function ManajemenKonten({ isReadOnly = false }: ManajemenKontenProps) {
     } catch (error: any) {
       console.error('Add comment error:', error);
       console.error('Error stack:', error.stack);
-      toast.error(error.message || 'Gagal menambahkan komentar');
+      
+      // Handle network errors
+      if (error.name === 'TypeError' && error.message.includes('fetch')) {
+        toast.error('Tidak dapat terhubung ke server. Pastikan koneksi internet Anda aktif.');
+      } else {
+        toast.error(error.message || 'Gagal menambahkan komentar. Silakan coba lagi.');
+      }
     }
   };
 
@@ -236,9 +264,24 @@ export function ManajemenKonten({ isReadOnly = false }: ManajemenKontenProps) {
       console.log('Like response ok:', response.ok);
 
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        console.error('Like error data:', errorData);
-        throw new Error(errorData.error || `Gagal menyukai konten (${response.status})`);
+        let errorMessage = `Gagal menyukai konten (${response.status})`;
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.error || errorMessage;
+          console.error('Like error data:', errorData);
+        } catch (e) {
+          const errorText = await response.text().catch(() => '');
+          console.error('Like error text:', errorText);
+          if (errorText) {
+            try {
+              const parsed = JSON.parse(errorText);
+              errorMessage = parsed.error || errorMessage;
+            } catch {
+              errorMessage = errorText || errorMessage;
+            }
+          }
+        }
+        throw new Error(errorMessage);
       }
 
       const result = await response.json();
@@ -255,7 +298,13 @@ export function ManajemenKonten({ isReadOnly = false }: ManajemenKontenProps) {
     } catch (error: any) {
       console.error('Like content error:', error);
       console.error('Error stack:', error.stack);
-      toast.error(error.message || 'Gagal menyukai konten');
+      
+      // Handle network errors
+      if (error.name === 'TypeError' && error.message.includes('fetch')) {
+        toast.error('Tidak dapat terhubung ke server. Pastikan koneksi internet Anda aktif.');
+      } else {
+        toast.error(error.message || 'Gagal menyukai konten. Silakan coba lagi.');
+      }
     }
   };
 
