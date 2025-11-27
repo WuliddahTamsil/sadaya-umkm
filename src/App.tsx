@@ -239,7 +239,7 @@ function AppContent() {
       )}
       
       {currentPage === 'fitur' && (
-        <FiturPage />
+        <FiturPage onSelectUMKM={handleSelectUMKM} />
       )}
       
       {/* Footer */}

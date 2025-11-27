@@ -3,7 +3,24 @@ import { Package, Truck, Heart, Shield, Star, Zap, Search, MapPin, Clock, Credit
 import { useState } from "react";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 
-export function FiturPage() {
+interface UMKMItem {
+  id: number;
+  name: string;
+  category: string;
+  address: string;
+  image: string;
+  description: string;
+  about?: string;
+  phone?: string;
+  operatingHours?: string;
+  mapsLink?: string;
+}
+
+interface FiturPageProps {
+  onSelectUMKM?: (umkm: UMKMItem) => void;
+}
+
+export function FiturPage({ onSelectUMKM }: FiturPageProps = {}) {
   const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
   const [isLocating, setIsLocating] = useState(false);
 
@@ -13,6 +30,82 @@ export function FiturPage() {
     { name: "Roti Unyil Venus", lat: -6.5950, lng: 106.8000, distance: "1.2 km", category: "Makanan" },
     { name: "Asinan Sedap", lat: -6.6000, lng: 106.8100, distance: "0.8 km", category: "Makanan" },
     { name: "PIA Apple Pie", lat: -6.5980, lng: 106.8050, distance: "0.3 km", category: "Makanan" },
+  ];
+
+  // Data UMKM untuk mapping
+  const umkmData: UMKMItem[] = [
+    {
+      id: 1,
+      name: "Lapis Bogor Sangkuriang",
+      category: "Makanan",
+      address: "Jl. Pajajaran No.20i, RT.01/RW.11, Baranangsiang, Kec. Bogor Tim., Kota Bogor, Jawa Barat 16143",
+      image: "https://agrinesia.co.id/uploads/2024-07/jfzaH33tlscoG2xPGHd8ykIuUGsU3zTo5NrCzWX4.jpeg",
+      description: "Pelopor dan pencetus pertama bolu lapis yang menggunakan bahan dasar talas",
+      about: "Berdiri sejak tahun 2011, Lapis Bogor Sangkuriang merupakan pelopor dan pencetus pertama bolu lapis yang menggunakan bahan dasar talas. Dikenal dengan teksturnya yang lembut dan topping keju yang melimpah, Lapis Sangkuriang terus berinovasi untuk memberikan oleh-oleh khas Bogor terbaik.",
+      phone: "(0251) 1500262",
+      operatingHours: "Setiap Hari, 06.00 - 22.00 WIB",
+      mapsLink: "https://www.google.com/maps/search/?api=1&query=Lapis+Bogor+Sangkuriang"
+    },
+    {
+      id: 2,
+      name: "Roti Unyil Venus",
+      category: "Makanan",
+      address: "Ruko V-Point, Jl. Pajajaran No.1, RT.01/RW.01, Babakan, Kecamatan Bogor Tengah, Kota Bogor, Jawa Barat 16128",
+      image: "https://i.gojekapi.com/darkroom/gofood-indonesia/v2/images/uploads/87ea29fa-9cf9-4c78-874a-a843af6c2747_Go-Biz_20230807_104930.jpeg",
+      description: "Produsen 'Roti Unyil' legendaris di Bogor dengan ukuran kecil dan puluhan varian rasa",
+      about: "Venus Bakery adalah produsen \"Roti Unyil\" yang legendaris di Bogor. Disebut roti unyil karena ukurannya yang kecil dan bisa dinikmati sekali lahap. Produknya selalu dibuat fresh setiap hari tanpa menggunakan bahan pengawet dan menawarkan puluhan varian rasa, dari asin (sosis, keju) hingga manis (cokelat, kismis).",
+      phone: "0878-7880-5735",
+      operatingHours: "Setiap Hari, 05.30 - 21.00 WIB",
+      mapsLink: "https://www.google.com/maps/search/?api=1&query=Roti+Unyil+Venus+Bogor"
+    },
+    {
+      id: 3,
+      name: "Asinan Sedap Gedung Dalam",
+      category: "Makanan",
+      address: "Jl. Siliwangi No.27C, RT.01/RW.01, Sukasari, Kec. Bogor Tim., Kota Bogor, Jawa Barat 16142",
+      image: "https://assets.pikiran-rakyat.com/crop/0x0:0x0/750x500/photo/2022/06/27/903345014.jpg",
+      description: "Salah satu gerai asinan paling legendaris dan tertua di Bogor, berdiri sejak 1978",
+      about: "Salah satu gerai asinan paling legendaris dan tertua di Bogor, berdiri sejak 1978. Terkenal dengan asinan sayur dan asinan buahnya yang menggunakan bahan-bahan segar, kuah cuka yang khas (pedas, asam, manis), dan taburan kacang yang melimpah.",
+      phone: "(0251) 8313099",
+      operatingHours: "Setiap Hari, 07.00 - 20.00 WIB",
+      mapsLink: "https://www.google.com/maps/search/?api=1&query=Asinan+Sedap+Gedung+Dalam"
+    },
+    {
+      id: 4,
+      name: "PIA Apple Pie",
+      category: "Makanan",
+      address: "Jl. Pangrango No.10, RT.04/RW.04, Babakan, Kecamatan Bogor Tengah, Kota Bogor, Jawa Barat 16128",
+      image: "https://s3.us-east-1.wasabisys.com/agendaindonesia/2022/10/Pie-Apple-Pie-Bogor.jpg",
+      description: "Toko pie terkenal di Bogor dengan apple pie yang renyah di luar dan lembut di dalam",
+      about: "Toko pie yang sangat terkenal di Bogor dengan suasana tempat yang unik dan homey. Sesuai namanya, produk andalan mereka adalah apple pie (pai apel) yang renyah di luar dan lembut di dalam. Mereka juga menyediakan varian pie lain seperti stroberi, keju, dan pie gurih (ayam).",
+      phone: "(0251) 8324169",
+      operatingHours: "Senin-Jumat (07.00-20.00 WIB), Sabtu-Minggu (07.00-22.00 WIB)",
+      mapsLink: "https://www.google.com/maps/search/?api=1&query=PIA+Apple+Pie+Bogor"
+    },
+    {
+      id: 5,
+      name: "Bika Bogor Talubi",
+      category: "Makanan",
+      address: "Jl. Pajajaran No.20M, RT.01/RW.11, Baranangsiang, Kec. Bogor Tim., Kota Bogor, Jawa Barat 16143",
+      image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhvrRS7rbZ9JBrHa85YQJgvl8ZW3uYsmoWwwCEvM_-L1en-5d5g6Oa6akl07FmbHbHnlzJPQ0GQPtA0ny44_7b7TazCgvtOneEj3hVZAf27KM28PPC1_t_B0GSyJ0hgM8CjwxYZS9zqeda7/s1600/20170103_165122_wm.jpg",
+      description: "Inovasi oleh-oleh khas Bogor yang mengolah talas menjadi kue bika ambon",
+      about: "Sebuah inovasi oleh-oleh khas Bogor yang mengolah talas menjadi kue bika ambon. Bika Bogor Talubi terkenal dengan teksturnya yang lembut, kenyal, dan memiliki aroma yang khas. Selain rasa original talas, tersedia juga varian rasa lain seperti Ubi Ungu, Nangka, dan Pandan.",
+      phone: "(0251) 8338788",
+      operatingHours: "Setiap Hari, 07.00 - 21.00 WIB",
+      mapsLink: "https://www.google.com/maps/search/?api=1&query=Bika+Bogor+Talubi"
+    },
+    {
+      id: 6,
+      name: "Macaroni Panggang (MP)",
+      category: "Makanan",
+      address: "Jl. Salak No.24, Babakan, Kecamatan Bogor Tengah, Kota Bogor, Jawa Barat 16128",
+      image: "https://images.tokopedia.net/img/cache/700/hDjmkQ/2025/4/18/856dcaaf-3fe4-4d7c-8a4b-095d0240b5e8.jpg",
+      description: "UMKM legendaris di Bogor yang terkenal dengan makaroni skotel panggangnya",
+      about: "Sebuah UMKM legendaris di Bogor yang terkenal dengan makaroni skotel panggangnya. Disajikan dalam cup aluminium foil, MP menawarkan makaroni panggang dengan isian keju, sosis, dan daging yang melimpah. Tempatnya juga cozy dan menjual aneka kue lain seperti pastries dan cookies.",
+      phone: "(0251) 8324042",
+      operatingHours: "Setiap Hari, 07.00 - 20.00 WIB",
+      mapsLink: "https://www.google.com/maps/search/?api=1&query=Macaroni+Panggang+MP+Bogor"
+    }
   ];
 
   // Rekomendasi Makanan Kota Bogor
@@ -26,7 +119,8 @@ export function FiturPage() {
       description: "Pelopor dan pencetus pertama bolu lapis yang menggunakan bahan dasar talas",
       category: "Oleh-Oleh",
       price: "Rp 25.000",
-      badge: "Terlaris"
+      badge: "Terlaris",
+      umkmId: 1
     },
     {
       id: 2,
@@ -37,7 +131,8 @@ export function FiturPage() {
       description: "Produsen 'Roti Unyil' legendaris di Bogor dengan ukuran kecil dan puluhan varian rasa",
       category: "Roti",
       price: "Rp 3.000",
-      badge: "Favorit"
+      badge: "Favorit",
+      umkmId: 2
     },
     {
       id: 3,
@@ -48,7 +143,8 @@ export function FiturPage() {
       description: "Salah satu gerai asinan paling legendaris dan tertua di Bogor, berdiri sejak 1978",
       category: "Asinan",
       price: "Rp 15.000",
-      badge: "Legendaris"
+      badge: "Legendaris",
+      umkmId: 3
     },
     {
       id: 4,
@@ -59,7 +155,8 @@ export function FiturPage() {
       description: "Toko pie terkenal di Bogor dengan apple pie yang renyah di luar dan lembut di dalam",
       category: "Pie",
       price: "Rp 35.000",
-      badge: "Premium"
+      badge: "Premium",
+      umkmId: 4
     },
     {
       id: 5,
@@ -70,7 +167,8 @@ export function FiturPage() {
       description: "Inovasi oleh-oleh khas Bogor yang mengolah talas menjadi kue bika ambon",
       category: "Oleh-Oleh",
       price: "Rp 20.000",
-      badge: "Baru"
+      badge: "Baru",
+      umkmId: 5
     },
     {
       id: 6,
@@ -81,9 +179,22 @@ export function FiturPage() {
       description: "UMKM legendaris di Bogor yang terkenal dengan makaroni skotel panggangnya",
       category: "Makanan",
       price: "Rp 18.000",
-      badge: "Klasik"
+      badge: "Klasik",
+      umkmId: 6
     },
   ];
+
+  // Function to handle detail click
+  const handleDetailClick = (foodId: number) => {
+    if (!onSelectUMKM) return;
+    const food = recommendedFoods.find(f => f.id === foodId);
+    if (food) {
+      const umkm = umkmData.find(u => u.id === food.umkmId);
+      if (umkm) {
+        onSelectUMKM(umkm);
+      }
+    }
+  };
 
   const handleGetLocation = () => {
     setIsLocating(true);
@@ -779,6 +890,7 @@ export function FiturPage() {
                       style={{ background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)' }}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
+                      onClick={() => handleDetailClick(food.id)}
                     >
                       Lihat Detail
                     </motion.button>
