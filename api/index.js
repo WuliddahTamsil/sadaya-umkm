@@ -24,7 +24,11 @@ const app = express();
 
 // Middleware - Logging untuk debugging di Vercel
 app.use((req, res, next) => {
-  console.log(`[${req.method}] ${req.path} | Original: ${req.originalUrl} | URL: ${req.url}`);
+  console.log(`[${req.method}] ${req.path} | Original: ${req.originalUrl} | URL: ${req.url} | BaseURL: ${req.baseUrl}`);
+  // Log untuk debugging routing
+  if (req.path.includes('/users/') && req.path.includes('/status')) {
+    console.log('STATUS UPDATE REQUEST:', req.method, req.path);
+  }
   next();
 });
 
