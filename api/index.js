@@ -24,7 +24,7 @@ const app = express();
 
 // Middleware - Logging untuk debugging di Vercel
 app.use((req, res, next) => {
-  console.log(`[${req.method}] ${req.path} | Original: ${req.originalUrl}`);
+  console.log(`[${req.method}] ${req.path} | Original: ${req.originalUrl} | URL: ${req.url}`);
   next();
 });
 
@@ -47,26 +47,43 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // API Routes - In Vercel, requests to /api/* are routed here
-// The path received will be /api/auth/login, so we mount at /api
+// Vercel passes the full path including /api, so we mount at /api
+// Also handle paths without /api prefix in case Vercel strips it
 app.use('/api/auth', authRoutes);
+app.use('/auth', authRoutes); // Fallback if path doesn't include /api
 app.use('/api/users', usersRoutes);
+app.use('/users', usersRoutes); // Fallback if path doesn't include /api
 app.use('/api/upload', uploadRoutes);
+app.use('/upload', uploadRoutes);
 app.use('/api/orders', ordersRoutes);
+app.use('/orders', ordersRoutes);
 app.use('/api/notifications', notificationsRoutes);
+app.use('/notifications', notificationsRoutes);
 app.use('/api/products', productsRoutes);
+app.use('/products', productsRoutes);
 app.use('/api/cart', cartRoutes);
+app.use('/cart', cartRoutes);
 app.use('/api/wallet', walletRoutes);
+app.use('/wallet', walletRoutes);
 app.use('/api/content', contentRoutes);
+app.use('/content', contentRoutes);
 app.use('/api/comments', commentRoutes);
+app.use('/comments', commentRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/admin', adminRoutes);
 app.use('/api/chat', chatRoutes);
+app.use('/chat', chatRoutes);
 app.use('/api/setup', setupRoutes);
+app.use('/setup', setupRoutes);
 
 // Serve uploaded files
 app.use('/uploads', express.static(join(__dirname, '../server', 'uploads')));
 
 // Health check
 app.get('/api/health', (req, res) => {
+  res.json({ status: 'OK', message: 'Backend API is running' });
+});
+app.get('/health', (req, res) => {
   res.json({ status: 'OK', message: 'Backend API is running' });
 });
 

@@ -562,46 +562,105 @@ export const uploadProfilePhotoController = async (req, res) => {
       originalname: req.file.originalname,
       mimetype: req.file.mimetype,
       size: req.file.size,
-      fieldname: req.file.fieldname
+      fieldname: req.file.fieldname,
+      hasBuffer: !!req.file.buffer,
+      hasPath: !!req.file.path
     });
 
     const isVercel = process.env.VERCEL || process.env.VERCEL_ENV;
     const hasBlobToken = !!process.env.BLOB_READ_WRITE_TOKEN;
 
+    console.log('🔍 Environment check:', {
+      isVercel,
+      hasBlobToken,
+      VERCEL: process.env.VERCEL,
+      VERCEL_ENV: process.env.VERCEL_ENV,
+      BLOB_TOKEN_EXISTS: !!process.env.BLOB_READ_WRITE_TOKEN
+    });
+
     let profilePhotoUrl;
 
     if (isVercel && hasBlobToken) {
       // Upload ke Vercel Blob Storage
+      console.log('📤 Uploading to Vercel Blob Storage...');
       const fileData = prepareFileForBlob(req.file);
       if (!fileData) {
-        return res.status(400).json({ error: 'File tidak valid' });
+        console.error('❌ Failed to prepare file for blob');
+        return res.status(400).json({ error: 'File tidak valid atau tidak dapat diproses' });
       }
       
-      profilePhotoUrl = await uploadToBlob(
-        fileData.buffer,
-        fileData.filename,
-        fileData.mimetype,
-        'profiles'
-      );
-      console.log('✅ Profile photo uploaded to blob:', profilePhotoUrl);
+      console.log('📤 File prepared for blob:', {
+        filename: fileData.filename,
+        mimetype: fileData.mimetype,
+        bufferSize: fileData.buffer?.length || 0
+      });
+      
+      try {
+        profilePhotoUrl = await uploadToBlob(
+          fileData.buffer,
+          fileData.filename,
+          fileData.mimetype,
+          'profiles'
+        );
+        console.log('✅ Profile photo uploaded to blob:', profilePhotoUrl);
+        
+        // Verifikasi URL valid
+        if (!profilePhotoUrl || !profilePhotoUrl.startsWith('http')) {
+          throw new Error('URL yang dihasilkan tidak valid');
+        }
+      } catch (blobError) {
+        console.error('❌ Error uploading to blob:', blobError);
+        console.error('Error details:', {
+          message: blobError.message,
+          stack: blobError.stack
+        });
+        throw new Error(`Gagal upload ke Vercel Blob Storage: ${blobError.message}`);
+      }
     } else if (!isVercel) {
       // Local development: gunakan path relatif
+      console.log('📁 Local development mode - using file system');
+      if (!req.file.path) {
+        return res.status(400).json({ error: 'File path tidak ditemukan' });
+      }
       const imagePath = getRelativePath(req.file.path);
       const baseUrl = 'http://localhost:3000';
       profilePhotoUrl = `${baseUrl}/${imagePath}`;
+      console.log('✅ Profile photo path (local):', profilePhotoUrl);
     } else {
-      return res.status(500).json({ error: 'BLOB_READ_WRITE_TOKEN tidak dikonfigurasi' });
+      console.error('❌ BLOB_READ_WRITE_TOKEN tidak dikonfigurasi');
+      return res.status(500).json({ 
+        error: 'BLOB_READ_WRITE_TOKEN tidak dikonfigurasi. Silakan set environment variable ini di Vercel.' 
+      });
     }
+
+    // Pastikan URL valid sebelum menyimpan
+    if (!profilePhotoUrl || !profilePhotoUrl.trim()) {
+      throw new Error('URL foto profil tidak valid');
+    }
+
+    console.log('💾 Saving profile photo URL to MongoDB:', profilePhotoUrl);
 
     // Update user dengan profile photo URL
     const updateData = {
-      profilePhoto: profilePhotoUrl,
+      profilePhoto: profilePhotoUrl.trim(),
       updatedAt: new Date().toISOString()
     };
 
+    console.log('📝 Update data:', {
+      profilePhoto: updateData.profilePhoto.substring(0, 100) + '...',
+      updatedAt: updateData.updatedAt
+    });
+
     const updatedUser = await updateUser(userId, updateData);
     
-    console.log('✅ User profile photo updated');
+    // Verifikasi bahwa profilePhoto tersimpan
+    if (!updatedUser.profilePhoto) {
+      console.error('❌ CRITICAL: profilePhoto tidak tersimpan di database!');
+      throw new Error('Gagal menyimpan URL foto profil ke database');
+    }
+    
+    console.log('✅ User profile photo updated successfully');
+    console.log('✅ Profile photo URL in database:', updatedUser.profilePhoto.substring(0, 100) + '...');
     console.log('=== UPLOAD PROFILE PHOTO END ===');
 
     // Hapus password dari response

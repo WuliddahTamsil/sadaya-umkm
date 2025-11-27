@@ -86,17 +86,35 @@ export function ManajemenData() {
   const fetchUsers = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch(api.users.getAll);
+      const response = await fetch(api.users.getAll, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include', // Include cookies for authentication
+      });
       
       if (!response.ok) {
-        throw new Error('Gagal mengambil data users');
+        const errorText = await response.text();
+        console.error('API Error Response:', response.status, errorText);
+        throw new Error(`Gagal mengambil data users: ${response.status} ${response.statusText}`);
       }
 
       const result = await response.json();
-      const users = result.data || [];
+      
+      // Validate response structure
+      if (!result || typeof result !== 'object') {
+        throw new Error('Format response tidak valid dari server');
+      }
+      
+      const users = Array.isArray(result.data) ? result.data : (Array.isArray(result) ? result : []);
       
       // Transform users to DataItem format
-      const transformedData: DataItem[] = users.map((user: any) => ({
+      const transformedData: DataItem[] = users.map((user: any) => {
+        if (!user || typeof user !== 'object') {
+          return null;
+        }
+        return {
         id: user._id || user.id,
         name: user.name || 'N/A',
         email: user.email || 'N/A',
@@ -124,14 +142,25 @@ export function ManajemenData() {
         vehiclePhotoFile: user.vehiclePhotoFile,
         storePhotoFile: user.storePhotoFile,
         businessPermitFile: user.businessPermitFile,
-      }));
+      };
+      }).filter((item): item is DataItem => item !== null);
       
       setData(transformedData);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error fetching users:', error);
-      toast.error('Gagal mengambil data users');
-      // Fallback to sample data
+      const errorMessage = error.message || 'Gagal mengambil data users';
+      toast.error(errorMessage);
+      // Fallback to empty data
       setData([]);
+      
+      // Log more details in production for debugging
+      if (import.meta.env.PROD) {
+        console.error('Production error details:', {
+          url: api.users.getAll,
+          error: error.message,
+          stack: error.stack,
+        });
+      }
     } finally {
       setIsLoading(false);
       setIsRefreshing(false);
@@ -168,6 +197,7 @@ export function ManajemenData() {
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify({ status: 'active' }),
       });
 
@@ -190,6 +220,7 @@ export function ManajemenData() {
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify({ status: 'inactive' }),
       });
 
@@ -219,6 +250,7 @@ export function ManajemenData() {
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify({
           name: editingItem.name,
           phone: editingItem.phone,
@@ -254,6 +286,7 @@ export function ManajemenData() {
     try {
       const response = await fetch(api.users.delete(item.id), {
         method: 'DELETE',
+        credentials: 'include',
       });
 
       if (!response.ok) {
