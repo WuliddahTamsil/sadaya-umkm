@@ -250,14 +250,17 @@ export function ManajemenData() {
       });
 
       if (!response.ok) {
-        throw new Error('Gagal menyetujui user');
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || errorData.message || 'Gagal menyetujui user');
       }
 
-      toast.success('User berhasil disetujui');
+      const result = await response.json();
+      toast.success(result.message || 'User berhasil disetujui');
       fetchUsers();
     } catch (error) {
       console.error('Approve error:', error);
-      toast.error('Gagal menyetujui user');
+      const errorMessage = error instanceof Error ? error.message : 'Gagal menyetujui user';
+      toast.error(errorMessage);
     }
   };
 
@@ -273,14 +276,17 @@ export function ManajemenData() {
       });
 
       if (!response.ok) {
-        throw new Error('Gagal menolak user');
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || errorData.message || 'Gagal menolak user');
       }
 
-      toast.success('User berhasil ditolak');
+      const result = await response.json();
+      toast.success(result.message || 'User berhasil ditolak');
       fetchUsers();
     } catch (error) {
       console.error('Reject error:', error);
-      toast.error('Gagal menolak user');
+      const errorMessage = error instanceof Error ? error.message : 'Gagal menolak user';
+      toast.error(errorMessage);
     }
   };
 
@@ -313,16 +319,19 @@ export function ManajemenData() {
       });
 
       if (!response.ok) {
-        throw new Error('Gagal mengupdate user');
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || errorData.message || 'Gagal mengupdate user');
       }
 
-      toast.success('User berhasil diupdate');
+      const result = await response.json();
+      toast.success(result.message || 'User berhasil diupdate');
       setIsEditDialogOpen(false);
       setEditingItem(null);
       fetchUsers();
     } catch (error) {
       console.error('Update error:', error);
-      toast.error('Gagal mengupdate user');
+      const errorMessage = error instanceof Error ? error.message : 'Gagal mengupdate user';
+      toast.error(errorMessage);
     }
   };
 
@@ -338,14 +347,17 @@ export function ManajemenData() {
       });
 
       if (!response.ok) {
-        throw new Error('Gagal menghapus user');
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || errorData.message || 'Gagal menghapus user');
       }
 
-      toast.success('User berhasil dihapus');
+      const result = await response.json();
+      toast.success(result.message || 'User berhasil dihapus');
       fetchUsers();
     } catch (error) {
       console.error('Delete error:', error);
-      toast.error('Gagal menghapus user');
+      const errorMessage = error instanceof Error ? error.message : 'Gagal menghapus user';
+      toast.error(errorMessage);
     }
   };
 
@@ -795,22 +807,33 @@ export function ManajemenData() {
                               <MoreVertical size={16} />
                             </Button>
                           </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end">
-                            <DropdownMenuItem onClick={() => handleViewDetail(item)}>
+                          <DropdownMenuContent align="end" onCloseAutoFocus={(e) => e.preventDefault()}>
+                            <DropdownMenuItem 
+                              onClick={(e) => {
+                                e.preventDefault();
+                                handleViewDetail(item);
+                              }}
+                            >
                               <Eye size={16} className="mr-2" />
                               Lihat Detail
                             </DropdownMenuItem>
                             {item.status === 'pending' && (
                               <>
                                 <DropdownMenuItem 
-                                  onClick={() => handleApprove(item)}
+                                  onClick={async (e) => {
+                                    e.preventDefault();
+                                    await handleApprove(item);
+                                  }}
                                   className="text-green-600"
                                 >
                                   <Check size={16} className="mr-2" />
                                   Setujui
                                 </DropdownMenuItem>
                                 <DropdownMenuItem 
-                                  onClick={() => handleReject(item)}
+                                  onClick={async (e) => {
+                                    e.preventDefault();
+                                    await handleReject(item);
+                                  }}
                                   className="text-red-600"
                                 >
                                   <X size={16} className="mr-2" />
@@ -818,12 +841,20 @@ export function ManajemenData() {
                                 </DropdownMenuItem>
                               </>
                             )}
-                            <DropdownMenuItem onClick={() => handleEdit(item)}>
+                            <DropdownMenuItem 
+                              onClick={(e) => {
+                                e.preventDefault();
+                                handleEdit(item);
+                              }}
+                            >
                               <Edit size={16} className="mr-2" />
                               Edit
                             </DropdownMenuItem>
                             <DropdownMenuItem 
-                              onClick={() => handleDelete(item)}
+                              onClick={async (e) => {
+                                e.preventDefault();
+                                await handleDelete(item);
+                              }}
                               className="text-red-600"
                             >
                               <Trash2 size={16} className="mr-2" />
@@ -880,7 +911,15 @@ export function ManajemenData() {
       </Card>
 
       {/* Detail Dialog */}
-      <Dialog open={isDetailDialogOpen} onOpenChange={setIsDetailDialogOpen}>
+      <Dialog 
+        open={isDetailDialogOpen} 
+        onOpenChange={(open) => {
+          setIsDetailDialogOpen(open);
+          if (!open) {
+            setSelectedItem(null);
+          }
+        }}
+      >
         <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle style={{ color: '#2F4858' }}>Detail Pengguna</DialogTitle>
@@ -1065,7 +1104,15 @@ export function ManajemenData() {
       </Dialog>
 
       {/* Edit Dialog */}
-      <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+      <Dialog 
+        open={isEditDialogOpen} 
+        onOpenChange={(open) => {
+          setIsEditDialogOpen(open);
+          if (!open) {
+            setEditingItem(null);
+          }
+        }}
+      >
         <DialogContent className="max-w-2xl">
           <DialogHeader>
             <DialogTitle style={{ color: '#2F4858' }}>Edit Pengguna</DialogTitle>
