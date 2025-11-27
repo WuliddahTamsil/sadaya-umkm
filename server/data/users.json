@@ -24,8 +24,8 @@
     "email": "aisyahputrihhh16@gmail.com",
     "password": "$2a$10$g39AZhc6HUeVAhTXFEhEnOiwtpL.fEnmg4b4IHp/nTQNZscGgNj4q",
     "role": "user",
-    "phone": null,
-    "address": null,
+    "phone": "",
+    "address": "",
     "description": null,
     "status": "active",
     "isVerified": true,
@@ -34,8 +34,8 @@
     "totalOrders": 0,
     "rating": 0,
     "createdAt": "2025-11-13T08:09:55.584Z",
-    "updatedAt": "2025-11-27T15:05:37.900Z",
-    "profilePhoto": "http://localhost:3000/uploads/general/unknown_1764255937734_Simple_Green_Leaf_Design__1_.png"
+    "updatedAt": "2025-11-27T17:24:22.382Z",
+    "profilePhoto": "http://localhost:3000/uploads/general/unknown_1764264261431_Thumbnail_CIHUY.png"
   },
   {
     "id": "5751984f-9ad3-4978-bd8a-7a574c1e03c3",
