@@ -365,5 +365,49 @@
     "status": "processing",
     "read": false,
     "createdAt": "2025-11-16T18:12:11.127Z"
+  },
+  {
+    "id": "d47db193-1437-49d6-9675-b0b1537600a4",
+    "userId": "4fb06afa-fd54-4d28-aace-d40af516f40a",
+    "type": "order",
+    "title": "Pesanan Baru! 🎉",
+    "message": "Pesanan baru dari AISYAH PUTRI HARMELIA - Total: Rp 55.000",
+    "orderId": "ORD-1764255697772-E92NL9M6I",
+    "status": "pending",
+    "read": false,
+    "createdAt": "2025-11-27T15:01:38.088Z"
+  },
+  {
+    "id": "8cdb6bdc-2d17-4255-9135-227d224b9176",
+    "userId": "4fb06afa-fd54-4d28-aace-d40af516f40a",
+    "type": "order",
+    "title": "Pembayaran Diterima! 💰",
+    "message": "Pembayaran order ORD-1764255697772-E92NL9M6I telah diterima - Rp 55.000",
+    "orderId": "ORD-1764255697772-E92NL9M6I",
+    "status": "processing",
+    "read": false,
+    "createdAt": "2025-11-27T15:01:39.622Z"
+  },
+  {
+    "id": "8728c4f4-33ea-4495-a3dc-d0917d8a0439",
+    "userId": "4fb06afa-fd54-4d28-aace-d40af516f40a",
+    "type": "order",
+    "title": "Pesanan Baru! 🎉",
+    "message": "Pesanan baru dari AISYAH PUTRI HARMELIA - Total: Rp 55.000",
+    "orderId": "ORD-1764255753671-AUJPPGAPI",
+    "status": "pending",
+    "read": false,
+    "createdAt": "2025-11-27T15:02:33.697Z"
+  },
+  {
+    "id": "1de7dfb8-cb60-41cd-b72a-3040ba3950fa",
+    "userId": "4fb06afa-fd54-4d28-aace-d40af516f40a",
+    "type": "order",
+    "title": "Pembayaran Diterima! 💰",
+    "message": "Pembayaran order ORD-1764255753671-AUJPPGAPI telah diterima - Rp 55.000",
+    "orderId": "ORD-1764255753671-AUJPPGAPI",
+    "status": "processing",
+    "read": false,
+    "createdAt": "2025-11-27T15:02:35.235Z"
   }
 ]

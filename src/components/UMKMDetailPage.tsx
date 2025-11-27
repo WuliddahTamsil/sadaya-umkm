@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "./ui/button";
-import { ArrowLeft, MapPin, Phone, Clock, ExternalLink, Star, Edit, Trash2, Upload, X, Images, Tag, Share2, Heart, ShoppingCart, ArrowRight } from "lucide-react";
+import { ArrowLeft, MapPin, Phone, Clock, ExternalLink, Star, Edit, Trash2, Upload, X, Images, Tag, Share2, Heart, ShoppingCart, ArrowRight, Package, TrendingUp, Award, Sparkles } from "lucide-react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { Card, CardContent } from "./ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "./ui/dialog";
@@ -188,6 +188,7 @@ interface Review {
   date: string;
   comment: string;
   photos: string[];
+  sessionId?: string; // Track session for non-logged in users
 }
 
 // Function to get reviews with product images based on UMKM
@@ -305,19 +306,92 @@ export function UMKMDetailPage({ umkm, onBack, onStartOrder }: UMKMDetailPagePro
   const { user } = useAuth();
   const [activeTab, setActiveTab] = useState<'produk' | 'tentang' | 'ulasan' | 'galeri' | 'promo'>('ulasan');
   // Get reviews with product images based on current UMKM
-  const [reviews, setReviews] = useState<Review[]>(() => getReviewsForUMKM(umkm.id));
+  const [reviews, setReviews] = useState<Review[]>(() => {
+    const savedReviews = localStorage.getItem(`reviews_${umkm.id}`);
+    if (savedReviews) {
+      return JSON.parse(savedReviews);
+    }
+    return getReviewsForUMKM(umkm.id);
+  });
   const [isReviewDialogOpen, setIsReviewDialogOpen] = useState(false);
   const [editingReview, setEditingReview] = useState<Review | null>(null);
   const [reviewForm, setReviewForm] = useState({
     rating: 5,
     comment: "",
+    userName: "", // Add name field for non-logged in users
     photos: [] as File[],
-    photoPreviews: [] as string[]
+    photoPreviews: [] as string[],
+    existingPhotos: [] as string[] // Track existing photos when editing
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  // Get or create session ID for tracking reviews without login
+  const getSessionId = (): string => {
+    let sessionId = sessionStorage.getItem('review_session_id');
+    if (!sessionId) {
+      sessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      sessionStorage.setItem('review_session_id', sessionId);
+    }
+    return sessionId;
+  };
+  
+  // Save reviews to localStorage
+  const saveReviewsToStorage = (newReviews: Review[]) => {
+    localStorage.setItem(`reviews_${umkm.id}`, JSON.stringify(newReviews));
+  };
+  
+  // Check if user can edit/delete review
+  const canEditReview = (review: Review): boolean => {
+    if (user && review.userId === user.id) return true;
+    const sessionId = getSessionId();
+    if (review.sessionId === sessionId) return true;
+    return false;
+  };
   const [cart] = useState<Array<{ id: string; name: string; price: number; quantity: number; image: string }>>([]);
   const galleryImages = getProductImagesForUMKM(umkm.id, umkm.image);
   const mapEmbedUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126748.56402638384!2d106.72782745!3d-6.595038!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69c5d2e602b5f5%3A0x4027980f0e5c7e0!2sBogor%2C%20West%20Java%2C%20Indonesia!5e0!3m2!1sen!2s!4v1234567890";
+
+  // Generate detailed product data with variations
+  const getDetailedProducts = () => {
+    const productNames = [
+      "Lapis Bogor Original",
+      "Lapis Bogor Ketan Hitam",
+      "Lapis Bogor Pandan",
+      "Lapis Bogor Coklat",
+      "Lapis Bogor Keju",
+      "Lapis Bogor Special",
+    ];
+    
+    const categories = ["Makanan", "Kue", "Oleh-oleh", "Snack", "Kue Tradisional"];
+    const badges = ["Baru", "Terlaris", "Promo", "Favorit", null, null];
+    
+    return galleryImages.map((image, index) => {
+      const basePrice = 25000 + (index * 5000);
+      const rating = 4.0 + (Math.random() * 1.0);
+      const sold = Math.floor(Math.random() * 500) + 50;
+      const stock = Math.floor(Math.random() * 100) + 10;
+      const hasDiscount = index % 3 === 0;
+      const discountPercent = hasDiscount ? [10, 15, 20][index % 3] : 0;
+      
+      return {
+        id: `product-${umkm.id}-${index}`,
+        name: productNames[index] || `Produk ${index + 1}`,
+        image,
+        price: basePrice,
+        originalPrice: hasDiscount ? Math.round(basePrice / (1 - discountPercent / 100)) : null,
+        discount: discountPercent,
+        rating: Math.round(rating * 10) / 10,
+        sold,
+        stock,
+        category: categories[index % categories.length],
+        badge: badges[index % badges.length],
+        description: "Produk berkualitas tinggi dengan bahan pilihan terbaik",
+        variant: index % 3, // 0: orange, 1: green, 2: blue
+      };
+    });
+  };
+
+  const detailedProducts = getDetailedProducts();
 
   // Calculate average rating and total reviews
   const averageRating = reviews.length > 0
@@ -339,7 +413,8 @@ export function UMKMDetailPage({ umkm, onBack, onStartOrder }: UMKMDetailPagePro
   const getCurrentUserName = () => {
     if (user?.name) return user.name;
     if (user?.email) return user.email.split("@")[0];
-    return "User";
+    // For non-logged in users, use form input or default
+    return reviewForm.userName || "Pengguna";
   };
 
   // Handle image upload
@@ -395,33 +470,55 @@ export function UMKMDetailPage({ umkm, onBack, onStartOrder }: UMKMDetailPagePro
 
   // Remove photo from form
   const removePhoto = (index: number) => {
-    setReviewForm(prev => ({
-      ...prev,
-      photos: prev.photos.filter((_, i) => i !== index),
-      photoPreviews: prev.photoPreviews.filter((_, i) => i !== index)
-    }));
+    setReviewForm(prev => {
+      const removedPreview = prev.photoPreviews[index];
+      
+      // Check if it's an existing photo (from edit mode) or a new upload
+      const isExistingPhoto = prev.existingPhotos.includes(removedPreview);
+      
+      // Remove from photoPreviews
+      const newPhotoPreviews = prev.photoPreviews.filter((_, i) => i !== index);
+      
+      if (isExistingPhoto) {
+        // Remove from existing photos
+        return {
+          ...prev,
+          photoPreviews: newPhotoPreviews,
+          existingPhotos: prev.existingPhotos.filter(p => p !== removedPreview)
+        };
+      } else {
+        // Remove from new photos
+        // Count how many new previews come before this index
+        const newPreviewsBeforeIndex = prev.photoPreviews
+          .slice(0, index)
+          .filter(p => !prev.existingPhotos.includes(p)).length;
+        
+        return {
+          ...prev,
+          photos: prev.photos.filter((_, i) => i !== newPreviewsBeforeIndex),
+          photoPreviews: newPhotoPreviews
+        };
+      }
+    });
   };
 
   // Open dialog for new review
   const handleOpenNewReview = () => {
-    // Allow opening dialog even without login - will check on submit
     setEditingReview(null);
     setReviewForm({
       rating: 5,
       comment: "",
+      userName: user?.name || user?.email?.split("@")[0] || "",
       photos: [],
-      photoPreviews: []
+      photoPreviews: [],
+      existingPhotos: []
     });
     setIsReviewDialogOpen(true);
   };
 
   // Open dialog for editing review
   const handleEditReview = (review: Review) => {
-    if (!user) {
-      toast.error("Silakan login terlebih dahulu");
-      return;
-    }
-    if (review.userId !== user.id) {
+    if (!canEditReview(review)) {
       toast.error("Anda hanya dapat mengedit ulasan Anda sendiri");
       return;
     }
@@ -429,34 +526,38 @@ export function UMKMDetailPage({ umkm, onBack, onStartOrder }: UMKMDetailPagePro
     setReviewForm({
       rating: review.rating,
       comment: review.comment,
+      userName: review.userName,
       photos: [], // New files to upload
-      photoPreviews: [...review.photos] // Existing photos from review
+      photoPreviews: [...review.photos], // Existing photos from review
+      existingPhotos: [...review.photos] // Track original photos
     });
     setIsReviewDialogOpen(true);
   };
 
   // Delete review
   const handleDeleteReview = (reviewId: number) => {
-    if (!user) {
-      toast.error("Silakan login terlebih dahulu");
-      return;
-    }
     const review = reviews.find(r => r.id === reviewId);
-    if (review && review.userId !== user.id) {
+    if (!review) return;
+    
+    if (!canEditReview(review)) {
       toast.error("Anda hanya dapat menghapus ulasan Anda sendiri");
       return;
     }
+    
     if (confirm("Apakah Anda yakin ingin menghapus ulasan ini?")) {
-      setReviews(prev => prev.filter(r => r.id !== reviewId));
+      const newReviews = reviews.filter(r => r.id !== reviewId);
+      setReviews(newReviews);
+      saveReviewsToStorage(newReviews);
       toast.success("Ulasan berhasil dihapus");
     }
   };
 
   // Submit review (create or update)
   const handleSubmitReview = async () => {
-    // Check if user is logged in
-    if (!user) {
-      toast.error("Silakan login terlebih dahulu untuk menulis ulasan");
+    // Validate name (for non-logged in users)
+    const userName = reviewForm.userName.trim() || getCurrentUserName();
+    if (!userName) {
+      toast.error("Mohon isi nama Anda");
       return;
     }
 
@@ -475,34 +576,29 @@ export function UMKMDetailPage({ umkm, onBack, onStartOrder }: UMKMDetailPagePro
     setIsSubmitting(true);
 
     try {
-      // Process photos: combine existing previews with new file uploads
+      // Process photos: combine existing photos (from edit) with new uploads
       const allPhotos: string[] = [];
 
-      // When editing: photoPreviews contains existing photos (from review) + new uploads
-      // When creating: photoPreviews only contains new uploads
-      // photos array contains only new File objects
-      
-      // Strategy: 
-      // 1. Get all previews that are NOT from new files (existing photos when editing)
-      // 2. Convert new files to data URLs
-      
-      const newFileCount = reviewForm.photos.length;
-      const existingPhotoPreviews = reviewForm.photoPreviews.slice(newFileCount);
-      const newPhotoPreviews = reviewForm.photoPreviews.slice(0, newFileCount);
-
-      // Add existing photos (from edit mode)
-      allPhotos.push(...existingPhotoPreviews);
+      // Add existing photos (that weren't removed during edit)
+      allPhotos.push(...reviewForm.existingPhotos);
 
       // Process new file uploads
-      // If preview already exists (from handleImageUpload), use it
-      // Otherwise, convert file to data URL
+      // photoPreviews contains: [new previews from files, existing photos]
+      // We need to get only the new previews (not in existingPhotos)
+      const newPreviews = reviewForm.photoPreviews.filter(
+        preview => !reviewForm.existingPhotos.includes(preview)
+      );
+
+      // For new files, use their previews if available, otherwise convert to data URL
       for (let i = 0; i < reviewForm.photos.length; i++) {
         const file = reviewForm.photos[i];
-        const existingPreview = newPhotoPreviews[i];
+        const preview = newPreviews[i];
         
-        if (existingPreview && existingPreview.startsWith('data:')) {
-          // Preview already generated, use it
-          allPhotos.push(existingPreview);
+        if (preview && preview.startsWith('data:')) {
+          // Use existing preview
+          if (!allPhotos.includes(preview)) {
+            allPhotos.push(preview);
+          }
         } else {
           // Convert file to data URL
           try {
@@ -519,33 +615,48 @@ export function UMKMDetailPage({ umkm, onBack, onStartOrder }: UMKMDetailPagePro
           }
         }
       }
+      
+      // Add any remaining new previews that weren't matched with files
+      newPreviews.forEach(preview => {
+        if (!allPhotos.includes(preview) && preview.startsWith('data:')) {
+          allPhotos.push(preview);
+        }
+      });
 
       if (editingReview) {
         // Update existing review
-        setReviews(prev => prev.map(r => 
+        const updatedReviews = reviews.map(r => 
           r.id === editingReview.id
             ? {
                 ...r,
                 rating: reviewForm.rating,
                 comment: reviewForm.comment.trim(),
+                userName: userName,
+                userAvatar: getUserInitials(userName),
                 photos: allPhotos
               }
             : r
-        ));
+        );
+        setReviews(updatedReviews);
+        saveReviewsToStorage(updatedReviews);
         toast.success("Ulasan berhasil diperbarui");
       } else {
         // Create new review
+        const sessionId = getSessionId();
         const newReview: Review = {
           id: Date.now(),
-          userId: user.id,
-          userName: getCurrentUserName(),
-          userAvatar: getUserInitials(getCurrentUserName()),
+          userId: user?.id || `guest_${sessionId}`,
+          userName: userName,
+          userAvatar: getUserInitials(userName),
           rating: reviewForm.rating,
           date: "Baru saja",
           comment: reviewForm.comment.trim(),
-          photos: allPhotos
+          photos: allPhotos,
+          sessionId: sessionId
         };
-        setReviews(prev => [newReview, ...prev]);
+        const updatedReviews = [newReview, ...reviews];
+        setReviews(updatedReviews);
+        saveReviewsToStorage(updatedReviews);
         toast.success("Ulasan berhasil ditambahkan");
       }
 
@@ -554,8 +665,10 @@ export function UMKMDetailPage({ umkm, onBack, onStartOrder }: UMKMDetailPagePro
       setReviewForm({
         rating: 5,
         comment: "",
+        userName: user?.name || user?.email?.split("@")[0] || "",
         photos: [],
-        photoPreviews: []
+        photoPreviews: [],
+        existingPhotos: []
       });
       setEditingReview(null);
     } catch (error) {
@@ -979,58 +1092,160 @@ export function UMKMDetailPage({ umkm, onBack, onStartOrder }: UMKMDetailPagePro
           </div>
         )}
 
-        {/* Produk Tab - Uniform Design */}
+        {/* Produk Tab - Detailed & Varied Design */}
         {activeTab === 'produk' && (
           <div className="py-6">
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
-              {galleryImages.map((image, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: index * 0.1, duration: 0.3 }}
-                  whileHover={{ y: -4 }}
-                >
-                  <Card 
-                    className="overflow-hidden cursor-pointer border-0 shadow-lg hover:shadow-xl transition-all duration-300 bg-white"
-                    style={{ borderRadius: '16px' }}
-                    onClick={onStartOrder}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {detailedProducts.map((product, index) => {
+                const colorThemes = [
+                  { // Orange
+                    bgGradient: "from-orange-50 to-orange-100",
+                    iconBg: "linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)",
+                    accentColor: "#FF8D28",
+                    borderColor: "rgba(255, 141, 40, 0.3)",
+                  },
+                  { // Green
+                    bgGradient: "from-green-50 to-green-100",
+                    iconBg: "linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%)",
+                    accentColor: "#4CAF50",
+                    borderColor: "rgba(76, 175, 80, 0.3)",
+                  },
+                  { // Blue
+                    bgGradient: "from-blue-50 to-blue-100",
+                    iconBg: "linear-gradient(135deg, #2196F3 0%, #1976D2 100%)",
+                    accentColor: "#2196F3",
+                    borderColor: "rgba(33, 150, 243, 0.3)",
+                  },
+                ];
+                const theme = colorThemes[product.variant];
+                
+                return (
+                  <motion.div
+                    key={product.id}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: index * 0.1, duration: 0.3 }}
+                    whileHover={{ y: -8, scale: 1.02 }}
+                    className="group"
                   >
-                    <div className="relative aspect-square overflow-hidden bg-gray-100">
-                      <ImageWithFallback
-                        src={image}
-                        alt={`Produk ${index + 1}`}
-                        className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
-                        style={{ 
-                          imageRendering: 'auto',
-                          objectFit: 'cover',
-                          objectPosition: 'center'
-                        }}
-                        loading="lazy"
-                        decoding="async"
-                      />
-                      {/* Overlay on hover */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
-                    </div>
-                    <CardContent className="p-4">
-                      <div className="flex items-center justify-between">
-                        <p className="text-sm font-semibold" style={{ color: '#2F4858' }}>
-                          Produk {index + 1}
-                        </p>
+                    <Card 
+                      className={`overflow-hidden cursor-pointer border-2 shadow-xl hover:shadow-2xl transition-all duration-300 bg-gradient-to-br ${theme.bgGradient} h-full flex flex-col`}
+                      style={{ 
+                        borderRadius: '20px',
+                        borderColor: theme.borderColor,
+                      }}
+                      onClick={onStartOrder}
+                    >
+                      <div className="relative aspect-square overflow-hidden bg-gray-100">
+                        <ImageWithFallback
+                          src={product.image}
+                          alt={product.name}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                        {/* Badge */}
+                        {product.badge && (
+                          <div 
+                            className="absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-bold text-white shadow-lg"
+                            style={{ background: theme.iconBg }}
+                          >
+                            {product.badge}
+                          </div>
+                        )}
+                        {/* Discount Badge */}
+                        {product.discount > 0 && (
+                          <div 
+                            className="absolute top-3 right-3 px-3 py-1 rounded-full text-xs font-bold text-white shadow-lg"
+                            style={{ background: 'linear-gradient(135deg, #E91E63 0%, #C2185B 100%)' }}
+                          >
+                            -{product.discount}%
+                          </div>
+                        )}
+                        {/* Rating Badge */}
                         <div 
-                          className="px-2 py-1 rounded-full text-xs font-semibold"
+                          className="absolute bottom-3 left-3 px-2 py-1 rounded-lg bg-white/90 backdrop-blur-sm flex items-center gap-1 shadow-md"
+                        >
+                          <Star size={14} className="text-yellow-500 fill-yellow-500" />
+                          <span className="text-xs font-semibold" style={{ color: '#2F4858' }}>
+                            {product.rating}
+                          </span>
+                        </div>
+                        {/* Overlay on hover */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      </div>
+                      
+                      <CardContent className="flex-1 flex flex-col" style={{ padding: '1.25rem' }}>
+                        {/* Category */}
+                        <div className="mb-3">
+                          <span 
+                            className="text-xs font-semibold px-3 py-1.5 rounded-md inline-block"
+                            style={{ 
+                              background: theme.iconBg,
+                              color: '#FFFFFF',
+                              opacity: 0.9
+                            }}
+                          >
+                            {product.category}
+                          </span>
+                        </div>
+                        
+                        {/* Product Name */}
+                        <h4 className="text-lg font-bold mb-2" style={{ color: '#2F4858', marginLeft: 0, marginRight: 0 }}>
+                          {product.name}
+                        </h4>
+                        
+                        {/* Description */}
+                        <p className="text-sm mb-4 flex-1" style={{ color: '#858585', lineHeight: '1.6', marginLeft: 0, marginRight: 0 }}>
+                          {product.description}
+                        </p>
+                        
+                        {/* Price & Stock Info */}
+                        <div className="space-y-3 mb-4" style={{ marginLeft: 0, marginRight: 0 }}>
+                          <div className="flex items-baseline gap-2 flex-wrap">
+                            {product.originalPrice && (
+                              <span className="text-sm line-through" style={{ color: '#858585' }}>
+                                Rp {product.originalPrice.toLocaleString('id-ID')}
+                              </span>
+                            )}
+                            <span className="text-xl font-bold" style={{ color: theme.accentColor }}>
+                              Rp {product.price.toLocaleString('id-ID')}
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-4 text-xs flex-wrap" style={{ color: '#858585' }}>
+                            <div className="flex items-center gap-1.5">
+                              <TrendingUp size={14} />
+                              <span>{product.sold} terjual</span>
+                            </div>
+                            <div className="flex items-center gap-1.5">
+                              <Package size={14} />
+                              <span>Stok: {product.stock}</span>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        {/* Action Button */}
+                        <Button
+                          className="w-full mt-auto"
                           style={{ 
-                            background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)',
-                            color: '#FFFFFF'
+                            background: theme.iconBg,
+                            color: '#FFFFFF',
+                            border: 'none',
+                            padding: '0.75rem 1rem'
+                          }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            if (onStartOrder) onStartOrder();
                           }}
                         >
-                          Lihat
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
+                          <ShoppingCart size={16} className="mr-2" />
+                          Lihat Detail
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                );
+              })}
             </div>
             {onStartOrder && (
               <motion.div
@@ -1182,6 +1397,29 @@ export function UMKMDetailPage({ umkm, onBack, onStartOrder }: UMKMDetailPagePro
         {/* Ulasan Tab - Uniform Card Design */}
         {activeTab === 'ulasan' && (
           <div className="py-6 space-y-5">
+            {/* Header dengan tombol Tulis Ulasan */}
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h3 className="text-xl font-bold" style={{ color: '#2F4858' }}>
+                  Ulasan Pelanggan
+                </h3>
+                <p className="text-sm mt-1" style={{ color: '#858585' }}>
+                  {reviews.length} ulasan
+                </p>
+              </div>
+              <Button
+                onClick={handleOpenNewReview}
+                className="rounded-xl shadow-lg h-12 px-6 flex items-center gap-2"
+                style={{ 
+                  background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)',
+                  color: '#FFFFFF'
+                }}
+              >
+                <Edit size={18} />
+                Tulis Ulasan
+              </Button>
+            </div>
+
             {reviews.length === 0 ? (
               <Card className="border-0 shadow-lg" style={{ borderRadius: '16px' }}>
                 <CardContent className="p-12 text-center">
@@ -1242,25 +1480,28 @@ export function UMKMDetailPage({ umkm, onBack, onStartOrder }: UMKMDetailPagePro
                                 ))}
                               </div>
                             </div>
-                            <div className="flex items-center gap-2 flex-shrink-0">
+                            <div className="flex items-center gap-3 flex-shrink-0">
                               <span className="text-xs font-medium" style={{ color: '#858585' }}>
                                 {review.date}
                               </span>
-                              {user && review.userId === user.id && (
+                              {/* Tombol Edit dan Delete - selalu terlihat, validasi di dalam fungsi */}
+                              {canEditReview(review) && (
                                 <div className="flex items-center gap-1">
                                   <button
                                     onClick={() => handleEditReview(review)}
-                                    className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                                    className="p-2 hover:bg-orange-50 rounded-lg transition-colors border border-transparent hover:border-orange-200"
                                     style={{ color: '#FF8D28' }}
+                                    title="Edit ulasan"
                                   >
-                                    <Edit size={16} />
+                                    <Edit size={18} />
                                   </button>
                                   <button
                                     onClick={() => handleDeleteReview(review.id)}
-                                    className="p-2 hover:bg-red-50 rounded-lg transition-colors"
+                                    className="p-2 hover:bg-red-50 rounded-lg transition-colors border border-transparent hover:border-red-200"
                                     style={{ color: '#dc2626' }}
+                                    title="Hapus ulasan"
                                   >
-                                    <Trash2 size={16} />
+                                    <Trash2 size={18} />
                                   </button>
                                 </div>
                               )}
@@ -1464,16 +1705,20 @@ export function UMKMDetailPage({ umkm, onBack, onStartOrder }: UMKMDetailPagePro
         </div>
       </div>
 
-      {/* Floating Action Button - Tulis Ulasan */}
+      {/* Floating Action Button - Tulis Ulasan (Mobile) */}
       {activeTab === 'ulasan' && (
-        <div className="fixed bottom-6 right-4 z-20">
+        <div className="fixed bottom-6 right-4 z-50 lg:hidden">
           <Button
             onClick={handleOpenNewReview}
-            className="rounded-full shadow-lg h-14 px-6"
-            style={{ backgroundColor: '#FF7F00', color: '#FFFFFF' }}
+            className="rounded-full shadow-2xl h-14 w-14 p-0 flex items-center justify-center"
+            style={{ 
+              background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)',
+              color: '#FFFFFF',
+              boxShadow: '0 10px 25px rgba(255, 141, 40, 0.4)'
+            }}
+            title="Tulis Ulasan"
           >
-            <Edit size={20} className="mr-2" />
-            Tulis Ulasan
+            <Edit size={24} />
           </Button>
         </div>
       )}
@@ -1485,14 +1730,25 @@ export function UMKMDetailPage({ umkm, onBack, onStartOrder }: UMKMDetailPagePro
             <DialogTitle>
               {editingReview ? "Edit Ulasan" : "Tulis Ulasan"}
             </DialogTitle>
-            {!user && (
-              <p className="text-sm" style={{ color: '#dc2626' }}>
-                * Silakan login terlebih dahulu untuk menulis ulasan
-              </p>
-            )}
           </DialogHeader>
 
           <div className="space-y-4 py-4">
+            {/* Nama (untuk non-logged in users atau edit) */}
+            {(!user || editingReview) && (
+              <div>
+                <label className="text-sm font-medium mb-2 block" style={{ color: '#2F4858' }}>
+                  Nama *
+                </label>
+                <Input
+                  type="text"
+                  value={reviewForm.userName}
+                  onChange={(e) => setReviewForm(prev => ({ ...prev, userName: e.target.value }))}
+                  placeholder="Masukkan nama Anda"
+                  className="w-full"
+                />
+              </div>
+            )}
+
             {/* Rating */}
             <div>
               <label className="text-sm font-medium mb-2 block" style={{ color: '#2F4858' }}>
@@ -1605,8 +1861,10 @@ export function UMKMDetailPage({ umkm, onBack, onStartOrder }: UMKMDetailPagePro
                 setReviewForm({
                   rating: 5,
                   comment: "",
+                  userName: user?.name || user?.email?.split("@")[0] || "",
                   photos: [],
-                  photoPreviews: []
+                  photoPreviews: [],
+                  existingPhotos: []
                 });
                 setEditingReview(null);
               }}
@@ -1615,13 +1873,13 @@ export function UMKMDetailPage({ umkm, onBack, onStartOrder }: UMKMDetailPagePro
             </Button>
             <Button
               onClick={handleSubmitReview}
-              disabled={isSubmitting || !reviewForm.comment.trim() || !user}
+              disabled={isSubmitting || !reviewForm.comment.trim() || (!user && !reviewForm.userName.trim())}
               style={{ 
-                backgroundColor: isSubmitting || !reviewForm.comment.trim() || !user ? '#CCCCCC' : '#FF7F00', 
+                backgroundColor: isSubmitting || !reviewForm.comment.trim() || (!user && !reviewForm.userName.trim()) ? '#CCCCCC' : '#FF7F00', 
                 color: '#FFFFFF' 
               }}
             >
-              {!user ? "Login Dulu" : isSubmitting ? "Menyimpan..." : editingReview ? "Perbarui" : "Kirim"}
+              {isSubmitting ? "Menyimpan..." : editingReview ? "Perbarui" : "Kirim"}
             </Button>
           </DialogFooter>
         </DialogContent>

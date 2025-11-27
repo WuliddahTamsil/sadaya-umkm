@@ -26,12 +26,12 @@ export function AuthSectionLanding({ onRoleSelect }: AuthSectionLandingProps) {
           <h2 style={{ color: '#2F4858' }} className="text-3xl lg:text-4xl font-bold mb-3 lg:mb-4">
             Mulai Bersama Kami
           </h2>
-          <p className="text-gray-600" style={{ fontSize: '18px', maxWidth: '600px', margin: '0 auto' }}>
+          <p className="text-gray-600" style={{ fontSize: '18px', maxWidth: '600px', margin: '0 auto', marginBottom: '2rem' }}>
             Pilih cara Anda bergabung dengan ekosistem Asli Bogor
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto mt-8 lg:mt-12">
           {/* User Card */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}

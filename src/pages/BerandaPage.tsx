@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Button } from "../components/ui/button";
 import { AsliBogorLogo } from "../components/ui/asli-bogor-logo";
-import { Leaf, TrendingUp, Users, Store, Award, ArrowRight, CheckCircle2 } from "lucide-react";
+import { Leaf, TrendingUp, Users, Store, Award, ArrowRight, CheckCircle2, Package, Truck, Heart, Shield, Star, Gift, Sparkles } from "lucide-react";
 import { AuthSectionLanding } from "../components/AuthSectionLanding";
 
 interface BerandaPageProps {
@@ -31,12 +31,60 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
   ];
 
   const benefits = [
-    "Produk lokal berkualitas tinggi",
-    "Pesan antar cepat & mudah",
-    "Dukung UMKM, bangga Bogor",
-    "Transaksi aman terpercaya",
-    "Rating & review transparan",
-    "Promo menarik setiap hari",
+    {
+      text: "Produk lokal berkualitas tinggi",
+      icon: Package,
+      gradient: "from-orange-500 to-orange-400",
+      bgGradient: "from-orange-50 to-orange-100",
+      iconBg: "linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)",
+      accentColor: "#FF8D28",
+      colorTheme: "orange",
+    },
+    {
+      text: "Pesan antar cepat & mudah",
+      icon: Truck,
+      gradient: "from-green-500 to-green-400",
+      bgGradient: "from-green-50 to-green-100",
+      iconBg: "linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%)",
+      accentColor: "#4CAF50",
+      colorTheme: "green",
+    },
+    {
+      text: "Dukung UMKM, bangga Bogor",
+      icon: Heart,
+      gradient: "from-blue-500 to-blue-400",
+      bgGradient: "from-blue-50 to-blue-100",
+      iconBg: "linear-gradient(135deg, #2196F3 0%, #1976D2 100%)",
+      accentColor: "#2196F3",
+      colorTheme: "blue",
+    },
+    {
+      text: "Transaksi aman terpercaya",
+      icon: Shield,
+      gradient: "from-orange-600 to-orange-400",
+      bgGradient: "from-orange-50 to-orange-100",
+      iconBg: "linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)",
+      accentColor: "#FF8D28",
+      colorTheme: "orange",
+    },
+    {
+      text: "Rating & review transparan",
+      icon: Star,
+      gradient: "from-green-600 to-green-400",
+      bgGradient: "from-green-50 to-green-100",
+      iconBg: "linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%)",
+      accentColor: "#4CAF50",
+      colorTheme: "green",
+    },
+    {
+      text: "Promo menarik setiap hari",
+      icon: Gift,
+      gradient: "from-blue-600 to-blue-400",
+      bgGradient: "from-blue-50 to-blue-100",
+      iconBg: "linear-gradient(135deg, #2196F3 0%, #1976D2 100%)",
+      accentColor: "#2196F3",
+      colorTheme: "blue",
+    },
   ];
 
   return (
@@ -320,29 +368,123 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            {benefits.map((benefit, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1, duration: 0.5 }}
-                className="bg-gradient-to-br from-white to-[#FFF4E6] p-6 rounded-2xl shadow-lg hover:shadow-xl transition-all border border-orange-100"
-              >
-                <div className="flex items-start gap-4">
-                  <div 
-                    className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
-                    style={{ background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)' }}
+          {/* Animated Sliding Cards */}
+          <div className="overflow-hidden relative max-w-6xl mx-auto py-4">
+            <motion.div
+              className="flex gap-6"
+              animate={{
+                x: ["0%", "-50%"], // Move by half (since we duplicate the cards)
+              }}
+              transition={{
+                x: {
+                  repeat: Infinity,
+                  repeatType: "loop",
+                  duration: 40,
+                  ease: "linear",
+                },
+              }}
+              style={{
+                width: "200%", // Double width for seamless loop
+              }}
+            >
+              {/* Render cards twice for seamless loop */}
+              {[...benefits, ...benefits].map((benefit, index) => {
+                const Icon = benefit.icon;
+                return (
+                  <motion.div
+                    key={index}
+                    className="flex-shrink-0"
+                    style={{
+                      minWidth: "320px", // Fixed min width for consistent card size
+                      width: "320px", // Fixed width for consistent animation
+                    }}
+                    whileHover={{ scale: 1.05, y: -8, rotate: 1 }}
+                    transition={{ type: "spring", stiffness: 300 }}
                   >
-                    <CheckCircle2 size={24} className="text-white" />
-                  </div>
-                  <p className="text-base font-medium" style={{ color: '#2F4858' }}>
-                    {benefit}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
+                    <div 
+                      className={`bg-gradient-to-br ${benefit.bgGradient} p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-all border-2 h-full relative overflow-hidden group`}
+                      style={{
+                        borderColor: 'rgba(255, 255, 255, 0.8)',
+                      }}
+                    >
+                      {/* Decorative background pattern */}
+                      <div 
+                        className="absolute top-0 right-0 w-32 h-32 opacity-10 rounded-full blur-2xl transition-opacity group-hover:opacity-20"
+                        style={{
+                          background: benefit.iconBg,
+                        }}
+                      />
+                      
+                      {/* Animated sparkle effect */}
+                      <motion.div
+                        className="absolute top-2 right-2"
+                        animate={{
+                          scale: [1, 1.2, 1],
+                          opacity: [0.3, 0.6, 0.3],
+                        }}
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                        }}
+                      >
+                        <Sparkles size={20} style={{ color: benefit.accentColor }} />
+                      </motion.div>
+                      
+                      <div className="flex flex-col items-center text-center gap-4 relative z-10 h-full justify-center">
+                        <motion.div 
+                          className="w-16 h-16 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg relative z-20"
+                          style={{ background: benefit.iconBg }}
+                          whileHover={{ rotate: [0, -10, 10, 0], scale: 1.1 }}
+                          transition={{ duration: 0.5 }}
+                        >
+                          <Icon 
+                            size={32} 
+                            style={{ 
+                              color: '#FFFFFF',
+                              display: 'block',
+                              zIndex: 10,
+                              position: 'relative'
+                            }} 
+                            strokeWidth={2.5} 
+                          />
+                          {/* Glow effect on icon */}
+                          <div 
+                            className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-50 blur-md transition-opacity"
+                            style={{ background: benefit.iconBg }}
+                          />
+                        </motion.div>
+                        <div className="flex-1 flex items-center justify-center">
+                          <p className="text-base font-semibold leading-relaxed text-center" style={{ color: '#2F4858' }}>
+                            {benefit.text}
+                          </p>
+                        </div>
+                      </div>
+                      
+                      {/* Decorative corner accent */}
+                      <div 
+                        className="absolute bottom-0 right-0 w-20 h-20 opacity-5 group-hover:opacity-10 transition-opacity"
+                        style={{
+                          background: `linear-gradient(135deg, transparent 0%, ${benefit.accentColor} 100%)`,
+                        }}
+                      />
+                      
+                      {/* Bottom border accent */}
+                      <div 
+                        className="absolute bottom-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                        style={{
+                          background: benefit.iconBg,
+                        }}
+                      />
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </motion.div>
+            
+            {/* Gradient overlays for fade effect */}
+            <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-white to-transparent pointer-events-none z-10" />
+            <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-white to-transparent pointer-events-none z-10" />
           </div>
         </div>
       </section>

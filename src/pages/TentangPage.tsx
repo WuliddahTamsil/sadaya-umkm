@@ -1,6 +1,9 @@
 import { motion } from "framer-motion";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { Heart, Target, Users, Award, Globe, Handshake, Lightbulb, Sparkles, Zap, Rocket } from "lucide-react";
+import AISImage from "../assets/AIS.png";
+import GHINAImage from "../assets/GHINA.png";
+import WUWUImage from "../assets/WUWU.png";
 
 export function TentangPage() {
   const values = [
@@ -25,11 +28,11 @@ export function TentangPage() {
   ];
 
   const milestones = [
-    { year: "2020", title: "Platform Diluncurkan", desc: "Asli Bogor resmi diluncurkan untuk mendukung UMKM Bogor" },
-    { year: "2021", title: "100+ UMKM Bergabung", desc: "Mencapai milestone pertama dengan 100 UMKM terdaftar" },
-    { year: "2022", title: "5K+ Pengguna Aktif", desc: "Komunitas pengguna berkembang pesat" },
-    { year: "2023", title: "Ekspansi Nasional", desc: "Produk UMKM Bogor bisa dinikmati di seluruh Indonesia" },
-    { year: "2024", title: "500+ UMKM", desc: "Mencapai 500 UMKM terdaftar dengan berbagai kategori" },
+    { year: "2025", title: "Platform Diluncurkan", desc: "Asli Bogor resmi diluncurkan untuk mendukung UMKM Bogor" },
+    { year: "2026", title: "100+ UMKM Bergabung", desc: "Mencapai milestone pertama dengan 100 UMKM terdaftar" },
+    { year: "2027", title: "5K+ Pengguna Aktif", desc: "Komunitas pengguna berkembang pesat" },
+    { year: "2028", title: "Ekspansi Nasional", desc: "Produk UMKM Bogor bisa dinikmati di seluruh Indonesia" },
+    { year: "2029", title: "500+ UMKM", desc: "Mencapai 500 UMKM terdaftar dengan berbagai kategori" },
   ];
 
   const teamValues = [
@@ -351,6 +354,202 @@ export function TentangPage() {
                 </motion.div>
               );
             })}
+          </div>
+        </div>
+      </section>
+
+      {/* Tim Pengembang Section */}
+      <section className="py-20 lg:py-28 relative overflow-hidden bg-white">
+        {/* Animated Background Elements - Lighter */}
+        <motion.div
+          className="absolute top-10 left-10 w-72 h-72 rounded-full opacity-3 blur-3xl"
+          style={{ background: '#FF8D28' }}
+          animate={{
+            scale: [1, 1.3, 1],
+            x: [0, 50, 0],
+            y: [0, -30, 0],
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        <motion.div
+          className="absolute bottom-10 right-10 w-96 h-96 rounded-full opacity-3 blur-3xl"
+          style={{ background: '#4CAF50' }}
+          animate={{
+            scale: [1, 1.2, 1],
+            x: [0, -50, 0],
+            y: [0, 30, 0],
+          }}
+          transition={{
+            duration: 25,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+
+        <div className="container mx-auto px-4 lg:px-6 relative z-20">
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <motion.div
+              className="inline-block mb-4"
+              animate={{
+                scale: [1, 1.1, 1],
+                rotate: [0, 5, -5, 0],
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            >
+              <Users size={48} style={{ color: '#FF8D28' }} />
+            </motion.div>
+            <h2 className="text-3xl lg:text-4xl font-bold mb-4" style={{ color: '#2F4858' }}>
+              Tim Pengembang
+            </h2>
+            <p style={{ color: '#4A4A4A', fontSize: '18px', maxWidth: '700px', margin: '0 auto' }}>
+              Tim kreatif dan berdedikasi di balik kesuksesan Asli Bogor
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-8 lg:gap-12 max-w-6xl mx-auto relative z-20">
+            {[
+              {
+                name: "AISYAH",
+                role: "Frontend Developer",
+                description: "Bertanggung jawab dalam pengembangan antarmuka pengguna yang menarik dan responsif. Membuat pengalaman pengguna yang seamless dan modern.",
+                image: AISImage,
+                color: "#FF8D28",
+                gradient: "from-orange-400 to-orange-600"
+              },
+              {
+                name: "GHINA",
+                role: "UI/UX Designer + Project Manager",
+                description: "Mendesain pengalaman pengguna yang intuitif dan menarik. Menciptakan desain yang tidak hanya cantik tapi juga fungsional. Mengelola dan mengkoordinasikan seluruh proyek pengembangan platform.",
+                image: GHINAImage,
+                color: "#2196F3",
+                gradient: "from-blue-400 to-blue-600"
+              },
+              {
+                name: "WULIDDAH",
+                role: "Backend Developer",
+                description: "Mengembangkan sistem backend yang robust dan scalable. Memastikan keamanan data dan performa optimal untuk platform.",
+                image: WUWUImage,
+                color: "#4CAF50",
+                gradient: "from-green-400 to-green-600"
+              }
+            ].map((member, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.2, duration: 0.6 }}
+                whileHover={{ y: -10, scale: 1.02 }}
+                className="group"
+              >
+                <div className="bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden border-2 border-orange-100 h-full flex flex-col relative z-20">
+                  {/* Photo Section - Clear and Sharp */}
+                  <div className="relative h-80 overflow-hidden bg-gray-50">
+                    <ImageWithFallback
+                      src={member.image}
+                      alt={member.name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      style={{
+                        imageRendering: 'crisp-edges',
+                        objectFit: 'cover',
+                        objectPosition: 'center',
+                        filter: 'none'
+                      }}
+                    />
+                    {/* Animated Sparkle Effect */}
+                    <motion.div
+                      className="absolute top-4 right-4 z-10"
+                      animate={{
+                        scale: [1, 1.2, 1],
+                        opacity: [0.5, 1, 0.5],
+                        rotate: [0, 180, 360],
+                      }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                      }}
+                    >
+                      <Sparkles size={24} style={{ color: member.color }} />
+                    </motion.div>
+                    {/* Name Badge - Clear and Visible */}
+                    <div className="absolute bottom-0 left-0 right-0 p-4 z-10">
+                      <motion.div
+                        className="bg-white rounded-xl p-4 shadow-2xl border-2"
+                        style={{ borderColor: member.color }}
+                        initial={{ y: 20, opacity: 0 }}
+                        whileInView={{ y: 0, opacity: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: index * 0.2 + 0.3, duration: 0.5 }}
+                      >
+                        <h3 className="text-xl font-bold mb-1" style={{ color: '#2F4858' }}>
+                          {member.name}
+                        </h3>
+                        <p 
+                          className="text-sm font-bold"
+                          style={{ color: member.color }}
+                        >
+                          {member.role}
+                        </p>
+                      </motion.div>
+                    </div>
+                  </div>
+
+                  {/* Content Section */}
+                  <div className="p-6 flex-1 flex flex-col bg-white relative z-10">
+                    {/* Job Description */}
+                    <motion.p
+                      className="text-base leading-relaxed mb-4 flex-1 font-medium"
+                      style={{ color: '#2F4858' }}
+                      initial={{ opacity: 0 }}
+                      whileInView={{ opacity: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: index * 0.2 + 0.4, duration: 0.5 }}
+                    >
+                      {member.description}
+                    </motion.p>
+
+                    {/* Decorative Element */}
+                    <motion.div
+                      className="flex items-center gap-3 pt-4 border-t-2"
+                      style={{ borderColor: '#FFE5CC' }}
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: index * 0.2 + 0.5, duration: 0.5 }}
+                    >
+                      <div 
+                        className={`w-14 h-14 rounded-xl bg-gradient-to-br ${member.gradient} flex items-center justify-center shadow-lg`}
+                      >
+                        <Users size={24} className="text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <p className="text-xs font-semibold mb-1" style={{ color: '#858585' }}>
+                          Tim Asli Bogor
+                        </p>
+                        <p className="text-sm font-bold" style={{ color: member.color }}>
+                          {member.role}
+                        </p>
+                      </div>
+                    </motion.div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>

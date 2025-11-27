@@ -359,5 +359,67 @@
     "createdAt": "2025-11-16T18:11:28.949Z",
     "updatedAt": "2025-11-16T18:12:11.126Z",
     "paidAt": "2025-11-16T18:11:29.231Z"
+  },
+  {
+    "id": "ORD-1764255697772-E92NL9M6I",
+    "userId": "7c31ebb1-1d62-45cf-9868-7bf092bca650",
+    "userName": "AISYAH PUTRI HARMELIA",
+    "userEmail": "aisyahputrihhh16@gmail.com",
+    "umkmId": "4fb06afa-fd54-4d28-aace-d40af516f40a",
+    "storeName": "Lapis Bogor Sangkuriang",
+    "storeAddress": "Bogor, Jawa Barat",
+    "items": [
+      {
+        "id": "lapis-talas-original-001",
+        "name": "Lapis Talas Original",
+        "quantity": 1,
+        "price": 45000
+      }
+    ],
+    "subtotal": 45000,
+    "deliveryFee": 10000,
+    "total": 55000,
+    "deliveryAddress": "Jl. Pajajaran No. 45, Bogor",
+    "paymentMethod": "dana",
+    "paymentStatus": "paid",
+    "notes": null,
+    "status": "preparing",
+    "driverId": null,
+    "driverName": null,
+    "trackingNumber": null,
+    "createdAt": "2025-11-27T15:01:37.772Z",
+    "updatedAt": "2025-11-27T15:01:39.618Z",
+    "paidAt": "2025-11-27T15:01:39.616Z"
+  },
+  {
+    "id": "ORD-1764255753671-AUJPPGAPI",
+    "userId": "7c31ebb1-1d62-45cf-9868-7bf092bca650",
+    "userName": "AISYAH PUTRI HARMELIA",
+    "userEmail": "aisyahputrihhh16@gmail.com",
+    "umkmId": "4fb06afa-fd54-4d28-aace-d40af516f40a",
+    "storeName": "Lapis Bogor Sangkuriang",
+    "storeAddress": "Bogor, Jawa Barat",
+    "items": [
+      {
+        "id": "lapis-talas-original-001",
+        "name": "Lapis Talas Original",
+        "quantity": 1,
+        "price": 45000
+      }
+    ],
+    "subtotal": 45000,
+    "deliveryFee": 10000,
+    "total": 55000,
+    "deliveryAddress": "Jl. Pajajaran No. 45, Bogor",
+    "paymentMethod": "gopay",
+    "paymentStatus": "paid",
+    "notes": null,
+    "status": "preparing",
+    "driverId": null,
+    "driverName": null,
+    "trackingNumber": null,
+    "createdAt": "2025-11-27T15:02:33.671Z",
+    "updatedAt": "2025-11-27T15:02:35.230Z",
+    "paidAt": "2025-11-27T15:02:35.229Z"
   }
 ]

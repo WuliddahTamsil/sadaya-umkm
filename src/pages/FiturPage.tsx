@@ -223,7 +223,7 @@ export function FiturPage() {
         </div>
       </section>
 
-      {/* Main Features Section */}
+      {/* Main Features Section - Horizontal Scrolling Animation */}
       <section className="py-20 lg:py-28 bg-white">
         <div className="container mx-auto px-4 lg:px-6">
           <motion.div
@@ -241,36 +241,70 @@ export function FiturPage() {
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {mainFeatures.map((feature, index) => {
-              const Icon = feature.icon;
-              return (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1, duration: 0.5 }}
-                  whileHover={{ y: -8 }}
-                >
-                  <div className="bg-white p-8 rounded-3xl shadow-lg hover:shadow-xl transition-all h-full border border-orange-100">
-                    <motion.div 
-                      className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center mb-6`}
-                      whileHover={{ scale: 1.1, rotate: 5 }}
-                      transition={{ type: "spring", stiffness: 300 }}
-                    >
-                      <Icon size={32} style={{ color: '#FFFFFF' }} />
-                    </motion.div>
-                    <h4 style={{ color: '#2F4858' }} className="mb-3 text-xl font-bold">
-                      {feature.title}
-                    </h4>
-                    <p className="text-base leading-relaxed" style={{ color: '#4A4A4A' }}>
-                      {feature.description}
-                    </p>
-                  </div>
-                </motion.div>
-              );
-            })}
+          {/* Horizontal Scrolling Container */}
+          <div className="overflow-hidden relative max-w-6xl mx-auto py-4">
+            <motion.div
+              className="flex gap-6"
+              animate={{
+                x: ["0%", "-50%"], // Move by half (since we duplicate the cards)
+              }}
+              transition={{
+                x: {
+                  repeat: Infinity,
+                  repeatType: "loop",
+                  duration: 40,
+                  ease: "linear",
+                },
+              }}
+              style={{
+                width: "200%", // Double width for seamless loop
+              }}
+            >
+              {/* Render cards twice for seamless loop */}
+              {[...mainFeatures, ...mainFeatures].map((feature, index) => {
+                const Icon = feature.icon;
+                return (
+                  <motion.div
+                    key={index}
+                    className="flex-shrink-0 group"
+                    style={{
+                      minWidth: "400px",
+                      width: "400px",
+                    }}
+                    whileHover={{ scale: 1.05, y: -8 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                  >
+                    <div className="bg-white p-8 rounded-3xl shadow-lg hover:shadow-xl transition-all h-full border-2 border-orange-100 relative overflow-hidden">
+                      {/* Decorative background pattern */}
+                      <div
+                        className="absolute top-0 right-0 w-32 h-32 opacity-10 rounded-full blur-2xl transition-opacity group-hover:opacity-20"
+                        style={{
+                          background: `linear-gradient(135deg, ${feature.color} 0%, ${feature.color}CC 100%)`,
+                        }}
+                      />
+                      
+                      <motion.div 
+                        className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center mb-6 relative z-10`}
+                        whileHover={{ scale: 1.1, rotate: 5 }}
+                        transition={{ type: "spring", stiffness: 300 }}
+                      >
+                        <Icon size={32} style={{ color: '#FFFFFF' }} />
+                      </motion.div>
+                      <h4 style={{ color: '#2F4858' }} className="mb-3 text-xl font-bold relative z-10">
+                        {feature.title}
+                      </h4>
+                      <p className="text-base leading-relaxed relative z-10" style={{ color: '#4A4A4A' }}>
+                        {feature.description}
+                      </p>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </motion.div>
+            
+            {/* Gradient overlays for fade effect */}
+            <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-white to-transparent pointer-events-none z-10" />
+            <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-white to-transparent pointer-events-none z-10" />
           </div>
         </div>
       </section>
