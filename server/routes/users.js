@@ -1,10 +1,13 @@
 import express from 'express';
-import { getAllUsers, getUserById, updateUserStatus, updateUserProfile, deleteUser } from '../controllers/usersController.js';
+import { getAllUsers, getUserById, updateUserStatus, updateUserProfile, deleteUser, createUser } from '../controllers/usersController.js';
 
 const router = express.Router();
 
 // GET /api/users - Get all users (untuk admin)
 router.get('/', getAllUsers);
+
+// POST /api/users - Create user (untuk admin)
+router.post('/', createUser);
 
 // PATCH /api/users/:id/status - Update user status (untuk admin)
 router.patch('/:id/status', updateUserStatus);

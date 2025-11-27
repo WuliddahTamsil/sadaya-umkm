@@ -1,4 +1,6 @@
-import { getAllUsers as getAllUsersModel, getUserById as getUserByIdModel, updateUser, deleteUser as deleteUserModel } from '../models/userModel.js';
+import { v4 as uuidv4 } from 'uuid';
+import bcrypt from 'bcryptjs';
+import { getAllUsers as getAllUsersModel, getUserById as getUserByIdModel, updateUser, deleteUser as deleteUserModel, saveUser, getUserByEmail } from '../models/userModel.js';
 
 export const getAllUsers = async (req, res) => {
   try {
@@ -192,6 +194,88 @@ export const deleteUser = async (req, res) => {
   } catch (error) {
     console.error('Delete user error:', error);
     res.status(500).json({ error: 'Terjadi kesalahan saat menghapus user' });
+  }
+};
+
+export const createUser = async (req, res) => {
+  try {
+    let {
+      name,
+      email,
+      password,
+      role,
+      phone,
+      address,
+      description,
+      storeName,
+      storeAddress,
+      storeDescription,
+      vehicleType,
+      vehiclePlate,
+      status
+    } = req.body;
+
+    if (!name && !storeName) {
+      return res.status(400).json({ error: 'Nama harus diisi' });
+    }
+
+    if (!email || !password || !role) {
+      return res.status(400).json({ error: 'Email, password, dan role wajib diisi' });
+    }
+
+    email = email.toLowerCase().trim();
+    password = password.trim();
+    const normalizedRole = role.toString().toLowerCase();
+
+    if (normalizedRole === 'admin') {
+      return res.status(400).json({ error: 'Role admin tidak dapat dibuat melalui dashboard' });
+    }
+
+    const existingUser = await getUserByEmail(email);
+    if (existingUser) {
+      return res.status(400).json({ error: 'Email sudah terdaftar' });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const now = new Date().toISOString();
+    const defaultStatus = status || (normalizedRole === 'user' ? 'active' : 'pending');
+    const isActive = defaultStatus === 'active';
+
+    const newUser = {
+      id: uuidv4(),
+      name: normalizedRole === 'umkm' ? storeName || name : name,
+      email,
+      password: hashedPassword,
+      role: normalizedRole,
+      phone: phone || null,
+      address: address || null,
+      description: description || null,
+      storeName: storeName || null,
+      storeAddress: storeAddress || null,
+      storeDescription: storeDescription || null,
+      vehicleType: vehicleType || null,
+      vehiclePlate: vehiclePlate || null,
+      status: defaultStatus,
+      isVerified: normalizedRole === 'user' ? true : isActive,
+      isOnboarded: normalizedRole === 'user' ? true : isActive,
+      totalOrders: 0,
+      rating: 0,
+      joinDate: now.split('T')[0],
+      createdAt: now,
+      updatedAt: now
+    };
+
+    await saveUser(newUser);
+    const { password: _, ...userWithoutPassword } = newUser;
+
+    res.status(201).json({
+      success: true,
+      message: 'User berhasil dibuat',
+      data: userWithoutPassword
+    });
+  } catch (error) {
+    console.error('Create user error:', error);
+    res.status(500).json({ error: 'Terjadi kesalahan saat membuat user' });
   }
 };
 

@@ -33,11 +33,13 @@ import { api } from '../../../config/api';
 import { toast } from 'sonner';
 import { ExternalLink, FileText, Image as ImageIcon } from 'lucide-react';
 
+type RoleOption = 'UMKM' | 'Driver' | 'User';
+
 interface DataItem {
   id: string;
   name: string;
   email: string;
-  role: 'UMKM' | 'Driver' | 'User';
+  role: RoleOption;
   status: 'active' | 'inactive' | 'pending';
   joinDate: string;
   totalOrders: number;
@@ -66,6 +68,21 @@ interface DataItem {
 type SortField = 'name' | 'joinDate' | 'totalOrders' | 'rating';
 type SortDirection = 'asc' | 'desc';
 
+interface NewUserState {
+  role: RoleOption;
+  name: string;
+  email: string;
+  password: string;
+  phone: string;
+  address: string;
+  description: string;
+  storeName: string;
+  storeAddress: string;
+  storeDescription: string;
+  vehicleType: string;
+  vehiclePlate: string;
+}
+
 export function ManajemenData() {
   const [searchQuery, setSearchQuery] = useState('');
   const [filterRole, setFilterRole] = useState<string>('all');
@@ -79,6 +96,23 @@ export function ManajemenData() {
   const [isDetailDialogOpen, setIsDetailDialogOpen] = useState(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<DataItem | null>(null);
+  const initialNewUserState: NewUserState = {
+    role: 'UMKM',
+    name: '',
+    email: '',
+    password: '',
+    phone: '',
+    address: '',
+    description: '',
+    storeName: '',
+    storeAddress: '',
+    storeDescription: '',
+    vehicleType: '',
+    vehiclePlate: '',
+  };
+  const [newUser, setNewUser] = useState<NewUserState>(initialNewUserState);
+  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
+  const [isSubmittingNewUser, setIsSubmittingNewUser] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
@@ -279,9 +313,67 @@ export function ManajemenData() {
   };
 
   const handleDelete = async (item: DataItem) => {
-    if (!confirm(`Apakah Anda yakin ingin menghapus ${item.name}?`)) {
+    if (!window.confirm(`Apakah Anda yakin ingin menghapus ${item.name}?`)) {
       return;
     }
+  const resetNewUserForm = () => {
+    setNewUser(initialNewUserState);
+  };
+
+  const handleCreateUser = async () => {
+    const hasName = newUser.name.trim().length > 0;
+    const hasUMKMStoreName = newUser.storeName.trim().length > 0;
+    if ((!hasName && newUser.role !== 'UMKM') || (newUser.role === 'UMKM' && !hasUMKMStoreName)) {
+      toast.error('Nama pengguna atau nama UMKM wajib diisi');
+      return;
+    }
+
+    if (!newUser.email.trim() || !newUser.password.trim()) {
+      toast.error('Email dan password wajib diisi');
+      return;
+    }
+
+    setIsSubmittingNewUser(true);
+    try {
+      const payload = {
+        name: newUser.name.trim() || newUser.storeName.trim(),
+        email: newUser.email.trim(),
+        password: newUser.password.trim(),
+        role: newUser.role.toLowerCase(),
+        phone: newUser.phone.trim() || undefined,
+        address: newUser.address.trim() || undefined,
+        description: newUser.description.trim() || undefined,
+        storeName: newUser.role === 'UMKM' ? newUser.storeName.trim() : undefined,
+        storeAddress: newUser.role === 'UMKM' ? newUser.storeAddress.trim() || undefined : undefined,
+        storeDescription: newUser.role === 'UMKM' ? newUser.storeDescription.trim() || undefined : undefined,
+        vehicleType: newUser.role === 'Driver' ? newUser.vehicleType.trim() || undefined : undefined,
+        vehiclePlate: newUser.role === 'Driver' ? newUser.vehiclePlate.trim() || undefined : undefined,
+      };
+
+      const response = await fetch(api.users.create, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || 'Gagal menambahkan user');
+      }
+
+      toast.success('Pengguna berhasil ditambahkan');
+      setIsAddDialogOpen(false);
+      resetNewUserForm();
+      fetchUsers();
+    } catch (error) {
+      console.error('Create user error:', error);
+      toast.error(error instanceof Error ? error.message : 'Gagal menambahkan user');
+    } finally {
+      setIsSubmittingNewUser(false);
+    }
+  };
 
     try {
       const response = await fetch(api.users.delete(item.id), {
@@ -402,6 +494,12 @@ export function ManajemenData() {
             Kelola data user, UMKM, dan driver
           </p>
         </div>
+        <Button
+          onClick={() => setIsAddDialogOpen(true)}
+          style={{ backgroundColor: '#FF8D28', color: '#FFFFFF' }}
+        >
+          + Tambah Pengguna
+        </Button>
       </motion.div>
 
       {/* Stats Overview */}
@@ -1047,6 +1145,176 @@ export function ManajemenData() {
               </div>
             </div>
           )}
+        </DialogContent>
+      </Dialog>
+
+      {/* Add Dialog */}
+      <Dialog
+        open={isAddDialogOpen}
+        onOpenChange={(open) => {
+          setIsAddDialogOpen(open);
+          if (!open) {
+            resetNewUserForm();
+          }
+        }}
+      >
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle style={{ color: '#2F4858' }}>Tambah Pengguna</DialogTitle>
+            <DialogDescription>
+              Isi detail pengguna baru
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label>Role</Label>
+                <Select
+                  value={newUser.role}
+                  onValueChange={(value: RoleOption) => setNewUser({ ...newUser, role: value })}
+                >
+                  <SelectTrigger className="mt-1">
+                    <SelectValue placeholder="Pilih role" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="UMKM">UMKM</SelectItem>
+                    <SelectItem value="Driver">Driver</SelectItem>
+                    <SelectItem value="User">User</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <Label>Email</Label>
+                <Input
+                  type="email"
+                  value={newUser.email}
+                  onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
+                  className="mt-1"
+                  placeholder="user@example.com"
+                />
+              </div>
+              <div>
+                <Label>Password</Label>
+                <Input
+                  type="password"
+                  value={newUser.password}
+                  onChange={(e) => setNewUser({ ...newUser, password: e.target.value })}
+                  className="mt-1"
+                  placeholder="Minimal 6 karakter"
+                />
+              </div>
+              <div>
+                <Label>Nama Lengkap / Penanggung Jawab</Label>
+                <Input
+                  value={newUser.name}
+                  onChange={(e) => setNewUser({ ...newUser, name: e.target.value })}
+                  className="mt-1"
+                  placeholder="Nama sesuai KTP"
+                />
+              </div>
+              {newUser.role === 'UMKM' && (
+                <>
+                  <div>
+                    <Label>Nama UMKM / Toko</Label>
+                    <Input
+                      value={newUser.storeName}
+                      onChange={(e) => setNewUser({ ...newUser, storeName: e.target.value })}
+                      className="mt-1"
+                      placeholder="Nama toko"
+                    />
+                  </div>
+                  <div>
+                    <Label>Alamat Toko</Label>
+                    <Input
+                      value={newUser.storeAddress}
+                      onChange={(e) => setNewUser({ ...newUser, storeAddress: e.target.value })}
+                      className="mt-1"
+                      placeholder="Alamat lengkap toko"
+                    />
+                  </div>
+                  <div className="col-span-2">
+                    <Label>Deskripsi UMKM</Label>
+                    <Textarea
+                      value={newUser.storeDescription}
+                      onChange={(e) => setNewUser({ ...newUser, storeDescription: e.target.value })}
+                      className="mt-1"
+                      rows={3}
+                      placeholder="Deskripsi singkat usaha"
+                    />
+                  </div>
+                </>
+              )}
+              {newUser.role === 'Driver' && (
+                <>
+                  <div>
+                    <Label>Jenis Kendaraan</Label>
+                    <Input
+                      value={newUser.vehicleType}
+                      onChange={(e) => setNewUser({ ...newUser, vehicleType: e.target.value })}
+                      className="mt-1"
+                      placeholder="Motor / Mobil"
+                    />
+                  </div>
+                  <div>
+                    <Label>Plat Nomor</Label>
+                    <Input
+                      value={newUser.vehiclePlate}
+                      onChange={(e) => setNewUser({ ...newUser, vehiclePlate: e.target.value })}
+                      className="mt-1"
+                      placeholder="F 1234 XX"
+                    />
+                  </div>
+                </>
+              )}
+              <div>
+                <Label>Telepon</Label>
+                <Input
+                  value={newUser.phone}
+                  onChange={(e) => setNewUser({ ...newUser, phone: e.target.value })}
+                  className="mt-1"
+                  placeholder="+62..."
+                />
+              </div>
+              <div>
+                <Label>Alamat</Label>
+                <Input
+                  value={newUser.address}
+                  onChange={(e) => setNewUser({ ...newUser, address: e.target.value })}
+                  className="mt-1"
+                  placeholder="Alamat domisili"
+                />
+              </div>
+              <div className="col-span-2">
+                <Label>Deskripsi</Label>
+                <Textarea
+                  value={newUser.description}
+                  onChange={(e) => setNewUser({ ...newUser, description: e.target.value })}
+                  className="mt-1"
+                  rows={3}
+                  placeholder="Catatan tambahan"
+                />
+              </div>
+            </div>
+            <div className="flex justify-end gap-2 pt-4">
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setIsAddDialogOpen(false);
+                  resetNewUserForm();
+                }}
+                disabled={isSubmittingNewUser}
+              >
+                Batal
+              </Button>
+              <Button
+                onClick={handleCreateUser}
+                style={{ backgroundColor: '#FF8D28', color: '#FFFFFF' }}
+                disabled={isSubmittingNewUser}
+              >
+                {isSubmittingNewUser ? 'Menyimpan...' : 'Simpan'}
+              </Button>
+            </div>
+          </div>
         </DialogContent>
       </Dialog>
     </div>
