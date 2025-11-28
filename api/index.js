@@ -16,6 +16,7 @@ import commentRoutes from '../server/routes/comments.js';
 import adminRoutes from '../server/routes/admin.js';
 import chatRoutes from '../server/routes/chat.js';
 import setupRoutes from '../server/routes/setup.js';
+import { updateUserStatus, updateUserProfile } from '../server/controllers/usersController.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -57,7 +58,34 @@ app.use(express.urlencoded({ extended: true }));
 // Vercel passes the full path including /api, so we mount at /api
 // Also handle paths without /api prefix in case Vercel strips it
 
-// Special handling for users routes - mount before other routes
+// CRITICAL: Handle PATCH /api/users/:id/status BEFORE mounting usersRoutes
+// This ensures the more specific route is matched first
+app.patch('/api/users/:id/status', async (req, res, next) => {
+  console.log('>>> EXPLICIT STATUS ROUTE HANDLER - ID:', req.params.id, 'Path:', req.path);
+  try {
+    await updateUserStatus(req, res);
+  } catch (error) {
+    console.error('Status update error in explicit handler:', error);
+    next(error);
+  }
+});
+
+// CRITICAL: Handle PATCH /api/users/:id BEFORE mounting usersRoutes
+app.patch('/api/users/:id', async (req, res, next) => {
+  // Skip if this should match /:id/status
+  if (req.path.endsWith('/status') || req.originalUrl.endsWith('/status')) {
+    return next();
+  }
+  console.log('>>> EXPLICIT PROFILE ROUTE HANDLER - ID:', req.params.id, 'Path:', req.path);
+  try {
+    await updateUserProfile(req, res);
+  } catch (error) {
+    console.error('Profile update error in explicit handler:', error);
+    next(error);
+  }
+});
+
+// Special handling for users routes - mount after explicit handlers
 app.use('/api/users', usersRoutes);
 app.use('/users', usersRoutes); // Fallback if path doesn't include /api
 
