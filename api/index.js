@@ -26,8 +26,11 @@ const app = express();
 app.use((req, res, next) => {
   console.log(`[${req.method}] ${req.path} | Original: ${req.originalUrl} | URL: ${req.url} | BaseURL: ${req.baseUrl}`);
   // Log untuk debugging routing
-  if (req.path.includes('/users/') && req.path.includes('/status')) {
-    console.log('STATUS UPDATE REQUEST:', req.method, req.path);
+  if (req.path.includes('/users/')) {
+    console.log('USERS REQUEST:', req.method, req.path, 'Full path:', req.originalUrl);
+    if (req.path.includes('/status')) {
+      console.log('>>> STATUS UPDATE REQUEST DETECTED <<<');
+    }
   }
   next();
 });
@@ -53,10 +56,13 @@ app.use(express.urlencoded({ extended: true }));
 // API Routes - In Vercel, requests to /api/* are routed here
 // Vercel passes the full path including /api, so we mount at /api
 // Also handle paths without /api prefix in case Vercel strips it
-app.use('/api/auth', authRoutes);
-app.use('/auth', authRoutes); // Fallback if path doesn't include /api
+
+// Special handling for users routes - mount before other routes
 app.use('/api/users', usersRoutes);
 app.use('/users', usersRoutes); // Fallback if path doesn't include /api
+
+app.use('/api/auth', authRoutes);
+app.use('/auth', authRoutes); // Fallback if path doesn't include /api
 app.use('/api/upload', uploadRoutes);
 app.use('/upload', uploadRoutes);
 app.use('/api/orders', ordersRoutes);
