@@ -32,7 +32,8 @@ import {
   LogOut,
   Bell,
   BarChart3,
-  Calendar
+  Calendar,
+  Gamepad2
 } from 'lucide-react';
 
 interface DashboardLayoutProps {
@@ -75,6 +76,7 @@ export function DashboardLayout({ children, activeMenu, onMenuChange }: Dashboar
           { id: 'pesanan', label: 'Pesanan Saya', icon: Package },
           { id: 'tracking', label: 'Tracking Pesanan', icon: TrendingUp },
           { id: 'dompet', label: 'Dompet Saya', icon: Wallet },
+          { id: 'game', label: 'Harvest Bogor 🎮', icon: Gamepad2 },
           { id: 'konten', label: 'Konten', icon: FileText },
           { id: 'profil', label: 'Profil', icon: User },
           { id: 'notifikasi', label: 'Notifikasi', icon: Bell, badge: unreadCount },

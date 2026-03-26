@@ -7,14 +7,14 @@ export function Footer() {
   return (
     <footer 
       className="py-12 relative overflow-hidden"
-      style={{ background: 'linear-gradient(135deg, #2F4858 0%, #1a2a35 100%)' }}
+      style={{ background: 'linear-gradient(135deg, #fef3c7 0%, #ffdca0 45%, #fdba74 100%)', color:'#334155' }}
     >
       {/* Decorative Elements */}
-      <div className="absolute top-0 left-0 opacity-10">
-        <Leaf size={100} className="text-green-400" />
+      <div className="absolute top-0 left-0 opacity-15">
+        <Leaf size={100} className="text-amber-400" />
       </div>
-      <div className="absolute bottom-0 right-0 opacity-10">
-        <Leaf size={120} className="text-orange-400" />
+      <div className="absolute bottom-0 right-0 opacity-15">
+        <Leaf size={120} className="text-orange-300" />
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
@@ -33,7 +33,7 @@ export function Footer() {
                 alt="SADAYA"
               />
             </div>
-            <p className="body-3 mb-4" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>
+            <p className="body-3 mb-4" style={{ color: '#334155' }}>
               Platform digital untuk UMKM Bogor yang menghubungkan produk lokal berkualitas dengan pelanggan di seluruh Indonesia.
             </p>
             <div className="flex space-x-4">
@@ -79,27 +79,27 @@ export function Footer() {
             </h4>
             <ul className="space-y-2">
               <li>
-                <a href="#hero" className="body-3 hover:text-[#FFB84D] transition-colors" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>
+                <a href="#hero" className="body-3 hover:text-[#FFB84D] transition-colors" style={{ color: '#475569' }}>
                   Beranda
                 </a>
               </li>
               <li>
-                <a href="#direktori" className="body-3 hover:text-[#FFB84D] transition-colors" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>
+                <a href="#direktori" className="body-3 hover:text-[#FFB84D] transition-colors" style={{ color: '#475569' }}>
                   Direktori UMKM
                 </a>
               </li>
               <li>
-                <a href="#auth-section" className="body-3 hover:text-[#FFB84D] transition-colors" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>
+                <a href="#auth-section" className="body-3 hover:text-[#FFB84D] transition-colors" style={{ color: '#475569' }}>
                   Masuk / Daftar
                 </a>
               </li>
               <li>
-                <a href="#tentang" className="body-3 hover:text-[#FFB84D] transition-colors" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>
+                <a href="#tentang" className="body-3 hover:text-[#FFB84D] transition-colors" style={{ color: '#475569' }}>
                   Tentang Kami
                 </a>
               </li>
               <li>
-                <a href="#keunggulan" className="body-3 hover:text-[#FFB84D] transition-colors" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>
+                <a href="#keunggulan" className="body-3 hover:text-[#FFB84D] transition-colors" style={{ color: '#475569' }}>
                   Keunggulan
                 </a>
               </li>
@@ -119,19 +119,19 @@ export function Footer() {
             <ul className="space-y-3">
               <li className="flex items-start gap-3">
                 <MapPin size={20} style={{ color: '#FFB84D' }} className="flex-shrink-0 mt-1" />
-                <span className="body-3" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>
+                <span className="body-3" style={{ color: '#334155' }}>
                   Jl. Pajajaran No. 123, Bogor, Jawa Barat 16143
                 </span>
               </li>
               <li className="flex items-center gap-3">
                 <Phone size={20} style={{ color: '#FFB84D' }} className="flex-shrink-0" />
-                <span className="body-3" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>
+                <span className="body-3" style={{ color: '#334155' }}>
                   +62-853-8937-1126
                 </span>
               </li>
               <li className="flex items-center gap-3">
                 <Mail size={20} style={{ color: '#FFB84D' }} className="flex-shrink-0" />
-                <span className="body-3" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>
+                <span className="body-3" style={{ color: '#334155' }}>
                   info@aslibogor.id
                 </span>
               </li>
@@ -148,10 +148,10 @@ export function Footer() {
           viewport={{ once: true }}
           transition={{ delay: 0.3, duration: 0.5 }}
         >
-          <p className="body-3 text-center" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>
+          <p className="body-3 text-center" style={{ color: '#334155' }}>
             © 2025 SADAYA. Bikin Keren UMKM Lokal. All rights reserved.
           </p>
-          <p className="body-3 text-center mt-2" style={{ color: 'rgba(255, 255, 255, 0.6)' }}>
+          <p className="body-3 text-center mt-2" style={{ color: '#475569' }}>
             Follow us: <a href="https://instagram.com/aslibogor" target="_blank" className="hover:text-[#FFB84D] transition-colors">@AsliBogor</a>
           </p>
         </motion.div>

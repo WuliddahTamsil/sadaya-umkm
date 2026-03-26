@@ -4,7 +4,7 @@ import { AsliBogorLogo } from "./ui/asli-bogor-logo";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
-type LandingPage = 'beranda' | 'direktori' | 'tentang' | 'fitur';
+type LandingPage = 'beranda' | 'direktori' | 'tentang' | 'fitur' | 'game';
 
 interface LandingNavbarProps {
   onRoleSelect?: (role: 'user' | 'umkm' | 'driver') => void;
@@ -48,16 +48,17 @@ export function LandingNavbar({ onRoleSelect, currentPage = 'beranda', onNavigat
     { id: 'direktori', label: 'Direktori' },
     { id: 'tentang', label: 'Tentang' },
     { id: 'fitur', label: 'Fitur' },
+    { id: 'game', label: 'Game 🎮' },
   ];
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed z-40 top-0 left-0 right-0 h-16 border-b border-slate-300/30 text-slate-900/90 transition-all duration-300 backdrop-blur-md bg-white/95 ${
         isScrolled
-          ? 'bg-white/95 backdrop-blur-md shadow-lg py-3'
-          : 'bg-gradient-to-r from-orange-50/95 via-orange-100/95 to-orange-200/95 backdrop-blur-sm py-4'
-      }`}
-    >
+          ? 'shadow-lg border-slate-300/50 backdrop-brightness-110'
+          : 'shadow-sm border-slate-300/30'
+      }`}>
+
       <div className="container mx-auto px-4 lg:px-6">
         <div className="flex items-center justify-between">
           {/* Logo */}
@@ -77,7 +78,7 @@ export function LandingNavbar({ onRoleSelect, currentPage = 'beranda', onNavigat
 
           {/* Desktop Navigation - Centered */}
           <nav className="hidden lg:flex items-center absolute left-1/2 transform -translate-x-1/2">
-            <div className="flex items-center gap-3 bg-white/80 backdrop-blur-sm rounded-full px-4 py-2 shadow-sm border border-orange-100">
+            <div className="flex items-center gap-2 border border-slate-200/70 rounded-full bg-white py-2 pl-4 pr-2 shadow-sm" style={{ minHeight: 44 }}>
               {navItems.map((item, index) => (
                 <motion.button
                   key={item.id}

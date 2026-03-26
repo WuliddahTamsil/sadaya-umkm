@@ -9,6 +9,7 @@ import { BerandaPage } from "./pages/BerandaPage";
 import { DirektoriPage } from "./pages/DirektoriPage";
 import { TentangPage } from "./pages/TentangPage";
 import { FiturPage } from "./pages/FiturPage";
+import { GamePage } from "./pages/Game";
 import { UMKMDetailPage } from "./components/UMKMDetailPage";
 import { ShopPage } from "./components/ShopPage";
 import { RoleSelectionPage } from "./components/auth/RoleSelectionPage";
@@ -48,7 +49,7 @@ type AuthView =
   | 'user-login'
   | 'user-register';
 
-type LandingPage = 'beranda' | 'direktori' | 'tentang' | 'fitur';
+type LandingPage = 'beranda' | 'direktori' | 'tentang' | 'fitur' | 'game';
 
 function AppContent() {
   const { user } = useAuth();
@@ -240,6 +241,10 @@ function AppContent() {
       
       {currentPage === 'fitur' && (
         <FiturPage onSelectUMKM={handleSelectUMKM} />
+      )}
+      
+      {currentPage === 'game' && (
+        <GamePage />
       )}
       
       {/* Footer */}
