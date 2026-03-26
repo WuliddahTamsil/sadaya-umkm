@@ -4,15 +4,18 @@ import { AsliBogorLogo } from "./ui/asli-bogor-logo";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
-type LandingPage = 'beranda' | 'direktori' | 'tentang' | 'fitur' | 'game';
+type LandingPage = "beranda" | "direktori" | "tentang" | "fitur" | "game";
 
 interface LandingNavbarProps {
-  onRoleSelect?: (role: 'user' | 'umkm' | 'driver') => void;
+  onRoleSelect?: (role: "user" | "umkm" | "driver") => void;
   currentPage?: LandingPage;
   onNavigateToPage?: (page: LandingPage) => void;
 }
 
-export function LandingNavbar({ onRoleSelect, currentPage = 'beranda', onNavigateToPage }: LandingNavbarProps) {
+export function LandingNavbar({
+  currentPage = "beranda",
+  onNavigateToPage,
+}: LandingNavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -20,8 +23,8 @@ export function LandingNavbar({ onRoleSelect, currentPage = 'beranda', onNavigat
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const handleNavClick = (page: LandingPage) => {
@@ -33,64 +36,65 @@ export function LandingNavbar({ onRoleSelect, currentPage = 'beranda', onNavigat
 
   const handleAuthClick = () => {
     if (onNavigateToPage) {
-      onNavigateToPage('beranda');
+      onNavigateToPage("beranda");
       setTimeout(() => {
-        const element = document.getElementById('auth-section');
+        const element = document.getElementById("auth-section");
         if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
+          element.scrollIntoView({ behavior: "smooth" });
         }
       }, 100);
     }
   };
 
   const navItems: Array<{ id: LandingPage; label: string }> = [
-    { id: 'beranda', label: 'Beranda' },
-    { id: 'direktori', label: 'Direktori' },
-    { id: 'tentang', label: 'Tentang' },
-    { id: 'fitur', label: 'Fitur' },
-    { id: 'game', label: 'Game 🎮' },
+    { id: "beranda", label: "Beranda" },
+    { id: "direktori", label: "Direktori" },
+    { id: "tentang", label: "Tentang" },
+    { id: "fitur", label: "Fitur" },
+    { id: "game", label: "Game" },
   ];
 
   return (
     <nav
       className={`fixed z-40 top-0 left-0 right-0 h-16 border-b border-slate-300/30 text-slate-900/90 transition-all duration-300 backdrop-blur-md bg-white/95 ${
         isScrolled
-          ? 'shadow-lg border-slate-300/50 backdrop-brightness-110'
-          : 'shadow-sm border-slate-300/30'
-      }`}>
-
+          ? "shadow-lg border-slate-300/50 backdrop-brightness-110"
+          : "shadow-sm border-slate-300/30"
+      }`}
+    >
       <div className="container mx-auto px-4 lg:px-6">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <motion.div
             className="flex items-center cursor-pointer z-10"
-            onClick={() => handleNavClick('beranda')}
+            onClick={() => handleNavClick("beranda")}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
             <AsliBogorLogo
               variant="primary"
-              className={`w-auto transition-all ${
-                isScrolled ? 'h-8' : 'h-10'
-              }`}
+              className={`w-auto transition-all ${isScrolled ? "h-8" : "h-10"}`}
             />
           </motion.div>
 
           {/* Desktop Navigation - Centered */}
           <nav className="hidden lg:flex items-center absolute left-1/2 transform -translate-x-1/2">
-            <div className="flex items-center gap-2 border border-slate-200/70 rounded-full bg-white py-2 pl-4 pr-2 shadow-sm" style={{ minHeight: 44 }}>
-              {navItems.map((item, index) => (
+            <div
+              className="flex items-center gap-2 border border-slate-200/70 rounded-full bg-white py-2 pl-4 pr-2  shadow-sm"
+              style={{ minHeight: 44 }}
+            >
+              {navItems.map((item) => (
                 <motion.button
                   key={item.id}
                   onClick={() => handleNavClick(item.id)}
                   className="relative px-6 py-2 rounded-full body-3 transition-all whitespace-nowrap"
-                  style={{ 
-                    color: currentPage === item.id ? '#FF8D28' : '#2F4858',
-                    fontWeight: currentPage === item.id ? 600 : 500
+                  style={{
+                    color: currentPage === item.id ? "#FF8D28" : "#2F4858",
+                    fontWeight: currentPage === item.id ? 600 : 500,
                   }}
-                  whileHover={{ 
-                    color: '#FF8D28',
-                    scale: 1.05
+                  whileHover={{
+                    color: "#FF8D28",
+                    scale: 1.05,
                   }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -117,20 +121,17 @@ export function LandingNavbar({ onRoleSelect, currentPage = 'beranda', onNavigat
 
           {/* Desktop Auth Button */}
           <div className="hidden lg:flex items-center">
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button
                 onClick={handleAuthClick}
                 className="px-6 py-2.5 text-sm font-semibold whitespace-nowrap shadow-md hover:shadow-lg transition-all"
                 style={{
-                  background: isScrolled 
-                    ? 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)'
-                    : 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)',
-                  color: '#FFFFFF',
-                  border: 'none',
-                  borderRadius: '12px'
+                  background: isScrolled
+                    ? "linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)"
+                    : "linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)",
+                  color: "#FFFFFF",
+                  border: "none",
+                  borderRadius: "12px",
                 }}
               >
                 Masuk / Daftar
@@ -142,14 +143,16 @@ export function LandingNavbar({ onRoleSelect, currentPage = 'beranda', onNavigat
           <motion.button
             className="lg:hidden z-50 p-2.5 rounded-xl transition-all relative"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            style={{ 
-              color: '#2F4858',
-              backgroundColor: isScrolled ? 'rgba(255, 255, 255, 0.9)' : 'rgba(255, 255, 255, 0.8)',
-              border: '1px solid rgba(255, 141, 40, 0.2)'
+            style={{
+              color: "#2F4858",
+              backgroundColor: isScrolled
+                ? "rgba(255, 255, 255, 0.9)"
+                : "rgba(255, 255, 255, 0.8)",
+              border: "1px solid rgba(255, 141, 40, 0.2)",
             }}
-            whileHover={{ 
+            whileHover={{
               scale: 1.1,
-              backgroundColor: 'rgba(255, 141, 40, 0.1)'
+              backgroundColor: "rgba(255, 141, 40, 0.1)",
             }}
             whileTap={{ scale: 0.9 }}
             aria-label="Toggle menu"
@@ -169,12 +172,12 @@ export function LandingNavbar({ onRoleSelect, currentPage = 'beranda', onNavigat
           className="lg:hidden overflow-hidden"
           initial={false}
           animate={{
-            height: mobileMenuOpen ? 'auto' : 0,
-            opacity: mobileMenuOpen ? 1 : 0
+            height: mobileMenuOpen ? "auto" : 0,
+            opacity: mobileMenuOpen ? 1 : 0,
           }}
           transition={{
             duration: 0.3,
-            ease: "easeInOut"
+            ease: "easeInOut",
           }}
         >
           <div className="pt-4 pb-4 space-y-3">
@@ -183,24 +186,27 @@ export function LandingNavbar({ onRoleSelect, currentPage = 'beranda', onNavigat
                 key={item.id}
                 onClick={() => handleNavClick(item.id)}
                 className="w-full text-left px-5 py-3.5 rounded-xl body-3 transition-all shadow-sm"
-                style={{ 
-                  color: currentPage === item.id ? '#FF8D28' : '#2F4858',
+                style={{
+                  color: currentPage === item.id ? "#FF8D28" : "#2F4858",
                   fontWeight: currentPage === item.id ? 700 : 600,
-                  backgroundColor: currentPage === item.id ? 'rgba(255, 141, 40, 0.15)' : 'rgba(255, 255, 255, 0.95)',
-                  border: `1px solid ${currentPage === item.id ? 'rgba(255, 141, 40, 0.3)' : 'rgba(255, 141, 40, 0.15)'}`
+                  backgroundColor:
+                    currentPage === item.id
+                      ? "rgba(255, 141, 40, 0.15)"
+                      : "rgba(255, 255, 255, 0.95)",
+                  border: `1px solid ${currentPage === item.id ? "rgba(255, 141, 40, 0.3)" : "rgba(255, 141, 40, 0.15)"}`,
                 }}
                 initial={{ opacity: 0, x: -20 }}
-                animate={{ 
+                animate={{
                   opacity: mobileMenuOpen ? 1 : 0,
-                  x: mobileMenuOpen ? 0 : -20
+                  x: mobileMenuOpen ? 0 : -20,
                 }}
                 transition={{ delay: index * 0.1 }}
-                whileHover={{ 
-                  backgroundColor: 'rgba(255, 141, 40, 0.15)',
-                  color: '#FF8D28',
-                  paddingLeft: '28px',
+                whileHover={{
+                  backgroundColor: "rgba(255, 141, 40, 0.15)",
+                  color: "#FF8D28",
+                  paddingLeft: "28px",
                   scale: 1.02,
-                  boxShadow: '0 4px 12px rgba(255, 141, 40, 0.2)'
+                  boxShadow: "0 4px 12px rgba(255, 141, 40, 0.2)",
                 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -210,9 +216,9 @@ export function LandingNavbar({ onRoleSelect, currentPage = 'beranda', onNavigat
             <motion.div
               className="pt-2"
               initial={{ opacity: 0, y: 10 }}
-              animate={{ 
+              animate={{
                 opacity: mobileMenuOpen ? 1 : 0,
-                y: mobileMenuOpen ? 0 : 10
+                y: mobileMenuOpen ? 0 : 10,
               }}
               transition={{ delay: 0.4 }}
               whileHover={{ scale: 1.02 }}
@@ -222,10 +228,11 @@ export function LandingNavbar({ onRoleSelect, currentPage = 'beranda', onNavigat
                 onClick={handleAuthClick}
                 className="w-full py-3.5 text-sm font-bold shadow-lg"
                 style={{
-                  background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)',
-                  color: '#FFFFFF',
-                  border: 'none',
-                  borderRadius: '12px'
+                  background:
+                    "linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)",
+                  color: "#FFFFFF",
+                  border: "none",
+                  borderRadius: "12px",
                 }}
               >
                 Masuk / Daftar
@@ -237,4 +244,3 @@ export function LandingNavbar({ onRoleSelect, currentPage = 'beranda', onNavigat
     </nav>
   );
 }
-
