@@ -1,4 +1,4 @@
-# Asli Bogor - Platform E-Commerce UMKM Khas Bogor
+# SADAYA - Platform E-Commerce UMKM Khas Bogor
 
 Platform e-commerce yang menghubungkan pembeli dengan UMKM lokal di Bogor, memungkinkan pembelian produk khas Bogor secara online dengan sistem pengiriman terintegrasi.
 

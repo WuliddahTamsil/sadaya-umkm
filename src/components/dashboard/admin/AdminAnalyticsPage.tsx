@@ -186,7 +186,7 @@ export function AdminAnalyticsPage() {
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h3 style={{ color: '#2F4858' }}>Analytics Platform Asli Bogor</h3>
+        <h3 style={{ color: '#2F4858' }}>Analytics Platform SADAYA</h3>
         <ExportButton filename="platform-analytics" />
       </div>
 

@@ -73,6 +73,15 @@ export const api = {
     delete: (id: string) => `${API_BASE_URL}/content/${id}`,
     like: (id: string) => `${API_BASE_URL}/content/${id}/like`,
   },
+  workshops: {
+    getAll: `${API_BASE_URL}/workshops`,
+    getById: (id: string) => `${API_BASE_URL}/workshops/${id}`,
+    create: `${API_BASE_URL}/workshops`,
+    update: (id: string) => `${API_BASE_URL}/workshops/${id}`,
+    delete: (id: string) => `${API_BASE_URL}/workshops/${id}`,
+    participants: (id: string) => `${API_BASE_URL}/workshops/${id}/participants`,
+    register: (id: string) => `${API_BASE_URL}/workshops/${id}/register`,
+  },
   comments: {
     getByContentId: (contentId: string) => `${API_BASE_URL}/comments/${contentId}`,
     create: `${API_BASE_URL}/comments`,

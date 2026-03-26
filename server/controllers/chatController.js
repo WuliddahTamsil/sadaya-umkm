@@ -1,5 +1,5 @@
 // Simple AI Chat Controller
-// This is a rule-based AI that responds to common questions about Asli Bogor
+// This is a rule-based AI that responds to common questions about SADAYA
 
 const getAIResponse = (message, userRole, conversationHistory = []) => {
   const lowerMessage = message.toLowerCase().trim();
@@ -10,42 +10,42 @@ const getAIResponse = (message, userRole, conversationHistory = []) => {
     let result;
     if (mathMatch[1] && mathMatch[2]) {
       result = parseInt(mathMatch[1]) * parseInt(mathMatch[2]);
-      return `Hasil dari ${mathMatch[1]} × ${mathMatch[2]} adalah **${result}**. Ada yang bisa saya bantu lagi tentang Asli Bogor?`;
+      return `Hasil dari ${mathMatch[1]} × ${mathMatch[2]} adalah **${result}**. Ada yang bisa saya bantu lagi tentang SADAYA?`;
     } else if (mathMatch[3] && mathMatch[4]) {
       result = parseInt(mathMatch[3]) + parseInt(mathMatch[4]);
-      return `Hasil dari ${mathMatch[3]} + ${mathMatch[4]} adalah **${result}**. Ada yang bisa saya bantu lagi tentang Asli Bogor?`;
+      return `Hasil dari ${mathMatch[3]} + ${mathMatch[4]} adalah **${result}**. Ada yang bisa saya bantu lagi tentang SADAYA?`;
     } else if (mathMatch[5] && mathMatch[6]) {
       result = parseInt(mathMatch[5]) / parseInt(mathMatch[6]);
-      return `Hasil dari ${mathMatch[5]} : ${mathMatch[6]} adalah **${result}**. Ada yang bisa saya bantu lagi tentang Asli Bogor?`;
+      return `Hasil dari ${mathMatch[5]} : ${mathMatch[6]} adalah **${result}**. Ada yang bisa saya bantu lagi tentang SADAYA?`;
     } else if (mathMatch[7] && mathMatch[8]) {
       result = parseInt(mathMatch[7]) / parseInt(mathMatch[8]);
-      return `Hasil dari ${mathMatch[7]} ÷ ${mathMatch[8]} adalah **${result}**. Ada yang bisa saya bantu lagi tentang Asli Bogor?`;
+      return `Hasil dari ${mathMatch[7]} ÷ ${mathMatch[8]} adalah **${result}**. Ada yang bisa saya bantu lagi tentang SADAYA?`;
     } else if (mathMatch[10] && mathMatch[11]) {
       result = parseInt(mathMatch[10]) * parseInt(mathMatch[11]);
-      return `Hasil dari ${mathMatch[10]} × ${mathMatch[11]} adalah **${result}**. Ada yang bisa saya bantu lagi tentang Asli Bogor?`;
+      return `Hasil dari ${mathMatch[10]} × ${mathMatch[11]} adalah **${result}**. Ada yang bisa saya bantu lagi tentang SADAYA?`;
     }
   }
 
   // Who are you / Introduction
   if (lowerMessage.match(/(kamu|anda|kalian|siapakah|siapa).*(siapa|apa|who|what)/) || 
       lowerMessage.match(/kenalan|perkenalkan|introduce/)) {
-    return 'Saya adalah **AI Assistant Asli Bogor**! 🤖\n\nSaya siap membantu Anda dengan:\n• Cara melakukan pemesanan\n• Status pesanan dan tracking\n• Metode pembayaran\n• Informasi pengiriman\n• Produk dan UMKM\n• Pertanyaan tentang akun\n\nAda yang bisa saya bantu?';
+    return 'Saya adalah **AI Assistant SADAYA**! 🤖\n\nSaya siap membantu Anda dengan:\n• Cara melakukan pemesanan\n• Status pesanan dan tracking\n• Metode pembayaran\n• Informasi pengiriman\n• Produk dan UMKM\n• Pertanyaan tentang akun\n\nAda yang bisa saya bantu?';
   }
 
   // How to use website / Cara pakai web
   if (lowerMessage.match(/(cara|bagaimana|gimana|tutorial|panduan).*(pakai|gunakan|use|web|website|situs|aplikasi|platform)/) ||
       lowerMessage.match(/(pakai|gunakan|use).*(web|website|situs|aplikasi|platform)/)) {
-    return '**Cara Menggunakan Website Asli Bogor:**\n\n1. **Untuk Pembeli (User):**\n   • Login/Register sebagai "Masyarakat"\n   • Jelajahi produk UMKM di halaman beranda\n   • Klik produk untuk detail, lalu "Tambah ke Keranjang"\n   • Klik ikon keranjang di header untuk checkout\n   • Pilih metode pembayaran dan konfirmasi\n   • Lacak pesanan di menu "Tracking Pesanan"\n\n2. **Untuk UMKM:**\n   • Login/Register sebagai "UMKM"\n   • Upload dokumen verifikasi (KTP, foto toko, SIUP)\n   • Setelah disetujui admin, tambahkan produk di "Manajemen Produk"\n   • Kelola pesanan di "Manajemen Pesanan"\n\n3. **Untuk Driver:**\n   • Login/Register sebagai "Driver"\n   • Upload dokumen (KTP, SIM, STNK, foto kendaraan)\n   • Setelah disetujui, ambil order di "Order Aktif"\n   • Update status pengiriman real-time\n\nAda pertanyaan spesifik tentang fitur tertentu?';
+    return '**Cara Menggunakan Website SADAYA:**\n\n1. **Untuk Pembeli (User):**\n   • Login/Register sebagai "Masyarakat"\n   • Jelajahi produk UMKM di halaman beranda\n   • Klik produk untuk detail, lalu "Tambah ke Keranjang"\n   • Klik ikon keranjang di header untuk checkout\n   • Pilih metode pembayaran dan konfirmasi\n   • Lacak pesanan di menu "Tracking Pesanan"\n\n2. **Untuk UMKM:**\n   • Login/Register sebagai "UMKM"\n   • Upload dokumen verifikasi (KTP, foto toko, SIUP)\n   • Setelah disetujui admin, tambahkan produk di "Manajemen Produk"\n   • Kelola pesanan di "Manajemen Pesanan"\n\n3. **Untuk Driver:**\n   • Login/Register sebagai "Driver"\n   • Upload dokumen (KTP, SIM, STNK, foto kendaraan)\n   • Setelah disetujui, ambil order di "Order Aktif"\n   • Update status pengiriman real-time\n\nAda pertanyaan spesifik tentang fitur tertentu?';
   }
 
   // Greetings
   if (lowerMessage.match(/^(halo|hai|hi|hello|hey|hallo|halow)/)) {
-    return 'Halo! 👋 Selamat datang di Asli Bogor. Saya AI Assistant siap membantu Anda. Ada yang bisa saya bantu hari ini?';
+    return 'Halo! 👋 Selamat datang di SADAYA. Saya AI Assistant siap membantu Anda. Ada yang bisa saya bantu hari ini?';
   }
 
   if (lowerMessage.match(/selamat (pagi|siang|sore|malam)/)) {
     const time = lowerMessage.match(/selamat (pagi|siang|sore|malam)/)?.[1];
-    return `Selamat ${time}! 🌅\n\nSelamat datang di Asli Bogor. Ada yang bisa saya bantu?`;
+    return `Selamat ${time}! 🌅\n\nSelamat datang di SADAYA. Ada yang bisa saya bantu?`;
   }
 
   // Order related
@@ -85,7 +85,7 @@ const getAIResponse = (message, userRole, conversationHistory = []) => {
   }
 
   if (lowerMessage.match(/(kualitas|mutu|bagus|enak)/)) {
-    return 'Semua produk di Asli Bogor berasal dari UMKM terverifikasi dengan standar kualitas tinggi. Kami menjamin:\n• Produk asli dan autentik\n• Bahan baku berkualitas\n• Kemasan higienis\n• Garansi kepuasan pelanggan';
+    return 'Semua produk di SADAYA berasal dari UMKM terverifikasi dengan standar kualitas tinggi. Kami menjamin:\n• Produk asli dan autentik\n• Bahan baku berkualitas\n• Kemasan higienis\n• Garansi kepuasan pelanggan';
   }
 
   // UMKM specific
@@ -126,7 +126,7 @@ const getAIResponse = (message, userRole, conversationHistory = []) => {
   }
 
   if (lowerMessage.match(/(jam|waktu|operasional|buka|tutup)/)) {
-    return 'Layanan Asli Bogor tersedia 24/7 untuk pemesanan online. Untuk customer service:\n• Live Chat: 24/7\n• Telepon: Senin-Jumat, 08:00-17:00 WIB\n• Email: Direspons dalam 1-2 jam kerja';
+    return 'Layanan SADAYA tersedia 24/7 untuk pemesanan online. Untuk customer service:\n• Live Chat: 24/7\n• Telepon: Senin-Jumat, 08:00-17:00 WIB\n• Email: Direspons dalam 1-2 jam kerja';
   }
 
   // Default responses based on context
@@ -148,7 +148,7 @@ const getAIResponse = (message, userRole, conversationHistory = []) => {
   const fallbackResponses = [
     'Maaf, saya belum memahami pertanyaan Anda. Bisa dijelaskan lebih detail? Atau coba tanyakan tentang:\n• Cara melakukan pemesanan\n• Status pesanan\n• Metode pembayaran\n• Pengiriman\n• Produk dan UMKM',
     'Saya belum yakin dengan pertanyaan Anda. Apakah Anda ingin tahu tentang:\n• Pemesanan dan checkout\n• Tracking pesanan\n• Pembayaran dan refund\n• Pengiriman\n• Akun dan profil',
-    'Bisa tolong jelaskan lebih detail? Saya bisa membantu dengan berbagai topik seperti pemesanan, pembayaran, pengiriman, atau pertanyaan tentang produk Asli Bogor.',
+    'Bisa tolong jelaskan lebih detail? Saya bisa membantu dengan berbagai topik seperti pemesanan, pembayaran, pengiriman, atau pertanyaan tentang produk SADAYA.',
   ];
 
   return fallbackResponses[Math.floor(Math.random() * fallbackResponses.length)];

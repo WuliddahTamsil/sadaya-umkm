@@ -45,7 +45,7 @@ export function UMKMRegisterPage({ onSwitchToLogin, onBack }: UMKMRegisterPagePr
         address,
         description,
       });
-      toast.success('Registrasi berhasil! Selamat datang di Asli Bogor.');
+      toast.success('Registrasi berhasil! Selamat datang di SADAYA.');
     } catch (error: any) {
       console.error('UMKM registration error:', error);
       toast.error(error.message || 'Registrasi gagal. Silakan coba lagi.');

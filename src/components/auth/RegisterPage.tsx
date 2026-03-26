@@ -58,7 +58,7 @@ export function RegisterPage({ onSwitchToLogin, onClose }: RegisterPageProps) {
             <AsliBogorLogo variant="primary" className="h-16 w-auto" />
           </div>
           <CardTitle className="text-center" style={{ color: '#2F4858' }}>
-            Daftar Asli Bogor
+            Daftar SADAYA
           </CardTitle>
           <CardDescription className="text-center body-3">
             Pilih peran Anda dan buat akun baru

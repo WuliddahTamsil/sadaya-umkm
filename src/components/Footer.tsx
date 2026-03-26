@@ -30,7 +30,7 @@ export function Footer() {
               <AsliBogorLogo
                 variant="secondary"
                 className="h-12 w-auto drop-shadow-lg"
-                alt="Asli Bogor"
+                alt="SADAYA"
               />
             </div>
             <p className="body-3 mb-4" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>
@@ -149,7 +149,7 @@ export function Footer() {
           transition={{ delay: 0.3, duration: 0.5 }}
         >
           <p className="body-3 text-center" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>
-            © 2025 Asli Bogor. Bikin Keren UMKM Lokal. All rights reserved.
+            © 2025 SADAYA. Bikin Keren UMKM Lokal. All rights reserved.
           </p>
           <p className="body-3 text-center mt-2" style={{ color: 'rgba(255, 255, 255, 0.6)' }}>
             Follow us: <a href="https://instagram.com/aslibogor" target="_blank" className="hover:text-[#FFB84D] transition-colors">@AsliBogor</a>

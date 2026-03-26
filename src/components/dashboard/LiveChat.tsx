@@ -27,7 +27,7 @@ export function LiveChat({ isOpen, onClose }: LiveChatProps) {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      text: 'Halo! Saya adalah AI Assistant Asli Bogor. Ada yang bisa saya bantu?',
+      text: 'Halo! Saya adalah AI Assistant SADAYA. Ada yang bisa saya bantu?',
       sender: 'bot',
       timestamp: new Date(),
     },

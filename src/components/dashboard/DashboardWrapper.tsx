@@ -10,6 +10,7 @@ import { PersebaranUMKM } from './admin/PersebaranUMKM';
 import { ManajemenData } from './admin/ManajemenData';
 import { ManajemenOrder } from './admin/ManajemenOrder';
 import { ManajemenKonten } from './admin/ManajemenKonten';
+import { ManajemenWorkshop } from './admin/ManajemenWorkshop';
 import { LayananLaporan } from './admin/LayananLaporan';
 import { AdminKeuangan } from './admin/AdminKeuangan';
 
@@ -42,6 +43,8 @@ import { NotificationPage } from './NotificationPage';
 import { SettingsPage } from './SettingsPage';
 import { HelpPage } from './HelpPage';
 import { ComingSoonPage } from './ComingSoonPage';
+import { WorkshopManagementPage } from './WorkshopDetailPage';
+import { InfoPage } from './InfoPage';
 
 // Placeholder Components
 import { Card, CardContent } from '../ui/card';
@@ -121,6 +124,7 @@ export function DashboardWrapper() {
         return 'dashboard';
     }
   });
+  const [selectedWorkshop, setSelectedWorkshop] = useState<string | null>(null);
 
   if (!user) return null;
 
@@ -130,6 +134,16 @@ export function DashboardWrapper() {
       refreshUser();
     }
   }, []); // Run once on mount
+
+  // Show workshop detail page if selected
+  if (selectedWorkshop) {
+    return (
+      <WorkshopManagementPage
+        workshopId={selectedWorkshop}
+        onBack={() => setSelectedWorkshop(null)}
+      />
+    );
+  }
 
   const renderContent = () => {
     // Admin Pages
@@ -151,6 +165,8 @@ export function DashboardWrapper() {
           return <ManajemenOrder />;
         case 'konten':
           return <ManajemenKonten isReadOnly={false} />;
+        case 'workshop':
+          return <ManajemenWorkshop />;
         case 'laporan':
           return <LayananLaporan />;
         case 'keuangan':
@@ -184,7 +200,7 @@ export function DashboardWrapper() {
         case 'dompet':
           return <DompetPage />;
         case 'konten':
-          return <ManajemenKonten isReadOnly={true} />;
+          return <InfoPage onViewDetail={(workshopId) => setSelectedWorkshop(workshopId)} onViewWorkshopDetail={(workshopId) => setSelectedWorkshop(workshopId)} />;
         case 'profil':
           return <ProfilePage />;
         case 'notifikasi':

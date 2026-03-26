@@ -56,7 +56,7 @@ export function FeaturesSection() {
           transition={{ duration: 0.6 }}
         >
           <h2 style={{ color: '#2F4858' }} className="mb-3 lg:mb-4 text-3xl lg:text-4xl font-bold">
-            Kenapa Harus Asli Bogor
+            Kenapa Harus SADAYA
           </h2>
           <p style={{ color: '#4A4A4A', fontSize: '18px' }} className="max-w-2xl mx-auto">
             Dengan berbelanja di sini, kamu ikut melestarikan budaya dan produk khas Bogor sambil mendukung pertumbuhan ekonomi lokal

@@ -20,9 +20,9 @@ const logoSources: Record<LogoVariant, string> = {
 };
 
 const defaultAlt: Record<LogoVariant, string> = {
-  primary: "Logo utama Asli Bogor",
-  secondary: "Logo sekunder Asli Bogor",
-  logomark: "Logomark Asli Bogor",
+  primary: "Logo utama SADAYA",
+  secondary: "Logo sekunder SADAYA",
+  logomark: "Logomark SADAYA",
 };
 
 const defaultSizes: Record<LogoVariant, string> = {

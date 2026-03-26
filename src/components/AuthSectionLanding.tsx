@@ -27,7 +27,7 @@ export function AuthSectionLanding({ onRoleSelect }: AuthSectionLandingProps) {
             Mulai Bersama Kami
           </h2>
           <p className="text-gray-600" style={{ fontSize: '18px', maxWidth: '600px', margin: '0 auto', marginBottom: '2rem' }}>
-            Pilih cara Anda bergabung dengan ekosistem Asli Bogor
+            Pilih cara Anda bergabung dengan ekosistem SADAYA
           </p>
         </motion.div>
 

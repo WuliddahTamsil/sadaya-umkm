@@ -60,7 +60,7 @@ router.post('/setup-admin', async (req, res) => {
 
     const adminData = {
       id: 'admin-001',
-      name: 'Admin Asli Bogor',
+      name: 'Admin SADAYA',
       email: 'admin@gmail.com',
       password: passwordHash,
       role: 'admin',

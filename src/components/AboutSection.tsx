@@ -61,7 +61,7 @@ export function AboutSection() {
               viewport={{ once: true }}
               transition={{ delay: 0.2, duration: 0.5 }}
             >
-              Tentang Asli Bogor
+              Tentang SADAYA
             </motion.h2>
             <motion.p 
               style={{ color: '#4A4A4A', fontSize: '17px' }}
@@ -70,7 +70,7 @@ export function AboutSection() {
               viewport={{ once: true }}
               transition={{ delay: 0.3, duration: 0.5 }}
             >
-              Asli Bogor adalah platform digital yang lahir dari kecintaan terhadap produk lokal. Kami hadir untuk menjembatani para pelaku UMKM hebat di Bogor dengan pasar yang lebih luas. Misi kami sederhana: membantu UMKM naik kelas melalui teknologi, sekaligus memudahkan Anda menemukan dan menikmati produk-produk otentik khas Bogor.
+              SADAYA adalah platform digital yang lahir dari kecintaan terhadap produk lokal. Kami hadir untuk menjembatani para pelaku UMKM hebat di Bogor dengan pasar yang lebih luas. Misi kami sederhana: membantu UMKM naik kelas melalui teknologi, sekaligus memudahkan Anda menemukan dan menikmati produk-produk otentik khas Bogor.
             </motion.p>
             <motion.p 
               style={{ color: '#4A4A4A', fontSize: '17px' }}

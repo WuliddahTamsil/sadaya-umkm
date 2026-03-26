@@ -44,7 +44,7 @@ export function LoginPage({ onSwitchToRegister, onClose }: LoginPageProps) {
             <AsliBogorLogo variant="primary" className="h-16 w-auto" />
           </div>
           <CardTitle className="text-center" style={{ color: '#2F4858' }}>
-            Masuk ke Asli Bogor
+            Masuk ke SADAYA
           </CardTitle>
           <CardDescription className="text-center body-3">
             Masukkan email dan password untuk melanjutkan

@@ -6,20 +6,21 @@ import { Card, CardContent } from "./ui/card";
 import { Search, MapPin, Star, ChevronLeft, ChevronRight, Sparkles, Store, TrendingUp, Users, Award } from "lucide-react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 
-interface UMKMItem {
+export interface UMKMItem {
   id: number;
   name: string;
   category: string;
   address: string;
   image: string;
   description: string;
+  rating?: number;
   about?: string;
   phone?: string;
   operatingHours?: string;
   mapsLink?: string;
 }
 
-const umkmData: UMKMItem[] = [
+export const umkmData: UMKMItem[] = [
   {
     id: 1,
     name: "Lapis Bogor Sangkuriang",
@@ -262,7 +263,7 @@ const umkmData: UMKMItem[] = [
   }
 ];
 
-const categories = ["Semua", "Makanan", "Minuman", "Jasa", "Kerajinan"];
+export const categories = ["Semua", "Makanan", "Minuman", "Jasa", "Kerajinan"] as const;
 
 // Helper function to ensure HD image quality
 const getHDImageUrl = (url: string): string => {

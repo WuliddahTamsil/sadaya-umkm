@@ -146,7 +146,7 @@ export function UserBeranda() {
           }}
         >
           <h2 style={{ color: '#FFFFFF' }} className="mb-4">
-            Selamat Datang di Asli Bogor! 🎉
+            Selamat Datang di SADAYA! 🎉
           </h2>
           <p style={{ color: '#FFFFFF', opacity: 0.9 }}>
             Temukan produk lokal terbaik dari UMKM Bogor pilihan

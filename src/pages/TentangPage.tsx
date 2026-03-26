@@ -3,6 +3,7 @@ import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { Heart, Target, Users, Award, Globe, Handshake, Lightbulb, Sparkles, Zap, Rocket } from "lucide-react";
 import AISImage from "../assets/AIS.png";
 import GHINAImage from "../assets/GHINA.png";
+import ILHAMImage from "../assets/ilham.png";
 import WUWUImage from "../assets/WUWU.png";
 
 export function TentangPage() {
@@ -28,7 +29,7 @@ export function TentangPage() {
   ];
 
   const milestones = [
-    { year: "2025", title: "Platform Diluncurkan", desc: "Asli Bogor resmi diluncurkan untuk mendukung UMKM Bogor" },
+    { year: "2025", title: "Platform Diluncurkan", desc: "SADAYA resmi diluncurkan untuk mendukung UMKM Bogor" },
     { year: "2026", title: "100+ UMKM Bergabung", desc: "Mencapai milestone pertama dengan 100 UMKM terdaftar" },
     { year: "2027", title: "5K+ Pengguna Aktif", desc: "Komunitas pengguna berkembang pesat" },
     { year: "2028", title: "Ekspansi Nasional", desc: "Produk UMKM Bogor bisa dinikmati di seluruh Indonesia" },
@@ -150,7 +151,7 @@ export function TentangPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.6 }}
             >
-              Tentang Asli Bogor
+              Tentang SADAYA
             </motion.h1>
             <motion.p 
               className="text-xl lg:text-2xl mb-8 font-semibold"
@@ -254,7 +255,7 @@ export function TentangPage() {
               </motion.div>
               
               {[
-                "Asli Bogor dimulai dari sebuah visi sederhana: bagaimana cara membantu UMKM lokal untuk berkembang dan menjangkau pasar yang lebih luas. Kami percaya bahwa setiap produk lokal memiliki cerita dan nilai yang unik.",
+                "SADAYA dimulai dari sebuah visi sederhana: bagaimana cara membantu UMKM lokal untuk berkembang dan menjangkau pasar yang lebih luas. Kami percaya bahwa setiap produk lokal memiliki cerita dan nilai yang unik.",
                 "Bersama kami, setiap transaksi adalah langkah untuk memperkuat ekonomi lokal dan melestarikan warisan kuliner serta kerajinan kota kita. Kami tidak hanya menjual produk, tetapi juga membangun komunitas yang saling mendukung.",
                 "Dengan teknologi yang mudah digunakan dan dukungan penuh, kami membantu UMKM untuk naik kelas dan bersaing di era digital."
               ].map((text, index) => (
@@ -416,35 +417,43 @@ export function TentangPage() {
               Tim Pengembang
             </h2>
             <p style={{ color: '#4A4A4A', fontSize: '18px', maxWidth: '700px', margin: '0 auto' }}>
-              Tim kreatif dan berdedikasi di balik kesuksesan Asli Bogor
+              Tim kreatif dan berdedikasi di balik kesuksesan SADAYA
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8 lg:gap-12 max-w-6xl mx-auto relative z-20">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 max-w-7xl mx-auto relative z-20">
             {[
               {
                 name: "AISYAH",
-                role: "Frontend Developer",
-                description: "Bertanggung jawab dalam pengembangan antarmuka pengguna yang menarik dan responsif. Membuat pengalaman pengguna yang seamless dan modern.",
+                role: "Project Manager + Backend Developer",
+                description: "Bertanggung jawab dalam manajemen proyek secara keseluruhan dan pengembangan arsitektur server-side yang robust.",
                 image: AISImage,
-                color: "#FF8D28",
-                gradient: "from-orange-400 to-orange-600"
+                color: "#F59E0B",
+                gradient: "linear-gradient(135deg, #FBBF24 0%, #D97706 100%)"
               },
               {
                 name: "GHINA",
-                role: "UI/UX Designer + Project Manager",
-                description: "Mendesain pengalaman pengguna yang intuitif dan menarik. Menciptakan desain yang tidak hanya cantik tapi juga fungsional. Mengelola dan mengkoordinasikan seluruh proyek pengembangan platform.",
+                role: "UI Designer",
+                description: "Menciptakan desain antarmuka pengguna yang intuitif, estetis, dan memastikan pengalaman visual yang konsisten.",
                 image: GHINAImage,
-                color: "#2196F3",
-                gradient: "from-blue-400 to-blue-600"
+                color: "#3B82F6",
+                gradient: "linear-gradient(135deg, #60A5FA 0%, #2563EB 100%)"
               },
               {
                 name: "WULIDDAH",
-                role: "Backend Developer",
-                description: "Mengembangkan sistem backend yang robust dan scalable. Memastikan keamanan data dan performa optimal untuk platform.",
+                role: "UX Designer + Frontend Developer",
+                description: "Fokus pada pengalaman pengguna (UX) dan mentransformasikan desain menjadi kode frontend yang responsif dan interaktif.",
                 image: WUWUImage,
-                color: "#4CAF50",
-                gradient: "from-green-400 to-green-600"
+                color: "#10B981",
+                gradient: "linear-gradient(135deg, #34D399 0%, #059669 100%)"
+              },
+              {
+                name: "ILHAM",
+                role: "Backend Developer + Cloud Engineer",
+                description: "Mengelola integrasi database, logika bisnis server, serta bertanggung jawab penuh pada proses deployment dan maintenance hosting platform.",
+                image: ILHAMImage,
+                color: "#EF4444",
+                gradient: "linear-gradient(135deg, #F87171 0%, #DC2626 100%)"
               }
             ].map((member, index) => (
               <motion.div
@@ -532,14 +541,15 @@ export function TentangPage() {
                       viewport={{ once: true }}
                       transition={{ delay: index * 0.2 + 0.5, duration: 0.5 }}
                     >
-                      <div 
-                        className={`w-14 h-14 rounded-xl bg-gradient-to-br ${member.gradient} flex items-center justify-center shadow-lg`}
+                      <div
+                        className="w-14 h-14 rounded-xl flex items-center justify-center shadow-lg"
+                        style={{ background: member.gradient }}
                       >
                         <Users size={24} className="text-white" />
                       </div>
                       <div className="flex-1">
                         <p className="text-xs font-semibold mb-1" style={{ color: '#858585' }}>
-                          Tim Asli Bogor
+                          Tim SADAYA
                         </p>
                         <p className="text-sm font-bold" style={{ color: member.color }}>
                           {member.role}
@@ -596,7 +606,7 @@ export function TentangPage() {
               Perjalanan Kami
             </h2>
             <p style={{ color: '#4A4A4A', fontSize: '18px', maxWidth: '700px', margin: '0 auto' }}>
-              Momen-momen penting dalam perjalanan Asli Bogor
+              Momen-momen penting dalam perjalanan SADAYA
             </p>
           </motion.div>
 

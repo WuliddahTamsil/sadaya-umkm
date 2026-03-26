@@ -1,6 +1,6 @@
-# Backend API - Project Asli Bogor
+# Backend API - Project SADAYA
 
-Backend API untuk aplikasi Project Asli Bogor menggunakan Node.js dan Express.
+Backend API untuk aplikasi Project SADAYA menggunakan Node.js dan Express.
 
 ## Setup Awal
 

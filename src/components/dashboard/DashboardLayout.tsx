@@ -31,7 +31,8 @@ import {
   X,
   LogOut,
   Bell,
-  BarChart3
+  BarChart3,
+  Calendar
 } from 'lucide-react';
 
 interface DashboardLayoutProps {
@@ -57,6 +58,7 @@ export function DashboardLayout({ children, activeMenu, onMenuChange }: Dashboar
           { id: 'manajemen-data', label: 'Manajemen Data', icon: Users },
           { id: 'manajemen-order', label: 'Manajemen Order', icon: ShoppingCart },
           { id: 'konten', label: 'Manajemen Konten', icon: FileText },
+          { id: 'workshop', label: 'Manajemen Workshop', icon: Calendar },
           { id: 'laporan', label: 'Layanan & Laporan', icon: AlertCircle },
           { id: 'keuangan', label: 'Keuangan', icon: DollarSign },
           { id: 'profil', label: 'Profil', icon: User },
@@ -123,7 +125,7 @@ export function DashboardLayout({ children, activeMenu, onMenuChange }: Dashboar
             className="flex-shrink-0"
           />
           <div>
-            <p className="body-3" style={{ color: '#FFFFFF', fontWeight: 600 }}>Asli Bogor</p>
+            <p className="body-3" style={{ color: '#FFFFFF', fontWeight: 600 }}>SADAYA</p>
             <p className="body-3" style={{ color: 'rgba(255,255,255,0.7)', fontSize: '12px' }}>
               {user.role === 'admin' ? 'Admin' : user.role === 'umkm' ? 'UMKM' : user.role === 'driver' ? 'Driver' : 'Pembeli'}
             </p>

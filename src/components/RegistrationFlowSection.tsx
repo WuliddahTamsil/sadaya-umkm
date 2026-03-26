@@ -46,7 +46,7 @@ export function RegistrationFlowSection() {
     },
     {
       icon: Bike,
-      title: "4. Keuntungan Jadi Driver Asli Bogor",
+      title: "4. Keuntungan Jadi Driver SADAYA",
       description: "Kerja dengan waktu fleksibel sesuai keinginan Anda. Pendapatan transparan dengan sistem perhitungan yang jelas dan adil."
     }
   ];
@@ -98,7 +98,7 @@ export function RegistrationFlowSection() {
         <div className="max-w-4xl mx-auto">
           <div className="mb-8 text-center">
             <h3 style={{ color: '#2F4858' }}>
-              {activeTab === "umkm" ? "Sistem & Alur Asli Bogor" : "Daftar Sebagai Driver Asli Bogor"}
+              {activeTab === "umkm" ? "Sistem & Alur SADAYA" : "Daftar Sebagai Driver SADAYA"}
             </h3>
           </div>
 

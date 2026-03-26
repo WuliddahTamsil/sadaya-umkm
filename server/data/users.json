@@ -1,9 +1,9 @@
 [
   {
     "id": "admin-001",
-    "name": "Admin Asli Bogor",
+    "name": "Admin SADAYA",
     "email": "admin@gmail.com",
-    "password": "$2a$10$Hxh2dhrJr9bakO6lmKNCt.2ALuHYsQUEKEFxPoaBjuuylFwFh63xC",
+    "password": "$2a$10$EDIZZVOVXPxfoEVTBVnxYOfw4u5IZ5G3BZQJYQDTa93FWN0S9/d8e",
     "role": "admin",
     "phone": null,
     "address": null,

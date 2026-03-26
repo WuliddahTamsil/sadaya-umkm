@@ -24,7 +24,7 @@ export function Header() {
             <a
               href="#hero"
               className="flex items-center"
-              aria-label="Asli Bogor beranda"
+              aria-label="SADAYA beranda"
             >
               <AsliBogorLogo
                 variant="primary"

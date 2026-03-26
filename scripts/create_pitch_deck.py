@@ -86,7 +86,7 @@ def create_presentation() -> Presentation:
     text_box = slide.shapes.add_textbox(Inches(1.4), Inches(1.6), prs.slide_width - Inches(2.8), Inches(4))
     tf = text_box.text_frame
     p = tf.paragraphs[0]
-    p.text = "Asli Bogor"
+    p.text = "SADAYA"
     p.font.name = "Poppins"
     p.font.size = Pt(60)
     p.font.bold = True
@@ -115,7 +115,7 @@ def create_presentation() -> Presentation:
         [
             "Misi: membantu UMKM Bogor naik kelas lewat ekosistem digital yang humanis.",
             "Audiens utama: pelaku UMKM kuliner, craft, fashion, dan warga Bogor pecinta produk lokal.",
-            "Tone desain: hangat, natural, penuh energi oranye-hijau identitas Asli Bogor.",
+            "Tone desain: hangat, natural, penuh energi oranye-hijau identitas SADAYA.",
         ],
     )
 
@@ -136,7 +136,7 @@ def create_presentation() -> Presentation:
     # Slide 4 - Solution
     slide = prs.slides.add_slide(prs.slide_layouts[6])
     add_background(slide, colors["cream"])
-    add_title(slide, "Solusi Platform Asli Bogor")
+    add_title(slide, "Solusi Platform SADAYA")
     add_list(
         slide,
         [

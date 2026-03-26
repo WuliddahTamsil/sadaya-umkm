@@ -2,7 +2,7 @@
   "name": "backend",
   "version": "1.0.0",
   "type": "module",
-  "description": "Backend API untuk Asli Bogor",
+  "description": "Backend API untuk SADAYA",
   "main": "server.js",
   "scripts": {
     "dev": "node --watch server.js",

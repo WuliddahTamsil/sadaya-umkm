@@ -347,7 +347,7 @@ export function ManajemenKonten({ isReadOnly = false }: ManajemenKontenProps) {
         },
         body: JSON.stringify({
           ...editingContent,
-          author: user?.name || 'Admin Asli Bogor',
+          author: user?.name || 'Admin SADAYA',
           date: new Date().toISOString(),
         }),
       });
@@ -420,7 +420,7 @@ export function ManajemenKonten({ isReadOnly = false }: ManajemenKontenProps) {
       type: 'article',
       title: '10 UMKM Terbaik di Bogor yang Wajib Dikunjungi',
       excerpt: 'Temukan berbagai UMKM lokal Bogor dengan produk unggulan dan kualitas terjamin...',
-      author: 'Admin Asli Bogor',
+      author: 'Admin SADAYA',
       date: '2024-11-08',
       status: 'published',
       views: 1234,
@@ -434,7 +434,7 @@ export function ManajemenKonten({ isReadOnly = false }: ManajemenKontenProps) {
       type: 'announcement',
       title: 'Program Diskon Spesial Akhir Tahun!',
       excerpt: 'Dapatkan diskon hingga 50% untuk berbagai produk UMKM lokal...',
-      author: 'Admin Asli Bogor',
+      author: 'Admin SADAYA',
       date: '2024-11-07',
       status: 'published',
       views: 2341,
@@ -476,7 +476,7 @@ export function ManajemenKonten({ isReadOnly = false }: ManajemenKontenProps) {
       type: 'announcement',
       title: 'Fitur Baru: Live Tracking Pesanan',
       excerpt: 'Sekarang Anda bisa melacak pesanan secara real-time...',
-      author: 'Admin Asli Bogor',
+      author: 'Admin SADAYA',
       date: '2024-11-05',
       status: 'draft',
       views: 0,
@@ -570,8 +570,8 @@ export function ManajemenKonten({ isReadOnly = false }: ManajemenKontenProps) {
           <h3 style={{ color: '#2F4858' }}>{isReadOnly ? 'Konten' : 'Manajemen Konten'}</h3>
           <p className="body-3 mt-2" style={{ color: '#858585' }}>
             {isReadOnly 
-              ? 'Lihat artikel, pengumuman, dan promosi dari platform Asli Bogor'
-              : 'Kelola artikel, pengumuman, dan promosi untuk platform Asli Bogor'
+              ? 'Lihat artikel, pengumuman, dan promosi dari platform SADAYA'
+              : 'Kelola artikel, pengumuman, dan promosi untuk platform SADAYA'
             }
           </p>
         </div>

@@ -54,7 +54,7 @@ async function setupAdmin() {
 
     const adminData = {
       id: 'admin-001',
-      name: 'Admin Asli Bogor',
+      name: 'Admin SADAYA',
       email: 'admin@gmail.com',
       password: passwordHash,
       role: 'admin',
