@@ -409,5 +409,73 @@
     "status": "processing",
     "read": false,
     "createdAt": "2025-11-27T15:02:35.235Z"
+  },
+  {
+    "id": "9a126ba0-c854-4c79-bb26-966542151ee6",
+    "userId": "4fb06afa-fd54-4d28-aace-d40af516f40a",
+    "type": "order",
+    "title": "Pesanan Baru! 🎉",
+    "message": "Pesanan baru dari baro - Total: Rp 55.000",
+    "orderId": "ORD-1774522731989-1I06H9SFE",
+    "status": "pending",
+    "read": false,
+    "createdAt": "2026-03-26T10:58:52.246Z"
+  },
+  {
+    "id": "c1a03bdc-2961-4cd2-8228-32ddba90168c",
+    "userId": "4fb06afa-fd54-4d28-aace-d40af516f40a",
+    "type": "order",
+    "title": "Pembayaran Diterima! 💰",
+    "message": "Pembayaran order ORD-1774522731989-1I06H9SFE telah diterima - Rp 55.000",
+    "orderId": "ORD-1774522731989-1I06H9SFE",
+    "status": "processing",
+    "read": false,
+    "createdAt": "2026-03-26T10:58:53.814Z"
+  },
+  {
+    "id": "b96b37b2-061b-4d5b-bd7f-50a552ee971d",
+    "userId": "2f6a24de-1861-437e-ac15-7f7c14680e5f",
+    "type": "order",
+    "title": "Pesanan Diproses UMKM ✓",
+    "message": "Status pesanan ORD-1774522731989-1I06H9SFE telah diupdate",
+    "orderId": "ORD-1774522731989-1I06H9SFE",
+    "status": "processing",
+    "read": true,
+    "createdAt": "2026-03-26T10:59:55.383Z",
+    "readAt": "2026-03-26T11:06:30.032Z"
+  },
+  {
+    "id": "77e2dabf-a01d-4b25-8f7c-3d7a0045b4b3",
+    "userId": "4fb06afa-fd54-4d28-aace-d40af516f40a",
+    "type": "order",
+    "title": "Order Diambil Driver ✓",
+    "message": "Driver driver1 telah mengambil order ORD-1774522731989-1I06H9SFE",
+    "orderId": "ORD-1774522731989-1I06H9SFE",
+    "status": "processing",
+    "read": false,
+    "createdAt": "2026-03-26T11:00:32.951Z"
+  },
+  {
+    "id": "fb4dccc4-6746-4906-91e0-9235d689a8de",
+    "userId": "2f6a24de-1861-437e-ac15-7f7c14680e5f",
+    "type": "order",
+    "title": "Pesanan Sedang Dikirim ✓",
+    "message": "Driver driver1 sedang mengantar pesanan Anda",
+    "orderId": "ORD-1774522731989-1I06H9SFE",
+    "status": "processing",
+    "read": true,
+    "createdAt": "2026-03-26T11:00:32.962Z",
+    "readAt": "2026-03-26T11:06:28.760Z"
+  },
+  {
+    "id": "1535e078-f4e3-431f-99d0-6957a3c6d7b2",
+    "userId": "2f6a24de-1861-437e-ac15-7f7c14680e5f",
+    "type": "order",
+    "title": "Pesanan Telah Diterima! 🎉",
+    "message": "Pesanan ORD-1774522731989-1I06H9SFE telah diterima. Terima kasih sudah berbelanja!",
+    "orderId": "ORD-1774522731989-1I06H9SFE",
+    "status": "completed",
+    "read": false,
+    "createdAt": "2026-03-26T11:08:48.605Z"
   }
 ]

@@ -747,5 +747,23 @@
     "storeName": "TOKO TEKOM",
     "storeAddress": "hh",
     "storeDescription": "h"
+  },
+  {
+    "id": "2f6a24de-1861-437e-ac15-7f7c14680e5f",
+    "name": "baro",
+    "email": "baro@gmail.com",
+    "password": "$2a$10$CU2iNdv/RoIcRE4nTOdENeoOFT0aZKI/0D9/LAazdZqRlr0nQALna",
+    "role": "user",
+    "phone": null,
+    "address": null,
+    "description": null,
+    "status": "active",
+    "isVerified": true,
+    "isOnboarded": true,
+    "joinDate": "2026-03-26",
+    "totalOrders": 0,
+    "rating": 0,
+    "createdAt": "2026-03-26T10:57:43.618Z",
+    "updatedAt": "2026-03-26T10:57:43.618Z"
   }
 ]
