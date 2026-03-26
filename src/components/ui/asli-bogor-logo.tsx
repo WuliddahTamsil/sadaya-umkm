@@ -2,21 +2,16 @@ import * as React from "react";
 
 import { cn } from "./utils";
 
-import primaryLogo from "../../assets/images/Asli_Bogor_Logo_Primary.svg";
-import secondaryLogo from "../../assets/images/Asli_Bogor_Logo_Secondary.svg";
-import logomarkLogo from "../../assets/images/Asli_Bogor_Logomark.svg";
-
 type LogoVariant = "primary" | "secondary" | "logomark";
 
-export interface AsliBogorLogoProps
-  extends React.ImgHTMLAttributes<HTMLImageElement> {
+export interface AsliBogorLogoProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   variant?: LogoVariant;
 }
 
 const logoSources: Record<LogoVariant, string> = {
-  primary: primaryLogo,
-  secondary: secondaryLogo,
-  logomark: logomarkLogo,
+  primary: "/logo/sadaya_1.svg",
+  secondary: "/logo/sadaya_2.svg",
+  logomark: "/logo/sadaya_1.svg",
 };
 
 const defaultAlt: Record<LogoVariant, string> = {
@@ -52,4 +47,3 @@ export const AsliBogorLogo = React.forwardRef<
 });
 
 AsliBogorLogo.displayName = "AsliBogorLogo";
-

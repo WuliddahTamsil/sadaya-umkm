@@ -3,15 +3,37 @@ import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { AsliBogorLogo } from "../components/ui/asli-bogor-logo";
-import { Leaf, TrendingUp, Users, Store, Award, ArrowRight, Package, Truck, Heart, Shield, Star, Gift, Sparkles, Clock, ChevronLeft, ChevronRight, Search } from "lucide-react";
+import {
+  Leaf,
+  TrendingUp,
+  Users,
+  Store,
+  Award,
+  ArrowRight,
+  Package,
+  Truck,
+  Heart,
+  Shield,
+  Star,
+  Gift,
+  Sparkles,
+  Clock,
+  ChevronLeft,
+  ChevronRight,
+  Search,
+} from "lucide-react";
 import { AuthSectionLanding } from "../components/AuthSectionLanding";
 
 interface BerandaPageProps {
-  onRoleSelect: (role: 'user' | 'umkm' | 'driver') => void;
+  onRoleSelect: (role: "user" | "umkm" | "driver") => void;
   onNavigateToDirectory: () => void;
 }
 
-function parseCompactNumber(raw: string): { end: number; suffix: string; isK: boolean } {
+function parseCompactNumber(raw: string): {
+  end: number;
+  suffix: string;
+  isK: boolean;
+} {
   const trimmed = (raw || "").trim();
   const hasPlus = trimmed.includes("+");
   const suffix = hasPlus ? "+" : "";
@@ -22,13 +44,7 @@ function parseCompactNumber(raw: string): { end: number; suffix: string; isK: bo
   return { end, suffix, isK };
 }
 
-function StatCountUp({
-  valueStr,
-  color,
-}: {
-  valueStr: string;
-  color: string;
-}) {
+function StatCountUp({ valueStr, color }: { valueStr: string; color: string }) {
   const { end, suffix, isK } = parseCompactNumber(valueStr);
   const headingRef = useRef<HTMLHeadingElement | null>(null);
   const inView = useInView(headingRef, { once: true, margin: "-40px" });
@@ -68,11 +84,14 @@ function StatCountUp({
   );
 }
 
-export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPageProps) {
+export function BerandaPage({
+  onRoleSelect,
+  onNavigateToDirectory,
+}: BerandaPageProps) {
   const scrollToAuth = () => {
-    const element = document.getElementById('auth-section');
+    const element = document.getElementById("auth-section");
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      element.scrollIntoView({ behavior: "smooth" });
     }
   };
 
@@ -85,55 +104,75 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
   const heroParallax = useTransform(scrollYProgress, [0, 1], [0, -28]);
 
   const [directoryQuery, setDirectoryQuery] = useState("");
-  const [directoryCategory, setDirectoryCategory] = useState<"Semua" | "Makanan" | "Minuman" | "Jasa" | "Kerajinan">("Semua");
+  const [directoryCategory, setDirectoryCategory] = useState<
+    "Semua" | "Makanan" | "Minuman" | "Jasa" | "Kerajinan"
+  >("Semua");
 
   const directoryPreview = [
     {
       name: "Lapis Bogor Sangkuriang",
       category: "Makanan" as const,
-      address: "Jl. Pajajaran No.20i, RT.01/RW.11, Baranangsiang, Kec. Bogor Tim., Kota Bogor, Jawa Barat 16143",
-      image: "https://agrinesia.co.id/uploads/2024-07/jfzaH33tlscoG2xPGHd8ykIuUGsU3zTo5NrCzWX4.jpeg",
-      description: "Pelopor dan pencetus pertama bolu lapis yang menggunakan bahan dasar talas",
+      address:
+        "Jl. Pajajaran No.20i, RT.01/RW.11, Baranangsiang, Kec. Bogor Tim., Kota Bogor, Jawa Barat 16143",
+      image:
+        "https://agrinesia.co.id/uploads/2024-07/jfzaH33tlscoG2xPGHd8ykIuUGsU3zTo5NrCzWX4.jpeg",
+      description:
+        "Pelopor dan pencetus pertama bolu lapis yang menggunakan bahan dasar talas",
       rating: 4.8,
     },
     {
       name: "Roti Unyil Venus",
       category: "Makanan" as const,
-      address: "Ruko V-Point, Jl. Pajajaran No.1, RT.01/RW.01, Babakan, Kecamatan Bogor Tengah, Kota Bogor, Jawa Barat 16128",
-      image: "https://i.gojekapi.com/darkroom/gofood-indonesia/v2/images/uploads/87ea29fa-9cf9-4c78-874a-a843af6c2747_Go-Biz_20230807_104930.jpeg",
-      description: "Produsen 'Roti Unyil' legendaris di Bogor dengan ukuran kecil dan puluhan varian rasa",
+      address:
+        "Ruko V-Point, Jl. Pajajaran No.1, RT.01/RW.01, Babakan, Kecamatan Bogor Tengah, Kota Bogor, Jawa Barat 16128",
+      image:
+        "https://i.gojekapi.com/darkroom/gofood-indonesia/v2/images/uploads/87ea29fa-9cf9-4c78-874a-a843af6c2747_Go-Biz_20230807_104930.jpeg",
+      description:
+        "Produsen 'Roti Unyil' legendaris di Bogor dengan ukuran kecil dan puluhan varian rasa",
       rating: 4.8,
     },
     {
       name: "Asinan Sedap Gedung Dalam",
       category: "Makanan" as const,
-      address: "Jl. Siliwangi No.27C, RT.01/RW.01, Sukasari, Kec. Bogor Tim., Kota Bogor, Jawa Barat 16142",
-      image: "https://assets.pikiran-rakyat.com/crop/0x0:0x0/750x500/photo/2022/06/27/903345014.jpg",
-      description: "Salah satu gerai asinan paling legendaris dan tertua di Bogor, berdiri sejak 1978",
+      address:
+        "Jl. Siliwangi No.27C, RT.01/RW.01, Sukasari, Kec. Bogor Tim., Kota Bogor, Jawa Barat 16142",
+      image:
+        "https://assets.pikiran-rakyat.com/crop/0x0:0x0/750x500/photo/2022/06/27/903345014.jpg",
+      description:
+        "Salah satu gerai asinan paling legendaris dan tertua di Bogor, berdiri sejak 1978",
       rating: 4.8,
     },
     {
       name: "PIA Apple Pie",
       category: "Makanan" as const,
-      address: "Jl. Pangrango No.10, RT.04/RW.04, Babakan, Kecamatan Bogor Tengah, Kota Bogor, Jawa Barat 16128",
-      image: "https://s3.us-east-1.wasabisys.com/agendaindonesia/2022/10/Pie-Apple-Pie-Bogor.jpg",
-      description: "Toko pie terkenal di Bogor dengan apple pie yang renyah di luar dan lembut di dalam",
+      address:
+        "Jl. Pangrango No.10, RT.04/RW.04, Babakan, Kecamatan Bogor Tengah, Kota Bogor, Jawa Barat 16128",
+      image:
+        "https://s3.us-east-1.wasabisys.com/agendaindonesia/2022/10/Pie-Apple-Pie-Bogor.jpg",
+      description:
+        "Toko pie terkenal di Bogor dengan apple pie yang renyah di luar dan lembut di dalam",
       rating: 4.8,
     },
     {
       name: "Bika Bogor Talubi",
       category: "Makanan" as const,
-      address: "Jl. Pajajaran No.20M, RT.01/RW.11, Baranangsiang, Kec. Bogor Tim., Kota Bogor, Jawa Barat 16143",
-      image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhvrRS7rbZ9JBrHa85YQJgvl8ZW3uYsmoWwwCEvM_-L1en-5d5g6Oa6akl07FmbHbHnlzJPQ0GQPtA0ny44_7b7TazCgvtOneEj3hVZAf27KM28PPC1_t_B0GSyJ0hgM8CjwxYZS9zqeda7/s1600/20170103_165122_wm.jpg",
-      description: "Inovasi oleh-oleh khas Bogor yang mengolah talas menjadi kue bika ambon",
+      address:
+        "Jl. Pajajaran No.20M, RT.01/RW.11, Baranangsiang, Kec. Bogor Tim., Kota Bogor, Jawa Barat 16143",
+      image:
+        "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhvrRS7rbZ9JBrHa85YQJgvl8ZW3uYsmoWwwCEvM_-L1en-5d5g6Oa6akl07FmbHbHnlzJPQ0GQPtA0ny44_7b7TazCgvtOneEj3hVZAf27KM28PPC1_t_B0GSyJ0hgM8CjwxYZS9zqeda7/s1600/20170103_165122_wm.jpg",
+      description:
+        "Inovasi oleh-oleh khas Bogor yang mengolah talas menjadi kue bika ambon",
       rating: 4.8,
     },
     {
       name: "Macaroni Panggang (MP)",
       category: "Makanan" as const,
-      address: "Jl. Salak No.24, Babakan, Kecamatan Bogor Tengah, Kota Bogor, Jawa Barat 16128",
-      image: "https://images.tokopedia.net/img/cache/700/hDjmkQ/2025/4/18/856dcaaf-3fe4-4d7c-8a4b-095d0240b5e8.jpg",
-      description: "UMKM legendaris di Bogor yang terkenal dengan makaroni skotel panggangnya",
+      address:
+        "Jl. Salak No.24, Babakan, Kecamatan Bogor Tengah, Kota Bogor, Jawa Barat 16128",
+      image:
+        "https://images.tokopedia.net/img/cache/700/hDjmkQ/2025/4/18/856dcaaf-3fe4-4d7c-8a4b-095d0240b5e8.jpg",
+      description:
+        "UMKM legendaris di Bogor yang terkenal dengan makaroni skotel panggangnya",
       rating: 4.8,
     },
   ];
@@ -145,7 +184,8 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
       umkm.name.toLowerCase().includes(q) ||
       umkm.category.toLowerCase().includes(q) ||
       umkm.address.toLowerCase().includes(q);
-    const matchesCategory = directoryCategory === "Semua" || umkm.category === directoryCategory;
+    const matchesCategory =
+      directoryCategory === "Semua" || umkm.category === directoryCategory;
     return matchesQuery && matchesCategory;
   });
 
@@ -156,10 +196,26 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
   ];
 
   const categories = [
-    { name: "Makanan", count: "150+ UMKM", gradient: "from-orange-400 to-yellow-300" },
-    { name: "Minuman", count: "80+ UMKM", gradient: "from-green-400 to-green-600" },
-    { name: "Fashion", count: "120+ UMKM", gradient: "from-yellow-300 to-orange-400" },
-    { name: "Jasa", count: "150+ UMKM", gradient: "from-green-500 to-emerald-600" },
+    {
+      name: "Makanan",
+      count: "150+ UMKM",
+      gradient: "from-orange-400 to-yellow-300",
+    },
+    {
+      name: "Minuman",
+      count: "80+ UMKM",
+      gradient: "from-green-400 to-green-600",
+    },
+    {
+      name: "Fashion",
+      count: "120+ UMKM",
+      gradient: "from-yellow-300 to-orange-400",
+    },
+    {
+      name: "Jasa",
+      count: "150+ UMKM",
+      gradient: "from-green-500 to-emerald-600",
+    },
   ];
 
   const benefits = [
@@ -256,12 +312,13 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
   return (
     <div className="min-h-screen">
       {/* Hero Section - Keep original design */}
-      <section 
+      <section
         ref={heroRef}
-        id="hero" 
+        id="hero"
         className="relative min-h-screen flex items-center overflow-hidden"
         style={{
-          background: 'linear-gradient(135deg, #FFF4E6 0%, #FFB84D 50%, #FF8D28 100%)',
+          background:
+            "linear-gradient(135deg, #FFF4E6 0%, #FFB84D 50%, #FF8D28 100%)",
         }}
       >
         {/* Decorative Elements - Floating Leaves */}
@@ -274,7 +331,7 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
           transition={{
             duration: 4,
             repeat: Infinity,
-            ease: "easeInOut"
+            ease: "easeInOut",
           }}
         >
           <Leaf size={80} />
@@ -289,7 +346,7 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
           transition={{
             duration: 5,
             repeat: Infinity,
-            ease: "easeInOut"
+            ease: "easeInOut",
           }}
         >
           <Leaf size={60} />
@@ -304,19 +361,20 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
           transition={{
             duration: 6,
             repeat: Infinity,
-            ease: "easeInOut"
+            ease: "easeInOut",
           }}
         >
           <Leaf size={70} />
         </motion.div>
 
         {/* Mountain Silhouette */}
-        <motion.div 
+        <motion.div
           className="absolute bottom-0 left-0 right-0 h-64 opacity-10"
           style={{
-            background: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 1200 300\'%3E%3Cpath fill=\'%232F4858\' d=\'M0,200 L300,50 L500,120 L700,30 L900,100 L1200,80 L1200,300 L0,300 Z\'/%3E%3C/svg%3E")',
-            backgroundSize: 'cover',
-            backgroundPosition: 'bottom',
+            background:
+              "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 300'%3E%3Cpath fill='%232F4858' d='M0,200 L300,50 L500,120 L700,30 L900,100 L1200,80 L1200,300 L0,300 Z'/%3E%3C/svg%3E\")",
+            backgroundSize: "cover",
+            backgroundPosition: "bottom",
             y: heroParallax,
           }}
         />
@@ -324,7 +382,7 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
         <div className="container mx-auto px-4 py-20 pt-32 relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left: Text Content */}
-            <motion.div 
+            <motion.div
               className="space-y-6"
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
@@ -332,16 +390,16 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
             >
               <motion.div
                 initial={{ opacity: 0, scale: 0.8, y: 20 }}
-                animate={{ 
-                  opacity: 1, 
-                  scale: 1, 
-                  y: 0 
+                animate={{
+                  opacity: 1,
+                  scale: 1,
+                  y: 0,
                 }}
-                transition={{ 
-                  delay: 0.25, 
+                transition={{
+                  delay: 0.25,
                   duration: 0.8,
                   type: "spring",
-                  stiffness: 100
+                  stiffness: 100,
                 }}
                 className="flex items-center mb-4"
               >
@@ -351,20 +409,21 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
                     filter: [
                       "drop-shadow(0 10px 20px rgba(255, 141, 40, 0.3))",
                       "drop-shadow(0 15px 30px rgba(255, 141, 40, 0.5))",
-                      "drop-shadow(0 10px 20px rgba(255, 141, 40, 0.3))"
-                    ]
+                      "drop-shadow(0 10px 20px rgba(255, 141, 40, 0.3))",
+                    ],
                   }}
                   transition={{
                     duration: 3,
                     repeat: Infinity,
-                    ease: "easeInOut"
+                    ease: "easeInOut",
                   }}
                 >
                   <AsliBogorLogo
-                    variant="primary"
+                    variant="secondary"
                     className="h-32 md:h-40 lg:h-48 w-auto drop-shadow-2xl"
                     style={{
-                      filter: "drop-shadow(0 10px 25px rgba(255, 141, 40, 0.4))"
+                      filter:
+                        "drop-shadow(0 10px 25px rgba(255, 141, 40, 0.4))",
                     }}
                   />
                 </motion.div>
@@ -384,11 +443,11 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
               </motion.div>
 
               <motion.h1
-                style={{ 
-                  color: '#2F4858',
-                  fontSize: 'clamp(2rem, 5vw, 3.5rem)',
+                style={{
+                  color: "#2F4858",
+                  fontSize: "clamp(2rem, 5vw, 3.5rem)",
                   fontWeight: 700,
-                  lineHeight: 1.2
+                  lineHeight: 1.2,
                 }}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -398,40 +457,44 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
                 Bikin Keren UMKM Lokal
               </motion.h1>
 
-              <motion.p 
-                style={{ color: '#4A4A4A', fontSize: '18px' }}
+              <motion.p
+                style={{ color: "#4A4A4A", fontSize: "18px" }}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5, duration: 0.6 }}
               >
-                Temukan dan dukung usaha keren di sekitarmu. Platform digital yang menghubungkan UMKM Bogor dengan pelanggan di seluruh Indonesia.
+                Temukan dan dukung usaha keren di sekitarmu. Platform digital
+                yang menghubungkan UMKM Bogor dengan pelanggan di seluruh
+                Indonesia.
               </motion.p>
 
-              <motion.div 
+              <motion.div
                 className="flex flex-col sm:flex-row gap-4"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.6, duration: 0.6 }}
               >
-                <Button 
+                <Button
                   onClick={onNavigateToDirectory}
                   className="px-8 py-6 text-lg hover-lift"
-                  style={{ 
-                    background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)',
-                    color: '#FFFFFF',
-                    border: 'none'
+                  style={{
+                    background:
+                      "linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)",
+                    color: "#FFFFFF",
+                    border: "none",
                   }}
                 >
                   Jelajahi Direktori
                 </Button>
 
-                <Button 
+                <Button
                   onClick={scrollToAuth}
                   className="px-8 py-6 text-lg hover-lift"
-                  style={{ 
-                    background: 'linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%)',
-                    color: '#FFFFFF',
-                    border: 'none'
+                  style={{
+                    background:
+                      "linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%)",
+                    color: "#FFFFFF",
+                    border: "none",
                   }}
                 >
                   Masuk / Daftar Sekarang
@@ -450,10 +513,16 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
                   return (
                     <div key={index} className="text-center">
                       <div className="flex items-center justify-center mb-2">
-                        <Icon size={24} style={{ color: stat.color }} className="mr-2" />
+                        <Icon
+                          size={24}
+                          style={{ color: stat.color }}
+                          className="mr-2"
+                        />
                         <StatCountUp valueStr={stat.value} color={stat.color} />
                       </div>
-                      <p className="body-3" style={{ color: '#4A4A4A' }}>{stat.label}</p>
+                      <p className="body-3" style={{ color: "#4A4A4A" }}>
+                        {stat.label}
+                      </p>
                     </div>
                   );
                 })}
@@ -461,7 +530,7 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
             </motion.div>
 
             {/* Right: Illustration/Image - Keep original */}
-            <motion.div 
+            <motion.div
               className="relative"
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
@@ -477,7 +546,7 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
                   transition={{
                     duration: 3,
                     repeat: Infinity,
-                    ease: "easeInOut"
+                    ease: "easeInOut",
                   }}
                 />
                 <motion.div
@@ -488,7 +557,7 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
                   transition={{
                     duration: 4,
                     repeat: Infinity,
-                    ease: "easeInOut"
+                    ease: "easeInOut",
                   }}
                 />
 
@@ -499,12 +568,19 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
                       <motion.div
                         key={index}
                         className={`bg-gradient-to-br ${category.gradient} rounded-2xl p-6 h-32 flex items-center justify-center`}
-                        whileHover={{ scale: 1.05, rotate: index % 2 === 0 ? 2 : -2 }}
+                        whileHover={{
+                          scale: 1.05,
+                          rotate: index % 2 === 0 ? 2 : -2,
+                        }}
                         transition={{ type: "spring", stiffness: 300 }}
                       >
                         <div className="text-center text-white">
-                          <h4 className="font-bold text-lg mb-1">{category.name}</h4>
-                          <p className="body-3 text-white/90">{category.count}</p>
+                          <h4 className="font-bold text-lg mb-1">
+                            {category.name}
+                          </h4>
+                          <p className="body-3 text-white/90">
+                            {category.count}
+                          </p>
                         </div>
                       </motion.div>
                     ))}
@@ -517,14 +593,18 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
 
         {/* Bottom Wave */}
         <div className="absolute bottom-0 left-0 right-0">
-          <svg viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg" className="w-full">
-            <path 
-              d="M0,50 C300,100 500,0 800,50 L800,120 L0,120 Z" 
+          <svg
+            viewBox="0 0 1200 120"
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-full"
+          >
+            <path
+              d="M0,50 C300,100 500,0 800,50 L800,120 L0,120 Z"
               fill="#FFFFFF"
               opacity="0.3"
             />
-            <path 
-              d="M0,70 C400,20 700,100 1200,50 L1200,120 L0,120 Z" 
+            <path
+              d="M0,70 C400,20 700,100 1200,50 L1200,120 L0,120 Z"
               fill="#FFFFFF"
             />
           </svg>
@@ -541,11 +621,22 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl lg:text-4xl font-bold mb-4" style={{ color: '#2F4858' }}>
+            <h2
+              className="text-3xl lg:text-4xl font-bold mb-4"
+              style={{ color: "#2F4858" }}
+            >
               Kenapa Pilih Asli Bogor?
             </h2>
-            <p style={{ color: '#4A4A4A', fontSize: '18px', maxWidth: '700px', margin: '0 auto' }}>
-              Platform digital untuk UMKM Bogor yang menghubungkan produk lokal berkualitas dengan pelanggan di seluruh Indonesia.
+            <p
+              style={{
+                color: "#4A4A4A",
+                fontSize: "18px",
+                maxWidth: "700px",
+                margin: "0 auto",
+              }}
+            >
+              Platform digital untuk UMKM Bogor yang menghubungkan produk lokal
+              berkualitas dengan pelanggan di seluruh Indonesia.
             </p>
           </motion.div>
 
@@ -582,20 +673,20 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
                     whileHover={{ scale: 1.05, y: -8, rotate: 1 }}
                     transition={{ type: "spring", stiffness: 300 }}
                   >
-                    <div 
+                    <div
                       className={`bg-gradient-to-br ${benefit.bgGradient} p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-all border-2 h-full relative overflow-hidden group`}
                       style={{
-                        borderColor: 'rgba(255, 255, 255, 0.8)',
+                        borderColor: "rgba(255, 255, 255, 0.8)",
                       }}
                     >
                       {/* Decorative background pattern */}
-                      <div 
+                      <div
                         className="absolute top-0 right-0 w-32 h-32 opacity-10 rounded-full blur-2xl transition-opacity group-hover:opacity-20"
                         style={{
                           background: benefit.iconBg,
                         }}
                       />
-                      
+
                       {/* Animated sparkle effect */}
                       <motion.div
                         className="absolute top-2 right-2"
@@ -609,49 +700,55 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
                           ease: "easeInOut",
                         }}
                       >
-                        <Sparkles size={20} style={{ color: benefit.accentColor }} />
+                        <Sparkles
+                          size={20}
+                          style={{ color: benefit.accentColor }}
+                        />
                       </motion.div>
-                      
+
                       <div className="flex flex-col items-center text-center gap-4 relative z-10 h-full justify-center">
-                        <motion.div 
+                        <motion.div
                           className="w-16 h-16 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg relative z-20"
                           style={{ background: benefit.iconBg }}
                           whileHover={{ rotate: [0, -10, 10, 0], scale: 1.1 }}
                           transition={{ duration: 0.5 }}
                         >
-                          <Icon 
-                            size={32} 
-                            style={{ 
-                              color: '#FFFFFF',
-                              display: 'block',
+                          <Icon
+                            size={32}
+                            style={{
+                              color: "#FFFFFF",
+                              display: "block",
                               zIndex: 10,
-                              position: 'relative'
-                            }} 
-                            strokeWidth={2.5} 
+                              position: "relative",
+                            }}
+                            strokeWidth={2.5}
                           />
                           {/* Glow effect on icon */}
-                          <div 
+                          <div
                             className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-50 blur-md transition-opacity"
                             style={{ background: benefit.iconBg }}
                           />
                         </motion.div>
                         <div className="flex-1 flex items-center justify-center">
-                          <p className="text-base font-semibold leading-relaxed text-center" style={{ color: '#2F4858' }}>
+                          <p
+                            className="text-base font-semibold leading-relaxed text-center"
+                            style={{ color: "#2F4858" }}
+                          >
                             {benefit.text}
                           </p>
                         </div>
                       </div>
-                      
+
                       {/* Decorative corner accent */}
-                      <div 
+                      <div
                         className="absolute bottom-0 right-0 w-20 h-20 opacity-5 group-hover:opacity-10 transition-opacity"
                         style={{
                           background: `linear-gradient(135deg, transparent 0%, ${benefit.accentColor} 100%)`,
                         }}
                       />
-                      
+
                       {/* Bottom border accent */}
-                      <div 
+                      <div
                         className="absolute bottom-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity"
                         style={{
                           background: benefit.iconBg,
@@ -662,7 +759,7 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
                 );
               })}
             </motion.div>
-            
+
             {/* Gradient overlays for fade effect */}
             <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-white to-transparent pointer-events-none z-10" />
             <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-white to-transparent pointer-events-none z-10" />
@@ -671,7 +768,10 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
       </section>
 
       {/* CTA Section */}
-      <section id="auth-section" className="py-20 lg:py-28 bg-gradient-to-b from-white to-[#FFF4E6]">
+      <section
+        id="auth-section"
+        className="py-20 lg:py-28 bg-gradient-to-b from-white to-[#FFF4E6]"
+      >
         <AuthSectionLanding onRoleSelect={onRoleSelect} />
       </section>
 
@@ -686,21 +786,44 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
             transition={{ duration: 0.6 }}
           >
             <div className="inline-block mb-4">
-              <Award size={48} style={{ color: '#FF8D28' }} />
+              <Award size={48} style={{ color: "#FF8D28" }} />
             </div>
-            <h2 className="text-3xl lg:text-4xl font-bold mb-4" style={{ color: '#2F4858' }}>
+            <h2
+              className="text-3xl lg:text-4xl font-bold mb-4"
+              style={{ color: "#2F4858" }}
+            >
               UMKM Sukses Bersama Kami
             </h2>
-            <p style={{ color: '#4A4A4A', fontSize: '18px', maxWidth: '700px', margin: '0 auto' }}>
-              Ribuan UMKM telah berkembang dan mencapai kesuksesan melalui platform Asli Bogor
+            <p
+              style={{
+                color: "#4A4A4A",
+                fontSize: "18px",
+                maxWidth: "700px",
+                margin: "0 auto",
+              }}
+            >
+              Ribuan UMKM telah berkembang dan mencapai kesuksesan melalui
+              platform Asli Bogor
             </p>
           </motion.div>
 
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {[
-              { title: "Peningkatan Penjualan", value: "300%", desc: "Rata-rata peningkatan penjualan UMKM" },
-              { title: "Jangkauan Pasar", value: "Seluruh Indonesia", desc: "Produk UMKM Bogor bisa dinikmati di mana saja" },
-              { title: "Kepuasan Pelanggan", value: "4.8/5", desc: "Rating tinggi dari ribuan pelanggan" },
+              {
+                title: "Peningkatan Penjualan",
+                value: "300%",
+                desc: "Rata-rata peningkatan penjualan UMKM",
+              },
+              {
+                title: "Jangkauan Pasar",
+                value: "Seluruh Indonesia",
+                desc: "Produk UMKM Bogor bisa dinikmati di mana saja",
+              },
+              {
+                title: "Kepuasan Pelanggan",
+                value: "4.8/5",
+                desc: "Rating tinggi dari ribuan pelanggan",
+              },
             ].map((stat, index) => (
               <motion.div
                 key={index}
@@ -710,13 +833,19 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
                 transition={{ delay: index * 0.1, duration: 0.5 }}
                 className="bg-gradient-to-br from-[#FFF4E6] to-white p-8 rounded-2xl shadow-lg text-center border border-orange-100"
               >
-                <h3 className="text-3xl font-bold mb-2" style={{ color: '#FF8D28' }}>
+                <h3
+                  className="text-3xl font-bold mb-2"
+                  style={{ color: "#FF8D28" }}
+                >
                   {stat.value}
                 </h3>
-                <h4 className="text-lg font-semibold mb-2" style={{ color: '#2F4858' }}>
+                <h4
+                  className="text-lg font-semibold mb-2"
+                  style={{ color: "#2F4858" }}
+                >
                   {stat.title}
                 </h4>
-                <p className="text-sm" style={{ color: '#858585' }}>
+                <p className="text-sm" style={{ color: "#858585" }}>
                   {stat.desc}
                 </p>
               </motion.div>
@@ -726,7 +855,13 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
       </section>
 
       {/* Mini Direktori (style seperti halaman Direktori) */}
-      <section className="py-20 lg:py-28 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #FFFFFF 0%, #FFF4E6 30%, #FFE5CC 100%)' }}>
+      <section
+        className="py-20 lg:py-28 relative overflow-hidden"
+        style={{
+          background:
+            "linear-gradient(135deg, #FFFFFF 0%, #FFF4E6 30%, #FFE5CC 100%)",
+        }}
+      >
         <div className="container mx-auto px-4 lg:px-6 relative z-10">
           <motion.div
             className="text-center max-w-4xl mx-auto mb-10 lg:mb-12"
@@ -735,11 +870,22 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl lg:text-4xl font-bold mb-4" style={{ color: '#2F4858' }}>
+            <h2
+              className="text-3xl lg:text-4xl font-bold mb-4"
+              style={{ color: "#2F4858" }}
+            >
               Temukan UMKM Lokal Terbaik
             </h2>
-            <p style={{ color: '#4A4A4A', fontSize: '18px', maxWidth: '900px', margin: '0 auto' }}>
-              Jelajahi berbagai produk dan jasa dari UMKM terbaik di Bogor dengan kualitas premium
+            <p
+              style={{
+                color: "#4A4A4A",
+                fontSize: "18px",
+                maxWidth: "900px",
+                margin: "0 auto",
+              }}
+            >
+              Jelajahi berbagai produk dan jasa dari UMKM terbaik di Bogor
+              dengan kualitas premium
             </p>
           </motion.div>
 
@@ -753,8 +899,18 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
           >
             {[
               { icon: Store, value: "500+", label: "UMKM", color: "#FF8D28" },
-              { icon: Users, value: "10K+", label: "Pengguna", color: "#4CAF50" },
-              { icon: TrendingUp, value: "50+", label: "Driver", color: "#2196F3" },
+              {
+                icon: Users,
+                value: "10K+",
+                label: "Pengguna",
+                color: "#4CAF50",
+              },
+              {
+                icon: TrendingUp,
+                value: "50+",
+                label: "Driver",
+                color: "#2196F3",
+              },
               { icon: Star, value: "4.8", label: "Rating", color: "#FFB84D" },
             ].map((s, idx) => {
               const Icon = s.icon;
@@ -770,18 +926,26 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
                 >
                   <div
                     className="w-12 h-12 mx-auto mb-2 rounded-xl flex items-center justify-center"
-                    style={{ background: `linear-gradient(135deg, ${s.color} 0%, ${s.color}CC 100%)` }}
+                    style={{
+                      background: `linear-gradient(135deg, ${s.color} 0%, ${s.color}CC 100%)`,
+                    }}
                   >
                     <Icon size={20} className="text-white" />
                   </div>
                   {s.label === "Rating" ? (
-                    <div className="text-xl font-bold mb-1" style={{ color: s.color }}>
+                    <div
+                      className="text-xl font-bold mb-1"
+                      style={{ color: s.color }}
+                    >
                       {s.value}
                     </div>
                   ) : (
                     <StatCountUp valueStr={s.value} color={s.color} />
                   )}
-                  <div className="text-xs font-medium" style={{ color: '#4A4A4A' }}>
+                  <div
+                    className="text-xs font-medium"
+                    style={{ color: "#4A4A4A" }}
+                  >
                     {s.label}
                   </div>
                 </motion.div>
@@ -800,13 +964,19 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
             <div className="relative group">
               <div
                 className="absolute -inset-1 rounded-3xl opacity-70 blur-xl transition duration-300 group-hover:opacity-100"
-                style={{ background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 50%, #4CAF50 100%)' }}
+                style={{
+                  background:
+                    "linear-gradient(135deg, #FF8D28 0%, #FFB84D 50%, #4CAF50 100%)",
+                }}
               />
               <div className="relative bg-white rounded-3xl shadow-2xl border border-orange-100">
                 <div className="flex items-center gap-4 p-2">
                   <div
                     className="flex-shrink-0 w-14 h-14 rounded-2xl flex items-center justify-center ml-2"
-                    style={{ background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)' }}
+                    style={{
+                      background:
+                        "linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)",
+                    }}
                   >
                     <Search className="text-white" size={24} />
                   </div>
@@ -815,7 +985,7 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
                     value={directoryQuery}
                     onChange={(e) => setDirectoryQuery(e.target.value)}
                     className="flex-1 border-0 focus:ring-0 text-base py-6 px-0 bg-transparent"
-                    style={{ color: '#2F4858', fontSize: '16px' }}
+                    style={{ color: "#2F4858", fontSize: "16px" }}
                   />
                 </div>
               </div>
@@ -830,7 +1000,9 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            {(["Semua", "Makanan", "Minuman", "Jasa", "Kerajinan"] as const).map((c) => (
+            {(
+              ["Semua", "Makanan", "Minuman", "Jasa", "Kerajinan"] as const
+            ).map((c) => (
               <motion.button
                 key={c}
                 onClick={() => setDirectoryCategory(c)}
@@ -839,8 +1011,17 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
                 className="px-6 py-3 rounded-2xl font-bold text-sm border-2 shadow-sm"
                 style={
                   directoryCategory === c
-                    ? { background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)', color: '#FFFFFF', borderColor: 'transparent' }
-                    : { background: '#FFFFFF', color: '#2F4858', borderColor: '#FFE5CC' }
+                    ? {
+                        background:
+                          "linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)",
+                        color: "#FFFFFF",
+                        borderColor: "transparent",
+                      }
+                    : {
+                        background: "#FFFFFF",
+                        color: "#2F4858",
+                        borderColor: "#FFE5CC",
+                      }
                 }
               >
                 {c}
@@ -871,25 +1052,50 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
                     <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                     <div
                       className="absolute top-4 left-4 px-4 py-2 rounded-full shadow-lg backdrop-blur-sm"
-                      style={{ background: 'linear-gradient(135deg, rgba(255, 141, 40, 0.95) 0%, rgba(255, 184, 77, 0.95) 100%)' }}
+                      style={{
+                        background:
+                          "linear-gradient(135deg, rgba(255, 141, 40, 0.95) 0%, rgba(255, 184, 77, 0.95) 100%)",
+                      }}
                     >
-                      <span className="text-xs font-bold text-white">{umkm.category}</span>
+                      <span className="text-xs font-bold text-white">
+                        {umkm.category}
+                      </span>
                     </div>
                     <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-sm rounded-full px-3 py-1.5 flex items-center space-x-1 shadow-lg">
-                      <Star size={16} className="text-yellow-500 fill-current" />
-                      <span className="text-sm font-bold" style={{ color: '#2F4858' }}>{umkm.rating.toFixed(1)}</span>
+                      <Star
+                        size={16}
+                        className="text-yellow-500 fill-current"
+                      />
+                      <span
+                        className="text-sm font-bold"
+                        style={{ color: "#2F4858" }}
+                      >
+                        {umkm.rating.toFixed(1)}
+                      </span>
                     </div>
                   </div>
 
                   <div className="p-6 flex-1 flex flex-col">
-                    <h3 className="text-xl font-bold mb-2 group-hover:text-[#FF8D28] transition-colors" style={{ color: '#2F4858' }}>
+                    <h3
+                      className="text-xl font-bold mb-2 group-hover:text-[#FF8D28] transition-colors"
+                      style={{ color: "#2F4858" }}
+                    >
                       {umkm.name}
                     </h3>
-                    <p className="text-sm mb-4 line-clamp-2 flex-1" style={{ color: '#4A4A4A' }}>
+                    <p
+                      className="text-sm mb-4 line-clamp-2 flex-1"
+                      style={{ color: "#4A4A4A" }}
+                    >
                       {umkm.description}
                     </p>
-                    <div className="pt-4 border-t" style={{ borderColor: '#FFE5CC' }}>
-                      <p className="text-sm line-clamp-2" style={{ color: '#858585' }}>
+                    <div
+                      className="pt-4 border-t"
+                      style={{ borderColor: "#FFE5CC" }}
+                    >
+                      <p
+                        className="text-sm line-clamp-2"
+                        style={{ color: "#858585" }}
+                      >
                         {umkm.address}
                       </p>
                     </div>
@@ -897,7 +1103,10 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
                     <motion.button
                       onClick={onNavigateToDirectory}
                       className="w-full mt-5 py-3 rounded-xl font-bold text-white"
-                      style={{ background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)' }}
+                      style={{
+                        background:
+                          "linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)",
+                      }}
                       whileHover={{ scale: 1.02, y: -2 }}
                       whileTap={{ scale: 0.98 }}
                     >
@@ -913,7 +1122,9 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
             <motion.button
               onClick={onNavigateToDirectory}
               className="px-8 py-4 rounded-xl font-bold text-white shadow-xl"
-              style={{ background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)' }}
+              style={{
+                background: "linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)",
+              }}
               whileHover={{ scale: 1.03, y: -2 }}
               whileTap={{ scale: 0.98 }}
             >
@@ -934,21 +1145,41 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
             transition={{ duration: 0.6 }}
           >
             <div className="inline-flex items-center gap-3 mb-4 px-5 py-2.5 rounded-full bg-[#FFF4E6] border border-orange-100">
-              <Gift size={18} style={{ color: '#FF8D28' }} />
-              <span className="font-bold" style={{ color: '#2F4858' }}>
+              <Gift size={18} style={{ color: "#FF8D28" }} />
+              <span className="font-bold" style={{ color: "#2F4858" }}>
                 Promo Spesial Buat Kamu
               </span>
             </div>
-            <p style={{ color: '#4A4A4A', fontSize: '18px', maxWidth: 760, margin: '0 auto' }}>
-              Belanja hemat sambil dukung UMKM lokal. Promo dipilih yang paling relevan untuk kamu.
+            <p
+              style={{
+                color: "#4A4A4A",
+                fontSize: "18px",
+                maxWidth: 760,
+                margin: "0 auto",
+              }}
+            >
+              Belanja hemat sambil dukung UMKM lokal. Promo dipilih yang paling
+              relevan untuk kamu.
             </p>
           </motion.div>
 
           <div className="grid md:grid-cols-3 gap-6">
             {[
-              { title: "Diskon 15% Mingguan", desc: "Pakai kode: BOGOR15", accent: "#FF8D28" },
-              { title: "Ongkir Hemat", desc: "Untuk UMKM pilihan, mulai Rp0", accent: "#4CAF50" },
-              { title: "Poin Reward Lebih Banyak", desc: "Setiap transaksi dapat reward tambahan", accent: "#2196F3" },
+              {
+                title: "Diskon 15% Mingguan",
+                desc: "Pakai kode: BOGOR15",
+                accent: "#FF8D28",
+              },
+              {
+                title: "Ongkir Hemat",
+                desc: "Untuk UMKM pilihan, mulai Rp0",
+                accent: "#4CAF50",
+              },
+              {
+                title: "Poin Reward Lebih Banyak",
+                desc: "Setiap transaksi dapat reward tambahan",
+                accent: "#2196F3",
+              },
             ].map((promo, idx) => (
               <motion.div
                 key={promo.title}
@@ -972,7 +1203,11 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
                 <motion.div
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"
                   animate={{ x: ["-110%", "110%"] }}
-                  transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+                  transition={{
+                    duration: 1.5,
+                    repeat: Infinity,
+                    ease: "linear",
+                  }}
                   style={{
                     background:
                       "linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.28) 50%, rgba(255,255,255,0) 100%)",
@@ -980,24 +1215,38 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
                 />
                 <div
                   className="w-14 h-14 rounded-2xl flex items-center justify-center mb-4"
-                  style={{ background: `linear-gradient(135deg, ${promo.accent} 0%, rgba(255,255,255,0) 100%)` }}
+                  style={{
+                    background: `linear-gradient(135deg, ${promo.accent} 0%, rgba(255,255,255,0) 100%)`,
+                  }}
                 >
-                  <Gift size={22} style={{ color: '#FFFFFF' }} />
+                  <Gift size={22} style={{ color: "#FFFFFF" }} />
                 </div>
-                <h3 className="font-bold text-lg" style={{ color: '#2F4858' }}>
+                <h3 className="font-bold text-lg" style={{ color: "#2F4858" }}>
                   {promo.title}
                 </h3>
-                <p className="body-3 mt-2" style={{ color: '#858585' }}>
+                <p className="body-3 mt-2" style={{ color: "#858585" }}>
                   {promo.desc}
                 </p>
                 <motion.button
                   onClick={onNavigateToDirectory}
                   className="w-full mt-5 py-3 rounded-xl font-bold text-white"
-                  style={{ background: `linear-gradient(135deg, ${promo.accent} 0%, #FFB84D 100%)` }}
+                  style={{
+                    background: `linear-gradient(135deg, ${promo.accent} 0%, #FFB84D 100%)`,
+                  }}
                   whileHover={{ scale: 1.03, y: -2 }}
                   whileTap={{ scale: 0.98 }}
-                  animate={{ boxShadow: ["0 0 0 rgba(255,141,40,0)", `0 0 26px rgba(255,141,40,0.25)`, "0 0 0 rgba(255,141,40,0)"] }}
-                  transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+                  animate={{
+                    boxShadow: [
+                      "0 0 0 rgba(255,141,40,0)",
+                      `0 0 26px rgba(255,141,40,0.25)`,
+                      "0 0 0 rgba(255,141,40,0)",
+                    ],
+                  }}
+                  transition={{
+                    duration: 1.8,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
                 >
                   Ambil Promo
                 </motion.button>
@@ -1018,13 +1267,21 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
             transition={{ duration: 0.6 }}
           >
             <div className="inline-flex items-center gap-3 mb-4 px-5 py-2.5 rounded-full bg-white/70 border border-orange-100 backdrop-blur-sm shadow-sm">
-              <Star size={18} style={{ color: '#FF8D28' }} />
-              <span className="font-bold" style={{ color: '#2F4858' }}>
+              <Star size={18} style={{ color: "#FF8D28" }} />
+              <span className="font-bold" style={{ color: "#2F4858" }}>
                 Review dari Komunitas
               </span>
             </div>
-            <p style={{ color: '#4A4A4A', fontSize: '18px', maxWidth: 760, margin: '0 auto' }}>
-              Cerita mereka yang sudah coba dan ngerasa terbantu. Rating tinggi karena pengalaman nyata.
+            <p
+              style={{
+                color: "#4A4A4A",
+                fontSize: "18px",
+                maxWidth: 760,
+                margin: "0 auto",
+              }}
+            >
+              Cerita mereka yang sudah coba dan ngerasa terbantu. Rating tinggi
+              karena pengalaman nyata.
             </p>
           </motion.div>
 
@@ -1039,7 +1296,10 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
                   if (dx < -70) {
                     setReviewIndex((prev) => (prev + 1) % testimonials.length);
                   } else if (dx > 70) {
-                    setReviewIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+                    setReviewIndex(
+                      (prev) =>
+                        (prev - 1 + testimonials.length) % testimonials.length,
+                    );
                   }
                 }}
                 className="bg-white rounded-3xl border-2 border-orange-100 shadow-xl p-6 relative overflow-hidden"
@@ -1052,9 +1312,13 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
                   className="absolute -top-8 -left-8 opacity-15"
                   initial={{ scale: 0.9, rotate: 0 }}
                   animate={{ rotate: [0, 8, 0] }}
-                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
                 >
-                  <Sparkles size={48} style={{ color: '#FF8D28' }} />
+                  <Sparkles size={48} style={{ color: "#FF8D28" }} />
                 </motion.div>
 
                 <div className="flex items-center justify-between mb-4 relative z-10">
@@ -1062,8 +1326,9 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
                     <div
                       className="w-12 h-12 rounded-full flex items-center justify-center font-bold"
                       style={{
-                        background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)',
-                        color: '#FFFFFF',
+                        background:
+                          "linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)",
+                        color: "#FFFFFF",
                       }}
                     >
                       {activeTestimonial.name
@@ -1074,10 +1339,13 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
                         .toUpperCase()}
                     </div>
                     <div>
-                      <div className="font-bold" style={{ color: '#2F4858', lineHeight: 1.1 }}>
+                      <div
+                        className="font-bold"
+                        style={{ color: "#2F4858", lineHeight: 1.1 }}
+                      >
                         {activeTestimonial.name}
                       </div>
-                      <div className="body-3" style={{ color: '#858585' }}>
+                      <div className="body-3" style={{ color: "#858585" }}>
                         {activeTestimonial.time}
                       </div>
                     </div>
@@ -1091,22 +1359,35 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
                         animate={{ scale: 1, opacity: 1 }}
                         transition={{ delay: i * 0.04, duration: 0.25 }}
                       >
-                        <Star size={14} className="text-yellow-500 fill-current" />
+                        <Star
+                          size={14}
+                          className="text-yellow-500 fill-current"
+                        />
                       </motion.span>
                     ))}
                   </div>
                 </div>
 
-                <h4 className="font-bold mb-2 relative z-10" style={{ color: '#2F4858' }}>
+                <h4
+                  className="font-bold mb-2 relative z-10"
+                  style={{ color: "#2F4858" }}
+                >
                   {activeTestimonial.shop}
                 </h4>
-                <p className="body-3 relative z-10" style={{ color: '#4A4A4A', fontSize: 15, lineHeight: 1.6 }}>
+                <p
+                  className="body-3 relative z-10"
+                  style={{ color: "#4A4A4A", fontSize: 15, lineHeight: 1.6 }}
+                >
                   {activeTestimonial.text}
                 </p>
 
                 <div className="mt-5 flex items-center justify-end gap-2 relative z-10">
-                  <Heart size={16} style={{ color: '#FF8D28' }} fill="#FF8D28" />
-                  <span className="body-3" style={{ color: '#858585' }}>
+                  <Heart
+                    size={16}
+                    style={{ color: "#FF8D28" }}
+                    fill="#FF8D28"
+                  />
+                  <span className="body-3" style={{ color: "#858585" }}>
                     {activeTestimonial.likes} Orang merasa terbantu
                   </span>
                 </div>
@@ -1116,9 +1397,18 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
             <div className="mt-8 flex items-center justify-center gap-4">
               <motion.button
                 type="button"
-                onClick={() => setReviewIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length)}
+                onClick={() =>
+                  setReviewIndex(
+                    (prev) =>
+                      (prev - 1 + testimonials.length) % testimonials.length,
+                  )
+                }
                 className="px-4 py-2 rounded-xl border-2"
-                style={{ borderColor: "#FFE5CC", color: "#FF8D28", background: "#FFF4E6" }}
+                style={{
+                  borderColor: "#FFE5CC",
+                  color: "#FF8D28",
+                  background: "#FFF4E6",
+                }}
                 whileHover={{ scale: 1.04, y: -2 }}
                 whileTap={{ scale: 0.98 }}
                 aria-label="Sebelumnya"
@@ -1149,9 +1439,15 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
 
               <motion.button
                 type="button"
-                onClick={() => setReviewIndex((prev) => (prev + 1) % testimonials.length)}
+                onClick={() =>
+                  setReviewIndex((prev) => (prev + 1) % testimonials.length)
+                }
                 className="px-4 py-2 rounded-xl border-2"
-                style={{ borderColor: "#FFE5CC", color: "#FF8D28", background: "#FFF4E6" }}
+                style={{
+                  borderColor: "#FFE5CC",
+                  color: "#FF8D28",
+                  background: "#FFF4E6",
+                }}
                 whileHover={{ scale: 1.04, y: -2 }}
                 whileTap={{ scale: 0.98 }}
                 aria-label="Berikutnya"
@@ -1174,13 +1470,21 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
             transition={{ duration: 0.6 }}
           >
             <div className="inline-flex items-center gap-3 mb-4 px-5 py-2.5 rounded-full bg-[#FFF4E6] border border-orange-100">
-              <Sparkles size={18} style={{ color: '#FF8D28' }} />
-              <span className="font-bold" style={{ color: '#2F4858' }}>
+              <Sparkles size={18} style={{ color: "#FF8D28" }} />
+              <span className="font-bold" style={{ color: "#2F4858" }}>
                 Inspirasi Buat Kamu
               </span>
             </div>
-            <p style={{ color: '#4A4A4A', fontSize: '18px', maxWidth: 760, margin: '0 auto' }}>
-              Inspirasi, rekomendasi, dan hal-hal seru biar kamu makin semangat dukung UMKM lokal.
+            <p
+              style={{
+                color: "#4A4A4A",
+                fontSize: "18px",
+                maxWidth: 760,
+                margin: "0 auto",
+              }}
+            >
+              Inspirasi, rekomendasi, dan hal-hal seru biar kamu makin semangat
+              dukung UMKM lokal.
             </p>
           </motion.div>
 
@@ -1190,25 +1494,29 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
                 title: "5 Tips Mudah Dukung UMKM Lokal di Sekitarmu",
                 tag: "Kuliner",
                 time: "5 menit",
-                image: "https://images.unsplash.com/photo-1526318898511-5c3f7f5f5c2e?auto=format&fit=crop&w=1200&q=80",
+                image:
+                  "https://images.unsplash.com/photo-1526318898511-5c3f7f5f5c2e?auto=format&fit=crop&w=1200&q=80",
               },
               {
                 title: "10 Kuliner Khas Nusantara yang Wajib Kamu Coba!",
                 tag: "Kuliner",
                 time: "7 menit",
-                image: "https://images.unsplash.com/photo-1523986371872-9d3ba2e2f642?auto=format&fit=crop&w=1200&q=80",
+                image:
+                  "https://images.unsplash.com/photo-1523986371872-9d3ba2e2f642?auto=format&fit=crop&w=1200&q=80",
               },
               {
                 title: "Panduan Lengkap Memulai Usaha Kecil dari Nol",
                 tag: "Bisnis",
                 time: "10 menit",
-                image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=80",
+                image:
+                  "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=80",
               },
               {
                 title: "Kenapa UMKM Harus Go Digital? Ini Manfaatnya!",
                 tag: "Teknologi",
                 time: "15 menit",
-                image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80",
+                image:
+                  "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80",
               },
             ].map((tip, idx) => (
               <motion.div
@@ -1223,9 +1531,13 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
                 <motion.div
                   className="absolute -top-8 -right-8 opacity-15"
                   animate={{ rotate: [0, 14, 0] }}
-                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
                 >
-                  <Sparkles size={44} style={{ color: '#FF8D28' }} />
+                  <Sparkles size={44} style={{ color: "#FF8D28" }} />
                 </motion.div>
 
                 <div className="relative h-36 rounded-2xl overflow-hidden mb-4">
@@ -1239,16 +1551,20 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
                 </div>
                 <div className="flex items-center justify-between gap-4 mb-3 relative z-10">
                   <div className="inline-flex items-center gap-2">
-                    <Clock size={18} style={{ color: '#FF8D28' }} />
-                    <span className="body-3" style={{ color: '#858585', fontWeight: 700 }}>
+                    <Clock size={18} style={{ color: "#FF8D28" }} />
+                    <span
+                      className="body-3"
+                      style={{ color: "#858585", fontWeight: 700 }}
+                    >
                       {tip.time}
                     </span>
                   </div>
                   <div
                     className="px-4 py-2 rounded-full text-xs font-bold"
                     style={{
-                      background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)',
-                      color: '#FFFFFF',
+                      background:
+                        "linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)",
+                      color: "#FFFFFF",
                     }}
                   >
                     {tip.tag}
@@ -1256,14 +1572,14 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
                 </div>
                 <h3
                   className="font-bold text-lg relative z-10 transition-transform duration-300 group-hover:-translate-y-1"
-                  style={{ color: '#2F4858' }}
+                  style={{ color: "#2F4858" }}
                 >
                   {tip.title}
                 </h3>
                 <motion.button
                   onClick={onNavigateToDirectory}
                   className="mt-5 inline-flex items-center gap-2 font-bold"
-                  style={{ color: '#FF8D28' }}
+                  style={{ color: "#FF8D28" }}
                   whileHover={{ x: 3 }}
                   whileTap={{ scale: 0.98 }}
                 >
@@ -1278,7 +1594,9 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
             <motion.button
               onClick={scrollToAuth}
               className="px-10 py-4 rounded-xl font-bold text-white shadow-xl border-0 inline-flex items-center gap-2"
-              style={{ background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)' }}
+              style={{
+                background: "linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)",
+              }}
               whileHover={{ scale: 1.03, y: -2 }}
               whileTap={{ scale: 0.98 }}
               animate={{
@@ -1288,7 +1606,11 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
                   "0 0 0 rgba(255,141,40,0)",
                 ],
               }}
-              transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
+              transition={{
+                duration: 2.2,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
             >
               <Sparkles size={18} />
               Gabung Sekarang
@@ -1299,4 +1621,3 @@ export function BerandaPage({ onRoleSelect, onNavigateToDirectory }: BerandaPage
     </div>
   );
 }
-
