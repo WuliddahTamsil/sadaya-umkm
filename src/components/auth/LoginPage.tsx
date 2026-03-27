@@ -83,7 +83,7 @@ export function LoginPage({ onSwitchToRegister, onClose }: LoginPageProps) {
             <Button
               type="submit"
               className="w-full"
-              style={{ backgroundColor: '#FF8D28', color: '#FFFFFF' }}
+              style={{ backgroundColor: '#F99912', color: '#FFFFFF' }}
               disabled={isLoading}
             >
               {isLoading ? 'Memproses...' : 'Masuk'}
@@ -102,7 +102,7 @@ export function LoginPage({ onSwitchToRegister, onClose }: LoginPageProps) {
               <button
                 onClick={onSwitchToRegister}
                 className="body-3"
-                style={{ color: '#FF8D28', fontWeight: 600 }}
+                style={{ color: '#F99912', fontWeight: 600 }}
               >
                 Daftar di sini
               </button>

@@ -42,7 +42,7 @@ export function FeaturesSection() {
   ];
 
   return (
-    <section id="fitur" className="py-20 lg:py-28 relative" style={{ background: 'linear-gradient(to bottom, #FFFFFF 0%, #FFF4E6 100%)' }}>
+    <section id="fitur" className="py-20 lg:py-28 relative" style={{ background: 'linear-gradient(to bottom, #FFFFFF 0%, #9ACD32 100%)' }}>
       {/* Background Pattern */}
       <div className="absolute inset-0 bg-pattern-leaves opacity-5" />
       

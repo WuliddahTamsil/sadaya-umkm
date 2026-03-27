@@ -41,7 +41,7 @@ export function Footer() {
                 href="https://instagram.com/aslibogor" 
                 target="_blank"
                 className="w-10 h-10 rounded-full flex items-center justify-center transition-all"
-                style={{ background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)' }}
+                style={{ background: 'linear-gradient(135deg, #9370DB 0%, #B4A7D6 100%)' }}
                 whileHover={{ scale: 1.1, rotate: 5 }}
               >
                 <Instagram size={20} style={{ color: '#FFFFFF' }} />
@@ -59,7 +59,7 @@ export function Footer() {
                 href="https://twitter.com/aslibogor" 
                 target="_blank"
                 className="w-10 h-10 rounded-full flex items-center justify-center transition-all"
-                style={{ background: 'linear-gradient(135deg, #FFB84D 0%, #FF8D28 100%)' }}
+                style={{ background: 'linear-gradient(135deg, #9ACD32 0%, #7BA820 100%)' }}
                 whileHover={{ scale: 1.1, rotate: 5 }}
               >
                 <Twitter size={20} style={{ color: '#FFFFFF' }} />
@@ -79,27 +79,27 @@ export function Footer() {
             </h4>
             <ul className="space-y-2">
               <li>
-                <a href="#hero" className="body-3 hover:text-[#FFB84D] transition-colors" style={{ color: '#475569' }}>
+                <a href="#hero" className="body-3 hover:text-[#9370DB] transition-colors" style={{ color: '#475569' }}>
                   Beranda
                 </a>
               </li>
               <li>
-                <a href="#direktori" className="body-3 hover:text-[#FFB84D] transition-colors" style={{ color: '#475569' }}>
+                <a href="#direktori" className="body-3 hover:text-[#9370DB] transition-colors" style={{ color: '#475569' }}>
                   Direktori UMKM
                 </a>
               </li>
               <li>
-                <a href="#auth-section" className="body-3 hover:text-[#FFB84D] transition-colors" style={{ color: '#475569' }}>
+                <a href="#auth-section" className="body-3 hover:text-[#9370DB] transition-colors" style={{ color: '#475569' }}>
                   Masuk / Daftar
                 </a>
               </li>
               <li>
-                <a href="#tentang" className="body-3 hover:text-[#FFB84D] transition-colors" style={{ color: '#475569' }}>
+                <a href="#tentang" className="body-3 hover:text-[#9370DB] transition-colors" style={{ color: '#475569' }}>
                   Tentang Kami
                 </a>
               </li>
               <li>
-                <a href="#keunggulan" className="body-3 hover:text-[#FFB84D] transition-colors" style={{ color: '#475569' }}>
+                <a href="#keunggulan" className="body-3 hover:text-[#9370DB] transition-colors" style={{ color: '#475569' }}>
                   Keunggulan
                 </a>
               </li>
@@ -118,19 +118,19 @@ export function Footer() {
             </h4>
             <ul className="space-y-3">
               <li className="flex items-start gap-3">
-                <MapPin size={20} style={{ color: '#FFB84D' }} className="flex-shrink-0 mt-1" />
+                <MapPin size={20} style={{ color: '#9370DB' }} className="flex-shrink-0 mt-1" />
                 <span className="body-3" style={{ color: '#334155' }}>
                   Jl. Pajajaran No. 123, Bogor, Jawa Barat 16143
                 </span>
               </li>
               <li className="flex items-center gap-3">
-                <Phone size={20} style={{ color: '#FFB84D' }} className="flex-shrink-0" />
+                <Phone size={20} style={{ color: '#9370DB' }} className="flex-shrink-0" />
                 <span className="body-3" style={{ color: '#334155' }}>
                   +62-853-8937-1126
                 </span>
               </li>
               <li className="flex items-center gap-3">
-                <Mail size={20} style={{ color: '#FFB84D' }} className="flex-shrink-0" />
+                <Mail size={20} style={{ color: '#9370DB' }} className="flex-shrink-0" />
                 <span className="body-3" style={{ color: '#334155' }}>
                   info@aslibogor.id
                 </span>
@@ -152,7 +152,7 @@ export function Footer() {
             © 2025 SADAYA. Bikin Keren UMKM Lokal. All rights reserved.
           </p>
           <p className="body-3 text-center mt-2" style={{ color: '#475569' }}>
-            Follow us: <a href="https://instagram.com/aslibogor" target="_blank" className="hover:text-[#FFB84D] transition-colors">@AsliBogor</a>
+            Follow us: <a href="https://instagram.com/aslibogor" target="_blank" className="hover:text-[#9370DB] transition-colors">@AsliBogor</a>
           </p>
         </motion.div>
       </div>

@@ -25,11 +25,11 @@ export function FloatingShapes({ variant = 'default' }: { variant?: 'default' | 
   const getColors = () => {
     switch (variant) {
       case 'green':
-        return ['#4CAF50', '#2E7D32', '#81C784', '#66BB6A'];
+        return ['#9ACD32', '#7DA520', '#B8E63D', '#A5D820'];
       case 'orange':
-        return ['#FF8D28', '#FFB84D', '#FFA726', '#FF9800'];
+        return ['#F99912', '#9ACD32', '#9370DB', '#9ACD32'];
       default:
-        return ['#FF8D28', '#4CAF50', '#2196F3', '#FFB84D'];
+        return ['#F99912', '#9ACD32', '#9370DB', '#9ACD32'];
     }
   };
 

@@ -65,13 +65,13 @@ export function WishlistPage() {
               className="w-20 h-20 rounded-full mx-auto mb-4 flex items-center justify-center"
               style={{ backgroundColor: '#FFF4E6' }}
             >
-              <Heart size={32} style={{ color: '#FF8D28' }} />
+              <Heart size={32} style={{ color: '#F99912' }} />
             </div>
             <h3 style={{ color: '#2F4858' }}>Belum Ada Produk Favorit</h3>
             <p className="body-3 mt-2 mb-6" style={{ color: '#858585' }}>
               Belum ada produk favorit. Tambahkan produk ke favorit dengan menekan tombol "Tambah ke Favorit" pada produk yang Anda sukai.
             </p>
-            <Button style={{ backgroundColor: '#FF8D28', color: '#FFFFFF' }}>
+            <Button style={{ backgroundColor: '#F99912', color: '#FFFFFF' }}>
               Mulai Belanja
             </Button>
           </CardContent>
@@ -99,8 +99,8 @@ export function WishlistPage() {
                   >
                     <Heart 
                       size={20} 
-                      style={{ color: '#FF8D28' }} 
-                      fill="#FF8D28"
+                      style={{ color: '#F99912' }} 
+                      fill="#F99912"
                       className="group-hover:fill-red-500 group-hover:stroke-red-500 transition-colors"
                     />
                   </button>
@@ -128,14 +128,14 @@ export function WishlistPage() {
                   </p>
                   <div className="flex items-center gap-2 mb-3">
                     <div className="flex items-center gap-1">
-                      <Star size={16} style={{ color: '#FFB800', fill: '#FFB800' }} />
+                      <Star size={16} style={{ color: '#F99912', fill: '#F99912' }} />
                       <span className="body-3" style={{ color: '#2F4858' }}>{item.rating}</span>
                     </div>
                     <span className="body-3" style={{ color: '#CCCCCC' }}>•</span>
                     <span className="body-3" style={{ color: '#858585' }}>{item.sold} terjual</span>
                   </div>
                   <div className="flex items-end gap-2 mb-4">
-                    <p style={{ color: '#FF8D28', fontWeight: 700, fontSize: '18px' }}>
+                    <p style={{ color: '#F99912', fontWeight: 700, fontSize: '18px' }}>
                       Rp {item.price.toLocaleString('id-ID')}
                     </p>
                     {item.originalPrice && (
@@ -149,7 +149,7 @@ export function WishlistPage() {
                   </div>
                   <Button
                     className="w-full"
-                    style={{ backgroundColor: '#FF8D28', color: '#FFFFFF' }}
+                    style={{ backgroundColor: '#F99912', color: '#FFFFFF' }}
                     onClick={() => handleAddToCart(item.name)}
                   >
                     <ShoppingCart size={16} className="mr-2" />

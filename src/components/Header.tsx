@@ -60,7 +60,7 @@ export function Header() {
             <Button variant="outline" style={{ borderColor: '#2F4858', color: '#2F4858' }} className="body-3">
               Login
             </Button>
-            <Button style={{ backgroundColor: '#FF8D28', color: '#FFFFFF' }} className="body-3">
+            <Button style={{ backgroundColor: '#9370DB', color: '#FFFFFF' }} className="body-3">
               Daftar
             </Button>
           </div>
@@ -99,7 +99,7 @@ export function Header() {
               <Button variant="outline" style={{ borderColor: '#2F4858', color: '#2F4858' }} className="body-3">
                 Login
               </Button>
-              <Button style={{ backgroundColor: '#FF8D28', color: '#FFFFFF' }} className="body-3">
+              <Button style={{ backgroundColor: '#9370DB', color: '#FFFFFF' }} className="body-3">
                 Daftar
               </Button>
             </div>

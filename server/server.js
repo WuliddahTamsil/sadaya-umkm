@@ -15,7 +15,6 @@ import commentRoutes from './routes/comments.js';
 import setupRoutes from './routes/setup.js';
 import adminRoutes from './routes/admin.js';
 import chatRoutes from './routes/chat.js';
-import workshopRoutes from './routes/workshops.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -29,17 +28,17 @@ const corsOptions = {
   origin: function (origin, callback) {
     // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin) return callback(null, true);
-    
+
     // Allow localhost for development
     if (origin.includes('localhost') || origin.includes('127.0.0.1')) {
       return callback(null, true);
     }
-    
+
     // Allow Vercel domains
     if (origin.includes('vercel.app') || origin.includes('netlify.app')) {
       return callback(null, true);
     }
-    
+
     // Allow all origins in development, restrict in production if needed
     callback(null, true);
   },

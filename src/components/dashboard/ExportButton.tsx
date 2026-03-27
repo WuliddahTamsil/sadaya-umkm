@@ -68,11 +68,11 @@ export function ExportButton({ filename = 'laporan', variant = 'outline' }: Expo
           Export PDF
         </DropdownMenuItem>
         <DropdownMenuItem onClick={handleExportExcel}>
-          <Table size={16} className="mr-2" style={{ color: '#4CAF50' }} />
+          <Table size={16} className="mr-2" style={{ color: '#9ACD32' }} />
           Export Excel
         </DropdownMenuItem>
         <DropdownMenuItem onClick={handleExportCSV}>
-          <FileText size={16} className="mr-2" style={{ color: '#2196F3' }} />
+          <FileText size={16} className="mr-2" style={{ color: '#9370DB' }} />
           Export CSV
         </DropdownMenuItem>
       </DropdownMenuContent>

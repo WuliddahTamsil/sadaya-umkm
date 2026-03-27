@@ -47,10 +47,10 @@ export function ManajemenPesanan() {
 
   const getStatusInfo = (status: OrderStatus) => {
     const statusConfig: Record<OrderStatus, { label: string; color: string; textColor: string }> = {
-      preparing: { label: "Sedang Disiapkan", color: "#B3E5FC", textColor: "#1976D2" },
-      ready: { label: "Menunggu Driver", color: "#FDE08E", textColor: "#F57C00" },
-      pickup: { label: "Sedang Diantar", color: "#C8E6C9", textColor: "#2E7D32" },
-      delivered: { label: "Selesai", color: "#C8E6C9", textColor: "#2E7D32" },
+      preparing: { label: "Sedang Disiapkan", color: "#B3E5FC", textColor: "#9370DB" },
+      ready: { label: "Menunggu Driver", color: "#FDE08E", textColor: "#F99912" },
+      pickup: { label: "Sedang Diantar", color: "#C8E6C9", textColor: "#9ACD32" },
+      delivered: { label: "Selesai", color: "#C8E6C9", textColor: "#9ACD32" },
     };
     return statusConfig[status];
   };
@@ -137,12 +137,12 @@ export function ManajemenPesanan() {
                   </Badge>
                 )}
               </div>
-              <Button variant="ghost" size="sm" style={{ color: "#2196F3" }}>
+              <Button variant="ghost" size="sm" style={{ color: "#9370DB" }}>
                 <Phone size={16} />
               </Button>
             </div>
             <div className="flex items-start gap-3">
-              <MapPin size={20} style={{ color: "#FF8D28" }} />
+              <MapPin size={20} style={{ color: "#F99912" }} />
               <p className="body-3" style={{ color: "#858585" }}>
                 {order.deliveryAddress}
               </p>
@@ -168,14 +168,14 @@ export function ManajemenPesanan() {
             </div>
             <div className="flex justify-between mt-3 pt-3 border-t">
               <p style={{ color: "#2F4858", fontWeight: 600 }}>Total</p>
-              <h4 style={{ color: "#FF8D28" }}>Rp {order.total.toLocaleString("id-ID")}</h4>
+              <h4 style={{ color: "#F99912" }}>Rp {order.total.toLocaleString("id-ID")}</h4>
             </div>
           </div>
 
           {/* Driver Info */}
           {order.driverName && (
             <div className="p-3 rounded-lg mb-4" style={{ backgroundColor: "#E3F2FD" }}>
-              <p className="body-3" style={{ color: "#1976D2", fontWeight: 600 }}>
+              <p className="body-3" style={{ color: "#9370DB", fontWeight: 600 }}>
                 Driver: {order.driverName}
               </p>
             </div>
@@ -186,7 +186,7 @@ export function ManajemenPesanan() {
             {order.status === "preparing" && (
               <Button
                 className="flex-1"
-                style={{ backgroundColor: "#4CAF50", color: "#FFFFFF" }}
+                style={{ backgroundColor: "#9ACD32", color: "#FFFFFF" }}
                 onClick={() => handleStatusChange(order.id, "ready")}
               >
                 <CheckCircle size={16} className="mr-2" />
@@ -194,7 +194,7 @@ export function ManajemenPesanan() {
               </Button>
             )}
             {order.status === "ready" && (
-              <Button className="flex-1" style={{ backgroundColor: "#FF8D28", color: "#FFFFFF" }} disabled>
+              <Button className="flex-1" style={{ backgroundColor: "#F99912", color: "#FFFFFF" }} disabled>
                 Menunggu Driver
               </Button>
             )}

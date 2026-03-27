@@ -47,12 +47,12 @@ export function MountainSilhouette() {
             <stop offset="100%" style={{ stopColor: '#2F4858', stopOpacity: 0.3 }} />
           </linearGradient>
           <linearGradient id="mountain-gradient-2" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" style={{ stopColor: '#4CAF50', stopOpacity: 1 }} />
-            <stop offset="100%" style={{ stopColor: '#4CAF50', stopOpacity: 0.3 }} />
+            <stop offset="0%" style={{ stopColor: '#9ACD32', stopOpacity: 1 }} />
+            <stop offset="100%" style={{ stopColor: '#9ACD32', stopOpacity: 0.3 }} />
           </linearGradient>
           <linearGradient id="mountain-gradient-3" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" style={{ stopColor: '#2E7D32', stopOpacity: 1 }} />
-            <stop offset="100%" style={{ stopColor: '#2E7D32', stopOpacity: 0.3 }} />
+            <stop offset="0%" style={{ stopColor: '#9ACD32', stopOpacity: 1 }} />
+            <stop offset="100%" style={{ stopColor: '#9ACD32', stopOpacity: 0.3 }} />
           </linearGradient>
         </defs>
       </motion.svg>

@@ -17,8 +17,8 @@ export function RoleSelectionPage({ onSelectRole, onClose }: RoleSelectionPagePr
       subtitle: 'Pembeli / Pelanggan',
       description: 'Temukan dan beli produk UMKM lokal terbaik',
       icon: User,
-      gradient: 'from-yellow-300 to-orange-400',
-      color: '#FFB84D'
+      gradient: 'from-[#F99912] to-[#9ACD32]',
+      color: '#F99912'
     },
     {
       id: 'umkm' as const,
@@ -26,8 +26,8 @@ export function RoleSelectionPage({ onSelectRole, onClose }: RoleSelectionPagePr
       subtitle: 'Penjual / Pelaku Usaha',
       description: 'Daftarkan usaha dan jual produk Anda',
       icon: Store,
-      gradient: 'from-orange-400 to-red-500',
-      color: '#FF8D28'
+      gradient: 'from-[#9370DB] to-[#F99912]',
+      color: '#9370DB'
     },
     {
       id: 'driver' as const,
@@ -35,18 +35,21 @@ export function RoleSelectionPage({ onSelectRole, onClose }: RoleSelectionPagePr
       subtitle: 'Mitra Pengiriman',
       description: 'Bergabung sebagai mitra pengiriman kami',
       icon: Truck,
-      gradient: 'from-green-400 to-green-600',
-      color: '#4CAF50'
+      gradient: 'from-[#9ACD32] to-[#9370DB]',
+      color: '#9ACD32'
     }
   ];
 
   return (
     <div 
-      className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden"
-      style={{
-        background: 'linear-gradient(135deg, #FFF4E6 0%, #FFB84D 50%, #FF8D28 100%)',
-      }}
+      className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-slate-50"
     >
+      {/* Dynamic Bright Background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-[20%] -left-[10%] w-[50%] h-[50%] rounded-full bg-gradient-to-br from-[#F99912] to-transparent opacity-10 blur-3xl animate-pulse" />
+        <div className="absolute top-[20%] -right-[10%] w-[40%] h-[60%] rounded-full bg-gradient-to-bl from-[#9ACD32] to-transparent opacity-10 blur-3xl" style={{ animation: 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite' }} />
+        <div className="absolute -bottom-[10%] left-[20%] w-[60%] h-[40%] rounded-full bg-gradient-to-tr from-[#9370DB] to-transparent opacity-10 blur-3xl" style={{ animation: 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite' }} />
+      </div>
       {/* Background Pattern */}
       <div className="absolute inset-0 bg-pattern-leaves opacity-30" />
 
@@ -63,7 +66,6 @@ export function RoleSelectionPage({ onSelectRole, onClose }: RoleSelectionPagePr
           <span>Kembali ke Landing Page</span>
         </motion.button>
 
-        {/* Header */}
         <motion.div 
           className="text-center mb-12"
           initial={{ opacity: 0, y: -20 }}
@@ -76,9 +78,9 @@ export function RoleSelectionPage({ onSelectRole, onClose }: RoleSelectionPagePr
               className="h-14 w-auto drop-shadow-lg"
             />
           </div>
-          <h1 style={{ color: '#2F4858' }}>Pilih Role Anda</h1>
+          <h1 className="text-3xl font-bold" style={{ color: '#0f172a' }}>Pilih Peran Anda</h1>
           <p className="mt-4" style={{ color: '#4A4A4A', fontSize: '18px' }}>
-            Silakan pilih kategori yang sesuai dengan kebutuhan Anda
+            Silakan pilih kategori yang sesuai dengan kebutuhan Anda di ekosistem SADAYA
           </p>
         </motion.div>
 
@@ -98,7 +100,8 @@ export function RoleSelectionPage({ onSelectRole, onClose }: RoleSelectionPagePr
               >
                 <CardContent className="p-8 text-center space-y-4">
                   <motion.div
-                    className={`mx-auto w-20 h-20 rounded-full bg-gradient-to-br ${role.gradient} flex items-center justify-center`}
+                    className="mx-auto w-20 h-20 rounded-full flex items-center justify-center shadow-lg"
+                    style={{ background: `linear-gradient(135deg, ${role.color} 0%, ${role.color}aa 100%)` }}
                     whileHover={{ scale: 1.1, rotate: 5 }}
                     transition={{ type: "spring", stiffness: 300 }}
                   >

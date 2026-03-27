@@ -515,15 +515,15 @@ export function ManajemenKonten({ isReadOnly = false }: ManajemenKontenProps) {
   });
 
   const stats = [
-    { label: 'Total Konten', value: 156, icon: FileText, color: '#2196F3' },
-    { label: 'Views Bulan Ini', value: 45789, icon: Eye, color: '#FF8D28' },
+    { label: 'Total Konten', value: 156, icon: FileText, color: '#9370DB' },
+    { label: 'Views Bulan Ini', value: 45789, icon: Eye, color: '#F99912' },
     { label: 'Total Likes', value: 3421, icon: Heart, color: '#FF6B6B' },
-    { label: 'Engagement Rate', value: '24.5%', icon: TrendingUp, color: '#4CAF50' }
+    { label: 'Engagement Rate', value: '24.5%', icon: TrendingUp, color: '#9ACD32' }
   ];
 
   const getStatusBadge = (status: string) => {
     const styles = {
-      published: { bg: '#4CAF50', text: 'Published' },
+      published: { bg: '#9ACD32', text: 'Published' },
       draft: { bg: '#858585', text: 'Draft' },
       scheduled: { bg: '#FF9800', text: 'Scheduled' }
     };
@@ -542,9 +542,9 @@ export function ManajemenKonten({ isReadOnly = false }: ManajemenKontenProps) {
       promotion: <Tag size={12} />
     };
     const colors = {
-      article: '#2196F3',
-      announcement: '#FF8D28',
-      promotion: '#4CAF50'
+      article: '#9370DB',
+      announcement: '#F99912',
+      promotion: '#9ACD32'
     };
     return (
       <div className="flex items-center gap-1">
@@ -577,7 +577,7 @@ export function ManajemenKonten({ isReadOnly = false }: ManajemenKontenProps) {
         </div>
         {!isReadOnly && (
           <Button 
-            style={{ backgroundColor: '#FF8D28' }}
+            style={{ backgroundColor: '#F99912' }}
             onClick={handleCreateNew}
           >
             <Plus size={16} className="mr-2" />
@@ -669,7 +669,7 @@ export function ManajemenKonten({ isReadOnly = false }: ManajemenKontenProps) {
       {/* Content Grid */}
       {isLoading ? (
         <div className="flex items-center justify-center h-64">
-          <Loader2 className="animate-spin" size={32} style={{ color: '#FF8D28' }} />
+          <Loader2 className="animate-spin" size={32} style={{ color: '#F99912' }} />
         </div>
       ) : (
         <motion.div
@@ -797,7 +797,7 @@ export function ManajemenKonten({ isReadOnly = false }: ManajemenKontenProps) {
                         </span>
                       </div>
                       <div className="flex items-center gap-1">
-                        <MessageSquare size={14} style={{ color: '#2196F3' }} />
+                        <MessageSquare size={14} style={{ color: '#9370DB' }} />
                         <span className="body-3" style={{ color: '#858585', fontSize: '11px' }}>
                           {content.comments}
                         </span>
@@ -937,7 +937,7 @@ export function ManajemenKonten({ isReadOnly = false }: ManajemenKontenProps) {
               </Button>
               <Button
                 onClick={handleSaveCreate}
-                style={{ backgroundColor: '#FF8D28', color: '#FFFFFF' }}
+                style={{ backgroundColor: '#F99912', color: '#FFFFFF' }}
               >
                 Simpan
               </Button>
@@ -1041,7 +1041,7 @@ export function ManajemenKonten({ isReadOnly = false }: ManajemenKontenProps) {
               </Button>
               <Button
                 onClick={handleSaveEdit}
-                style={{ backgroundColor: '#FF8D28', color: '#FFFFFF' }}
+                style={{ backgroundColor: '#F99912', color: '#FFFFFF' }}
               >
                 Simpan Perubahan
               </Button>
@@ -1181,7 +1181,7 @@ export function ManajemenKonten({ isReadOnly = false }: ManajemenKontenProps) {
                                       target="_blank"
                                       rel="noopener noreferrer"
                                       style={{ 
-                                        color: '#2196F3',
+                                        color: '#9370DB',
                                         textDecoration: 'underline',
                                         wordBreak: 'break-all'
                                       }}
@@ -1223,7 +1223,7 @@ export function ManajemenKonten({ isReadOnly = false }: ManajemenKontenProps) {
                     <Button
                       onClick={handleAddComment}
                       disabled={!newComment.trim()}
-                      style={{ backgroundColor: '#FF8D28', color: '#FFFFFF' }}
+                      style={{ backgroundColor: '#F99912', color: '#FFFFFF' }}
                     >
                       <Send size={16} className="mr-2" />
                       Kirim Komentar
@@ -1234,7 +1234,7 @@ export function ManajemenKonten({ isReadOnly = false }: ManajemenKontenProps) {
                 {/* Comments List */}
                 {isLoadingComments ? (
                   <div className="flex items-center justify-center py-8">
-                    <Loader2 className="animate-spin" size={24} style={{ color: '#FF8D28' }} />
+                    <Loader2 className="animate-spin" size={24} style={{ color: '#F99912' }} />
                   </div>
                 ) : comments.length === 0 ? (
                   <div className="text-center py-8">
@@ -1258,9 +1258,9 @@ export function ManajemenKonten({ isReadOnly = false }: ManajemenKontenProps) {
                           <div className="flex items-center gap-3">
                             <div 
                               className="w-10 h-10 rounded-full flex items-center justify-center"
-                              style={{ backgroundColor: '#FF8D28' + '20' }}
+                              style={{ backgroundColor: '#F99912' + '20' }}
                             >
-                              <User size={20} style={{ color: '#FF8D28' }} />
+                              <User size={20} style={{ color: '#F99912' }} />
                             </div>
                             <div>
                               <p className="font-semibold text-sm" style={{ color: '#2F4858' }}>

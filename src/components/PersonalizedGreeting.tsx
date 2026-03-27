@@ -7,10 +7,10 @@ export function PersonalizedGreeting() {
   
   const getGreeting = () => {
     const hour = new Date().getHours();
-    if (hour < 12) return { text: 'Selamat pagi', icon: Sun, color: '#FFB84D' };
-    if (hour < 15) return { text: 'Selamat siang', icon: Sun, color: '#FF8D28' };
-    if (hour < 18) return { text: 'Selamat sore', icon: Cloud, color: '#FF8D28' };
-    return { text: 'Selamat malam', icon: Moon, color: '#2196F3' };
+    if (hour < 12) return { text: 'Selamat pagi', icon: Sun, color: '#F99912' };
+    if (hour < 15) return { text: 'Selamat siang', icon: Sun, color: '#F99912' };
+    if (hour < 18) return { text: 'Selamat sore', icon: Cloud, color: '#F99912' };
+    return { text: 'Selamat malam', icon: Moon, color: '#9370DB' };
   };
 
   const getRoleMessage = () => {

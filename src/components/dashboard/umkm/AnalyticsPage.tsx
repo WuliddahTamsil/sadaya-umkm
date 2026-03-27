@@ -101,7 +101,7 @@ export function UMKMAnalyticsPage() {
       value: totalRevenue,
       change: '+18.5%',
       icon: DollarSign, 
-      color: '#4CAF50',
+      color: '#9ACD32',
       trend: 'up'
     },
     { 
@@ -109,7 +109,7 @@ export function UMKMAnalyticsPage() {
       value: totalOrders,
       change: '+12.3%',
       icon: ShoppingBag, 
-      color: '#2196F3',
+      color: '#9370DB',
       trend: 'up'
     },
     { 
@@ -117,7 +117,7 @@ export function UMKMAnalyticsPage() {
       value: totalProductsSold,
       change: '+8.7%',
       icon: Package, 
-      color: '#FF8D28',
+      color: '#F99912',
       trend: 'up'
     },
     { 
@@ -125,7 +125,7 @@ export function UMKMAnalyticsPage() {
       value: uniqueCustomers,
       change: '+15.2%',
       icon: Users, 
-      color: '#9C27B0',
+      color: '#9370DB',
       trend: 'up'
     },
     { 
@@ -133,7 +133,7 @@ export function UMKMAnalyticsPage() {
       value: 4.8,
       change: '+0.2',
       icon: Star, 
-      color: '#FFB800',
+      color: '#F99912',
       trend: 'up'
     },
     { 
@@ -141,7 +141,7 @@ export function UMKMAnalyticsPage() {
       value: 24.5,
       change: '+3.1%',
       icon: TrendingUp, 
-      color: '#4CAF50',
+      color: '#9ACD32',
       trend: 'up'
     }
   ];
@@ -196,7 +196,7 @@ export function UMKMAnalyticsPage() {
                       className="body-3 px-2 py-1 rounded-full"
                       style={{
                         backgroundColor: '#C8E6C9',
-                        color: '#2E7D32',
+                        color: '#9ACD32',
                         fontSize: '12px'
                       }}
                     >
@@ -256,8 +256,8 @@ export function UMKMAnalyticsPage() {
                     <div
                       className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
                       style={{
-                        backgroundColor: index < 3 ? '#FFB80020' : '#E0E0E0',
-                        color: index < 3 ? '#FFB800' : '#858585',
+                        backgroundColor: index < 3 ? '#F9991220' : '#E0E0E0',
+                        color: index < 3 ? '#F99912' : '#858585',
                         fontWeight: 700
                       }}
                     >
@@ -275,7 +275,7 @@ export function UMKMAnalyticsPage() {
                       className="body-3 px-2 py-1 rounded"
                       style={{
                         backgroundColor: '#C8E6C9',
-                        color: '#2E7D32',
+                        color: '#9ACD32',
                         fontSize: '11px'
                       }}
                     >
@@ -307,8 +307,8 @@ export function UMKMAnalyticsPage() {
                   <div
                     className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0"
                     style={{
-                      backgroundColor: '#FF8D2820',
-                      color: '#FF8D28',
+                      backgroundColor: '#F9991220',
+                      color: '#F99912',
                       fontWeight: 700
                     }}
                   >

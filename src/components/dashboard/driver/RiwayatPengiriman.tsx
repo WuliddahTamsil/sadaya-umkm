@@ -105,9 +105,9 @@ export function RiwayatPengiriman() {
             <div className="flex items-center gap-4">
               <div 
                 className="w-12 h-12 rounded-full flex items-center justify-center"
-                style={{ backgroundColor: '#4CAF5020' }}
+                style={{ backgroundColor: '#9ACD3220' }}
               >
-                <Package size={24} style={{ color: '#4CAF50' }} />
+                <Package size={24} style={{ color: '#9ACD32' }} />
               </div>
               <div>
                 <p className="body-3" style={{ color: '#858585' }}>Total Pengiriman</p>
@@ -122,13 +122,13 @@ export function RiwayatPengiriman() {
             <div className="flex items-center gap-4">
               <div 
                 className="w-12 h-12 rounded-full flex items-center justify-center"
-                style={{ backgroundColor: '#FF8D2820' }}
+                style={{ backgroundColor: '#F9991220' }}
               >
-                <DollarSign size={24} style={{ color: '#FF8D28' }} />
+                <DollarSign size={24} style={{ color: '#F99912' }} />
               </div>
               <div>
                 <p className="body-3" style={{ color: '#858585' }}>Total Penghasilan</p>
-                <h3 style={{ color: '#FF8D28' }}>
+                <h3 style={{ color: '#F99912' }}>
                   Rp {totalEarnings.toLocaleString('id-ID')}
                 </h3>
               </div>
@@ -141,13 +141,13 @@ export function RiwayatPengiriman() {
             <div className="flex items-center gap-4">
               <div 
                 className="w-12 h-12 rounded-full flex items-center justify-center"
-                style={{ backgroundColor: '#FFB80020' }}
+                style={{ backgroundColor: '#F9991220' }}
               >
-                <Star size={24} style={{ color: '#FFB800' }} />
+                <Star size={24} style={{ color: '#F99912' }} />
               </div>
               <div>
                 <p className="body-3" style={{ color: '#858585' }}>Rating Rata-rata</p>
-                <h3 style={{ color: '#FFB800' }}>
+                <h3 style={{ color: '#F99912' }}>
                   {averageRating.toFixed(1)} ⭐
                 </h3>
               </div>
@@ -195,7 +195,7 @@ export function RiwayatPengiriman() {
                           <Badge
                             style={{
                               backgroundColor: delivery.status === 'completed' ? '#C8E6C9' : '#FFCDD2',
-                              color: delivery.status === 'completed' ? '#2E7D32' : '#C62828'
+                              color: delivery.status === 'completed' ? '#9ACD32' : '#C62828'
                             }}
                           >
                             {delivery.status === 'completed' ? '✓ Selesai' : '✗ Dibatalkan'}
@@ -207,9 +207,9 @@ export function RiwayatPengiriman() {
                           <div className="flex items-start gap-3">
                             <div 
                               className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
-                              style={{ backgroundColor: '#4CAF5020' }}
+                              style={{ backgroundColor: '#9ACD3220' }}
                             >
-                              <MapPin size={16} style={{ color: '#4CAF50' }} />
+                              <MapPin size={16} style={{ color: '#9ACD32' }} />
                             </div>
                             <div>
                               <p className="body-3" style={{ color: '#858585', fontSize: '12px' }}>
@@ -258,14 +258,14 @@ export function RiwayatPengiriman() {
                             </div>
                             {delivery.rating && (
                               <div className="flex items-center gap-2">
-                                <Star size={16} style={{ color: '#FFB800', fill: '#FFB800' }} />
-                                <span className="body-3" style={{ color: '#FFB800', fontWeight: 600 }}>
+                                <Star size={16} style={{ color: '#F99912', fill: '#F99912' }} />
+                                <span className="body-3" style={{ color: '#F99912', fontWeight: 600 }}>
                                   {delivery.rating}.0
                                 </span>
                               </div>
                             )}
                           </div>
-                          <h4 style={{ color: '#4CAF50' }}>
+                          <h4 style={{ color: '#9ACD32' }}>
                             Rp {delivery.fee.toLocaleString('id-ID')}
                           </h4>
                         </div>

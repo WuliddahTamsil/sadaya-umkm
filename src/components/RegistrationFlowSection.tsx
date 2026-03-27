@@ -72,7 +72,7 @@ export function RegistrationFlowSection() {
               variant={activeTab === "umkm" ? "default" : "ghost"}
               style={
                 activeTab === "umkm"
-                  ? { backgroundColor: '#FF8D28', color: '#FFFFFF' }
+                  ? { backgroundColor: '#F99912', color: '#FFFFFF' }
                   : { color: '#2F4858' }
               }
               className="body-3 rounded-r-none"
@@ -84,7 +84,7 @@ export function RegistrationFlowSection() {
               variant={activeTab === "driver" ? "default" : "ghost"}
               style={
                 activeTab === "driver"
-                  ? { backgroundColor: '#FF8D28', color: '#FFFFFF' }
+                  ? { backgroundColor: '#F99912', color: '#FFFFFF' }
                   : { color: '#2F4858' }
               }
               className="body-3 rounded-l-none"
@@ -116,7 +116,7 @@ export function RegistrationFlowSection() {
                     className="w-12 h-12 rounded-full flex items-center justify-center mb-4"
                     style={{ backgroundColor: '#FDE08E' }}
                   >
-                    <Icon size={24} style={{ color: '#FF8D28' }} />
+                    <Icon size={24} style={{ color: '#F99912' }} />
                   </div>
                   <h4 style={{ color: '#2F4858' }} className="mb-3">
                     {step.title}
@@ -132,7 +132,7 @@ export function RegistrationFlowSection() {
           {/* CTA */}
           <div className="text-center mt-12">
             <Button 
-              style={{ backgroundColor: '#FF8D28', color: '#FFFFFF' }}
+              style={{ backgroundColor: '#F99912', color: '#FFFFFF' }}
               className="px-8 py-6"
             >
               {activeTab === "umkm" ? "Daftar Sebagai UMKM" : "Daftar Sebagai Driver"}

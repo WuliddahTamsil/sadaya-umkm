@@ -150,8 +150,8 @@ export function OrderAktif() {
 
   const getStatusBadge = (status: "ready" | "pickup") => {
     const styles = {
-      ready: { bg: "#FDE08E", color: "#F57C00", label: "Order Baru" },
-      pickup: { bg: "#B3E5FC", color: "#1976D2", label: "Sedang Diantar" },
+      ready: { bg: "#FDE08E", color: "#F99912", label: "Order Baru" },
+      pickup: { bg: "#B3E5FC", color: "#9370DB", label: "Sedang Diantar" },
     } as const;
     const style = styles[status];
     return (
@@ -168,19 +168,19 @@ export function OrderAktif() {
         <Card>
           <CardContent className="p-4">
             <p className="body-3" style={{ color: "#858585" }}>Order Baru</p>
-            <h3 style={{ color: "#FF8D28" }}>{newOrders.length}</h3>
+            <h3 style={{ color: "#F99912" }}>{newOrders.length}</h3>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-4">
             <p className="body-3" style={{ color: "#858585" }}>Dalam Proses</p>
-            <h3 style={{ color: "#2196F3" }}>{inProgressOrders.length}</h3>
+            <h3 style={{ color: "#9370DB" }}>{inProgressOrders.length}</h3>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-4">
             <p className="body-3" style={{ color: "#858585" }}>Estimasi Penghasilan</p>
-            <h3 style={{ color: "#4CAF50" }}>
+            <h3 style={{ color: "#9ACD32" }}>
               Rp {totalEarnings.toLocaleString("id-ID")}
             </h3>
           </CardContent>
@@ -208,7 +208,7 @@ export function OrderAktif() {
                 {/* Pickup Location */}
                 <div className="p-4 rounded-lg" style={{ backgroundColor: "#F5F5F5" }}>
                   <div className="flex items-start gap-3 mb-3">
-                    <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{ backgroundColor: "#FF8D28" }}>
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{ backgroundColor: "#F99912" }}>
                       <Package size={16} style={{ color: "#FFFFFF" }} />
                     </div>
                     <div className="flex-1">
@@ -230,7 +230,7 @@ export function OrderAktif() {
                 {/* Delivery Location */}
                 <div className="p-4 rounded-lg" style={{ backgroundColor: "#F5F5F5" }}>
                   <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{ backgroundColor: "#4CAF50" }}>
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center" style={{ backgroundColor: "#9ACD32" }}>
                       <MapPin size={16} style={{ color: "#FFFFFF" }} />
                     </div>
                     <div className="flex-1">
@@ -243,7 +243,7 @@ export function OrderAktif() {
                     variant="ghost"
                     size="sm"
                     className="mt-2 w-full"
-                    style={{ color: "#2196F3" }}
+                    style={{ color: "#9370DB" }}
                   >
                     <Phone size={14} className="mr-1" />
                     Hubungi Pelanggan
@@ -255,14 +255,14 @@ export function OrderAktif() {
               <div className="flex items-center justify-between pt-4 border-t" style={{ borderColor: "#E0E0E0" }}>
                 <div>
                   <p className="body-3" style={{ color: "#858585" }}>Upah Pengantaran</p>
-                  <h4 style={{ color: "#4CAF50" }}>
+                  <h4 style={{ color: "#9ACD32" }}>
                     Rp {order.deliveryFee.toLocaleString("id-ID")}
                   </h4>
                 </div>
                 <div className="flex gap-2">
                   {order.status === "ready" && (
                     <Button
-                      style={{ backgroundColor: "#FF8D28", color: "#FFFFFF" }}
+                      style={{ backgroundColor: "#F99912", color: "#FFFFFF" }}
                       onClick={() => handleAcceptOrder(order.id)}
                     >
                       Terima Order
@@ -270,7 +270,7 @@ export function OrderAktif() {
                   )}
                   {order.status === "pickup" && (
                     <Button
-                      style={{ backgroundColor: "#4CAF50", color: "#FFFFFF" }}
+                      style={{ backgroundColor: "#9ACD32", color: "#FFFFFF" }}
                       onClick={() => handleCompleteOrder(order.id)}
                     >
                       Selesaikan Pengantaran

@@ -81,14 +81,14 @@ export function RegisterPage({ onSwitchToLogin, onClose }: RegisterPageProps) {
                       onClick={() => setSelectedRole(role.value)}
                       className={`p-4 rounded-lg border-2 transition-all ${
                         selectedRole === role.value
-                          ? 'border-[#FF8D28] bg-[#FDE08E]'
+                          ? 'border-[#9370DB] bg-[#E8DAEF]'
                           : 'border-gray-200 hover:border-gray-300'
                       }`}
                     >
                       <Icon 
                         size={24} 
                         style={{ 
-                          color: selectedRole === role.value ? '#FF8D28' : '#858585',
+                          color: selectedRole === role.value ? '#9370DB' : '#858585',
                           margin: '0 auto'
                         }} 
                       />
@@ -156,7 +156,7 @@ export function RegisterPage({ onSwitchToLogin, onClose }: RegisterPageProps) {
             <Button
               type="submit"
               className="w-full"
-              style={{ backgroundColor: '#FF8D28', color: '#FFFFFF' }}
+              style={{ backgroundColor: '#9370DB', color: '#FFFFFF' }}
               disabled={isLoading}
             >
               {isLoading ? 'Memproses...' : 'Daftar Sekarang'}
@@ -169,7 +169,7 @@ export function RegisterPage({ onSwitchToLogin, onClose }: RegisterPageProps) {
               <button
                 onClick={onSwitchToLogin}
                 className="body-3"
-                style={{ color: '#FF8D28', fontWeight: 600 }}
+                style={{ color: '#9ACD32', fontWeight: 600 }}
               >
                 Masuk di sini
               </button>

@@ -89,11 +89,11 @@ export function LandingNavbar({
                   onClick={() => handleNavClick(item.id)}
                   className="relative px-6 py-2 rounded-full body-3 transition-all whitespace-nowrap"
                   style={{
-                    color: currentPage === item.id ? "#FF8D28" : "#2F4858",
+                    color: currentPage === item.id ? "#9370DB" : "#2F4858",
                     fontWeight: currentPage === item.id ? 600 : 500,
                   }}
                   whileHover={{
-                    color: "#FF8D28",
+                    color: "#9370DB",
                     scale: 1.05,
                   }}
                   whileTap={{ scale: 0.95 }}
@@ -101,14 +101,14 @@ export function LandingNavbar({
                   {item.label}
                   {currentPage === item.id ? (
                     <motion.div
-                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#FF8D28] to-[#FFB84D] rounded-full"
+                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#9370DB] to-[#9ACD32] rounded-full"
                       initial={{ scaleX: 0 }}
                       animate={{ scaleX: 1 }}
                       transition={{ duration: 0.2 }}
                     />
                   ) : (
                     <motion.div
-                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#FF8D28] to-[#FFB84D] rounded-full"
+                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#9370DB] to-[#9ACD32] rounded-full"
                       initial={{ scaleX: 0 }}
                       whileHover={{ scaleX: 1 }}
                       transition={{ duration: 0.2 }}
@@ -127,8 +127,8 @@ export function LandingNavbar({
                 className="px-6 py-2.5 text-sm font-semibold whitespace-nowrap shadow-md hover:shadow-lg transition-all"
                 style={{
                   background: isScrolled
-                    ? "linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)"
-                    : "linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)",
+                    ? "linear-gradient(135deg, #9370DB 0%, #B4A7D6 100%)"
+                    : "linear-gradient(135deg, #9370DB 0%, #B4A7D6 100%)",
                   color: "#FFFFFF",
                   border: "none",
                   borderRadius: "12px",
@@ -187,13 +187,13 @@ export function LandingNavbar({
                 onClick={() => handleNavClick(item.id)}
                 className="w-full text-left px-5 py-3.5 rounded-xl body-3 transition-all shadow-sm"
                 style={{
-                  color: currentPage === item.id ? "#FF8D28" : "#2F4858",
+                  color: currentPage === item.id ? "#9370DB" : "#2F4858",
                   fontWeight: currentPage === item.id ? 700 : 600,
                   backgroundColor:
                     currentPage === item.id
-                      ? "rgba(255, 141, 40, 0.15)"
+                      ? "rgba(147, 112, 219, 0.15)"
                       : "rgba(255, 255, 255, 0.95)",
-                  border: `1px solid ${currentPage === item.id ? "rgba(255, 141, 40, 0.3)" : "rgba(255, 141, 40, 0.15)"}`,
+                  border: `1px solid ${currentPage === item.id ? "rgba(147, 112, 219, 0.3)" : "rgba(147, 112, 219, 0.15)"}`,
                 }}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{
@@ -202,11 +202,11 @@ export function LandingNavbar({
                 }}
                 transition={{ delay: index * 0.1 }}
                 whileHover={{
-                  backgroundColor: "rgba(255, 141, 40, 0.15)",
-                  color: "#FF8D28",
+                  backgroundColor: "rgba(147, 112, 219, 0.15)",
+                  color: "#9370DB",
                   paddingLeft: "28px",
                   scale: 1.02,
-                  boxShadow: "0 4px 12px rgba(255, 141, 40, 0.2)",
+                  boxShadow: "0 4px 12px rgba(147, 112, 219, 0.2)",
                 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -229,7 +229,7 @@ export function LandingNavbar({
                 className="w-full py-3.5 text-sm font-bold shadow-lg"
                 style={{
                   background:
-                    "linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)",
+                    "linear-gradient(135deg, #9370DB 0%, #B4A7D6 100%)",
                   color: "#FFFFFF",
                   border: "none",
                   borderRadius: "12px",

@@ -100,9 +100,9 @@ export function HelpPage() {
           <CardContent className="p-6 text-center">
             <div 
               className="w-14 h-14 rounded-full mx-auto mb-3 flex items-center justify-center"
-              style={{ backgroundColor: '#4CAF5020' }}
+              style={{ backgroundColor: '#9ACD3220' }}
             >
-              <MessageCircle size={28} style={{ color: '#4CAF50' }} />
+              <MessageCircle size={28} style={{ color: '#9ACD32' }} />
             </div>
             <h4 style={{ color: '#2F4858' }}>Live Chat</h4>
             <p className="body-3 mt-2" style={{ color: '#858585' }}>
@@ -111,7 +111,7 @@ export function HelpPage() {
             <Button 
               className="mt-3" 
               size="sm"
-              style={{ backgroundColor: '#4CAF50', color: '#FFFFFF' }}
+              style={{ backgroundColor: '#9ACD32', color: '#FFFFFF' }}
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
@@ -135,9 +135,9 @@ export function HelpPage() {
           <CardContent className="p-6 text-center">
             <div 
               className="w-14 h-14 rounded-full mx-auto mb-3 flex items-center justify-center"
-              style={{ backgroundColor: '#2196F320' }}
+              style={{ backgroundColor: '#9370DB20' }}
             >
-              <Phone size={28} style={{ color: '#2196F3' }} />
+              <Phone size={28} style={{ color: '#9370DB' }} />
             </div>
             <h4 style={{ color: '#2F4858' }}>Telepon</h4>
             <p className="body-3 mt-2" style={{ color: '#858585' }}>
@@ -146,7 +146,7 @@ export function HelpPage() {
             <Button 
               className="mt-3" 
               size="sm"
-              style={{ backgroundColor: '#2196F3', color: '#FFFFFF' }}
+              style={{ backgroundColor: '#9370DB', color: '#FFFFFF' }}
             >
               Hubungi
             </Button>
@@ -157,9 +157,9 @@ export function HelpPage() {
           <CardContent className="p-6 text-center">
             <div 
               className="w-14 h-14 rounded-full mx-auto mb-3 flex items-center justify-center"
-              style={{ backgroundColor: '#FF8D2820' }}
+              style={{ backgroundColor: '#F9991220' }}
             >
-              <Mail size={28} style={{ color: '#FF8D28' }} />
+              <Mail size={28} style={{ color: '#F99912' }} />
             </div>
             <h4 style={{ color: '#2F4858' }}>Email</h4>
             <p className="body-3 mt-2" style={{ color: '#858585' }}>
@@ -168,7 +168,7 @@ export function HelpPage() {
             <Button 
               className="mt-3" 
               size="sm"
-              style={{ backgroundColor: '#FF8D28', color: '#FFFFFF' }}
+              style={{ backgroundColor: '#F99912', color: '#FFFFFF' }}
             >
               Kirim Email
             </Button>
@@ -182,9 +182,9 @@ export function HelpPage() {
           <div className="flex items-center gap-3 mb-4">
             <div 
               className="w-10 h-10 rounded-lg flex items-center justify-center"
-              style={{ backgroundColor: '#FF8D2820' }}
+              style={{ backgroundColor: '#F9991220' }}
             >
-              <HelpCircle size={20} style={{ color: '#FF8D28' }} />
+              <HelpCircle size={20} style={{ color: '#F99912' }} />
             </div>
             <CardTitle style={{ color: '#2F4858' }}>Pertanyaan Umum (FAQ)</CardTitle>
           </div>
@@ -241,7 +241,7 @@ export function HelpPage() {
           />
           <Button
             onClick={handleSendMessage}
-            style={{ backgroundColor: '#FF8D28', color: '#FFFFFF' }}
+            style={{ backgroundColor: '#F99912', color: '#FFFFFF' }}
           >
             <Send size={18} className="mr-2" />
             Kirim Pesan

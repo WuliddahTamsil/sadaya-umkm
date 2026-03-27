@@ -138,19 +138,16 @@ export function UserBeranda() {
       <GamificationBadge role="user" />
 
       {/* Hero Banner */}
-      <Card className="overflow-hidden">
+      <Card className="overflow-hidden border-0 shadow-xl">
         <div 
-          className="p-8 lg:p-12"
-          style={{ 
-            background: 'linear-gradient(135deg, #FF8D28 0%, #2F4858 100%)'
-          }}
+          className="p-8 lg:p-12 relative overflow-hidden"
         >
-          <h2 style={{ color: '#FFFFFF' }} className="mb-4">
-            Selamat Datang di SADAYA! 🎉
-          </h2>
-          <p style={{ color: '#FFFFFF', opacity: 0.9 }}>
-            Temukan produk lokal terbaik dari UMKM Bogor pilihan
-          </p>
+          {/* Dynamic Background Pattern */}
+          <div className="absolute inset-0 bg-gradient-to-br from-[#F99912] via-[#9ACD32] to-[#9370DB]" />
+          <div className="absolute inset-0 bg-[url('/pattern.svg')] opacity-10 mix-blend-overlay" />
+          
+          <div className="relative z-10">
+          </div>
         </div>
       </Card>
 
@@ -176,7 +173,7 @@ export function UserBeranda() {
                   onClick={() => setActiveCategory(category)}
                   style={
                     activeCategory === category
-                      ? { backgroundColor: '#FF8D28', color: '#FFFFFF' }
+                      ? { backgroundColor: '#F99912', color: '#FFFFFF', borderColor: '#F99912' }
                       : {}
                   }
                 >
@@ -190,9 +187,9 @@ export function UserBeranda() {
 
       {/* Products Grid */}
       {isLoading ? (
-        <Card>
+        <Card className="shadow-lg border-0">
           <CardContent className="p-12 text-center">
-            <Loader2 className="animate-spin mx-auto mb-4" style={{ color: '#FF8D28' }} size={48} />
+            <Loader2 className="animate-spin mx-auto mb-4" style={{ color: '#F99912' }} size={48} />
             <p style={{ color: '#858585' }}>Memuat produk...</p>
           </CardContent>
         </Card>
@@ -211,13 +208,13 @@ export function UserBeranda() {
                   e.stopPropagation();
                   handleAddToWishlist(product.name);
                 }}
-                className="absolute top-3 right-3 w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-md hover:bg-gray-50 transition-colors z-10"
+                className="absolute top-3 right-3 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-lg hover:bg-white hover:scale-110 transition-all z-10"
               >
-                <Heart size={20} style={{ color: '#FF8D28' }} />
+                <Heart size={20} className="text-[#F99912]" />
               </button>
               <Badge 
-                className="absolute top-3 left-3"
-                style={{ backgroundColor: '#FDE08E', color: '#2F4858' }}
+                className="absolute top-3 left-3 shadow-md"
+                style={{ backgroundColor: '#9ACD32', color: '#FFFFFF' }}
               >
                 {product.category}
               </Badge>
@@ -231,19 +228,20 @@ export function UserBeranda() {
               </p>
               <div className="flex items-center gap-2 mb-3">
                 <div className="flex items-center gap-1">
-                  <Star size={16} style={{ color: '#FFB800', fill: '#FFB800' }} />
+                  <Star size={16} style={{ color: '#F99912', fill: '#F99912' }} />
                   <span className="body-3" style={{ color: '#2F4858' }}>{product.rating}</span>
                 </div>
                 <span className="body-3" style={{ color: '#CCCCCC' }}>•</span>
                 <span className="body-3" style={{ color: '#858585' }}>{product.sold} terjual</span>
               </div>
               <div className="flex items-center justify-between">
-                <p style={{ color: '#FF8D28', fontWeight: 600 }}>
+                <p style={{ color: '#F99912', fontWeight: 700, fontSize: '1.1rem' }}>
                   Rp {product.price.toLocaleString('id-ID')}
                 </p>
                 <Button
                   size="sm"
-                  style={{ backgroundColor: '#FF8D28', color: '#FFFFFF' }}
+                  style={{ background: 'linear-gradient(to right, #F99912, #9ACD32)', color: '#FFFFFF' }}
+                  className="shadow-md hover:opacity-90 transition-opacity"
                   onClick={(e) => {
                     e.stopPropagation();
                     handleAddToCart(product);

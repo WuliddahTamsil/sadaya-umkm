@@ -31,7 +31,7 @@ export function HeroSection() {
             </p>
             <Button 
               onClick={scrollToDirectory}
-              style={{ backgroundColor: '#FF8D28', color: '#FFFFFF' }}
+              style={{ backgroundColor: '#9370DB', color: '#FFFFFF' }}
               className="px-8 py-6"
             >
               Mulai Sekarang

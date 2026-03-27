@@ -188,7 +188,7 @@ export function LiveChat({ isOpen, onClose }: LiveChatProps) {
               transition={{ delay: 0.1 }}
               className="relative flex items-center justify-between p-4 rounded-t-2xl overflow-hidden"
               style={{
-                background: 'linear-gradient(135deg, #FF8D28 0%, #FF6B00 50%, #FF8D28 100%)',
+                background: 'linear-gradient(135deg, #F99912 0%, #FF6B00 50%, #F99912 100%)',
               }}
             >
               {/* Animated background pattern */}
@@ -393,7 +393,7 @@ export function LiveChat({ isOpen, onClose }: LiveChatProps) {
                     disabled={!inputMessage.trim() || isLoading}
                     className="px-4"
                     style={{
-                      background: 'linear-gradient(135deg, #FF8D28 0%, #FF6B00 100%)',
+                      background: 'linear-gradient(135deg, #F99912 0%, #FF6B00 100%)',
                       color: '#FFFFFF',
                       boxShadow: '0 4px 12px rgba(255, 141, 40, 0.4)',
                     }}

@@ -13,7 +13,6 @@ import {
   LayoutDashboard, 
   Store, 
   MapPin, 
-  CheckSquare, 
   Users, 
   FileText, 
   AlertCircle, 
@@ -21,7 +20,6 @@ import {
   HelpCircle, 
   Settings,
   ShoppingCart,
-  Heart,
   Package,
   TrendingUp,
   Wallet,
@@ -115,12 +113,21 @@ export function DashboardLayout({ children, activeMenu, onMenuChange }: Dashboar
     }
   };
 
+  const getRoleGradient = (role?: string) => {
+    switch (role) {
+      case 'umkm': return 'bg-gradient-to-r from-[#9370DB] to-[#F99912]';
+      case 'driver': return 'bg-gradient-to-r from-[#9ACD32] to-[#9370DB]';
+      default: return 'bg-gradient-to-r from-[#F99912] to-[#9ACD32]';
+    }
+  };
+
+  const activeGradient = getRoleGradient(user.role);
   const menuItems = getMenuItems();
 
   const SidebarContent = () => (
     <>
       {/* Logo */}
-      <div className="p-6 border-b" style={{ borderColor: 'rgba(255,255,255,0.1)' }}>
+      <div className="p-6 border-b" style={{ borderColor: 'rgba(255,255,255,0.05)' }}>
         <div className="flex items-center gap-3">
           <AsliBogorLogo
             variant="logomark"
@@ -136,14 +143,14 @@ export function DashboardLayout({ children, activeMenu, onMenuChange }: Dashboar
       </div>
 
       {/* User Info */}
-      <div className="p-6 border-b" style={{ borderColor: 'rgba(255,255,255,0.1)' }}>
+      <div className="p-6 border-b" style={{ borderColor: 'rgba(255,255,255,0.05)' }}>
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-full bg-[#FF8D28] flex items-center justify-center">
+          <div className={`w-12 h-12 rounded-full flex items-center justify-center shadow-lg ${activeGradient}`}>
             <User size={20} style={{ color: '#FFFFFF' }} />
           </div>
-          <div className="flex-1">
-            <p className="body-3" style={{ color: '#FFFFFF', fontWeight: 600 }}>{user.name}</p>
-            <p className="body-3" style={{ color: 'rgba(255,255,255,0.7)', fontSize: '12px' }}>{user.email}</p>
+          <div className="flex-1 overflow-hidden">
+            <p className="body-3 truncate" style={{ color: '#FFFFFF', fontWeight: 600 }}>{user.name}</p>
+            <p className="body-3 truncate" style={{ color: 'rgba(255,255,255,0.7)', fontSize: '12px' }}>{user.email}</p>
           </div>
         </div>
         {!user.isVerified && (
@@ -168,8 +175,8 @@ export function DashboardLayout({ children, activeMenu, onMenuChange }: Dashboar
                   onMenuChange(item.id);
                   setSidebarOpen(false);
                 }}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${
-                  isActive ? 'bg-[#FF8D28]' : 'hover:bg-[#3d5866]'
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                  isActive ? activeGradient + ' shadow-md' : 'hover:bg-white/10'
                 }`}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -233,15 +240,15 @@ export function DashboardLayout({ children, activeMenu, onMenuChange }: Dashboar
       <MountainSilhouette />
       
       {/* Desktop Sidebar */}
-      <aside className="hidden lg:flex lg:flex-col w-64 flex-shrink-0 relative z-10" style={{ backgroundColor: '#2F4858' }}>
+      <aside className="hidden lg:flex lg:flex-col w-64 flex-shrink-0 relative z-10 bg-slate-900 border-r border-slate-800">
         <SidebarContent />
       </aside>
 
       {/* Mobile Sidebar */}
       {sidebarOpen && (
         <div className="fixed inset-0 z-50 lg:hidden">
-          <div className="absolute inset-0 bg-black bg-opacity-50" onClick={() => setSidebarOpen(false)} />
-          <aside className="absolute left-0 top-0 bottom-0 w-64 flex flex-col" style={{ backgroundColor: '#2F4858' }}>
+          <div className="absolute inset-0 bg-slate-900/80 backdrop-blur-sm" onClick={() => setSidebarOpen(false)} />
+          <aside className="absolute left-0 top-0 bottom-0 w-64 flex flex-col bg-slate-900 border-r border-slate-800 shadow-2xl">
             <div className="flex justify-end p-4">
               <button onClick={() => setSidebarOpen(false)}>
                 <X size={24} style={{ color: '#FFFFFF' }} />
@@ -253,9 +260,10 @@ export function DashboardLayout({ children, activeMenu, onMenuChange }: Dashboar
       )}
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col overflow-hidden relative z-10">
+      <div className="flex-1 flex flex-col overflow-hidden relative z-10 bg-slate-50">
         {/* Top Bar */}
-        <header className="bg-white border-b px-6 py-4 flex items-center justify-between glass">
+        <header className="bg-white/90 backdrop-blur-md px-6 py-4 flex items-center justify-between shadow-sm relative z-20">
+          <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#F99912] via-[#9ACD32] to-[#9370DB]" />
           <button
             onClick={() => setSidebarOpen(true)}
             className="lg:hidden"
@@ -278,8 +286,15 @@ export function DashboardLayout({ children, activeMenu, onMenuChange }: Dashboar
         </header>
 
         {/* Content */}
-        <main className="flex-1 overflow-y-auto p-6" style={{ backgroundColor: 'rgba(245, 245, 245, 0.95)' }}>
+        <main className="flex-1 overflow-y-auto p-6 relative">
+          {/* Subtle dashboard background glow */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+            <div className="absolute top-0 right-0 w-[40%] h-[40%] bg-gradient-to-bl from-[#9ACD32] to-transparent opacity-5 blur-3xl" />
+            <div className="absolute bottom-0 left-0 w-[40%] h-[40%] bg-gradient-to-tr from-[#9370DB] to-transparent opacity-5 blur-3xl" />
+          </div>
+          
           <motion.div
+            className="relative z-10"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}

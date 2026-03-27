@@ -320,14 +320,14 @@ export function DirectorySection({ onSelectUMKM }: DirectorySectionProps) {
       <div 
         className="absolute inset-0"
         style={{ 
-          background: 'linear-gradient(135deg, #FFFFFF 0%, #FFF4E6 30%, #FFE5CC 100%)'
+          background: 'linear-gradient(135deg, #FFFFFF 0%, #9370DB 30%, #9ACD32 100%)'
         }}
       />
       
       {/* Animated decorative elements */}
       <motion.div 
         className="absolute top-20 right-10 w-64 h-64 rounded-full opacity-10 blur-3xl" 
-        style={{ background: '#FF8D28' }}
+        style={{ background: '#9370DB' }}
         animate={{
           scale: [1, 1.3, 1],
           x: [0, 30, 0],
@@ -342,7 +342,7 @@ export function DirectorySection({ onSelectUMKM }: DirectorySectionProps) {
       />
       <motion.div 
         className="absolute bottom-20 left-10 w-96 h-96 rounded-full opacity-10 blur-3xl" 
-        style={{ background: '#4CAF50' }}
+        style={{ background: '#9ACD32' }}
         animate={{
           scale: [1, 1.2, 1],
           x: [0, -30, 0],
@@ -391,7 +391,7 @@ export function DirectorySection({ onSelectUMKM }: DirectorySectionProps) {
             ease: "easeInOut"
           }}
         >
-          <Sparkles size={16 + Math.random() * 8} style={{ color: '#FF8D28', opacity: 0.6 }} />
+          <Sparkles size={16 + Math.random() * 8} style={{ color: '#9ACD32', opacity: 0.6 }} />
         </motion.div>
       ))}
       
@@ -417,7 +417,7 @@ export function DirectorySection({ onSelectUMKM }: DirectorySectionProps) {
           >
             <motion.div
               className="w-16 h-16 rounded-2xl flex items-center justify-center shadow-xl"
-              style={{ background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)' }}
+              style={{ background: 'linear-gradient(135deg, #9370DB 0%, #B4A7D6 100%)' }}
               whileHover={{ scale: 1.2, rotate: 360 }}
               transition={{ duration: 0.6, type: "spring" }}
             >
@@ -474,10 +474,10 @@ export function DirectorySection({ onSelectUMKM }: DirectorySectionProps) {
           transition={{ delay: 0.5, duration: 0.6 }}
         >
           {[
-            { icon: Store, value: "500+", label: "UMKM", color: "#FF8D28" },
-            { icon: Users, value: "10K+", label: "Pengguna", color: "#4CAF50" },
+            { icon: Store, value: "500+", label: "UMKM", color: "#F99912" },
+            { icon: Users, value: "10K+", label: "Pengguna", color: "#9ACD32" },
             { icon: TrendingUp, value: "50+", label: "Driver", color: "#2196F3" },
-            { icon: Award, value: "4.8", label: "Rating", color: "#FFB84D" },
+            { icon: Award, value: "4.8", label: "Rating", color: "#9370DB" },
           ].map((stat, index) => {
             const Icon = stat.icon;
             return (
@@ -520,18 +520,18 @@ export function DirectorySection({ onSelectUMKM }: DirectorySectionProps) {
             <div 
               className="absolute -inset-1 rounded-3xl opacity-75 blur-xl transition duration-300 group-hover:opacity-100"
               style={{ 
-                background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 50%, #4CAF50 100%)'
+                background: 'linear-gradient(135deg, #9370DB 0%, #9ACD32 50%, #9ACD32 100%)'
               }}
             />
             
             {/* Search container */}
-            <div className="relative bg-white rounded-3xl shadow-2xl border-2 border-transparent group-hover:border-[#FF8D28]/30 transition-all">
+              <div className="relative bg-white rounded-3xl shadow-2xl border-2 border-transparent group-hover:border-[#F99912]/30 transition-all">
               <div className="flex items-center gap-4 p-2">
                 {/* Search icon */}
                 <div 
                   className="flex-shrink-0 w-14 h-14 rounded-2xl flex items-center justify-center ml-2"
                   style={{ 
-                    background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)'
+                    background: 'linear-gradient(135deg, #9370DB 0%, #B4A7D6 100%)'
                   }}
                 >
                   <Search className="text-white" size={24} />
@@ -556,7 +556,7 @@ export function DirectorySection({ onSelectUMKM }: DirectorySectionProps) {
                     animate={{ opacity: 1, scale: 1 }}
                     className="px-6 py-3 rounded-xl font-semibold text-sm mr-2"
                     style={{ 
-                      background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)',
+                      background: 'linear-gradient(135deg, #9370DB 0%, #B4A7D6 100%)',
                       color: '#FFFFFF'
                     }}
                     whileHover={{ scale: 1.05 }}
@@ -582,17 +582,17 @@ export function DirectorySection({ onSelectUMKM }: DirectorySectionProps) {
             const getCategoryGradient = (cat: string) => {
               switch(cat) {
                 case 'Semua':
-                  return 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)';
+                  return 'linear-gradient(135deg, #9370DB 0%, #9ACD32 100%)';
                 case 'Makanan':
-                  return 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)';
+                  return 'linear-gradient(135deg, #9370DB 0%, #9ACD32 100%)';
                 case 'Minuman':
-                  return 'linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%)';
+                  return 'linear-gradient(135deg, #9ACD32 0%, #9370DB 100%)';
                 case 'Jasa':
-                  return 'linear-gradient(135deg, #2196F3 0%, #1976D2 100%)';
+                  return 'linear-gradient(135deg, #9370DB 0%, #9ACD32 100%)';
                 case 'Kerajinan':
-                  return 'linear-gradient(135deg, #9C27B0 0%, #E91E63 100%)';
+                  return 'linear-gradient(135deg, #9370DB 0%, #9ACD32 100%)';
                 default:
-                  return 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)';
+                  return 'linear-gradient(135deg, #9370DB 0%, #9ACD32 100%)';
               }
             };
             
@@ -729,7 +729,7 @@ export function DirectorySection({ onSelectUMKM }: DirectorySectionProps) {
                       fontWeight: 700,
                       lineHeight: 1.3
                     }} 
-                    className="mb-3 group-hover:text-[#FF8D28] transition-colors"
+                    className="mb-3 group-hover:text-[#9370DB] transition-colors"
                     whileHover={{ x: 5 }}
                     transition={{ duration: 0.2 }}
                   >
@@ -748,8 +748,8 @@ export function DirectorySection({ onSelectUMKM }: DirectorySectionProps) {
                   </p>
                   
                   {/* Address */}
-                  <div className="flex items-start gap-2 pt-3 border-t" style={{ borderColor: '#FFE5CC' }}>
-                    <MapPin size={18} style={{ color: '#FF8D28' }} className="mt-0.5 flex-shrink-0" />
+                  <div className="flex items-start gap-2 pt-3 border-t" style={{ borderColor: '#D7BDE2' }}>
+                    <MapPin size={18} style={{ color: '#9370DB' }} className="mt-0.5 flex-shrink-0" />
                     <p className="text-sm line-clamp-2" style={{ color: '#858585' }}>
                       {umkm.address}
                     </p>
@@ -764,7 +764,7 @@ export function DirectorySection({ onSelectUMKM }: DirectorySectionProps) {
                     <motion.div 
                       className="w-full py-2.5 rounded-xl text-center font-semibold text-sm cursor-pointer"
                       style={{ 
-                        background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)',
+                        background: 'linear-gradient(135deg, #9370DB 0%, #B4A7D6 100%)',
                         color: '#FFFFFF'
                       }}
                       whileHover={{ scale: 1.05 }}
@@ -794,9 +794,9 @@ export function DirectorySection({ onSelectUMKM }: DirectorySectionProps) {
               variant="outline"
               className="flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all"
               style={{
-                borderColor: currentPage === 1 ? '#E0E0E0' : '#FF8D28',
+                borderColor: currentPage === 1 ? '#E0E0E0' : '#9370DB',
                 borderWidth: '2px',
-                color: currentPage === 1 ? '#858585' : '#FF8D28',
+                color: currentPage === 1 ? '#858585' : '#9370DB',
                 backgroundColor: currentPage === 1 ? '#F5F5F5' : '#FFFFFF',
                 cursor: currentPage === 1 ? 'not-allowed' : 'pointer'
               }}
@@ -808,12 +808,12 @@ export function DirectorySection({ onSelectUMKM }: DirectorySectionProps) {
             <div 
               className="px-6 py-3 rounded-xl"
               style={{ 
-                backgroundColor: '#FFF4E6',
-                border: '2px solid #FFE5CC'
+                backgroundColor: '#E8DAEF',
+                border: '2px solid #D7BDE2'
               }}
             >
               <span className="text-sm font-semibold" style={{ color: '#2F4858' }}>
-                Halaman <span style={{ color: '#FF8D28' }}>{currentPage}</span> dari {totalPages}
+                Halaman <span style={{ color: '#9370DB' }}>{currentPage}</span> dari {totalPages}
               </span>
             </div>
 
@@ -823,9 +823,9 @@ export function DirectorySection({ onSelectUMKM }: DirectorySectionProps) {
               variant="outline"
               className="flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all"
               style={{
-                borderColor: currentPage === totalPages ? '#E0E0E0' : '#FF8D28',
+                borderColor: currentPage === totalPages ? '#E0E0E0' : '#9370DB',
                 borderWidth: '2px',
-                color: currentPage === totalPages ? '#858585' : '#FF8D28',
+                color: currentPage === totalPages ? '#858585' : '#9370DB',
                 backgroundColor: currentPage === totalPages ? '#F5F5F5' : '#FFFFFF',
                 cursor: currentPage === totalPages ? 'not-allowed' : 'pointer'
               }}
@@ -845,9 +845,9 @@ export function DirectorySection({ onSelectUMKM }: DirectorySectionProps) {
           >
             <div 
               className="inline-block p-6 rounded-2xl mb-4"
-              style={{ backgroundColor: '#FFF4E6' }}
+              style={{ backgroundColor: '#E8DAEF' }}
             >
-              <Search size={48} style={{ color: '#FF8D28' }} />
+              <Search size={48} style={{ color: '#9370DB' }} />
             </div>
             <h3 style={{ color: '#2F4858', fontSize: '24px', fontWeight: 600 }} className="mb-2">
               Tidak ada UMKM yang ditemukan

@@ -87,13 +87,13 @@ export function RiwayatPesanan() {
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'pending':
-        return { bg: '#FDE08E', text: '#F57C00' };
+        return { bg: '#FDE08E', text: '#F99912' };
       case 'processing':
-        return { bg: '#B3E5FC', text: '#1976D2' };
+        return { bg: '#B3E5FC', text: '#9370DB' };
       case 'shipping':
         return { bg: '#C5CAE9', text: '#5E35B1' };
       case 'completed':
-        return { bg: '#C8E6C9', text: '#2E7D32' };
+        return { bg: '#C8E6C9', text: '#9ACD32' };
       case 'cancelled':
         return { bg: '#FFCDD2', text: '#C62828' };
       default:
@@ -136,7 +136,7 @@ export function RiwayatPesanan() {
       <div className="space-y-6">
         <Card>
           <CardContent className="p-12 text-center">
-            <Loader2 className="animate-spin mx-auto mb-4" style={{ color: '#FF8D28' }} size={48} />
+            <Loader2 className="animate-spin mx-auto mb-4" style={{ color: '#F99912' }} size={48} />
             <p style={{ color: '#858585' }}>Memuat riwayat pesanan...</p>
           </CardContent>
         </Card>
@@ -230,7 +230,7 @@ export function RiwayatPesanan() {
                                   {item.qty}x
                                 </p>
                               </div>
-                              <p className="body-3" style={{ color: '#FF8D28', fontWeight: 600 }}>
+                              <p className="body-3" style={{ color: '#F99912', fontWeight: 600 }}>
                                 Rp {item.price.toLocaleString('id-ID')}
                               </p>
                             </div>
@@ -241,7 +241,7 @@ export function RiwayatPesanan() {
                         <div className="flex items-center justify-between pt-4" style={{ borderTop: '1px solid #E0E0E0' }}>
                           <div>
                             <p className="body-3" style={{ color: '#858585' }}>Total Pembayaran</p>
-                            <h4 style={{ color: '#FF8D28' }}>
+                            <h4 style={{ color: '#F99912' }}>
                               Rp {order.total.toLocaleString('id-ID')}
                             </h4>
                           </div>
@@ -256,7 +256,7 @@ export function RiwayatPesanan() {
                             {order.status === 'completed' && (
                               <Button 
                                 size="sm"
-                                style={{ backgroundColor: '#FFB800', color: '#FFFFFF' }}
+                                style={{ backgroundColor: '#F99912', color: '#FFFFFF' }}
                               >
                                 <Star size={16} className="mr-1" />
                                 Beri Ulasan
@@ -265,7 +265,7 @@ export function RiwayatPesanan() {
                             {order.status === 'shipping' && (
                               <Button 
                                 size="sm"
-                                style={{ backgroundColor: '#4CAF50', color: '#FFFFFF' }}
+                                style={{ backgroundColor: '#9ACD32', color: '#FFFFFF' }}
                               >
                                 <Truck size={16} className="mr-1" />
                                 Lacak

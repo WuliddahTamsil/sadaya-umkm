@@ -29,7 +29,7 @@ export function TestimonialCard({ quote, author, role, rating, avatar }: Testimo
       </div>
       <div className="flex gap-1 mt-4">
         {Array.from({ length: rating }).map((_, i) => (
-          <Star key={i} size={18} fill="#FF8D28" className="fill-current" />
+          <Star key={i} size={18} fill="#F99912" className="fill-current" />
         ))}
       </div>
     </div>

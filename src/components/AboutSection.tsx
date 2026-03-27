@@ -22,7 +22,7 @@ export function AboutSection() {
   ];
 
   return (
-    <section id="tentang" className="py-20 lg:py-28 relative" style={{ background: 'linear-gradient(to bottom, #FFF4E6 0%, #FFFFFF 100%)' }}>
+    <section id="tentang" className="py-20 lg:py-28 relative" style={{ background: 'linear-gradient(to bottom, #9370DB 0%, #FFFFFF 100%)' }}>
       <div className="container mx-auto px-4 lg:px-6">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left: Illustration */}
@@ -40,8 +40,8 @@ export function AboutSection() {
                 className="w-full h-auto rounded-3xl shadow-2xl object-cover"
               />
               {/* Decorative gradient overlay */}
-              <div className="absolute -bottom-6 -right-6 w-32 h-32 rounded-full opacity-30 blur-2xl" style={{ background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)' }}></div>
-              <div className="absolute -top-6 -left-6 w-32 h-32 rounded-full opacity-30 blur-2xl" style={{ background: 'linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%)' }}></div>
+              <div className="absolute -bottom-6 -right-6 w-32 h-32 rounded-full opacity-30 blur-2xl" style={{ background: 'linear-gradient(135deg, #9ACD32 0%, #9370DB 100%)' }}></div>
+              <div className="absolute -top-6 -left-6 w-32 h-32 rounded-full opacity-30 blur-2xl" style={{ background: 'linear-gradient(135deg, #9370DB 0%, #7851A9 100%)' }}></div>
             </div>
           </motion.div>
 
@@ -93,7 +93,7 @@ export function AboutSection() {
                   viewport={{ once: true }}
                   transition={{ delay: 0.5 + index * 0.1, duration: 0.5 }}
                 >
-                  <div className="w-12 h-12 mx-auto mb-2 rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)' }}>
+                  <div className="w-12 h-12 mx-auto mb-2 rounded-full flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #9370DB 0%, #F99912 100%)' }}>
                     <value.icon size={24} className="text-white" />
                   </div>
                   <h4 style={{ color: '#2F4858', fontSize: '14px' }}>{value.title}</h4>

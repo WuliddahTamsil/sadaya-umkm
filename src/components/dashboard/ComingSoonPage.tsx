@@ -56,7 +56,7 @@ export function ComingSoonPage({
                 style={{
                   left: `${Math.random() * 100}%`,
                   top: `${Math.random() * 100}%`,
-                  backgroundColor: ['#FF8D28', '#FFB800', '#4CAF50', '#2196F3'][Math.floor(Math.random() * 4)],
+                  backgroundColor: ['#F99912', '#F99912', '#9ACD32', '#9370DB'][Math.floor(Math.random() * 4)],
                   opacity: 0.2,
                 }}
                 animate={{
@@ -78,7 +78,7 @@ export function ComingSoonPage({
               {/* Animated Icon */}
               <motion.div
                 className="inline-flex items-center justify-center w-24 h-24 rounded-full mb-6"
-                style={{ backgroundColor: '#FF8D2820' }}
+                style={{ backgroundColor: '#F9991220' }}
                 animate={{
                   rotate: [0, 10, -10, 0],
                   scale: [1, 1.1, 1],
@@ -99,7 +99,7 @@ export function ComingSoonPage({
                     ease: 'linear',
                   }}
                 >
-                  <IconComponent size={48} style={{ color: '#FF8D28' }} />
+                  <IconComponent size={48} style={{ color: '#F99912' }} />
                 </motion.div>
               </motion.div>
 
@@ -128,7 +128,7 @@ export function ComingSoonPage({
                 {/* Status Badge */}
                 <motion.div
                   className="inline-flex items-center gap-2 px-4 py-2 rounded-full"
-                  style={{ backgroundColor: '#FFB80020', border: '1px solid #FFB800' }}
+                  style={{ backgroundColor: '#F9991220', border: '1px solid #F99912' }}
                   animate={{
                     boxShadow: [
                       '0 0 0 0 rgba(255, 184, 0, 0.4)',
@@ -150,9 +150,9 @@ export function ComingSoonPage({
                       ease: 'linear',
                     }}
                   >
-                    <Zap size={16} style={{ color: '#FFB800' }} />
+                    <Zap size={16} style={{ color: '#F99912' }} />
                   </motion.div>
-                  <span className="body-3" style={{ color: '#FFB800', fontWeight: 600 }}>
+                  <span className="body-3" style={{ color: '#F99912', fontWeight: 600 }}>
                     Dalam Pengembangan
                   </span>
                 </motion.div>
@@ -172,7 +172,7 @@ export function ComingSoonPage({
                       className="w-12 h-2 rounded-full"
                       style={{ backgroundColor: '#E0E0E0' }}
                       animate={{
-                        backgroundColor: ['#E0E0E0', '#FF8D28', '#E0E0E0'],
+                        backgroundColor: ['#E0E0E0', '#F99912', '#E0E0E0'],
                       }}
                       transition={{
                         duration: 1.5,
@@ -230,7 +230,7 @@ export function ComingSoonPage({
                 <Button
                   onClick={() => window.history.back()}
                   size="lg"
-                  style={{ backgroundColor: '#FF8D28' }}
+                  style={{ backgroundColor: '#F99912' }}
                   className="group"
                 >
                   <motion.div

@@ -96,7 +96,7 @@ class ErrorBoundary extends React.Component<
                 this.setState({ hasError: false, error: null });
                 window.location.reload();
               }}
-              style={{ backgroundColor: '#FF8D28', color: '#FFFFFF' }}
+              style={{ backgroundColor: '#F99912', color: '#FFFFFF' }}
             >
               Muat Ulang Halaman
             </Button>

@@ -12,7 +12,7 @@ export function AuthSectionLanding({ onRoleSelect }: AuthSectionLandingProps) {
       id="auth-section" 
       className="py-20 lg:py-28 relative overflow-hidden"
       style={{
-        background: 'linear-gradient(135deg, #FFFFFF 0%, #FFF4E6 100%)',
+        background: 'linear-gradient(135deg, #FFFFFF 0%, #9ACD32 50%, #9370DB 100%)',
       }}
     >
       <div className="container mx-auto px-4 lg:px-6">
@@ -42,17 +42,17 @@ export function AuthSectionLanding({ onRoleSelect }: AuthSectionLandingProps) {
             onClick={() => onRoleSelect('user')}
           >
             <div className="text-center space-y-4">
-              <div className="w-16 h-16 mx-auto bg-gradient-to-br from-yellow-300 to-orange-400 rounded-full flex items-center justify-center">
+              <div className="w-16 h-16 mx-auto bg-gradient-to-br from-lime-400 to-orange-400 rounded-full flex items-center justify-center">
                 <User size={32} className="text-white" />
               </div>
-              <h3 style={{ color: '#FFB84D' }}>Masyarakat</h3>
+              <h3 style={{ color: '#9ACD32' }}>Masyarakat</h3>
               <p className="text-gray-600">
                 Belanja produk UMKM lokal terbaik
               </p>
               <Button
                 className="w-full"
                 style={{ 
-                  background: 'linear-gradient(135deg, #FFB84D 0%, #FF8D28 100%)',
+                  background: 'linear-gradient(135deg, #9ACD32 0%, #F99912 100%)',
                   color: '#FFFFFF' 
                 }}
               >
@@ -71,17 +71,17 @@ export function AuthSectionLanding({ onRoleSelect }: AuthSectionLandingProps) {
             onClick={() => onRoleSelect('umkm')}
           >
             <div className="text-center space-y-4">
-              <div className="w-16 h-16 mx-auto bg-gradient-to-br from-orange-400 to-red-500 rounded-full flex items-center justify-center">
+              <div className="w-16 h-16 mx-auto bg-gradient-to-br from-orange-400 to-purple-500 rounded-full flex items-center justify-center">
                 <Store size={32} className="text-white" />
               </div>
-              <h3 style={{ color: '#FF8D28' }}>UMKM</h3>
+              <h3 style={{ color: '#F99912' }}>UMKM</h3>
               <p className="text-gray-600">
                 Daftarkan dan kembangkan usaha Anda
               </p>
               <Button
                 className="w-full"
                 style={{ 
-                  background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)',
+                  background: 'linear-gradient(135deg, #F99912 0%, #9ACD32 100%)',
                   color: '#FFFFFF' 
                 }}
               >
@@ -100,17 +100,17 @@ export function AuthSectionLanding({ onRoleSelect }: AuthSectionLandingProps) {
             onClick={() => onRoleSelect('driver')}
           >
             <div className="text-center space-y-4">
-              <div className="w-16 h-16 mx-auto bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center">
+              <div className="w-16 h-16 mx-auto bg-gradient-to-br from-purple-400 to-lime-500 rounded-full flex items-center justify-center">
                 <Truck size={32} className="text-white" />
               </div>
-              <h3 style={{ color: '#4CAF50' }}>Driver</h3>
+              <h3 style={{ color: '#9370DB' }}>Driver</h3>
               <p className="text-gray-600">
                 Bergabung sebagai mitra pengiriman
               </p>
               <Button
                 className="w-full"
                 style={{ 
-                  background: 'linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%)',
+                  background: 'linear-gradient(135deg, #9370DB 0%, #9ACD32 100%)',
                   color: '#FFFFFF' 
                 }}
               >

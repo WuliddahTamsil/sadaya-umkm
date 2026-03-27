@@ -23,7 +23,7 @@ export function DriverAnalyticsPage() {
       label: 'Total Pengiriman',
       value: 156,
       icon: Bike,
-      color: '#2196F3',
+      color: '#9370DB',
       change: '+12',
       period: 'hari ini'
     },
@@ -31,7 +31,7 @@ export function DriverAnalyticsPage() {
       label: 'Total Jarak',
       value: 342.5,
       icon: MapPin,
-      color: '#FF8D28',
+      color: '#F99912',
       change: '+45.2',
       suffix: ' km',
       decimals: 1
@@ -40,7 +40,7 @@ export function DriverAnalyticsPage() {
       label: 'Total Pendapatan',
       value: 1250000,
       icon: DollarSign,
-      color: '#4CAF50',
+      color: '#9ACD32',
       change: '+18.5%',
       prefix: 'Rp '
     },
@@ -48,7 +48,7 @@ export function DriverAnalyticsPage() {
       label: 'Rating Driver',
       value: 4.9,
       icon: Star,
-      color: '#FFB800',
+      color: '#F99912',
       change: '+0.1',
       decimals: 1
     }
@@ -84,10 +84,10 @@ export function DriverAnalyticsPage() {
 
   const areaHeatmap = [
     { area: 'Bogor Tengah', deliveries: 45, earning: 675000, color: '#FF6B6B' },
-    { area: 'Bogor Utara', deliveries: 38, earning: 570000, color: '#FF8D28' },
-    { area: 'Bogor Selatan', deliveries: 52, earning: 780000, color: '#FFB800' },
-    { area: 'Bogor Timur', deliveries: 31, earning: 465000, color: '#4CAF50' },
-    { area: 'Bogor Barat', deliveries: 28, earning: 420000, color: '#2196F3' }
+    { area: 'Bogor Utara', deliveries: 38, earning: 570000, color: '#F99912' },
+    { area: 'Bogor Selatan', deliveries: 52, earning: 780000, color: '#F99912' },
+    { area: 'Bogor Timur', deliveries: 31, earning: 465000, color: '#9ACD32' },
+    { area: 'Bogor Barat', deliveries: 28, earning: 420000, color: '#9370DB' }
   ];
 
   const rewards = [
@@ -97,7 +97,7 @@ export function DriverAnalyticsPage() {
       current: 16,
       reward: 'Rp 50.000',
       icon: Target,
-      color: '#4CAF50'
+      color: '#9ACD32'
     },
     {
       title: 'Speed Bonus',
@@ -105,7 +105,7 @@ export function DriverAnalyticsPage() {
       current: 7,
       reward: 'Rp 30.000',
       icon: Zap,
-      color: '#FF8D28'
+      color: '#F99912'
     },
     {
       title: 'Rating Bonus',
@@ -113,7 +113,7 @@ export function DriverAnalyticsPage() {
       current: 4.9,
       reward: 'Rp 100.000',
       icon: Star,
-      color: '#FFB800',
+      color: '#F99912',
       completed: true
     }
   ];
@@ -181,7 +181,7 @@ export function DriverAnalyticsPage() {
                       className="body-3 px-2 py-1 rounded-full"
                       style={{
                         backgroundColor: '#C8E6C9',
-                        color: '#2E7D32',
+                        color: '#9ACD32',
                         fontSize: '12px'
                       }}
                     >
@@ -247,9 +247,9 @@ export function DriverAnalyticsPage() {
               <Line 
                 type="monotone" 
                 dataKey="deliveries" 
-                stroke="#2196F3" 
+                stroke="#9370DB" 
                 strokeWidth={3}
-                dot={{ fill: '#2196F3', r: 5 }}
+                dot={{ fill: '#9370DB', r: 5 }}
                 name="Pengiriman"
               />
             </LineChart>
@@ -263,7 +263,7 @@ export function DriverAnalyticsPage() {
           <CardHeader>
             <CardTitle style={{ color: '#2F4858' }}>
               <div className="flex items-center gap-2">
-                <MapPin size={20} style={{ color: '#FF8D28' }} />
+                <MapPin size={20} style={{ color: '#F99912' }} />
                 Heatmap Area Pengiriman
               </div>
             </CardTitle>
@@ -315,7 +315,7 @@ export function DriverAnalyticsPage() {
           <CardHeader>
             <CardTitle style={{ color: '#2F4858' }}>
               <div className="flex items-center gap-2">
-                <Gift size={20} style={{ color: '#9C27B0' }} />
+                <Gift size={20} style={{ color: '#9370DB' }} />
                 Reward & Bonus
               </div>
             </CardTitle>
@@ -333,7 +333,7 @@ export function DriverAnalyticsPage() {
                     className="p-4 rounded-lg"
                     style={{
                       backgroundColor: reward.completed ? '#C8E6C920' : '#F9F9F9',
-                      border: reward.completed ? '1px solid #4CAF50' : '1px solid #E0E0E0'
+                      border: reward.completed ? '1px solid #9ACD32' : '1px solid #E0E0E0'
                     }}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -352,7 +352,7 @@ export function DriverAnalyticsPage() {
                             {reward.title}
                           </p>
                           {reward.completed && (
-                            <Badge style={{ backgroundColor: '#4CAF50', color: '#FFFFFF' }}>
+                            <Badge style={{ backgroundColor: '#9ACD32', color: '#FFFFFF' }}>
                               Selesai! ✨
                             </Badge>
                           )}
@@ -389,7 +389,7 @@ export function DriverAnalyticsPage() {
           <CardHeader>
             <CardTitle style={{ color: '#2F4858' }}>
               <div className="flex items-center gap-2">
-                <TrendingUp size={20} style={{ color: '#4CAF50' }} />
+                <TrendingUp size={20} style={{ color: '#9ACD32' }} />
                 Metrik Performa
               </div>
             </CardTitle>
@@ -398,8 +398,8 @@ export function DriverAnalyticsPage() {
             <div className="grid md:grid-cols-2 gap-4">
               {recentPerformance.map((metric, index) => {
                 const statusColor = 
-                  metric.status === 'excellent' ? '#4CAF50' :
-                  metric.status === 'good' ? '#2196F3' : '#FF9800';
+                  metric.status === 'excellent' ? '#9ACD32' :
+                  metric.status === 'good' ? '#9370DB' : '#FF9800';
 
                 return (
                   <motion.div

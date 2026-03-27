@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
-import { AsliBogorLogo } from "../components/ui/asli-bogor-logo";
+
 import {
   Leaf,
   TrendingUp,
@@ -137,7 +137,7 @@ export function BerandaPage({
       address:
         "Jl. Siliwangi No.27C, RT.01/RW.01, Sukasari, Kec. Bogor Tim., Kota Bogor, Jawa Barat 16142",
       image:
-        "https://assets.pikiran-rakyat.com/crop/0x0:0x0/750x500/photo/2022/06/27/903345014.jpg",
+        "https://s3-ap-southeast-1.amazonaws.com/paxelbucket/revamp/upload-image-1BQ4P6I-E6RINM8-MG2EE3E-R4QAADJ.png",
       description:
         "Salah satu gerai asinan paling legendaris dan tertua di Bogor, berdiri sejak 1978",
       rating: 4.8,
@@ -190,31 +190,31 @@ export function BerandaPage({
   });
 
   const stats = [
-    { value: "500+", label: "UMKM Terdaftar", icon: Store, color: "#FF8D28" },
-    { value: "10K+", label: "Pengguna Aktif", icon: Users, color: "#4CAF50" },
-    { value: "50+", label: "Driver Siap", icon: TrendingUp, color: "#2F4858" },
+    { value: "500+", label: "UMKM Terdaftar", icon: Store, color: "#9370DB" },
+    { value: "10K+", label: "Pengguna Aktif", icon: Users, color: "#9ACD32" },
+    { value: "50+", label: "Driver Siap", icon: TrendingUp, color: "#F99912" },
   ];
 
   const categories = [
     {
       name: "Makanan",
       count: "150+ UMKM",
-      gradient: "from-orange-400 to-yellow-300",
+      gradient: "bg-gradient-lime-purple text-white shadow-md",
     },
     {
       name: "Minuman",
       count: "80+ UMKM",
-      gradient: "from-green-400 to-green-600",
+      gradient: "bg-gradient-orange-lime text-white shadow-md",
     },
     {
       name: "Fashion",
       count: "120+ UMKM",
-      gradient: "from-yellow-300 to-orange-400",
+      gradient: "bg-gradient-purple-orange text-white shadow-md",
     },
     {
       name: "Jasa",
       count: "150+ UMKM",
-      gradient: "from-green-500 to-emerald-600",
+      gradient: "bg-gradient-primary text-white shadow-md",
     },
   ];
 
@@ -222,56 +222,56 @@ export function BerandaPage({
     {
       text: "Produk lokal berkualitas tinggi",
       icon: Package,
-      gradient: "from-orange-500 to-orange-400",
-      bgGradient: "from-orange-50 to-orange-100",
-      iconBg: "linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)",
-      accentColor: "#FF8D28",
-      colorTheme: "orange",
+      gradient: "bg-gradient-purple-orange",
+      bgGradient: "bg-purple-50",
+      iconBg: "linear-gradient(135deg, #9370DB 0%, #F99912 100%)",
+      accentColor: "#9370DB",
+      colorTheme: "purple",
     },
     {
       text: "Pesan antar cepat & mudah",
       icon: Truck,
-      gradient: "from-green-500 to-green-400",
-      bgGradient: "from-green-50 to-green-100",
-      iconBg: "linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%)",
-      accentColor: "#4CAF50",
-      colorTheme: "green",
+      gradient: "bg-gradient-lime-purple",
+      bgGradient: "bg-lime-50",
+      iconBg: "linear-gradient(135deg, #9ACD32 0%, #9370DB 100%)",
+      accentColor: "#9ACD32",
+      colorTheme: "lime",
     },
     {
       text: "Dukung UMKM, bangga Bogor",
       icon: Heart,
-      gradient: "from-blue-500 to-blue-400",
-      bgGradient: "from-blue-50 to-blue-100",
-      iconBg: "linear-gradient(135deg, #2196F3 0%, #1976D2 100%)",
-      accentColor: "#2196F3",
-      colorTheme: "blue",
+      gradient: "bg-gradient-orange-lime",
+      bgGradient: "bg-orange-50",
+      iconBg: "linear-gradient(135deg, #F99912 0%, #9ACD32 100%)",
+      accentColor: "#F99912",
+      colorTheme: "orange",
     },
     {
       text: "Transaksi aman terpercaya",
       icon: Shield,
-      gradient: "from-orange-600 to-orange-400",
-      bgGradient: "from-orange-50 to-orange-100",
-      iconBg: "linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)",
-      accentColor: "#FF8D28",
-      colorTheme: "orange",
+      gradient: "bg-gradient-primary",
+      bgGradient: "bg-lime-50",
+      iconBg: "linear-gradient(135deg, #9ACD32 0%, #9370DB 100%)",
+      accentColor: "#9ACD32",
+      colorTheme: "lime",
     },
     {
       text: "Rating & review transparan",
       icon: Star,
-      gradient: "from-green-600 to-green-400",
-      bgGradient: "from-green-50 to-green-100",
-      iconBg: "linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%)",
-      accentColor: "#4CAF50",
-      colorTheme: "green",
+      gradient: "bg-gradient-orange-lime",
+      bgGradient: "bg-orange-50",
+      iconBg: "linear-gradient(135deg, #F99912 0%, #9ACD32 100%)",
+      accentColor: "#F99912",
+      colorTheme: "orange",
     },
     {
       text: "Promo menarik setiap hari",
       icon: Gift,
-      gradient: "from-blue-600 to-blue-400",
-      bgGradient: "from-blue-50 to-blue-100",
-      iconBg: "linear-gradient(135deg, #2196F3 0%, #1976D2 100%)",
-      accentColor: "#2196F3",
-      colorTheme: "blue",
+      gradient: "bg-gradient-purple-orange",
+      bgGradient: "bg-purple-50",
+      iconBg: "linear-gradient(135deg, #9370DB 0%, #F99912 100%)",
+      accentColor: "#9370DB",
+      colorTheme: "purple",
     },
   ];
 
@@ -309,304 +309,242 @@ export function BerandaPage({
 
   const activeTestimonial = testimonials[reviewIndex];
 
+  const MOCK_MARQUEE_UMKM = [
+    { name: "Lapis Bogor Sangkuriang", category: "Oleh-Oleh", image: "https://agrinesia.co.id/uploads/2024-07/jfzaH33tlscoG2xPGHd8ykIuUGsU3zTo5NrCzWX4.jpeg" },
+    { name: "Roti Unyil Venus", category: "Roti", image: "https://i.gojekapi.com/darkroom/gofood-indonesia/v2/images/uploads/87ea29fa-9cf9-4c78-874a-a843af6c2747_Go-Biz_20230807_104930.jpeg" },
+    { name: "Asinan Sedap Gedung Dalam", category: "Asinan", image: "https://assets.pikiran-rakyat.com/crop/0x0:0x0/750x500/photo/2022/06/27/903345014.jpg" },
+    { name: "PIA Apple Pie", category: "Pie", image: "https://s3.us-east-1.wasabisys.com/agendaindonesia/2022/10/Pie-Apple-Pie-Bogor.jpg" },
+    { name: "Bika Bogor Talubi", category: "Oleh-Oleh", image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhvrRS7rbZ9JBrHa85YQJgvl8ZW3uYsmoWwwCEvM_-L1en-5d5g6Oa6akl07FmbHbHnlzJPQ0GQPtA0ny44_7b7TazCgvtOneEj3hVZAf27KM28PPC1_t_B0GSyJ0hgM8CjwxYZS9zqeda7/s1600/20170103_165122_wm.jpg" },
+  ];
+
   return (
     <div className="min-h-screen">
-      {/* Hero Section - Keep original design */}
       <section
         ref={heroRef}
         id="hero"
-        className="relative min-h-screen flex items-center overflow-hidden"
-        style={{
-          background:
-            "linear-gradient(135deg, #FFF4E6 0%, #FFB84D 50%, #FF8D28 100%)",
-        }}
+        className="relative min-h-screen flex flex-col justify-center overflow-hidden"
+        style={{ background: 'linear-gradient(135deg, rgba(249, 153, 18, 0.05) 0%, rgba(147, 112, 219, 0.08) 50%, rgba(154, 205, 50, 0.05) 100%)' }}
       >
-        {/* Decorative Elements - Floating Leaves */}
+
+        {/* Luminous Soft Mesh Gradient Background */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+          {/* Blob 1: Green Top Left */}
+          <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[60%] rounded-full bg-[#9ACD32] opacity-50 blur-[100px]" />
+          {/* Blob 2: Orange Center Right */}
+          <div className="absolute top-[20%] right-[-10%] w-[45%] h-[55%] rounded-full bg-[#F99812] opacity-40 blur-[120px]" />
+          {/* Blob 3: Purple Bottom Left */}
+          <div className="absolute bottom-[-10%] left-[10%] w-[60%] h-[50%] rounded-full bg-[#9070D0] opacity-40 blur-[100px]" />
+        </div>
+
+        {/* Vibrant Floating Elements (Spread out to fill empty spaces) */}
+
+        {/* Floating Asset 1 - Top Left (Vibrant Orange Card) */}
         <motion.div
-          className="absolute top-20 left-10 text-green-600 opacity-20"
-          animate={{
-            y: [0, -20, 0],
-            rotate: [0, 10, 0],
-          }}
-          transition={{
-            duration: 4,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
+          className="absolute w-20 h-20 rounded-2xl shadow-[0_10px_35px_rgba(249,152,18,0.4)] flex items-center justify-center pointer-events-none z-20"
+          style={{ background: 'linear-gradient(135deg, #FFB84D 0%, #F99812 100%)', top: '15%', left: '8%', transform: 'rotate(-12deg)' }}
+          animate={{ y: [0, -20, 0], rotate: [-12, 5, -12] }}
+          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
         >
-          <Leaf size={80} />
+          <Sparkles className="text-white w-9 h-9" />
         </motion.div>
 
+        {/* Floating Asset 2 - Bottom Left (Lime Pill - below the text block edge) */}
         <motion.div
-          className="absolute top-40 right-20 text-green-600 opacity-20"
-          animate={{
-            y: [0, 20, 0],
-            rotate: [0, -10, 0],
-          }}
-          transition={{
-            duration: 5,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
+          className="absolute w-16 h-16 rounded-[1.5rem] shadow-[0_10px_35px_rgba(154,205,50,0.4)] flex items-center justify-center pointer-events-none z-20"
+          style={{ background: 'linear-gradient(135deg, #aee34b 0%, #9ACD32 100%)', bottom: '15%', left: '15%', transform: 'rotate(25deg)' }}
+          animate={{ y: [0, -15, 0], rotate: [25, 5, 25] }}
+          transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
         >
-          <Leaf size={60} />
+          <Leaf className="text-white w-7 h-7" />
         </motion.div>
 
+        {/* Floating Asset 3 - Top Center-Right (Purple Circle - above slider) */}
         <motion.div
-          className="absolute bottom-32 left-1/4 text-green-600 opacity-15"
-          animate={{
-            y: [0, -15, 0],
-            rotate: [0, 15, 0],
-          }}
-          transition={{
-            duration: 6,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
+          className="absolute w-16 h-16 rounded-full shadow-[0_10px_35px_rgba(144,112,208,0.4)] flex items-center justify-center pointer-events-none z-20"
+          style={{ background: 'linear-gradient(135deg, #b39ddb 0%, #9070D0 100%)', top: '12%', left: '55%' }}
+          animate={{ y: [0, 20, 0], scale: [1, 1.05, 1] }}
+          transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
         >
-          <Leaf size={70} />
+          <Store className="text-white w-8 h-8" />
         </motion.div>
 
-        {/* Mountain Silhouette */}
+        {/* Floating Asset 4 - Center Bottom (Orange-Purple Badge - completely replacing the stats void) */}
         <motion.div
-          className="absolute bottom-0 left-0 right-0 h-64 opacity-10"
-          style={{
-            background:
-              "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 300'%3E%3Cpath fill='%232F4858' d='M0,200 L300,50 L500,120 L700,30 L900,100 L1200,80 L1200,300 L0,300 Z'/%3E%3C/svg%3E\")",
-            backgroundSize: "cover",
-            backgroundPosition: "bottom",
-            y: heroParallax,
-          }}
-        />
+          className="absolute w-20 h-20 lg:w-24 lg:h-24 rounded-full shadow-[0_15px_40px_rgba(249,152,18,0.3)] flex items-center justify-center pointer-events-none z-20"
+          style={{ background: 'linear-gradient(135deg, #F99812 0%, #9070D0 100%)', bottom: '8%', left: '50%', marginLeft: '-3rem' }}
+          animate={{ y: [0, 25, 0], rotate: [0, 20, 0] }}
+          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+        >
+          <Award className="text-white w-10 h-10" />
+        </motion.div>
 
-        <div className="container mx-auto px-4 py-20 pt-32 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Left: Text Content */}
-            <motion.div
-              className="space-y-6"
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-            >
+        {/* Floating Asset 5 - Bottom Right (Lime Circle - near the slider end/side) */}
+        <motion.div
+          className="absolute w-14 h-14 rounded-full shadow-[0_10px_35px_rgba(154,205,50,0.4)] flex items-center justify-center pointer-events-none z-20"
+          style={{ background: 'linear-gradient(135deg, #aee34b 0%, #9ACD32 100%)', bottom: '18%', right: '6%' }}
+          animate={{ y: [0, -20, 0], scale: [1, 1.1, 1] }}
+          transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut' }}
+        >
+          <Star className="text-white w-6 h-6" />
+        </motion.div>
+
+        {/* Vibrant ambient sparkling dots */}
+        <motion.div className="absolute w-4 h-4 rounded-full bg-[#F99812] shadow-[0_0_15px_#F99812] z-20 pointer-events-none" style={{ top: '30%', left: '35%' }} animate={{ y: [0, 15, 0], opacity: [0.4, 0.9, 0.4] }} transition={{ duration: 3, repeat: Infinity }} />
+        <motion.div className="absolute w-5 h-5 rounded-full bg-[#9070D0] shadow-[0_0_15px_#9070D0] z-20 pointer-events-none" style={{ bottom: '25%', right: '28%' }} animate={{ y: [0, -20, 0], opacity: [0.4, 1, 0.4] }} transition={{ duration: 4, repeat: Infinity }} />
+        <motion.div className="absolute w-3 h-3 rounded-full bg-[#9ACD32] shadow-[0_0_15px_#9ACD32] z-20 pointer-events-none" style={{ top: '45%', right: '15%' }} animate={{ y: [0, -10, 0], opacity: [0.3, 0.8, 0.3] }} transition={{ duration: 2.5, repeat: Infinity }} />
+        <div className="container mx-auto px-4 lg:px-12 pt-28 pb-32 relative z-10 flex-1 flex flex-col justify-center">
+          {/* Glassmorphism Wrapping Container */}
+          <div
+            className="backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.05)] rounded-[2.5rem] p-6 lg:p-12 mb-16 mt-8 relative overflow-hidden z-10"
+            style={{
+              backgroundColor: 'rgba(255, 255, 255, 0.45)',
+              border: '1px solid rgba(255, 255, 255, 0.6)'
+            }}
+          >
+            <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+              {/* Left: Text Content */}
               <motion.div
-                initial={{ opacity: 0, scale: 0.8, y: 20 }}
-                animate={{
-                  opacity: 1,
-                  scale: 1,
-                  y: 0,
-                }}
-                transition={{
-                  delay: 0.25,
-                  duration: 0.8,
-                  type: "spring",
-                  stiffness: 100,
-                }}
-                className="flex items-center mb-4"
+                className="space-y-6 lg:pr-8 relative z-10"
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8 }}
               >
+                {/* Overline */}
                 <motion.div
-                  animate={{
-                    scale: [1, 1.05, 1],
-                    filter: [
-                      "drop-shadow(0 10px 20px rgba(255, 141, 40, 0.3))",
-                      "drop-shadow(0 15px 30px rgba(255, 141, 40, 0.5))",
-                      "drop-shadow(0 10px 20px rgba(255, 141, 40, 0.3))",
-                    ],
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-100/60 backdrop-blur-sm border border-orange-200/50"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1, duration: 0.5 }}
                 >
-                  <AsliBogorLogo
-                    variant="secondary"
-                    className="h-32 md:h-40 lg:h-48 w-auto drop-shadow-2xl"
-                    style={{
-                      filter:
-                        "drop-shadow(0 10px 25px rgba(255, 141, 40, 0.4))",
-                    }}
-                  />
+                  <Sparkles size={16} className="text-[#F99812]" />
+                  <span className="text-[#F99812] font-bold text-sm tracking-wider uppercase">
+                    Platform Ekosistem UMKM Indonesia
+                  </span>
+                </motion.div>
+
+                {/* Headline with Gradient Text */}
+                <motion.h1
+                  style={{
+                    color: "#2B323B",
+                    fontSize: "clamp(2.5rem, 4.5vw, 4.5rem)",
+                    fontWeight: 900,
+                    lineHeight: 1.15,
+                    letterSpacing: "-0.02em"
+                  }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2, duration: 0.6 }}
+                  className="mb-2"
+                >
+                  <span style={{ background: 'linear-gradient(to right, #F99812, #9070D0)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', color: 'transparent' }}>
+                    SADAYA
+                  </span> Tumbuh Bersama, Majukan UMKM Nusantara
+                </motion.h1>
+
+                {/* Subtitle */}
+                <motion.p
+                  style={{ color: "#4D4D4D", fontSize: "1.125rem", lineHeight: 1.6 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3, duration: 0.6 }}
+                  className="max-w-xl font-medium"
+                >
+                  Platform modern yang menghubungkan Customer, Driver, dan UMKM di seluruh Indonesia dalam satu ekosistem interaktif yang adil, kreatif, dan penuh semangat.
+                </motion.p>
+
+                {/* CTA Buttons */}
+                <motion.div
+                  className="flex flex-col sm:flex-row gap-4 pt-4"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5, duration: 0.6 }}
+                >
+                  <Button
+                    onClick={onNavigateToDirectory}
+                    className="px-8 py-6 text-base shadow-xl font-bold bg-[#9070D0] hover:bg-[#7b5bc0] text-white rounded-xl transition-all hover:translate-y-[-2px]"
+                  >
+                    Jelajahi Direktori
+                  </Button>
+                  <Button
+                    onClick={scrollToAuth}
+                    className="px-8 py-6 text-base shadow-xl font-bold bg-[#F99812] hover:bg-[#e08910] text-white rounded-xl transition-all hover:translate-y-[-2px]"
+                  >
+                    Masuk / Daftar Sekarang
+                  </Button>
                 </motion.div>
               </motion.div>
 
-              {/* Hook badge (wow in 3 detik pertama) */}
+              {/* Right: Dual-Direction Infinite Slider/Marquee */}
               <motion.div
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/70 backdrop-blur-sm border border-orange-100 shadow-sm"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.18, duration: 0.55 }}
-              >
-                <Sparkles size={18} style={{ color: "#FF8D28" }} />
-                <span style={{ color: "#2F4858", fontWeight: 800 }}>
-                  OH INI UMKM untuk beli produk lokal
-                </span>
-              </motion.div>
-
-              <motion.h1
-                style={{
-                  color: "#2F4858",
-                  fontSize: "clamp(2rem, 5vw, 3.5rem)",
-                  fontWeight: 700,
-                  lineHeight: 1.2,
-                }}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4, duration: 0.6 }}
-                className="mb-2"
-              >
-                Bikin Keren UMKM Lokal
-              </motion.h1>
-
-              <motion.p
-                style={{ color: "#4A4A4A", fontSize: "18px" }}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5, duration: 0.6 }}
-              >
-                Temukan dan dukung usaha keren di sekitarmu. Platform digital
-                yang menghubungkan UMKM Bogor dengan pelanggan di seluruh
-                Indonesia.
-              </motion.p>
-
-              <motion.div
-                className="flex flex-col sm:flex-row gap-4"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6, duration: 0.6 }}
-              >
-                <Button
-                  onClick={onNavigateToDirectory}
-                  className="px-8 py-6 text-lg hover-lift"
-                  style={{
-                    background:
-                      "linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)",
-                    color: "#FFFFFF",
-                    border: "none",
-                  }}
-                >
-                  Jelajahi Direktori
-                </Button>
-
-                <Button
-                  onClick={scrollToAuth}
-                  className="px-8 py-6 text-lg hover-lift"
-                  style={{
-                    background:
-                      "linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%)",
-                    color: "#FFFFFF",
-                    border: "none",
-                  }}
-                >
-                  Masuk / Daftar Sekarang
-                </Button>
-              </motion.div>
-
-              {/* Stats */}
-              <motion.div
-                className="grid grid-cols-3 gap-6 pt-8"
+                className="relative z-10 w-full py-2 lg:-mr-[20vw]"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 0.8, duration: 0.6 }}
+                transition={{ duration: 1, delay: 0.4 }}
+                style={{ maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)' }}
               >
-                {stats.map((stat, index) => {
-                  const Icon = stat.icon;
-                  return (
-                    <div key={index} className="text-center">
-                      <div className="flex items-center justify-center mb-2">
-                        <Icon
-                          size={24}
-                          style={{ color: stat.color }}
-                          className="mr-2"
-                        />
-                        <StatCountUp valueStr={stat.value} color={stat.color} />
-                      </div>
-                      <p className="body-3" style={{ color: "#4A4A4A" }}>
-                        {stat.label}
-                      </p>
-                    </div>
-                  );
-                })}
-              </motion.div>
-            </motion.div>
-
-            {/* Right: Illustration/Image - Keep original */}
-            <motion.div
-              className="relative"
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-            >
-              <div className="relative">
-                {/* Decorative circles */}
-                <motion.div
-                  className="absolute -top-10 -left-10 w-32 h-32 rounded-full bg-green-400 opacity-30 blur-xl"
-                  animate={{
-                    scale: [1, 1.2, 1],
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                />
-                <motion.div
-                  className="absolute -bottom-10 -right-10 w-40 h-40 rounded-full bg-orange-400 opacity-30 blur-xl"
-                  animate={{
-                    scale: [1, 1.3, 1],
-                  }}
-                  transition={{
-                    duration: 4,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                />
-
-                {/* Main visual - Decorative card grid */}
-                <div className="relative bg-white rounded-3xl shadow-2xl p-8 backdrop-blur-sm bg-opacity-90">
-                  <div className="grid grid-cols-2 gap-4">
-                    {categories.map((category, index) => (
-                      <motion.div
-                        key={index}
-                        className={`bg-gradient-to-br ${category.gradient} rounded-2xl p-6 h-32 flex items-center justify-center`}
-                        whileHover={{
-                          scale: 1.05,
-                          rotate: index % 2 === 0 ? 2 : -2,
-                        }}
-                        transition={{ type: "spring", stiffness: 300 }}
-                      >
-                        <div className="text-center text-white">
-                          <h4 className="font-bold text-lg mb-1">
-                            {category.name}
-                          </h4>
-                          <p className="body-3 text-white/90">
-                            {category.count}
-                          </p>
+                <div className="flex flex-col gap-6">
+                  {/* Row 1 (Top) - Right to Left */}
+                  <div className="flex overflow-hidden">
+                    <motion.div
+                      className="flex gap-6 pr-6"
+                      animate={{ x: ["0%", "-50%"] }}
+                      transition={{ ease: "linear", duration: 35, repeat: Infinity }}
+                      style={{ width: "max-content" }}
+                    >
+                      {[...MOCK_MARQUEE_UMKM, ...MOCK_MARQUEE_UMKM].map((umkm, i) => (
+                        <div
+                          key={`row1-${i}`}
+                          className="relative rounded-2xl overflow-hidden shadow-md flex-none border border-slate-100/50 group bg-slate-100"
+                          style={{ minWidth: '240px', width: '240px', height: '160px' }}
+                        >
+                          <img src={umkm.image} alt={umkm.name} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                          <div className="absolute inset-0 bg-gradient-to-t from-[#1E293B]/90 via-[#1E293B]/20 to-transparent opacity-90" />
+                          <div className="absolute bottom-4 left-4 right-4 text-left">
+                            <p className="text-white/90 text-[10px] font-bold uppercase tracking-wider mb-1">{umkm.category}</p>
+                            <h3 className="text-white font-bold text-sm leading-tight drop-shadow-md line-clamp-2 h-[40px] overflow-hidden">{umkm.name}</h3>
+                          </div>
                         </div>
-                      </motion.div>
-                    ))}
+                      ))}
+                    </motion.div>
+                  </div>
+
+                  {/* Row 2 (Bottom) - Left to Right */}
+                  <div className="flex overflow-hidden">
+                    <motion.div
+                      className="flex gap-6 pr-6"
+                      animate={{ x: ["-50%", "0%"] }}
+                      transition={{ ease: "linear", duration: 40, repeat: Infinity }}
+                      style={{ width: "max-content" }}
+                    >
+                      {[...MOCK_MARQUEE_UMKM, ...MOCK_MARQUEE_UMKM].reverse().map((umkm, i) => (
+                        <div
+                          key={`row2-${i}`}
+                          className="relative rounded-2xl overflow-hidden shadow-md flex-none border border-slate-100/50 group bg-slate-100"
+                          style={{ minWidth: '240px', width: '240px', height: '160px' }}
+                        >
+                          <img src={umkm.image} alt={umkm.name} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                          <div className="absolute inset-0 bg-gradient-to-t from-[#1E293B]/90 via-[#1E293B]/20 to-transparent opacity-90" />
+                          <div className="absolute bottom-4 left-4 right-4 text-left">
+                            <p className="text-white/90 text-[10px] font-bold uppercase tracking-wider mb-1">{umkm.category}</p>
+                            <h3 className="text-white font-bold text-sm leading-tight drop-shadow-md line-clamp-2 h-[40px] overflow-hidden">{umkm.name}</h3>
+                          </div>
+                        </div>
+                      ))}
+                    </motion.div>
                   </div>
                 </div>
-              </div>
-            </motion.div>
+              </motion.div>
+            </div>
           </div>
+
+
         </div>
 
-        {/* Bottom Wave */}
-        <div className="absolute bottom-0 left-0 right-0">
-          <svg
-            viewBox="0 0 1200 120"
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-full"
-          >
-            <path
-              d="M0,50 C300,100 500,0 800,50 L800,120 L0,120 Z"
-              fill="#FFFFFF"
-              opacity="0.3"
-            />
-            <path
-              d="M0,70 C400,20 700,100 1200,50 L1200,120 L0,120 Z"
-              fill="#FFFFFF"
-            />
+        {/* Bottom Wave Shape */}
+        <div className="absolute bottom-[-2px] left-0 right-0 pointer-events-none z-0">
+          <svg viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg" className="w-full block" preserveAspectRatio="none" style={{ height: "100px" }}>
+            <path d="M0,50 C300,100 500,0 800,50 L800,120 L0,120 Z" fill="#FFFFFF" opacity="0.3" />
+            <path d="M0,70 C400,20 700,100 1200,50 L1200,120 L0,120 Z" fill="#FFFFFF" />
           </svg>
         </div>
       </section>
@@ -625,7 +563,7 @@ export function BerandaPage({
               className="text-3xl lg:text-4xl font-bold mb-4"
               style={{ color: "#2F4858" }}
             >
-              Kenapa Pilih Asli Bogor?
+              Kenapa Pilih Sadaya?
             </h2>
             <p
               style={{
@@ -674,7 +612,7 @@ export function BerandaPage({
                     transition={{ type: "spring", stiffness: 300 }}
                   >
                     <div
-                      className={`bg-gradient-to-br ${benefit.bgGradient} p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-all border-2 h-full relative overflow-hidden group`}
+                      className={`p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-all border-2 h-full relative overflow-hidden group bg-white ${benefit.bgGradient}`}
                       style={{
                         borderColor: "rgba(255, 255, 255, 0.8)",
                       }}
@@ -770,7 +708,7 @@ export function BerandaPage({
       {/* CTA Section */}
       <section
         id="auth-section"
-        className="py-20 lg:py-28 bg-gradient-to-b from-white to-[#FFF4E6]"
+        className="py-20 lg:py-28 bg-slate-50 relative"
       >
         <AuthSectionLanding onRoleSelect={onRoleSelect} />
       </section>
@@ -786,7 +724,7 @@ export function BerandaPage({
             transition={{ duration: 0.6 }}
           >
             <div className="inline-block mb-4">
-              <Award size={48} style={{ color: "#FF8D28" }} />
+              <Award size={48} style={{ color: "#F99912" }} />
             </div>
             <h2
               className="text-3xl lg:text-4xl font-bold mb-4"
@@ -835,7 +773,7 @@ export function BerandaPage({
               >
                 <h3
                   className="text-3xl font-bold mb-2"
-                  style={{ color: "#FF8D28" }}
+                  style={{ color: "#F99912" }}
                 >
                   {stat.value}
                 </h3>
@@ -898,20 +836,20 @@ export function BerandaPage({
             transition={{ duration: 0.6 }}
           >
             {[
-              { icon: Store, value: "500+", label: "UMKM", color: "#FF8D28" },
+              { icon: Store, value: "500+", label: "UMKM", color: "#F99912" },
               {
                 icon: Users,
                 value: "10K+",
                 label: "Pengguna",
-                color: "#4CAF50",
+                color: "#9ACD32",
               },
               {
                 icon: TrendingUp,
                 value: "50+",
                 label: "Driver",
-                color: "#2196F3",
+                color: "#9370DB",
               },
-              { icon: Star, value: "4.8", label: "Rating", color: "#FFB84D" },
+              { icon: Star, value: "4.8", label: "Rating", color: "#F99912" },
             ].map((s, idx) => {
               const Icon = s.icon;
               return (
@@ -966,7 +904,7 @@ export function BerandaPage({
                 className="absolute -inset-1 rounded-3xl opacity-70 blur-xl transition duration-300 group-hover:opacity-100"
                 style={{
                   background:
-                    "linear-gradient(135deg, #FF8D28 0%, #FFB84D 50%, #4CAF50 100%)",
+                    "linear-gradient(135deg, #F99912 0%, #9ACD32 50%, #9370DB 100%)",
                 }}
               />
               <div className="relative bg-white rounded-3xl shadow-2xl border border-orange-100">
@@ -975,7 +913,7 @@ export function BerandaPage({
                     className="flex-shrink-0 w-14 h-14 rounded-2xl flex items-center justify-center ml-2"
                     style={{
                       background:
-                        "linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)",
+                        "linear-gradient(135deg, #F99912 0%, #9ACD32 100%)",
                     }}
                   >
                     <Search className="text-white" size={24} />
@@ -992,146 +930,120 @@ export function BerandaPage({
             </div>
           </motion.div>
 
-          {/* Filter */}
-          <motion.div
-            className="flex flex-wrap justify-center gap-3 mb-10"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            {(
-              ["Semua", "Makanan", "Minuman", "Jasa", "Kerajinan"] as const
-            ).map((c) => (
-              <motion.button
-                key={c}
-                onClick={() => setDirectoryCategory(c)}
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.98 }}
-                className="px-6 py-3 rounded-2xl font-bold text-sm border-2 shadow-sm"
-                style={
-                  directoryCategory === c
-                    ? {
-                        background:
-                          "linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)",
-                        color: "#FFFFFF",
-                        borderColor: "transparent",
-                      }
-                    : {
-                        background: "#FFFFFF",
-                        color: "#2F4858",
-                        borderColor: "#FFE5CC",
-                      }
-                }
-              >
-                {c}
-              </motion.button>
-            ))}
-          </motion.div>
 
           {/* Grid UMKM (preview seperti Direktori) */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {filteredDirectory.map((umkm, idx) => (
-              <motion.div
-                key={umkm.name}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.06, duration: 0.5 }}
-                whileHover={{ y: -8 }}
-                className="group"
-              >
-                <div className="bg-white rounded-3xl overflow-hidden border-2 border-orange-100 shadow-xl hover:shadow-2xl transition-all h-full flex flex-col">
-                  <div className="relative h-56 overflow-hidden">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+          {filteredDirectory.map((umkm, idx) => (
+            <motion.div
+              key={umkm.name}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.06, duration: 0.5 }}
+              whileHover={{
+                y: -12,
+                scale: 1.02,
+                rotateY: 2,
+                transition: { duration: 0.3 }
+              }}
+              className="group h-full"
+            >
+              <div className="bg-white rounded-3xl overflow-hidden border-2 border-gray-100 hover:border-gray-200 shadow-xl hover:shadow-2xl transition-all h-full flex flex-col cursor-pointer">
+                <div className="relative overflow-hidden">
+                  <div className="relative h-64 lg:h-72 overflow-hidden bg-gray-100">
                     <img
                       src={umkm.image}
                       alt={umkm.name}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      style={{
+                        objectFit: 'cover',
+                        objectPosition: 'center',
+                        minHeight: '256px'
+                      }}
                       loading="lazy"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                    <div
-                      className="absolute top-4 left-4 px-4 py-2 rounded-full shadow-lg backdrop-blur-sm"
-                      style={{
-                        background:
-                          "linear-gradient(135deg, rgba(255, 141, 40, 0.95) 0%, rgba(255, 184, 77, 0.95) 100%)",
-                      }}
-                    >
-                      <span className="text-xs font-bold text-white">
-                        {umkm.category}
-                      </span>
-                    </div>
-                    <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-sm rounded-full px-3 py-1.5 flex items-center space-x-1 shadow-lg">
-                      <Star
-                        size={16}
-                        className="text-yellow-500 fill-current"
-                      />
-                      <span
-                        className="text-sm font-bold"
-                        style={{ color: "#2F4858" }}
-                      >
-                        {umkm.rating.toFixed(1)}
-                      </span>
-                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
                   </div>
 
-                  <div className="p-6 flex-1 flex flex-col">
-                    <h3
-                      className="text-xl font-bold mb-2 group-hover:text-[#FF8D28] transition-colors"
-                      style={{ color: "#2F4858" }}
-                    >
-                      {umkm.name}
-                    </h3>
-                    <p
-                      className="text-sm mb-4 line-clamp-2 flex-1"
-                      style={{ color: "#4A4A4A" }}
-                    >
-                      {umkm.description}
-                    </p>
-                    <div
-                      className="pt-4 border-t"
-                      style={{ borderColor: "#FFE5CC" }}
-                    >
-                      <p
-                        className="text-sm line-clamp-2"
-                        style={{ color: "#858585" }}
-                      >
-                        {umkm.address}
-                      </p>
-                    </div>
+                  <div
+                    className="absolute top-4 left-4 px-4 py-2 rounded-full shadow-lg backdrop-blur-sm"
+                    style={{
+                      background:
+                        "linear-gradient(135deg, rgba(255, 141, 40, 0.95) 0%, rgba(255, 184, 77, 0.95) 100%)",
+                    }}
+                  >
+                    <span className="text-xs font-bold text-white">
+                      {umkm.category}
+                    </span>
+                  </div>
 
+                  <div className="absolute top-4 right-4 bg-white/95 backdrop-blur-sm rounded-full px-3 py-1.5 flex items-center space-x-1 shadow-lg">
+                    <Star size={16} className="text-yellow-500 fill-current" />
+                    <span className="text-sm font-bold" style={{ color: "#2F4858" }}>
+                      {umkm.rating.toFixed(1)}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="p-6 flex-1 flex flex-col relative z-10">
+                  <motion.h4
+                    style={{
+                      color: '#2F4858',
+                      fontSize: '20px',
+                      fontWeight: 700,
+                      lineHeight: 1.3
+                    }}
+                    className="mb-3 group-hover:text-[#9370DB] transition-colors"
+                    whileHover={{ x: 5 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {umkm.name}
+                  </motion.h4>
+
+                  <p
+                    className="text-sm mb-4 line-clamp-2"
+                    style={{
+                      color: '#4A4A4A',
+                      lineHeight: 1.5
+                    }}
+                  >
+                    {umkm.description}
+                  </p>
+
+                  <div className="flex items-start gap-2 pt-3 border-t mt-auto" style={{ borderColor: '#D7BDE2' }}>
+                    <Store size={18} style={{ color: '#9370DB' }} className="mt-0.5 flex-shrink-0" />
+                    <p className="text-sm line-clamp-2" style={{ color: '#858585' }}>
+                      {umkm.address}
+                    </p>
+                  </div>
+
+                  <motion.div
+                    className="mt-4 opacity-0 group-hover:opacity-100 transition-opacity"
+                    initial={{ y: 10 }}
+                    whileHover={{ y: 0 }}
+                  >
                     <motion.button
                       onClick={onNavigateToDirectory}
-                      className="w-full mt-5 py-3 rounded-xl font-bold text-white"
+                      className="w-full py-4 rounded-xl text-center font-semibold text-sm"
                       style={{
-                        background:
-                          "linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)",
+                        background: 'linear-gradient(135deg, #9370DB 0%, #B4A7D6 100%)',
+                        color: '#FFFFFF'
                       }}
-                      whileHover={{ scale: 1.02, y: -2 }}
-                      whileTap={{ scale: 0.98 }}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
                     >
                       Lihat Detail →
                     </motion.button>
-                  </div>
+                  </motion.div>
                 </div>
-              </motion.div>
-            ))}
-          </div>
-
-          <div className="mt-10 text-center">
-            <motion.button
-              onClick={onNavigateToDirectory}
-              className="px-8 py-4 rounded-xl font-bold text-white shadow-xl"
-              style={{
-                background: "linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)",
-              }}
-              whileHover={{ scale: 1.03, y: -2 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              Lihat Semua UMKM →
-            </motion.button>
-          </div>
+              </div>
+            </motion.div>
+          ))}
         </div>
+
+
+      </div>
       </section>
 
       {/* Promo Section */}
@@ -1145,7 +1057,7 @@ export function BerandaPage({
             transition={{ duration: 0.6 }}
           >
             <div className="inline-flex items-center gap-3 mb-4 px-5 py-2.5 rounded-full bg-[#FFF4E6] border border-orange-100">
-              <Gift size={18} style={{ color: "#FF8D28" }} />
+              <Gift size={18} style={{ color: "#F99912" }} />
               <span className="font-bold" style={{ color: "#2F4858" }}>
                 Promo Spesial Buat Kamu
               </span>
@@ -1168,17 +1080,20 @@ export function BerandaPage({
               {
                 title: "Diskon 15% Mingguan",
                 desc: "Pakai kode: BOGOR15",
-                accent: "#FF8D28",
+                accent: "#F99912",
+                gradient: "linear-gradient(135deg, #F99912 0%, #9ACD32 100%)",
               },
               {
                 title: "Ongkir Hemat",
                 desc: "Untuk UMKM pilihan, mulai Rp0",
-                accent: "#4CAF50",
+                accent: "#9ACD32",
+                gradient: "linear-gradient(135deg, #9ACD32 0%, #9370DB 100%)",
               },
               {
                 title: "Poin Reward Lebih Banyak",
                 desc: "Setiap transaksi dapat reward tambahan",
-                accent: "#2196F3",
+                accent: "#9370DB",
+                gradient: "linear-gradient(135deg, #9370DB 0%, #F99912 100%)",
               },
             ].map((promo, idx) => (
               <motion.div
@@ -1231,7 +1146,7 @@ export function BerandaPage({
                   onClick={onNavigateToDirectory}
                   className="w-full mt-5 py-3 rounded-xl font-bold text-white"
                   style={{
-                    background: `linear-gradient(135deg, ${promo.accent} 0%, #FFB84D 100%)`,
+                    background: promo.gradient,
                   }}
                   whileHover={{ scale: 1.03, y: -2 }}
                   whileTap={{ scale: 0.98 }}
@@ -1267,7 +1182,7 @@ export function BerandaPage({
             transition={{ duration: 0.6 }}
           >
             <div className="inline-flex items-center gap-3 mb-4 px-5 py-2.5 rounded-full bg-white/70 border border-orange-100 backdrop-blur-sm shadow-sm">
-              <Star size={18} style={{ color: "#FF8D28" }} />
+              <Star size={18} style={{ color: "#F99912" }} />
               <span className="font-bold" style={{ color: "#2F4858" }}>
                 Review dari Komunitas
               </span>
@@ -1318,7 +1233,7 @@ export function BerandaPage({
                     ease: "easeInOut",
                   }}
                 >
-                  <Sparkles size={48} style={{ color: "#FF8D28" }} />
+                  <Sparkles size={48} style={{ color: "#F99912" }} />
                 </motion.div>
 
                 <div className="flex items-center justify-between mb-4 relative z-10">
@@ -1327,7 +1242,7 @@ export function BerandaPage({
                       className="w-12 h-12 rounded-full flex items-center justify-center font-bold"
                       style={{
                         background:
-                          "linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)",
+                          "linear-gradient(135deg, #F99912 0%, #9ACD32 100%)",
                         color: "#FFFFFF",
                       }}
                     >
@@ -1384,8 +1299,8 @@ export function BerandaPage({
                 <div className="mt-5 flex items-center justify-end gap-2 relative z-10">
                   <Heart
                     size={16}
-                    style={{ color: "#FF8D28" }}
-                    fill="#FF8D28"
+                    style={{ color: "#F99912" }}
+                    fill="#F99912"
                   />
                   <span className="body-3" style={{ color: "#858585" }}>
                     {activeTestimonial.likes} Orang merasa terbantu
@@ -1406,7 +1321,7 @@ export function BerandaPage({
                 className="px-4 py-2 rounded-xl border-2"
                 style={{
                   borderColor: "#FFE5CC",
-                  color: "#FF8D28",
+                  color: "#F99912",
                   background: "#FFF4E6",
                 }}
                 whileHover={{ scale: 1.04, y: -2 }}
@@ -1428,7 +1343,7 @@ export function BerandaPage({
                       height: 10,
                       background:
                         i === reviewIndex
-                          ? "linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)"
+                          ? "linear-gradient(135deg, #F99912 0%, #9ACD32 100%)"
                           : "rgba(255,141,40,0.15)",
                       border: "none",
                     }}
@@ -1445,7 +1360,7 @@ export function BerandaPage({
                 className="px-4 py-2 rounded-xl border-2"
                 style={{
                   borderColor: "#FFE5CC",
-                  color: "#FF8D28",
+                  color: "#F99912",
                   background: "#FFF4E6",
                 }}
                 whileHover={{ scale: 1.04, y: -2 }}
@@ -1470,7 +1385,7 @@ export function BerandaPage({
             transition={{ duration: 0.6 }}
           >
             <div className="inline-flex items-center gap-3 mb-4 px-5 py-2.5 rounded-full bg-[#FFF4E6] border border-orange-100">
-              <Sparkles size={18} style={{ color: "#FF8D28" }} />
+              <Sparkles size={18} style={{ color: "#F99912" }} />
               <span className="font-bold" style={{ color: "#2F4858" }}>
                 Inspirasi Buat Kamu
               </span>
@@ -1495,21 +1410,21 @@ export function BerandaPage({
                 tag: "Kuliner",
                 time: "5 menit",
                 image:
-                  "https://images.unsplash.com/photo-1526318898511-5c3f7f5f5c2e?auto=format&fit=crop&w=1200&q=80",
+                  "https://image.idntimes.com/post/20250825/2148896942_6ba49f76-ca2b-441f-ab69-b57627b8c6ca.jpg",
               },
               {
                 title: "10 Kuliner Khas Nusantara yang Wajib Kamu Coba!",
                 tag: "Kuliner",
                 time: "7 menit",
                 image:
-                  "https://images.unsplash.com/photo-1523986371872-9d3ba2e2f642?auto=format&fit=crop&w=1200&q=80",
+                  "https://d1vbn70lmn1nqe.cloudfront.net/prod/wp-content/uploads/2024/07/16062938/Ragam-Makanan-Khas-Indonesia-yang-Lezat-dan-Kaya-Nutrisi.jpg",
               },
               {
                 title: "Panduan Lengkap Memulai Usaha Kecil dari Nol",
                 tag: "Bisnis",
                 time: "10 menit",
                 image:
-                  "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=80",
+                  "https://img.freepik.com/free-photo/business-objects-with-executives-discussing-blueprint-meeting_1098-4066.jpg?semt=ais_hybrid&w=740&q=80",
               },
               {
                 title: "Kenapa UMKM Harus Go Digital? Ini Manfaatnya!",
@@ -1537,7 +1452,7 @@ export function BerandaPage({
                     ease: "easeInOut",
                   }}
                 >
-                  <Sparkles size={44} style={{ color: "#FF8D28" }} />
+                  <Sparkles size={44} style={{ color: "#F99912" }} />
                 </motion.div>
 
                 <div className="relative h-36 rounded-2xl overflow-hidden mb-4">
@@ -1551,7 +1466,7 @@ export function BerandaPage({
                 </div>
                 <div className="flex items-center justify-between gap-4 mb-3 relative z-10">
                   <div className="inline-flex items-center gap-2">
-                    <Clock size={18} style={{ color: "#FF8D28" }} />
+                    <Clock size={18} style={{ color: "#F99912" }} />
                     <span
                       className="body-3"
                       style={{ color: "#858585", fontWeight: 700 }}
@@ -1563,7 +1478,7 @@ export function BerandaPage({
                     className="px-4 py-2 rounded-full text-xs font-bold"
                     style={{
                       background:
-                        "linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)",
+                        "linear-gradient(135deg, #F99912 0%, #9ACD32 100%)",
                       color: "#FFFFFF",
                     }}
                   >
@@ -1579,7 +1494,7 @@ export function BerandaPage({
                 <motion.button
                   onClick={onNavigateToDirectory}
                   className="mt-5 inline-flex items-center gap-2 font-bold"
-                  style={{ color: "#FF8D28" }}
+                  style={{ color: "#F99912" }}
                   whileHover={{ x: 3 }}
                   whileTap={{ scale: 0.98 }}
                 >
@@ -1588,33 +1503,6 @@ export function BerandaPage({
                 </motion.button>
               </motion.div>
             ))}
-          </div>
-
-          <div className="mt-12 text-center">
-            <motion.button
-              onClick={scrollToAuth}
-              className="px-10 py-4 rounded-xl font-bold text-white shadow-xl border-0 inline-flex items-center gap-2"
-              style={{
-                background: "linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)",
-              }}
-              whileHover={{ scale: 1.03, y: -2 }}
-              whileTap={{ scale: 0.98 }}
-              animate={{
-                boxShadow: [
-                  "0 0 0 rgba(255,141,40,0)",
-                  "0 0 30px rgba(255,141,40,0.25)",
-                  "0 0 0 rgba(255,141,40,0)",
-                ],
-              }}
-              transition={{
-                duration: 2.2,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            >
-              <Sparkles size={18} />
-              Gabung Sekarang
-            </motion.button>
           </div>
         </div>
       </section>

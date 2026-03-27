@@ -102,8 +102,8 @@ export function DriverOnboarding() {
   return (
     <div className="min-h-screen p-4" style={{ backgroundColor: '#F5F5F5' }}>
       <div className="max-w-3xl mx-auto py-8">
-        <Alert className="mb-6" style={{ backgroundColor: '#FDE08E', borderColor: '#FF8D28' }}>
-          <AlertCircle style={{ color: '#FF8D28' }} />
+        <Alert className="mb-6" style={{ backgroundColor: '#FDE08E', borderColor: '#F99912' }}>
+          <AlertCircle style={{ color: '#F99912' }} />
           <AlertDescription className="body-3" style={{ color: '#2F4858' }}>
             Anda perlu melengkapi pendaftaran driver sebelum dapat menggunakan dashboard secara penuh. 
             Akun Anda akan diverifikasi oleh admin dalam 1x24 jam.
@@ -113,7 +113,7 @@ export function DriverOnboarding() {
         <Card>
           <CardHeader>
             <div className="flex items-center gap-3 mb-2">
-              <div className="w-12 h-12 rounded-lg bg-[#FF8D28] flex items-center justify-center">
+              <div className="w-12 h-12 rounded-lg bg-[#F99912] flex items-center justify-center">
                 <Bike size={24} style={{ color: '#FFFFFF' }} />
               </div>
               <div>
@@ -264,7 +264,7 @@ export function DriverOnboarding() {
               <Button
                 type="submit"
                 className="w-full"
-                style={{ backgroundColor: '#FF8D28', color: '#FFFFFF' }}
+                style={{ backgroundColor: '#F99912', color: '#FFFFFF' }}
                 disabled={isLoading}
               >
                 {isLoading ? 'Mengirim...' : 'Kirim Pendaftaran'}

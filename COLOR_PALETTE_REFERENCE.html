@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SADAYA Color Palette Reference</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', 'Nunito', sans-serif;
+            background: #f8f9fa;
+            padding: 40px 20px;
+            color: #1a1a1a;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            background: linear-gradient(135deg, #F99912 0%, #9ACD32 50%, #9370DB 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #858585;
+            margin-bottom: 40px;
+            font-size: 1.1em;
+        }
+        
+        .section {
+            margin-bottom: 60px;
+        }
+        
+        .section-title {
+            font-size: 1.8em;
+            font-weight: 700;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #F99912;
+            color: #1a1a1a;
+        }
+        
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .color-box {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .color-box:hover {
+            transform: translateY(-5px);
+        }
+        
+        .color-sample {
+            height: 150px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 15px;
+            color: white;
+            font-weight: 600;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .color-info {
+            background: white;
+            padding: 15px;
+        }
+        
+        .color-name {
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 5px;
+        }
+        
+        .color-hex {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #858585;
+        }
+        
+        .gradient-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .gradient-box {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .gradient-sample {
+            height: 180px;
+            display: flex;
+            align-items: flex-end;
+            padding: 20px;
+        }
+        
+        .gradient-name {
+            background: white;
+            padding: 15px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+        
+        .stats {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2em;
+            font-weight: 700;
+            background: linear-gradient(135deg, #F99912 0%, #9370DB 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .stat-label {
+            color: #858585;
+            margin-top: 5px;
+        }
+        
+        .usage-section {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .usage-title {
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #1a1a1a;
+            font-size: 1.1em;
+        }
+        
+        .usage-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .usage-tag {
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+            color: white;
+        }
+        
+        .tag-orange {
+            background: #F99912;
+        }
+        
+        .tag-lime {
+            background: #9ACD32;
+            color: #1a1a1a;
+        }
+        
+        .tag-purple {
+            background: #9370DB;
+        }
+        
+        .tag-teal {
+            background: #14B8A6;
+        }
+        
+        .tag-indigo {
+            background: #6366F1;
+        }
+        
+        .tag-rose {
+            background: #F43F5E;
+        }
+        
+        .tag-cyan {
+            background: #06B6D4;
+        }
+        
+        .tag-amber {
+            background: #F59E0B;
+        }
+        
+        .tag-fuchsia {
+            background: #D946EF;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 30px;
+            color: #858585;
+            border-top: 1px solid #e0e0e0;
+            margin-top: 60px;
+        }
+        
+        .code-block {
+            background: #f3f4f6;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 SADAYA Color Palette</h1>
+        <p class="subtitle">Enhanced Balanced Color System v2.0</p>
+        
+        <!-- Stats Section -->
+        <div class="stats">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">12</div>
+                    <div class="stat-label">Warna Utama</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">27+</div>
+                    <div class="stat-label">Kombinasi Gradien</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">Kemungkinan Desain</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">✓</div>
+                    <div class="stat-label">Balanced & Merata</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Primary Colors -->
+        <div class="section">
+            <h2 class="section-title">🟠 Warna Primer SADAYA</h2>
+            <div class="color-grid">
+                <div class="color-box">
+                    <div class="color-sample" style="background: #F99912;">
+                        Orange
+                    </div>
+                    <div class="color-info">
+                        <div class="color-name">Primary Orange</div>
+                        <div class="color-hex">#F99912</div>
+                    </div>
+                </div>
+                <div class="color-box">
+                    <div class="color-sample" style="background: #9ACD32; color: #1a1a1a;">
+                        Lime
+                    </div>
+                    <div class="color-info">
+                        <div class="color-name">Primary Lime</div>
+                        <div class="color-hex">#9ACD32</div>
+                    </div>
+                </div>
+                <div class="color-box">
+                    <div class="color-sample" style="background: #9370DB;">
+                        Purple
+                    </div>
+                    <div class="color-info">
+                        <div class="color-name">Primary Purple</div>
+                        <div class="color-hex">#9370DB</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Secondary Colors -->
+        <div class="section">
+            <h2 class="section-title">🎨 Warna Sekunder (untuk Keseimbangan)</h2>
+            <div class="color-grid">
+                <div class="color-box">
+                    <div class="color-sample" style="background: #14B8A6;">Teal</div>
+                    <div class="color-info">
+                        <div class="color-name">Secondary Teal</div>
+                        <div class="color-hex">#14B8A6</div>
+                    </div>
+                </div>
+                <div class="color-box">
+                    <div class="color-sample" style="background: #6366F1;">Indigo</div>
+                    <div class="color-info">
+                        <div class="color-name">Secondary Indigo</div>
+                        <div class="color-hex">#6366F1</div>
+                    </div>
+                </div>
+                <div class="color-box">
+                    <div class="color-sample" style="background: #F43F5E;">Rose</div>
+                    <div class="color-info">
+                        <div class="color-name">Secondary Rose</div>
+                        <div class="color-hex">#F43F5E</div>
+                    </div>
+                </div>
+                <div class="color-box">
+                    <div class="color-sample" style="background: #06B6D4;">Cyan</div>
+                    <div class="color-info">
+                        <div class="color-name">Secondary Cyan</div>
+                        <div class="color-hex">#06B6D4</div>
+                    </div>
+                </div>
+                <div class="color-box">
+                    <div class="color-sample" style="background: #F59E0B;">Amber</div>
+                    <div class="color-info">
+                        <div class="color-name">Secondary Amber</div>
+                        <div class="color-hex">#F59E0B</div>
+                    </div>
+                </div>
+                <div class="color-box">
+                    <div class="color-sample" style="background: #D946EF;">Fuchsia</div>
+                    <div class="color-info">
+                        <div class="color-name">Secondary Fuchsia</div>
+                        <div class="color-hex">#D946EF</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Accent Colors -->
+        <div class="section">
+            <h2 class="section-title">✨ Accent Colors</h2>
+            <div class="color-grid">
+                <div class="color-box">
+                    <div class="color-sample" style="background: #10B981;">Mint</div>
+                    <div class="color-info">
+                        <div class="color-name">Accent Mint</div>
+                        <div class="color-hex">#10B981</div>
+                    </div>
+                </div>
+                <div class="color-box">
+                    <div class="color-sample" style="background: #059669;">Emerald</div>
+                    <div class="color-info">
+                        <div class="color-name">Accent Emerald</div>
+                        <div class="color-hex">#059669</div>
+                    </div>
+                </div>
+                <div class="color-box">
+                    <div class="color-sample" style="background: #0EA5E9;">Sky</div>
+                    <div class="color-info">
+                        <div class="color-name">Accent Sky</div>
+                        <div class="color-hex">#0EA5E9</div>
+                    </div>
+                </div>
+                <div class="color-box">
+                    <div class="color-sample" style="background: #EC4899;">Pink</div>
+                    <div class="color-info">
+                        <div class="color-name">Accent Pink</div>
+                        <div class="color-hex">#EC4899</div>
+                    </div>
+                </div>
+                <div class="color-box">
+                    <div class="color-sample" style="background: #EF4444;">Red</div>
+                    <div class="color-info">
+                        <div class="color-name">Accent Red</div>
+                        <div class="color-hex">#EF4444</div>
+                    </div>
+                </div>
+                <div class="color-box">
+                    <div class="color-sample" style="background: #3B82F6;">Blue</div>
+                    <div class="color-info">
+                        <div class="color-name">Accent Blue</div>
+                        <div class="color-hex">#3B82F6</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Primary Gradients -->
+        <div class="section">
+            <h2 class="section-title">🌈 Primary Gradients</h2>
+            <div class="gradient-grid">
+                <div class="gradient-box">
+                    <div class="gradient-sample" style="background: linear-gradient(135deg, #F99912 0%, #9ACD32 50%, #9370DB 100%);">
+                        <span style="color: white; font-weight: 600; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">Primary</span>
+                    </div>
+                    <div class="gradient-name">Gradient Primary</div>
+                </div>
+                <div class="gradient-box">
+                    <div class="gradient-sample" style="background: linear-gradient(135deg, #9370DB 0%, #06B6D4 25%, #9ACD32 50%, #F99912 75%, #F43F5E 100%);">
+                        <span style="color: white; font-weight: 600; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">Balanced</span>
+                    </div>
+                    <div class="gradient-name">Gradient Balanced</div>
+                </div>
+                <div class="gradient-box">
+                    <div class="gradient-sample" style="background: linear-gradient(120deg, #F43F5E 0%, #F99912 25%, #9ACD32 50%, #14B8A6 75%, #9370DB 100%);">
+                        <span style="color: white; font-weight: 600; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">Vibrant</span>
+                    </div>
+                    <div class="gradient-name">Gradient Vibrant</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Warm Gradients -->
+        <div class="section">
+            <h2 class="section-title">🔥 Warm Gradients (Energik)</h2>
+            <div class="gradient-grid">
+                <div class="gradient-box">
+                    <div class="gradient-sample" style="background: linear-gradient(135deg, #F99912 0%, #9ACD32 100%);">
+                        <span style="color: white; font-weight: 600; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">Orange-Lime</span>
+                    </div>
+                    <div class="gradient-name">Orange → Lime</div>
+                </div>
+                <div class="gradient-box">
+                    <div class="gradient-sample" style="background: linear-gradient(120deg, #F99912 0%, #F59E0B 50%, #EC4899 100%);">
+                        <span style="color: white; font-weight: 600; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">Warm</span>
+                    </div>
+                    <div class="gradient-name">Warm: Orange-Amber-Pink</div>
+                </div>
+                <div class="gradient-box">
+                    <div class="gradient-sample" style="background: linear-gradient(120deg, #F99912 0%, #F43F5E 50%, #D946EF 100%);">
+                        <span style="color: white; font-weight: 600; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">Sunset</span>
+                    </div>
+                    <div class="gradient-name">Sunset: Orange-Rose-Fuchsia</div>
+                </div>
+                <div class="gradient-box">
+                    <div class="gradient-sample" style="background: linear-gradient(135deg, #F99912 0%, #F43F5E 100%);">
+                        <span style="color: white; font-weight: 600; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">Rose</span>
+                    </div>
+                    <div class="gradient-name">Orange → Rose</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Cool Gradients -->
+        <div class="section">
+            <h2 class="section-title">❄️ Cool Gradients (Profesional)</h2>
+            <div class="gradient-grid">
+                <div class="gradient-box">
+                    <div class="gradient-sample" style="background: linear-gradient(120deg, #06B6D4 0%, #6366F1 50%, #9370DB 100%);">
+                        <span style="color: white; font-weight: 600; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">Cool</span>
+                    </div>
+                    <div class="gradient-name">Cool: Cyan-Indigo-Purple</div>
+                </div>
+                <div class="gradient-box">
+                    <div class="gradient-sample" style="background: linear-gradient(120deg, #0EA5E9 0%, #06B6D4 50%, #14B8A6 100%);">
+                        <span style="color: white; font-weight: 600; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">Ocean</span>
+                    </div>
+                    <div class="gradient-name">Ocean: Sky-Cyan-Teal</div>
+                </div>
+                <div class="gradient-box">
+                    <div class="gradient-sample" style="background: linear-gradient(135deg, #6366F1 0%, #06B6D4 100%);">
+                        <span style="color: white; font-weight: 600; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">Indigo-Cyan</span>
+                    </div>
+                    <div class="gradient-name">Indigo → Cyan</div>
+                </div>
+                <div class="gradient-box">
+                    <div class="gradient-sample" style="background: linear-gradient(135deg, #6366F1 0%, #0EA5E9 100%);">
+                        <span style="color: white; font-weight: 600; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">Indigo-Sky</span>
+                    </div>
+                    <div class="gradient-name">Indigo → Sky</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Nature Gradients -->
+        <div class="section">
+            <h2 class="section-title">🌱 Nature Gradients (Pertumbuhan)</h2>
+            <div class="gradient-grid">
+                <div class="gradient-box">
+                    <div class="gradient-sample" style="background: linear-gradient(120deg, #059669 0%, #9ACD32 50%, #14B8A6 100%);">
+                        <span style="color: white; font-weight: 600; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">Forest</span>
+                    </div>
+                    <div class="gradient-name">Forest: Emerald-Lime-Teal</div>
+                </div>
+                <div class="gradient-box">
+                    <div class="gradient-sample" style="background: linear-gradient(135deg, #9ACD32 0%, #14B8A6 100%);">
+                        <span style="color: #1a1a1a; font-weight: 600; text-shadow: 0 2px 4px rgba(255,255,255,0.3);">Lime-Teal</span>
+                    </div>
+                    <div class="gradient-name">Lime → Teal</div>
+                </div>
+                <div class="gradient-box">
+                    <div class="gradient-sample" style="background: linear-gradient(135deg, #9ACD32 0%, #059669 100%);">
+                        <span style="color: white; font-weight: 600; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">Lime-Emerald</span>
+                    </div>
+                    <div class="gradient-name">Lime → Emerald</div>
+                </div>
+                <div class="gradient-box">
+                    <div class="gradient-sample" style="background: linear-gradient(135deg, #9ACD32 0%, #06B6D4 100%);">
+                        <span style="color: #1a1a1a; font-weight: 600; text-shadow: 0 2px 4px rgba(255,255,255,0.3);">Lime-Cyan</span>
+                    </div>
+                    <div class="gradient-name">Lime → Cyan</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Soft Pastel Gradients -->
+        <div class="section">
+            <h2 class="section-title">🎀 Soft Pastel Gradients (Background)</h2>
+            <div class="gradient-grid">
+                <div class="gradient-box">
+                    <div class="gradient-sample" style="background: linear-gradient(135deg, #FED7AA 0%, #C4F34B 100%);">
+                        <span style="color: #1a1a1a; font-weight: 600; text-shadow: 0 2px 4px rgba(255,255,255,0.5);">Soft Warm</span>
+                    </div>
+                    <div class="gradient-name">Soft Warm</div>
+                </div>
+                <div class="gradient-box">
+                    <div class="gradient-sample" style="background: linear-gradient(135deg, #A3E4D7 0%, #D8B4FE 100%);">
+                        <span style="color: white; font-weight: 600; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">Soft Cool</span>
+                    </div>
+                    <div class="gradient-name">Soft Cool</div>
+                </div>
+                <div class="gradient-box">
+                    <div class="gradient-sample" style="background: linear-gradient(135deg, #FECACA 0%, #BEF264 50%, #AED9E0 100%);">
+                        <span style="color: #1a1a1a; font-weight: 600; text-shadow: 0 2px 4px rgba(255,255,255,0.5);">Soft Mixed</span>
+                    </div>
+                    <div class="gradient-name">Soft Mixed</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Usage Guidelines -->
+        <div class="section">
+            <h2 class="section-title">📋 Rekomendasi Penggunaan</h2>
+            
+            <div class="usage-section">
+                <div class="usage-title">🎯 Section Hero & CTA</div>
+                <div class="usage-items">
+                    <span class="usage-tag tag-orange">Gradient Vibrant</span>
+                    <span class="usage-tag tag-purple">Gradient Balanced</span>
+                    <span class="usage-tag tag-violet" style="background: linear-gradient(120deg, #F99912 0%, #F43F5E 50%, #D946EF 100%);">Gradient Sunset</span>
+                </div>
+            </div>
+            
+            <div class="usage-section">
+                <div class="usage-title">🎨 Feature Cards (Rotasi Warna)</div>
+                <div class="usage-items">
+                    <span class="usage-tag tag-purple">Purple-Indigo</span>
+                    <span class="usage-tag tag-teal">Teal-Cyan</span>
+                    <span class="usage-tag tag-orange">Orange-Amber</span>
+                    <span class="usage-tag tag-rose">Rose-Pink</span>
+                    <span class="usage-tag tag-lime">Lime-Emerald</span>
+                </div>
+            </div>
+            
+            <div class="usage-section">
+                <div class="usage-title">💾 Footer & Sections</div>
+                <div class="usage-items">
+                    <span class="usage-tag tag-indigo">Gradient Cool</span>
+                    <span class="usage-tag" style="background: linear-gradient(120deg, #0EA5E9 0%, #06B6D4 50%, #14B8A6 100%);">Gradient Ocean</span>
+                    <span class="usage-tag tag-purple">Gradient Balanced</span>
+                </div>
+            </div>
+            
+            <div class="usage-section">
+                <div class="usage-title">🎮 Gamification Elements</div>
+                <div class="usage-items">
+                    <span class="usage-tag tag-cyan">Level 1: Cyan-Sky</span>
+                    <span class="usage-tag tag-lime">Level 2: Lime-Emerald</span>
+                    <span class="usage-tag tag-purple">Level 3: Purple-Fuchsia</span>
+                    <span class="usage-tag tag-orange">Level 4: Orange-Amber</span>
+                    <span class="usage-tag tag-rose">Level 5: Rose-Pink</span>
+                </div>
+            </div>
+            
+            <div class="usage-section">
+                <div class="usage-title">✅ Buttons & Status</div>
+                <div class="usage-items">
+                    <span class="usage-tag tag-orange">Primary: Orange</span>
+                    <span class="usage-tag tag-lime">Success: Lime</span>
+                    <span class="usage-tag tag-indigo">Secondary: Indigo</span>
+                    <span class="usage-tag tag-rose">Danger: Rose</span>
+                    <span class="usage-tag tag-amber">Warning: Amber</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><strong>SADAYA Color Palette v2.0</strong> • Enhanced Balanced System</p>
+            <p>Untuk panduan lengkap, buka <code>COLOR_PALETTE_GUIDE.md</code></p>
+        </div>
+    </div>
+</body>
+</html>

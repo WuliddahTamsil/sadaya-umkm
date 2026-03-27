@@ -54,11 +54,11 @@ export function PersebaranUMKM() {
 
   const getColorByCategory = (category: string): string => {
     const colors: Record<string, string> = {
-      'Makanan': '#E91E63', // Pink/Red
-      'Minuman': '#FFC107', // Yellow/Amber
-      'Kerajinan': '#2196F3', // Blue
-      'Fashion': '#9C27B0', // Purple
-      'Jasa': '#4CAF50' // Green
+      'Makanan': '#F99912', // Orange
+      'Minuman': '#9ACD32', // Lime
+      'Kerajinan': '#9370DB', // Purple
+      'Fashion': '#F99912', // Orange
+      'Jasa': '#9ACD32' // Lime
     };
     return colors[category] || '#757575';
   };
@@ -146,7 +146,7 @@ export function PersebaranUMKM() {
       area: 'Bogor Tengah', 
       count: umkmPoints.filter(p => p.area === 'Bogor Tengah').length, 
       active: umkmPoints.filter(p => p.area === 'Bogor Tengah' && p.status === 'active').length, 
-      color: '#2E7D32'
+      color: '#9ACD32'
     },
     { 
       area: 'Bogor Utara', 
@@ -158,7 +158,7 @@ export function PersebaranUMKM() {
       area: 'Bogor Selatan', 
       count: umkmPoints.filter(p => p.area === 'Bogor Selatan').length, 
       active: umkmPoints.filter(p => p.area === 'Bogor Selatan' && p.status === 'active').length, 
-      color: '#F57C00'
+      color: '#F99912'
     },
     { 
       area: 'Bogor Timur', 
@@ -925,11 +925,11 @@ export function PersebaranUMKM() {
                   </div>
                   <div className="space-y-2">
                     {[
-                      { name: 'Makanan', color: '#E91E63', icon: UtensilsCrossed, count: filteredPoints.filter(p => p.category === 'Makanan').length },
-                      { name: 'Minuman', color: '#FFC107', icon: Coffee, count: filteredPoints.filter(p => p.category === 'Minuman').length },
-                      { name: 'Kerajinan', color: '#2196F3', icon: Hammer, count: filteredPoints.filter(p => p.category === 'Kerajinan').length },
-                      { name: 'Fashion', color: '#9C27B0', icon: Shirt, count: filteredPoints.filter(p => p.category === 'Fashion').length },
-                      { name: 'Jasa', color: '#4CAF50', icon: Wrench, count: filteredPoints.filter(p => p.category === 'Jasa').length },
+                      { name: 'Makanan', color: '#F99912', icon: UtensilsCrossed, count: filteredPoints.filter(p => p.category === 'Makanan').length },
+                      { name: 'Minuman', color: '#9ACD32', icon: Coffee, count: filteredPoints.filter(p => p.category === 'Minuman').length },
+                      { name: 'Kerajinan', color: '#9370DB', icon: Hammer, count: filteredPoints.filter(p => p.category === 'Kerajinan').length },
+                      { name: 'Fashion', color: '#F99912', icon: Shirt, count: filteredPoints.filter(p => p.category === 'Fashion').length },
+                      { name: 'Jasa', color: '#9ACD32', icon: Wrench, count: filteredPoints.filter(p => p.category === 'Jasa').length },
                     ].map((cat, index) => {
                       const IconComponent = cat.icon;
                       const isSelected = selectedCategory === cat.name;
@@ -1030,13 +1030,13 @@ export function PersebaranUMKM() {
                       { 
                         label: 'UMKM Ditampilkan', 
                         value: `${filteredPoints.length} / ${totalUMKM}`,
-                        color: '#2196F3',
+                        color: '#9370DB',
                         icon: Store
                       },
                       { 
                         label: 'UMKM Aktif', 
                         value: filteredPoints.filter(p => p.status === 'active').length.toString(),
-                        color: '#4CAF50',
+                        color: '#9ACD32',
                         icon: Activity
                       },
                       { 
@@ -1048,7 +1048,7 @@ export function PersebaranUMKM() {
                       { 
                         label: 'Kategori', 
                         value: selectedCategory === 'all' ? 'Semua' : selectedCategory,
-                        color: '#9C27B0',
+                        color: '#9370DB',
                         icon: Filter
                       },
                     ].map((stat, index) => {
@@ -1082,8 +1082,8 @@ export function PersebaranUMKM() {
                     })}
                     <div className="pt-3 mt-3 border-t" style={{ borderColor: 'rgba(46, 125, 50, 0.2)' }}>
                       <div className="flex items-center gap-2 p-2 rounded-lg" style={{ backgroundColor: 'rgba(46, 125, 50, 0.05)' }}>
-                        <MapPin size={16} style={{ color: '#2E7D32' }} />
-                        <p className="text-xs font-semibold" style={{ color: '#2E7D32' }}>
+                        <MapPin size={16} style={{ color: '#9ACD32' }} />
+                        <p className="text-xs font-semibold" style={{ color: '#9ACD32' }}>
                           Kota Bogor, Jawa Barat
                         </p>
                       </div>
@@ -1116,7 +1116,7 @@ export function PersebaranUMKM() {
                   }}
                   disabled={zoomLevel >= 2}
                 >
-                  <ZoomIn size={20} style={{ color: '#2E7D32' }} />
+                  <ZoomIn size={20} style={{ color: '#9ACD32' }} />
                 </Button>
               </motion.div>
               <motion.div 
@@ -1135,7 +1135,7 @@ export function PersebaranUMKM() {
                   }}
                   disabled={zoomLevel <= 0.5}
                 >
-                  <ZoomOut size={20} style={{ color: '#2E7D32' }} />
+                  <ZoomOut size={20} style={{ color: '#9ACD32' }} />
                 </Button>
               </motion.div>
               <motion.div 
@@ -1202,8 +1202,8 @@ export function PersebaranUMKM() {
                         variant="outline"
                         className="px-3 py-1"
                         style={{
-                          borderColor: selectedPoint.status === 'active' ? '#4CAF50' : '#F44336',
-                          color: selectedPoint.status === 'active' ? '#4CAF50' : '#F44336'
+                          borderColor: selectedPoint.status === 'active' ? '#9ACD32' : '#F44336',
+                          color: selectedPoint.status === 'active' ? '#9ACD32' : '#F44336'
                         }}
                       >
                         <Activity size={12} className="mr-1" />
@@ -1245,7 +1245,7 @@ export function PersebaranUMKM() {
                     transition={{ type: 'spring', stiffness: 300 }}
                   >
                     <div className="flex items-center gap-2 mb-2">
-                      <TrendingUp size={18} style={{ color: '#2196F3' }} />
+                      <TrendingUp size={18} style={{ color: '#9370DB' }} />
                       <p className="text-xs font-semibold" style={{ color: '#858585' }}>Total Orders</p>
                     </div>
                     <p className="text-2xl font-bold" style={{ color: '#2F4858' }}>
@@ -1287,10 +1287,10 @@ export function PersebaranUMKM() {
                     transition={{ type: 'spring', stiffness: 300 }}
                   >
                     <div className="flex items-center gap-2 mb-2">
-                      <Activity size={18} style={{ color: '#4CAF50' }} />
+                      <Activity size={18} style={{ color: '#9ACD32' }} />
                       <p className="text-xs font-semibold" style={{ color: '#858585' }}>Status</p>
                     </div>
-                    <p className="text-2xl font-bold" style={{ color: selectedPoint.status === 'active' ? '#4CAF50' : '#F44336' }}>
+                    <p className="text-2xl font-bold" style={{ color: selectedPoint.status === 'active' ? '#9ACD32' : '#F44336' }}>
                       {selectedPoint.status === 'active' ? 'Aktif' : 'Nonaktif'}
                     </p>
                     <p className="text-xs mt-1" style={{ color: '#858585' }}>

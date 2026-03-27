@@ -47,9 +47,9 @@ export function SettingsPage() {
           <div className="flex items-center gap-3">
             <div 
               className="w-10 h-10 rounded-lg flex items-center justify-center"
-              style={{ backgroundColor: '#FF8D2820' }}
+              style={{ backgroundColor: '#F9991220' }}
             >
-              <Bell size={20} style={{ color: '#FF8D28' }} />
+              <Bell size={20} style={{ color: '#F99912' }} />
             </div>
             <CardTitle style={{ color: '#2F4858' }}>Notifikasi</CardTitle>
           </div>
@@ -130,9 +130,9 @@ export function SettingsPage() {
           <div className="flex items-center gap-3">
             <div 
               className="w-10 h-10 rounded-lg flex items-center justify-center"
-              style={{ backgroundColor: '#2196F320' }}
+              style={{ backgroundColor: '#9370DB20' }}
             >
-              <Moon size={20} style={{ color: '#2196F3' }} />
+              <Moon size={20} style={{ color: '#9370DB' }} />
             </div>
             <CardTitle style={{ color: '#2F4858' }}>Tampilan</CardTitle>
           </div>
@@ -178,9 +178,9 @@ export function SettingsPage() {
           <div className="flex items-center gap-3">
             <div 
               className="w-10 h-10 rounded-lg flex items-center justify-center"
-              style={{ backgroundColor: '#4CAF5020' }}
+              style={{ backgroundColor: '#9ACD3220' }}
             >
-              <Shield size={20} style={{ color: '#4CAF50' }} />
+              <Shield size={20} style={{ color: '#9ACD32' }} />
             </div>
             <CardTitle style={{ color: '#2F4858' }}>Keamanan</CardTitle>
           </div>
@@ -204,7 +204,7 @@ export function SettingsPage() {
 
           <div className="p-4 rounded-lg space-y-3" style={{ backgroundColor: '#F9F9F9' }}>
             <div className="flex items-center gap-2 mb-3">
-              <Lock size={18} style={{ color: '#FF8D28' }} />
+              <Lock size={18} style={{ color: '#F99912' }} />
               <p style={{ color: '#2F4858', fontWeight: 600 }}>Ubah Password</p>
             </div>
             
@@ -254,7 +254,7 @@ export function SettingsPage() {
 
             <Button
               onClick={handleChangePassword}
-              style={{ backgroundColor: '#4CAF50', color: '#FFFFFF' }}
+              style={{ backgroundColor: '#9ACD32', color: '#FFFFFF' }}
               disabled={!passwordData.current || !passwordData.new || !passwordData.confirm}
             >
               Ubah Password
@@ -268,7 +268,7 @@ export function SettingsPage() {
         <Button
           onClick={handleSave}
           size="lg"
-          style={{ backgroundColor: '#FF8D28', color: '#FFFFFF' }}
+          style={{ backgroundColor: '#F99912', color: '#FFFFFF' }}
         >
           Simpan Pengaturan
         </Button>

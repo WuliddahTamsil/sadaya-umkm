@@ -92,11 +92,11 @@ export function ManajemenOrder() {
 
   const getStatusBadge = (status: OrderStatus) => {
     const styles: Record<OrderStatus, { bg: string; text: string; label: string }> = {
-      preparing: { bg: '#FDE08E', text: '#F57C00', label: 'Menunggu UMKM' },
-      ready: { bg: '#B3E5FC', text: '#1976D2', label: 'Siap Diambil' },
-      pickup: { bg: '#C8E6C9', text: '#2E7D32', label: 'Sedang Diantar' },
-      delivered: { bg: '#4CAF50', text: '#FFFFFF', label: 'Selesai' },
-      completed: { bg: '#4CAF50', text: '#FFFFFF', label: 'Selesai' },
+      preparing: { bg: '#FDE08E', text: '#F99912', label: 'Menunggu UMKM' },
+      ready: { bg: '#B3E5FC', text: '#9370DB', label: 'Siap Diambil' },
+      pickup: { bg: '#C8E6C9', text: '#9ACD32', label: 'Sedang Diantar' },
+      delivered: { bg: '#9ACD32', text: '#FFFFFF', label: 'Selesai' },
+      completed: { bg: '#9ACD32', text: '#FFFFFF', label: 'Selesai' },
     };
     const style = styles[status] || styles.preparing;
     return (
@@ -181,7 +181,7 @@ export function ManajemenOrder() {
         <CardContent className="p-0">
           {isLoading ? (
             <div className="p-12 text-center">
-              <Loader2 size={32} className="animate-spin mx-auto mb-4" style={{ color: '#FF8D28' }} />
+              <Loader2 size={32} className="animate-spin mx-auto mb-4" style={{ color: '#F99912' }} />
               <p style={{ color: '#858585' }}>Memuat data orders...</p>
             </div>
           ) : filteredData.length === 0 ? (
@@ -256,7 +256,7 @@ export function ManajemenOrder() {
                         </p>
                       </TableCell>
                       <TableCell>
-                        <p className="body-3" style={{ color: '#FF8D28', fontWeight: 600 }}>
+                        <p className="body-3" style={{ color: '#F99912', fontWeight: 600 }}>
                           Rp {item.total.toLocaleString('id-ID')}
                         </p>
                       </TableCell>
@@ -492,7 +492,7 @@ export function ManajemenOrder() {
                 </div>
                 <div className="flex justify-between items-center border-t pt-2">
                   <Label className="body-2" style={{ color: '#2F4858', fontWeight: 600 }}>Total</Label>
-                  <p className="body-2" style={{ color: '#FF8D28', fontWeight: 700, fontSize: '18px' }}>
+                  <p className="body-2" style={{ color: '#F99912', fontWeight: 700, fontSize: '18px' }}>
                     Rp {selectedOrder.total.toLocaleString('id-ID')}
                   </p>
                 </div>

@@ -76,7 +76,7 @@ export function ArticlesSection() {
         <div className="text-center">
           <Button 
             variant="outline"
-            style={{ borderColor: '#FF8D28', color: '#FF8D28' }}
+            style={{ borderColor: '#9370DB', color: '#9370DB' }}
             className="body-3"
           >
             Lihat Semua Artikel

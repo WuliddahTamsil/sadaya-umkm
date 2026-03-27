@@ -138,7 +138,7 @@ export function TrackingPesanan() {
               <div className="flex flex-col items-center">
                 <div
                   className={`w-12 h-12 rounded-full flex items-center justify-center ${
-                    isCompleted ? 'bg-[#FF8D28]' : 'bg-gray-200'
+                    isCompleted ? 'bg-[#F99912]' : 'bg-gray-200'
                   }`}
                 >
                   {isCompleted ? (
@@ -154,7 +154,7 @@ export function TrackingPesanan() {
                 {index < steps.length - 1 && (
                   <div
                     className={`w-0.5 h-16 ${
-                      isCompleted ? 'bg-[#FF8D28]' : 'bg-gray-200'
+                      isCompleted ? 'bg-[#F99912]' : 'bg-gray-200'
                     }`}
                   />
                 )}

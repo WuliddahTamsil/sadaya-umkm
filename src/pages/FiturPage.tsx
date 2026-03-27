@@ -232,42 +232,42 @@ export function FiturPage({ onSelectUMKM }: FiturPageProps = {}) {
       title: "Produk Lokal Berkualitas",
       description: "Semua produk yang dijual berasal dari UMKM asli Bogor yang sudah terkurasi dengan standar kualitas tinggi. Setiap produk dipastikan autentik dan berkualitas.",
       gradient: "from-orange-400 to-yellow-400",
-      color: "#FF8D28"
+      color: "#F99912"
     },
     {
       icon: Truck,
       title: "Pesan Antar Cepat & Mudah",
       description: "Tinggal klik, pesan, dan tunggu di rumah! Layanan pesan antar yang cepat dan terpercaya dengan driver berpengalaman.",
       gradient: "from-green-400 to-green-600",
-      color: "#4CAF50"
+      color: "#9ACD32"
     },
     {
       icon: Heart,
       title: "Dukung UMKM, Bangga Bogor",
       description: "Setiap pembelian Anda membantu UMKM berkembang dan memperkuat ekonomi Bogor. Bersama kita bangun ekonomi lokal yang kuat.",
       gradient: "from-yellow-300 to-orange-500",
-      color: "#FFB84D"
+      color: "#F99912"
     },
     {
       icon: Shield,
       title: "Transaksi Aman Terpercaya",
       description: "Sistem pembayaran yang aman dan terpercaya untuk setiap transaksi Anda. Data pribadi dan transaksi dijamin keamanannya.",
       gradient: "from-blue-400 to-blue-600",
-      color: "#2196F3"
+      color: "#9370DB"
     },
     {
       icon: Star,
       title: "Rating & Review Transparan",
       description: "Lihat ulasan dan rating dari pembeli lain untuk memilih produk terbaik. Sistem review yang jujur dan transparan.",
       gradient: "from-yellow-400 to-orange-400",
-      color: "#FF8D28"
+      color: "#F99912"
     },
     {
       icon: Zap,
       title: "Promo Menarik Setiap Hari",
       description: "Dapatkan berbagai promo dan diskon menarik untuk produk UMKM favorit Anda. Hemat lebih banyak dengan promo spesial.",
       gradient: "from-purple-400 to-pink-500",
-      color: "#9C27B0"
+      color: "#9370DB"
     }
   ];
 
@@ -276,37 +276,37 @@ export function FiturPage({ onSelectUMKM }: FiturPageProps = {}) {
       icon: Search,
       title: "Pencarian Cerdas",
       description: "Cari produk berdasarkan nama, kategori, atau lokasi dengan mudah",
-      color: "#FF8D28"
+      color: "#F99912"
     },
     {
       icon: MapPin,
       title: "Lokasi Terintegrasi",
       description: "Lihat lokasi UMKM di peta dan dapatkan arah dengan mudah",
-      color: "#4CAF50"
+      color: "#9ACD32"
     },
     {
       icon: Clock,
       title: "Jam Operasional",
       description: "Lihat jam buka UMKM dan pesan pada waktu yang tepat",
-      color: "#2196F3"
+      color: "#9370DB"
     },
     {
       icon: CreditCard,
       title: "Pembayaran Fleksibel",
       description: "Berbagai metode pembayaran yang nyaman untuk Anda",
-      color: "#FFB84D"
+      color: "#F99912"
     },
     {
       icon: Bell,
       title: "Notifikasi Real-time",
       description: "Dapatkan update pesanan dan promo terbaru secara real-time",
-      color: "#9C27B0"
+      color: "#9370DB"
     },
     {
       icon: Gift,
       title: "Program Loyalitas",
       description: "Dapatkan poin dan reward setiap kali berbelanja",
-      color: "#FF8D28"
+      color: "#F99912"
     },
   ];
 
@@ -479,7 +479,7 @@ export function FiturPage({ onSelectUMKM }: FiturPageProps = {}) {
         {/* Animated background elements */}
         <motion.div
           className="absolute top-20 right-10 w-64 h-64 rounded-full opacity-10 blur-3xl"
-          style={{ background: '#FF8D28' }}
+          style={{ background: '#F99912' }}
           animate={{
             scale: [1, 1.2, 1],
             x: [0, 30, 0],
@@ -493,7 +493,7 @@ export function FiturPage({ onSelectUMKM }: FiturPageProps = {}) {
         />
         <motion.div
           className="absolute bottom-20 left-10 w-96 h-96 rounded-full opacity-10 blur-3xl"
-          style={{ background: '#4CAF50' }}
+          style={{ background: '#9ACD32' }}
           animate={{
             scale: [1, 1.3, 1],
             x: [0, -30, 0],
@@ -521,7 +521,7 @@ export function FiturPage({ onSelectUMKM }: FiturPageProps = {}) {
             >
               <div 
                 className="w-20 h-20 mx-auto rounded-2xl flex items-center justify-center"
-                style={{ background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)' }}
+                style={{ background: 'linear-gradient(135deg, #F99912 0%, #9ACD32 100%)' }}
               >
                 <Navigation size={40} className="text-white" />
               </div>
@@ -547,7 +547,7 @@ export function FiturPage({ onSelectUMKM }: FiturPageProps = {}) {
                 {/* Map Header */}
                 <div 
                   className="p-4 flex items-center justify-between flex-shrink-0"
-                  style={{ background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)' }}
+                  style={{ background: 'linear-gradient(135deg, #F99912 0%, #9ACD32 100%)' }}
                 >
                   <div className="flex items-center gap-3">
                     <MapPin className="text-white" size={24} />
@@ -612,7 +612,7 @@ export function FiturPage({ onSelectUMKM }: FiturPageProps = {}) {
                         ease: "easeOut"
                       }}
                     >
-                      <div className="w-6 h-6 rounded-full bg-[#FF8D28] border-4 border-white shadow-lg" />
+                      <div className="w-6 h-6 rounded-full bg-[#F99912] border-4 border-white shadow-lg" />
                     </motion.div>
                   )}
                 </div>
@@ -640,12 +640,12 @@ export function FiturPage({ onSelectUMKM }: FiturPageProps = {}) {
                        viewport={{ once: true }}
                        transition={{ delay: index * 0.1, duration: 0.5 }}
                        whileHover={{ x: 8, scale: 1.02 }}
-                       className="p-4 rounded-xl border-2 border-orange-100 hover:border-[#FF8D28] transition-all cursor-pointer bg-gradient-to-r from-white to-[#FFF4E6]"
+                       className="p-4 rounded-xl border-2 border-orange-100 hover:border-[#F99912] transition-all cursor-pointer bg-gradient-to-r from-white to-[#FFF4E6]"
                      >
                        <div className="flex items-start justify-between gap-4">
                          <div className="flex-1">
                            <div className="flex items-center gap-2 mb-2">
-                             <MapPin size={18} style={{ color: '#FF8D28' }} />
+                             <MapPin size={18} style={{ color: '#F99912' }} />
                              <h4 className="font-bold" style={{ color: '#2F4858' }}>
                                {umkm.name}
                              </h4>
@@ -654,7 +654,7 @@ export function FiturPage({ onSelectUMKM }: FiturPageProps = {}) {
                              <span 
                                className="px-3 py-1 rounded-full text-xs font-semibold"
                                style={{ 
-                                 background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)',
+                                 background: 'linear-gradient(135deg, #F99912 0%, #9ACD32 100%)',
                                  color: '#FFFFFF'
                                }}
                              >
@@ -672,7 +672,7 @@ export function FiturPage({ onSelectUMKM }: FiturPageProps = {}) {
                          >
                            <div 
                              className="w-10 h-10 rounded-full flex items-center justify-center"
-                             style={{ background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)' }}
+                             style={{ background: 'linear-gradient(135deg, #F99912 0%, #9ACD32 100%)' }}
                            >
                              <Navigation size={20} className="text-white" />
                            </div>
@@ -685,7 +685,7 @@ export function FiturPage({ onSelectUMKM }: FiturPageProps = {}) {
                  {/* View All Button */}
                  <motion.button
                    className="w-full mt-6 py-3 rounded-xl font-semibold text-white"
-                   style={{ background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)' }}
+                   style={{ background: 'linear-gradient(135deg, #F99912 0%, #9ACD32 100%)' }}
                    whileHover={{ scale: 1.02, y: -2 }}
                    whileTap={{ scale: 0.98 }}
                    initial={{ opacity: 0, y: 20 }}
@@ -709,19 +709,19 @@ export function FiturPage({ onSelectUMKM }: FiturPageProps = {}) {
                    </h4>
                    <ul className="space-y-2 text-sm" style={{ color: '#4A4A4A' }}>
                      <li className="flex items-center gap-2">
-                       <div className="w-2 h-2 rounded-full" style={{ background: '#FF8D28' }} />
+                       <div className="w-2 h-2 rounded-full" style={{ background: '#F99912' }} />
                        Pencarian berdasarkan lokasi Anda
                      </li>
                      <li className="flex items-center gap-2">
-                       <div className="w-2 h-2 rounded-full" style={{ background: '#FF8D28' }} />
+                       <div className="w-2 h-2 rounded-full" style={{ background: '#F99912' }} />
                        Tampilkan jarak dan rute terdekat
                      </li>
                      <li className="flex items-center gap-2">
-                       <div className="w-2 h-2 rounded-full" style={{ background: '#FF8D28' }} />
+                       <div className="w-2 h-2 rounded-full" style={{ background: '#F99912' }} />
                        Integrasi dengan Google Maps
                      </li>
                      <li className="flex items-center gap-2">
-                       <div className="w-2 h-2 rounded-full" style={{ background: '#FF8D28' }} />
+                       <div className="w-2 h-2 rounded-full" style={{ background: '#F99912' }} />
                        Update lokasi real-time
                      </li>
                    </ul>
@@ -737,7 +737,7 @@ export function FiturPage({ onSelectUMKM }: FiturPageProps = {}) {
         {/* Animated background elements */}
         <motion.div
           className="absolute top-10 left-10 w-72 h-72 rounded-full opacity-5 blur-3xl"
-          style={{ background: '#FF8D28' }}
+          style={{ background: '#F99912' }}
           animate={{
             scale: [1, 1.3, 1],
             rotate: [0, 90, 0],
@@ -750,7 +750,7 @@ export function FiturPage({ onSelectUMKM }: FiturPageProps = {}) {
         />
         <motion.div
           className="absolute bottom-10 right-10 w-96 h-96 rounded-full opacity-5 blur-3xl"
-          style={{ background: '#4CAF50' }}
+          style={{ background: '#9ACD32' }}
           animate={{
             scale: [1, 1.2, 1],
             rotate: [0, -90, 0],
@@ -777,13 +777,13 @@ export function FiturPage({ onSelectUMKM }: FiturPageProps = {}) {
             >
               <div 
                 className="w-16 h-16 rounded-2xl flex items-center justify-center"
-                style={{ background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)' }}
+                style={{ background: 'linear-gradient(135deg, #F99912 0%, #9ACD32 100%)' }}
               >
                 <UtensilsCrossed size={32} className="text-white" />
               </div>
               <div 
                 className="w-16 h-16 rounded-2xl flex items-center justify-center"
-                style={{ background: 'linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%)' }}
+                style={{ background: 'linear-gradient(135deg, #9ACD32 0%, #9370DB 100%)' }}
               >
                 <TrendingUp size={32} className="text-white" />
               </div>
@@ -807,7 +807,7 @@ export function FiturPage({ onSelectUMKM }: FiturPageProps = {}) {
                 whileHover={{ y: -8, scale: 1.02 }}
                 className="group cursor-pointer"
               >
-                <div className="bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border-2 border-orange-100 hover:border-[#FF8D28] h-full flex flex-col">
+                <div className="bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border-2 border-orange-100 hover:border-[#F99912] h-full flex flex-col">
                   {/* Image Section */}
                   <div className="relative h-48 lg:h-56 overflow-hidden">
                     <ImageWithFallback
@@ -824,12 +824,12 @@ export function FiturPage({ onSelectUMKM }: FiturPageProps = {}) {
                         className="px-3 py-1.5 rounded-full text-xs font-bold text-white shadow-lg"
                         style={{ 
                           background: food.badge === "Terlaris" 
-                            ? 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)'
+                            ? 'linear-gradient(135deg, #F99912 0%, #9ACD32 100%)'
                             : food.badge === "Legendaris"
-                            ? 'linear-gradient(135deg, #9C27B0 0%, #E91E63 100%)'
+                            ? 'linear-gradient(135deg, #9370DB 0%, #E91E63 100%)'
                             : food.badge === "Premium"
-                            ? 'linear-gradient(135deg, #2196F3 0%, #1976D2 100%)'
-                            : 'linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%)'
+                            ? 'linear-gradient(135deg, #9370DB 0%, #F99912 100%)'
+                            : 'linear-gradient(135deg, #9ACD32 0%, #9370DB 100%)'
                         }}
                       >
                         {food.badge}
@@ -856,7 +856,7 @@ export function FiturPage({ onSelectUMKM }: FiturPageProps = {}) {
 
                   {/* Content Section */}
                   <div className="p-6 flex-1 flex flex-col">
-                    <h3 className="text-xl font-bold mb-2 group-hover:text-[#FF8D28] transition-colors" style={{ color: '#2F4858' }}>
+                    <h3 className="text-xl font-bold mb-2 group-hover:text-[#F99912] transition-colors" style={{ color: '#2F4858' }}>
                       {food.name}
                     </h3>
                     <p className="text-sm mb-4 line-clamp-2 flex-1" style={{ color: '#4A4A4A' }}>
@@ -879,7 +879,7 @@ export function FiturPage({ onSelectUMKM }: FiturPageProps = {}) {
                           ({food.reviews} ulasan)
                         </span>
                       </div>
-                      <span className="text-lg font-bold" style={{ color: '#FF8D28' }}>
+                      <span className="text-lg font-bold" style={{ color: '#F99912' }}>
                         {food.price}
                       </span>
                     </div>
@@ -887,7 +887,7 @@ export function FiturPage({ onSelectUMKM }: FiturPageProps = {}) {
                     {/* Action Button */}
                     <motion.button
                       className="w-full py-3 rounded-xl font-semibold text-white text-sm"
-                      style={{ background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)' }}
+                      style={{ background: 'linear-gradient(135deg, #F99912 0%, #9ACD32 100%)' }}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                       onClick={() => handleDetailClick(food.id)}
@@ -910,7 +910,7 @@ export function FiturPage({ onSelectUMKM }: FiturPageProps = {}) {
           >
             <motion.button
               className="px-8 py-4 rounded-xl font-bold text-white text-lg inline-flex items-center gap-3"
-              style={{ background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)' }}
+              style={{ background: 'linear-gradient(135deg, #F99912 0%, #9ACD32 100%)' }}
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -933,7 +933,7 @@ export function FiturPage({ onSelectUMKM }: FiturPageProps = {}) {
           >
             {/* Orange Card Decoration */}
             <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-[#FF8D28] to-[#FFB84D] rounded-3xl opacity-10 -z-10"
+              className="absolute inset-0 bg-gradient-to-r from-[#F99912] to-[#F99912] rounded-3xl opacity-10 -z-10"
               animate={{
                 scale: [1, 1.02, 1],
               }}
@@ -948,7 +948,7 @@ export function FiturPage({ onSelectUMKM }: FiturPageProps = {}) {
             <div className="relative">
               <motion.div
                 className="absolute -top-6 -left-6 w-32 h-32 rounded-2xl opacity-20 blur-2xl"
-                style={{ background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)' }}
+                style={{ background: 'linear-gradient(135deg, #F99912 0%, #9ACD32 100%)' }}
                 animate={{
                   scale: [1, 1.2, 1],
                   rotate: [0, 90, 0],
@@ -961,7 +961,7 @@ export function FiturPage({ onSelectUMKM }: FiturPageProps = {}) {
               />
               <motion.div
                 className="absolute -bottom-6 -right-6 w-32 h-32 rounded-2xl opacity-20 blur-2xl"
-                style={{ background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)' }}
+                style={{ background: 'linear-gradient(135deg, #F99912 0%, #9ACD32 100%)' }}
                 animate={{
                   scale: [1, 1.2, 1],
                   rotate: [0, -90, 0],
@@ -992,7 +992,7 @@ export function FiturPage({ onSelectUMKM }: FiturPageProps = {}) {
               >
                 <div 
                   className="px-8 py-4 rounded-2xl shadow-lg"
-                  style={{ background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)' }}
+                  style={{ background: 'linear-gradient(135deg, #F99912 0%, #9ACD32 100%)' }}
                 >
                   <p className="text-white font-semibold text-lg">
                     ✨ Platform Terpercaya untuk UMKM Bogor
@@ -1010,7 +1010,7 @@ export function FiturPage({ onSelectUMKM }: FiturPageProps = {}) {
                 <motion.a
                   href="#"
                   className="px-8 py-4 rounded-xl font-semibold text-white hover:shadow-xl transition-all inline-block"
-                  style={{ background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)' }}
+                  style={{ background: 'linear-gradient(135deg, #F99912 0%, #9ACD32 100%)' }}
                   whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -1020,8 +1020,8 @@ export function FiturPage({ onSelectUMKM }: FiturPageProps = {}) {
                   href="#"
                   className="px-8 py-4 rounded-xl font-semibold border-2 transition-all inline-block"
                   style={{ 
-                    borderColor: '#FF8D28',
-                    color: '#FF8D28',
+                    borderColor: '#F99912',
+                    color: '#F99912',
                     backgroundColor: 'transparent'
                   }}
                   whileHover={{ 

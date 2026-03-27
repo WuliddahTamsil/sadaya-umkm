@@ -557,9 +557,9 @@ export function ManajemenData() {
 
   const getRoleBadge = (role: string) => {
     const styles: Record<string, { bg: string; text: string; border: string }> = {
-      UMKM: { bg: '#FDE08E', text: '#F57C00', border: '#FF8D28' },
-      Driver: { bg: '#C8E6C9', text: '#2E7D32', border: '#4CAF50' },
-      User: { bg: '#B3E5FC', text: '#1976D2', border: '#2196F3' },
+      UMKM: { bg: '#FDE08E', text: '#F99912', border: '#F99912' },
+      Driver: { bg: '#C8E6C9', text: '#9ACD32', border: '#9ACD32' },
+      User: { bg: '#B3E5FC', text: '#9370DB', border: '#9370DB' },
     };
     const style = styles[role] || styles.User;
     return (
@@ -577,7 +577,7 @@ export function ManajemenData() {
 
   const getStatusBadge = (status: string) => {
     const styles: Record<string, { bg: string; text: string }> = {
-      active: { bg: '#4CAF50', text: '#FFFFFF' },
+      active: { bg: '#9ACD32', text: '#FFFFFF' },
       inactive: { bg: '#9E9E9E', text: '#FFFFFF' },
       pending: { bg: '#FF9800', text: '#FFFFFF' },
     };
@@ -617,7 +617,7 @@ export function ManajemenData() {
         </div>
         <Button
           onClick={() => setIsAddDialogOpen(true)}
-          style={{ backgroundColor: '#FF8D28', color: '#FFFFFF' }}
+          style={{ backgroundColor: '#F99912', color: '#FFFFFF' }}
         >
           + Tambah Pengguna
         </Button>
@@ -662,7 +662,7 @@ export function ManajemenData() {
                   <p style={{ color: '#2F4858', fontSize: '24px', fontWeight: 700 }}>
                     {stats.totalUMKM}
                   </p>
-                  <p className="body-3" style={{ color: '#4CAF50', fontSize: '12px' }}>
+                  <p className="body-3" style={{ color: '#9ACD32', fontSize: '12px' }}>
                     +18 dari bulan lalu
                   </p>
                 </div>
@@ -683,7 +683,7 @@ export function ManajemenData() {
                   <p style={{ color: '#2F4858', fontSize: '24px', fontWeight: 700 }}>
                     {stats.totalDriver}
                   </p>
-                  <p className="body-3" style={{ color: '#4CAF50', fontSize: '12px' }}>
+                  <p className="body-3" style={{ color: '#9ACD32', fontSize: '12px' }}>
                     +12 dari bulan lalu
                   </p>
                 </div>
@@ -704,7 +704,7 @@ export function ManajemenData() {
                   <p style={{ color: '#2F4858', fontSize: '24px', fontWeight: 700 }}>
                     {stats.totalUser}
                   </p>
-                  <p className="body-3" style={{ color: '#4CAF50', fontSize: '12px' }}>
+                  <p className="body-3" style={{ color: '#9ACD32', fontSize: '12px' }}>
                     +342 dari bulan lalu
                   </p>
                 </div>
@@ -788,7 +788,7 @@ export function ManajemenData() {
         <CardContent className="p-0">
           {isLoading ? (
             <div className="flex items-center justify-center p-12">
-              <Loader2 className="animate-spin" size={32} style={{ color: '#FF8D28' }} />
+              <Loader2 className="animate-spin" size={32} style={{ color: '#F99912' }} />
             </div>
           ) : paginatedData.length === 0 ? (
             <div className="text-center p-12">
@@ -873,13 +873,13 @@ export function ManajemenData() {
                       <TableCell style={{ color: '#858585' }}>
                         {formatDate(item.joinDate)}
                       </TableCell>
-                      <TableCell style={{ color: '#FF8D28', fontWeight: 600 }}>
+                      <TableCell style={{ color: '#F99912', fontWeight: 600 }}>
                         {item.totalOrders}
                       </TableCell>
                       <TableCell>
                         {item.rating > 0 ? (
                           <div className="flex items-center gap-1">
-                            <span style={{ color: '#FF8D28' }}>★</span>
+                            <span style={{ color: '#F99912' }}>★</span>
                             <span style={{ color: '#858585' }}>{item.rating.toFixed(1)}</span>
                           </div>
                         ) : (
@@ -977,7 +977,7 @@ export function ManajemenData() {
                     variant={currentPage === page ? 'default' : 'outline'}
                     size="sm"
                     onClick={() => setCurrentPage(page)}
-                    style={currentPage === page ? { backgroundColor: '#FF8D28' } : {}}
+                    style={currentPage === page ? { backgroundColor: '#F99912' } : {}}
                   >
                     {page}
                   </Button>
@@ -1318,7 +1318,7 @@ export function ManajemenData() {
                 </Button>
                 <Button
                   onClick={handleSaveEdit}
-                  style={{ backgroundColor: '#FF8D28', color: '#FFFFFF' }}
+                  style={{ backgroundColor: '#F99912', color: '#FFFFFF' }}
                 >
                   Simpan
                 </Button>
@@ -1488,7 +1488,7 @@ export function ManajemenData() {
               </Button>
               <Button
                 onClick={handleCreateUser}
-                style={{ backgroundColor: '#FF8D28', color: '#FFFFFF' }}
+                style={{ backgroundColor: '#F99912', color: '#FFFFFF' }}
                 disabled={isSubmittingNewUser}
               >
                 {isSubmittingNewUser ? 'Menyimpan...' : 'Simpan'}
