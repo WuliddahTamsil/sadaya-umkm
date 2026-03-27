@@ -475,7 +475,140 @@
     "message": "Pesanan ORD-1774522731989-1I06H9SFE telah diterima. Terima kasih sudah berbelanja!",
     "orderId": "ORD-1774522731989-1I06H9SFE",
     "status": "completed",
+    "read": true,
+    "createdAt": "2026-03-26T11:08:48.605Z",
+    "readAt": "2026-03-27T15:11:59.282Z"
+  },
+  {
+    "id": "b7e5e821-68b2-4cc1-aee2-a41f295908e8",
+    "userId": "7c31ebb1-1d62-45cf-9868-7bf092bca650",
+    "type": "order",
+    "title": "Pesanan Diproses UMKM ✓",
+    "message": "Status pesanan ORD-1764255753671-AUJPPGAPI telah diupdate",
+    "orderId": "ORD-1764255753671-AUJPPGAPI",
+    "status": "processing",
     "read": false,
-    "createdAt": "2026-03-26T11:08:48.605Z"
+    "createdAt": "2026-03-27T14:45:12.184Z"
+  },
+  {
+    "id": "32fb6e76-8b62-437a-9963-95ac5a0dc245",
+    "userId": "4fb06afa-fd54-4d28-aace-d40af516f40a",
+    "type": "order",
+    "title": "Pesanan Baru! 🎉",
+    "message": "Pesanan baru dari baro - Total: Rp 100.000",
+    "orderId": "ORD-1774624042442-Y600UHXEG",
+    "status": "pending",
+    "read": false,
+    "createdAt": "2026-03-27T15:07:22.584Z"
+  },
+  {
+    "id": "72b87610-8a1d-4f81-8b6f-cfe144f61835",
+    "userId": "4fb06afa-fd54-4d28-aace-d40af516f40a",
+    "type": "order",
+    "title": "Pembayaran Diterima! 💰",
+    "message": "Pembayaran order ORD-1774624042442-Y600UHXEG telah diterima - Rp 100.000",
+    "orderId": "ORD-1774624042442-Y600UHXEG",
+    "status": "processing",
+    "read": false,
+    "createdAt": "2026-03-27T15:07:22.643Z"
+  },
+  {
+    "id": "8bbafbb3-755d-487d-bd85-c2080b1c216c",
+    "userId": "4fb06afa-fd54-4d28-aace-d40af516f40a",
+    "type": "order",
+    "title": "Pesanan Baru! 🎉",
+    "message": "Pesanan baru dari baro - Total: Rp 55.000",
+    "orderId": "ORD-1774624209618-QGWXWVQN5",
+    "status": "pending",
+    "read": false,
+    "createdAt": "2026-03-27T15:10:09.910Z"
+  },
+  {
+    "id": "ad1f479e-d963-4e08-83ce-dfdb2c96e8ab",
+    "userId": "4fb06afa-fd54-4d28-aace-d40af516f40a",
+    "type": "order",
+    "title": "Pembayaran Diterima! 💰",
+    "message": "Pembayaran order ORD-1774624209618-QGWXWVQN5 telah diterima - Rp 55.000",
+    "orderId": "ORD-1774624209618-QGWXWVQN5",
+    "status": "processing",
+    "read": false,
+    "createdAt": "2026-03-27T15:10:10.359Z"
+  },
+  {
+    "id": "549a0114-a9ea-47d5-a86a-60f3990a9038",
+    "userId": "4fb06afa-fd54-4d28-aace-d40af516f40a",
+    "type": "order",
+    "title": "Pesanan Baru! 🎉",
+    "message": "Pesanan baru dari baro - Total: Rp 55.000",
+    "orderId": "ORD-1774627659938-GCW8081LW",
+    "status": "pending",
+    "read": false,
+    "createdAt": "2026-03-27T16:07:39.998Z"
+  },
+  {
+    "id": "a6aa879b-bf45-4fb6-9f39-5f968c16fccd",
+    "userId": "4fb06afa-fd54-4d28-aace-d40af516f40a",
+    "type": "order",
+    "title": "Pembayaran Diterima! 💰",
+    "message": "Pembayaran order ORD-1774627659938-GCW8081LW telah diterima - Rp 55.000",
+    "orderId": "ORD-1774627659938-GCW8081LW",
+    "status": "processing",
+    "read": false,
+    "createdAt": "2026-03-27T16:07:40.238Z"
+  },
+  {
+    "id": "b31a8518-517e-425d-9a44-d10a21f38928",
+    "userId": "2f6a24de-1861-437e-ac15-7f7c14680e5f",
+    "type": "order",
+    "title": "Pesanan Diproses UMKM ✓",
+    "message": "Status pesanan ORD-1774624209618-QGWXWVQN5 telah diupdate",
+    "orderId": "ORD-1774624209618-QGWXWVQN5",
+    "status": "processing",
+    "read": false,
+    "createdAt": "2026-03-27T16:07:57.704Z"
+  },
+  {
+    "id": "1de65e0a-9aa8-4cda-8ae0-76cbd03293f5",
+    "userId": "2f6a24de-1861-437e-ac15-7f7c14680e5f",
+    "type": "order",
+    "title": "Pesanan Diproses UMKM ✓",
+    "message": "Status pesanan ORD-1774627659938-GCW8081LW telah diupdate",
+    "orderId": "ORD-1774627659938-GCW8081LW",
+    "status": "processing",
+    "read": false,
+    "createdAt": "2026-03-27T16:08:04.283Z"
+  },
+  {
+    "id": "e9d6cdfc-bab2-4779-8b04-519b33a6f815",
+    "userId": "4fb06afa-fd54-4d28-aace-d40af516f40a",
+    "type": "order",
+    "title": "Order Diambil Driver ✓",
+    "message": "Driver driver1 telah mengambil order ORD-1774627659938-GCW8081LW",
+    "orderId": "ORD-1774627659938-GCW8081LW",
+    "status": "processing",
+    "read": false,
+    "createdAt": "2026-03-27T16:08:27.465Z"
+  },
+  {
+    "id": "81ff977d-7482-40f9-8748-5c7081054e5d",
+    "userId": "2f6a24de-1861-437e-ac15-7f7c14680e5f",
+    "type": "order",
+    "title": "Pesanan Sedang Dikirim ✓",
+    "message": "Driver driver1 sedang mengantar pesanan Anda",
+    "orderId": "ORD-1774627659938-GCW8081LW",
+    "status": "processing",
+    "read": false,
+    "createdAt": "2026-03-27T16:08:27.476Z"
+  },
+  {
+    "id": "1d831fbb-beb1-4702-a22b-b09db5e9cdf1",
+    "userId": "2f6a24de-1861-437e-ac15-7f7c14680e5f",
+    "type": "order",
+    "title": "Pesanan Telah Diterima! 🎉",
+    "message": "Pesanan ORD-1774627659938-GCW8081LW telah diterima. Terima kasih sudah berbelanja!",
+    "orderId": "ORD-1774627659938-GCW8081LW",
+    "status": "completed",
+    "read": false,
+    "createdAt": "2026-03-27T16:09:03.678Z"
   }
 ]
