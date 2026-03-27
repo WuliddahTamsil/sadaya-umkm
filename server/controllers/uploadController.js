@@ -48,6 +48,12 @@ function prepareFileForBlob(file) {
   return null;
 }
 
+function getMissingBlobTokenResponse() {
+  return {
+    error: 'BLOB_READ_WRITE_TOKEN belum dikonfigurasi di Vercel. Tambahkan env ini di Project Settings > Environment Variables lalu redeploy.'
+  };
+}
+
 export const uploadDriverDocuments = async (req, res) => {
   try {
     const { userId, phoneNumber, vehicleType, vehiclePlate } = req.body;
@@ -82,6 +88,11 @@ export const uploadDriverDocuments = async (req, res) => {
       VERCEL: process.env.VERCEL,
       VERCEL_ENV: process.env.VERCEL_ENV
     });
+
+    if (isVercel && !hasBlobToken) {
+      console.error('âŒ BLOB_READ_WRITE_TOKEN tidak tersedia untuk upload driver di Vercel');
+      return res.status(500).json(getMissingBlobTokenResponse());
+    }
 
     if (isVercel && hasBlobToken) {
       // Upload ke Vercel Blob Storage
@@ -222,8 +233,8 @@ export const uploadDriverDocuments = async (req, res) => {
       console.error('❌ ERROR: No file fields to save! Documents object is empty or invalid.');
       console.error('❌ Documents:', documents);
       console.error('❌ Files received:', files);
-      return res.status(400).json({ 
-        error: 'Tidak ada file yang berhasil diupload. Pastikan file valid dan BLOB_READ_WRITE_TOKEN terkonfigurasi dengan benar.' 
+      return res.status(502).json({
+        error: 'Upload ke Vercel Blob gagal. Pastikan token valid, Blob Store terhubung ke project ini, dan file yang dikirim tidak rusak.'
       });
     }
     
@@ -309,6 +320,11 @@ export const uploadUMKMDocuments = async (req, res) => {
     // Cek apakah di Vercel (perlu upload ke blob) atau local (simpan ke disk)
     const isVercel = process.env.VERCEL || process.env.VERCEL_ENV;
     const hasBlobToken = !!process.env.BLOB_READ_WRITE_TOKEN;
+
+    if (isVercel && !hasBlobToken) {
+      console.error('BLOB_READ_WRITE_TOKEN tidak tersedia untuk upload UMKM di Vercel');
+      return res.status(500).json(getMissingBlobTokenResponse());
+    }
 
     if (isVercel && hasBlobToken) {
       // Upload ke Vercel Blob Storage
@@ -426,8 +442,8 @@ export const uploadUMKMDocuments = async (req, res) => {
       console.error('❌ ERROR: No file fields to save! Documents object is empty or invalid.');
       console.error('❌ Documents:', documents);
       console.error('❌ Files received:', files);
-      return res.status(400).json({ 
-        error: 'Tidak ada file yang berhasil diupload. Pastikan file valid dan BLOB_READ_WRITE_TOKEN terkonfigurasi dengan benar.' 
+      return res.status(502).json({
+        error: 'Upload ke Vercel Blob gagal. Pastikan token valid, Blob Store terhubung ke project ini, dan file yang dikirim tidak rusak.'
       });
     }
     
@@ -520,7 +536,7 @@ export const uploadProductImageController = async (req, res) => {
       const baseUrl = 'http://localhost:3000';
       imageUrl = `${baseUrl}/${imagePath}`;
     } else {
-      return res.status(500).json({ error: 'BLOB_READ_WRITE_TOKEN tidak dikonfigurasi' });
+      return res.status(500).json(getMissingBlobTokenResponse());
     }
 
     res.json({
@@ -628,9 +644,7 @@ export const uploadProfilePhotoController = async (req, res) => {
       console.log('✅ Profile photo path (local):', profilePhotoUrl);
     } else {
       console.error('❌ BLOB_READ_WRITE_TOKEN tidak dikonfigurasi');
-      return res.status(500).json({ 
-        error: 'BLOB_READ_WRITE_TOKEN tidak dikonfigurasi. Silakan set environment variable ini di Vercel.' 
-      });
+      return res.status(500).json(getMissingBlobTokenResponse());
     }
 
     // Pastikan URL valid sebelum menyimpan
