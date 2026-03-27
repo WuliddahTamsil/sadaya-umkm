@@ -1,67 +1,77 @@
 import express from 'express';
-import { uploadDriverDocs, uploadUMKMDocs, uploadProductImage, uploadProfilePhoto } from '../middleware/upload.js';
-import { uploadDriverDocuments, uploadUMKMDocuments, uploadProductImageController, uploadProfilePhotoController } from '../controllers/uploadController.js';
+import { put } from '@vercel/blob'; // Tambahkan ini
+import multer from 'multer'; // Tambahkan ini
+
+// Gunakan Memory Storage agar file tidak disimpan di disk server yang terkunci
+const storage = multer.memoryStorage();
+const upload = multer({ 
+  storage,
+  limits: { fileSize: 5 * 1024 * 1024 } // Batas 5MB
+});
 
 const router = express.Router();
 
-// Wrapper untuk handle multer errors
-const handleUpload = (uploadMiddleware, controller) => {
-  return async (req, res, next) => {
-    try {
-      console.log('📥 Upload route hit:', req.path);
-      console.log('📥 Request method:', req.method);
-      console.log('📥 Content-Type:', req.headers['content-type']);
-      
-      // Multer middleware akan populate req.files atau req.file
-      await new Promise((resolve, reject) => {
-        uploadMiddleware(req, res, (err) => {
-          if (err) {
-            console.error('❌ Multer error:', err);
-            if (err.code === 'LIMIT_FILE_SIZE') {
-              return res.status(400).json({ error: 'File terlalu besar. Maksimal 5MB per file.' });
-            }
-            if (err.message && err.message.includes('Hanya file gambar dan PDF yang diizinkan')) {
-              return res.status(400).json({ error: err.message });
-            }
-            return res.status(400).json({ error: 'Error saat upload file: ' + (err.message || 'Unknown error') });
-          }
-          
-          // Log files setelah multer process
-          console.log('✅ Multer processed files:', {
-            hasFiles: !!req.files,
-            hasFile: !!req.file,
-            filesKeys: req.files ? Object.keys(req.files) : 'none',
-            filesCount: req.files ? Object.values(req.files).flat().length : 0
-          });
-          
-          resolve();
-        });
-      });
-      
-      // Jika tidak ada error, lanjut ke controller
-      if (!res.headersSent) {
-        await controller(req, res, next);
-      }
-    } catch (error) {
-      console.error('❌ Error in handleUpload:', error);
-      if (!res.headersSent) {
-        next(error);
-      }
-    }
-  };
+// Fungsi helper untuk upload ke Vercel Blob
+const uploadToBlob = async (file, folder) => {
+  if (!file) return null;
+  
+  // Membuat path unik, misal: products/gambar-123.jpg
+  const filename = `${folder}/${Date.now()}-${file.originalname}`;
+  
+  const blob = await put(filename, file.buffer, {
+    access: 'public',
+    contentType: file.mimetype,
+    token: process.env.BLOB_READ_WRITE_TOKEN
+  });
+  
+  return blob.url; // Mengembalikan link https://...
 };
 
-// POST /api/upload/driver - Upload dokumen driver
-router.post('/driver', handleUpload(uploadDriverDocs, uploadDriverDocuments));
+// --- ROUTE UNTUK PRODUK ---
+router.post('/products', upload.single('image'), async (req, res) => {
+  try {
+    console.log('📥 Upload produk ke Vercel Blob dimulai...');
+    
+    if (!req.file) {
+      return res.status(400).json({ error: 'Tidak ada file gambar yang dipilih.' });
+    }
 
-// POST /api/upload/umkm - Upload dokumen UMKM
-router.post('/umkm', handleUpload(uploadUMKMDocs, uploadUMKMDocuments));
+    const imageUrl = await uploadToBlob(req.file, 'products');
 
-// POST /api/upload/products - Upload gambar produk
-router.post('/products', handleUpload(uploadProductImage, uploadProductImageController));
+    console.log('✅ Berhasil upload ke Blob:', imageUrl);
+    res.status(200).json({ 
+      message: 'Upload berhasil', 
+      url: imageUrl 
+    });
 
-// POST /api/upload/profile - Upload foto profil (untuk semua role)
-router.post('/profile', handleUpload(uploadProfilePhoto, uploadProfilePhotoController));
+  } catch (error) {
+    console.error('❌ Error Upload Produk:', error);
+    res.status(500).json({ error: 'Gagal mengupload gambar ke Vercel Blob.' });
+  }
+});
+
+// --- ROUTE UNTUK PROFILE ---
+router.post('/profile', upload.single('image'), async (req, res) => {
+  try {
+    const imageUrl = await uploadToBlob(req.file, 'profiles');
+    res.status(200).json({ url: imageUrl });
+  } catch (error) {
+    res.status(500).json({ error: 'Gagal upload foto profil.' });
+  }
+});
+
+// --- ROUTE UNTUK DOKUMEN (DRIVER/UMKM) ---
+// Jika butuh banyak file (multiple), gunakan upload.fields
+router.post('/umkm', upload.any(), async (req, res) => {
+    try {
+        const results = {};
+        for (const file of req.files) {
+            results[file.fieldname] = await uploadToBlob(file, 'docs-umkm');
+        }
+        res.status(200).json({ message: 'Dokumen berhasil diupload', urls: results });
+    } catch (error) {
+        res.status(500).json({ error: 'Gagal upload dokumen UMKM.' });
+    }
+});
 
 export default router;
-
