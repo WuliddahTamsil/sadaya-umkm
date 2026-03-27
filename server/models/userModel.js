@@ -5,16 +5,13 @@ import { dirname, join } from 'path';
 // Jika MONGODB_URI ada, gunakan MongoDB, jika tidak, di production harus error.
 // Untuk development lokal gunakan JSON_FALLBACK=true jika memang ingin fallback file.
 const useMongoDB = !!process.env.MONGODB_URI;
-const allowJsonFallback = process.env.JSON_FALLBACK === 'true';
+const allowJsonFallback = true; // Force JSON fallback for development/debugging
 
 let mongoUserModelPromise = null;
 async function getMongoModel() {
-  if (!useMongoDB) {
-    if (allowJsonFallback) {
-      console.warn('⚠️ MONGODB_URI not set; using JSON file fallback (JSON_FALLBACK=true)');
-      return null;
-    }
-    throw new Error('MONGODB_URI not set. In production, MongoDB is required. Set MONGODB_URI env variable.');
+if (!useMongoDB) {
+    console.warn('⚠️ MONGODB_URI not set; using JSON file fallback (forced for debugging)');
+    return null;
   }
   if (!mongoUserModelPromise) {
     mongoUserModelPromise = import('./userModelMongo.js').then(module => {

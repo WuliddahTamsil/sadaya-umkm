@@ -42,5 +42,71 @@
     "status": "completed",
     "createdAt": "2025-11-16T18:11:29.228Z",
     "updatedAt": "2025-11-16T18:11:29.228Z"
+  },
+  {
+    "id": "a379c21d-4fb0-4bc3-939f-5ff8518eb7e6",
+    "userId": "2f6a24de-1861-437e-ac15-7f7c14680e5f",
+    "type": "topup",
+    "amount": 200000,
+    "description": "Top Up via Transfer Bank",
+    "orderId": null,
+    "status": "completed",
+    "createdAt": "2026-03-27T14:40:23.628Z",
+    "updatedAt": "2026-03-27T14:40:23.628Z"
+  },
+  {
+    "id": "6af082ee-c2d3-42b7-bd19-3789a82e6914",
+    "userId": "2f6a24de-1861-437e-ac15-7f7c14680e5f",
+    "type": "payment",
+    "amount": 100000,
+    "description": "Pembayaran Order ORD-1774624042442-Y600UHXEG",
+    "orderId": "ORD-1774624042442-Y600UHXEG",
+    "status": "completed",
+    "createdAt": "2026-03-27T15:07:22.633Z",
+    "updatedAt": "2026-03-27T15:07:22.633Z"
+  },
+  {
+    "id": "28cb0a4c-7752-4d1d-8357-2b4c93bc49c5",
+    "userId": "2f6a24de-1861-437e-ac15-7f7c14680e5f",
+    "type": "topup",
+    "amount": 200000,
+    "description": "Top Up via Transfer Bank",
+    "orderId": null,
+    "status": "completed",
+    "createdAt": "2026-03-27T15:07:41.551Z",
+    "updatedAt": "2026-03-27T15:07:41.551Z"
+  },
+  {
+    "id": "bb126114-1fa0-4f00-bd81-9623dccc3043",
+    "userId": "2f6a24de-1861-437e-ac15-7f7c14680e5f",
+    "type": "topup",
+    "amount": 500000,
+    "description": "Top Up via Transfer Bank",
+    "orderId": null,
+    "status": "completed",
+    "createdAt": "2026-03-27T15:07:46.027Z",
+    "updatedAt": "2026-03-27T15:07:46.027Z"
+  },
+  {
+    "id": "bbc250f6-d421-4303-8e4e-7f4317cc7e31",
+    "userId": "2f6a24de-1861-437e-ac15-7f7c14680e5f",
+    "type": "payment",
+    "amount": 55000,
+    "description": "Pembayaran Order ORD-1774624209618-QGWXWVQN5",
+    "orderId": "ORD-1774624209618-QGWXWVQN5",
+    "status": "completed",
+    "createdAt": "2026-03-27T15:10:10.302Z",
+    "updatedAt": "2026-03-27T15:10:10.302Z"
+  },
+  {
+    "id": "b6db2c69-fa04-4553-9448-93ff0e9d9724",
+    "userId": "2f6a24de-1861-437e-ac15-7f7c14680e5f",
+    "type": "payment",
+    "amount": 55000,
+    "description": "Pembayaran Order ORD-1774627659938-GCW8081LW",
+    "orderId": "ORD-1774627659938-GCW8081LW",
+    "status": "completed",
+    "createdAt": "2026-03-27T16:07:40.211Z",
+    "updatedAt": "2026-03-27T16:07:40.211Z"
   }
 ]
