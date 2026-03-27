@@ -15,7 +15,7 @@ const uploadToBlob = async (file, folder) => {
   const filename = `${folder}/${Date.now()}-${cleanName}`;
   
   const blob = await put(filename, file.buffer, {
-    access: 'public',
+    access: 'private',
     token: process.env.BLOB_READ_WRITE_TOKEN
   });
   return blob.url;
