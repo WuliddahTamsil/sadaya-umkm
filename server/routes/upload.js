@@ -4,45 +4,52 @@ import multer from 'multer';
 
 const router = express.Router();
 const storage = multer.memoryStorage();
-const upload = multer({ storage });
+const upload = multer({ 
+  storage,
+  limits: { fileSize: 10 * 1024 * 1024 } // 10MB
+});
 
-const uploadToBlob = async (file, folder) => {
+// Helper Upload
+const uploadToBlob = async (file) => {
   if (!file || !file.buffer) return null;
-  
-  const cleanName = file.originalname.replace(/[^a-zA-Z0-9.]/g, '_');
-  const filename = `${folder}/${Date.now()}-${cleanName}`;
-  
+  const filename = `sadaya/${Date.now()}-${file.originalname.replace(/\s/g, '_')}`;
   const blob = await put(filename, file.buffer, {
-    // UBAH INI JADI PRIVATE agar Vercel tidak menolak upload
-    access: 'private', 
+    access: 'private', // Sesuai dengan store kamu yang statusnya private
     addRandomSuffix: true,
     token: process.env.BLOB_READ_WRITE_TOKEN
   });
-  
   return blob.url;
 };
 
-// Route untuk semua jenis upload
-router.post(['/products', '/profile', '/umkm', '/driver'], upload.any(), async (req, res) => {
+// ROUTE UNIVERSAL - Menangani POST ke /api/upload/umkm, /api/upload/products, dll
+router.post('*', upload.any(), async (req, res) => {
   try {
-    const results = {};
-    const files = req.files || (req.file ? [req.file] : []);
-
-    if (files.length === 0) return res.status(400).json({ error: 'File tidak ditemukan' });
-
-    for (const file of files) {
-      const folder = file.fieldname || 'uploads';
-      const url = await uploadToBlob(file, folder);
-      results[file.fieldname] = url;
-      results.url = url; 
+    console.log('📥 Request masuk ke:', req.path);
+    
+    // Cek apakah ada file yang masuk
+    const files = req.files || [];
+    if (files.length === 0) {
+      console.log('❌ Tidak ada file di req.files');
+      return res.status(400).json({ error: 'Server tidak menerima file. Cek form-data kamu.' });
     }
 
-    console.log('✅ Berhasil upload ke Private Store:', results);
-    res.status(200).json({ message: 'Upload sukses', ...results });
+    const results = {};
+    // Proses semua file (KTP, Foto Usaha, dll)
+    for (const file of files) {
+      const url = await uploadToBlob(file);
+      results[file.fieldname] = url; // Simpan berdasarkan nama field aslinya
+      results.url = url; // Fallback
+    }
 
-  } catch (err) {
-    console.error('❌ Blob Error:', err.message);
-    res.status(500).json({ error: 'Gagal upload', detail: err.message });
+    console.log('✅ Berhasil upload:', results);
+    res.status(200).json({ 
+      message: 'Upload sukses',
+      ...results 
+    });
+
+  } catch (error) {
+    console.error('❌ Error Backend:', error.message);
+    res.status(500).json({ error: error.message });
   }
 });
 
