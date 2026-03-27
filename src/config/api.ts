@@ -22,6 +22,7 @@ export const api = {
     umkm: `${API_BASE_URL}/upload/umkm`,
     productImage: `${API_BASE_URL}/upload/products`,
     profilePhoto: `${API_BASE_URL}/upload/profile`,
+    file: `${API_BASE_URL}/upload/file`,
   },
   orders: {
     getAll: `${API_BASE_URL}/orders`,

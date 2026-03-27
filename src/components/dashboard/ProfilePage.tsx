@@ -9,6 +9,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { toast } from 'sonner';
 import { api } from '../../config/api';
 import { motion } from 'framer-motion';
+import { uploadFileToBlob, validateUploadFile } from '../../utils/upload';
 
 export function ProfilePage() {
   const { user, refreshUser } = useAuth();
@@ -42,31 +43,26 @@ export function ProfilePage() {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // Validate file type - allow PNG, JPG, JPEG, GIF, WEBP
-    const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif', 'image/webp'];
-    const fileType = file.type.toLowerCase();
-    
-    if (!allowedTypes.includes(fileType) && !file.type.startsWith('image/')) {
-      toast.error('Hanya file gambar (PNG, JPG, JPEG, GIF, WEBP) yang diizinkan');
-      return;
-    }
-
-    // Validate file size (max 5MB)
-    if (file.size > 5 * 1024 * 1024) {
-      toast.error('Ukuran file maksimal 5MB');
+    try {
+      validateUploadFile(file, ['image/']);
+    } catch (error: any) {
+      toast.error(error.message || 'File tidak valid');
       return;
     }
 
     try {
       setUploadingPhoto(true);
       
-      const formData = new FormData();
-      formData.append('profilePhoto', file);
-      formData.append('userId', user?.id || '');
+      const profilePhotoUrl = await uploadFileToBlob(file, 'profiles');
 
-      const response = await fetch(api.upload.profilePhoto, {
-        method: 'POST',
-        body: formData,
+      const response = await fetch(api.users.updateProfile(user?.id || ''), {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          profilePhoto: profilePhotoUrl,
+        }),
       });
 
       if (!response.ok) {

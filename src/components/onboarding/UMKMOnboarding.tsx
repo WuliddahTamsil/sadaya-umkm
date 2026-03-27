@@ -9,6 +9,7 @@ import { toast } from 'sonner';
 import { Upload, FileText, Store, AlertCircle } from 'lucide-react';
 import { Alert, AlertDescription } from '../ui/alert';
 import { api } from '../../config/api';
+import { uploadFileToBlob, validateUploadFile } from '../../utils/upload';
 
 export function UMKMOnboarding() {
   const { user, completeOnboarding, refreshUser } = useAuth();
@@ -24,6 +25,18 @@ export function UMKMOnboarding() {
   });
 
   const handleFileChange = (field: string, file: File | null) => {
+    if (file) {
+      try {
+        const allowedTypes = field === 'businessPermitFile'
+          ? ['image/', 'application/pdf']
+          : ['image/'];
+        validateUploadFile(file, allowedTypes);
+      } catch (error: any) {
+        toast.error(error.message || 'File tidak valid');
+        return;
+      }
+    }
+
     setFormData(prev => ({ ...prev, [field]: file }));
   };
 
@@ -38,48 +51,36 @@ export function UMKMOnboarding() {
     setIsLoading(true);
 
     try {
-      // Buat FormData untuk mengirim file
-      const uploadFormData = new FormData();
-      uploadFormData.append('userId', user.id);
-      uploadFormData.append('storeName', formData.storeName);
-      uploadFormData.append('storeAddress', formData.storeAddress);
-      uploadFormData.append('storeDescription', formData.storeDescription);
-      uploadFormData.append('phoneNumber', formData.phoneNumber);
-      
-      // Append files
-      if (formData.ktpFile) uploadFormData.append('ktpFile', formData.ktpFile);
-      if (formData.storePhotoFile) uploadFormData.append('storePhotoFile', formData.storePhotoFile);
-      if (formData.businessPermitFile) uploadFormData.append('businessPermitFile', formData.businessPermitFile);
+      if (!formData.ktpFile || !formData.storePhotoFile) {
+        throw new Error('KTP dan foto tempat usaha wajib diunggah');
+      }
 
-      const response = await fetch(api.upload.umkm, {
-        method: 'POST',
-        body: uploadFormData, // Jangan set Content-Type, browser akan set otomatis dengan boundary
+      const [ktpFile, storePhotoFile, businessPermitFile] = await Promise.all([
+        uploadFileToBlob(formData.ktpFile, 'umkm'),
+        uploadFileToBlob(formData.storePhotoFile, 'umkm'),
+        formData.businessPermitFile ? uploadFileToBlob(formData.businessPermitFile, 'umkm') : Promise.resolve(null),
+      ]);
+
+      const response = await fetch(api.users.updateProfile(user.id), {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          phone: formData.phoneNumber,
+          storeName: formData.storeName,
+          storeAddress: formData.storeAddress,
+          storeDescription: formData.storeDescription,
+          ktpFile,
+          storePhotoFile,
+          businessPermitFile,
+          isOnboarded: true,
+        }),
       });
 
-      // Cek content type sebelum parse JSON
-      const contentType = response.headers.get('content-type');
-      if (!contentType || !contentType.includes('application/json')) {
-        const text = await response.text();
-        throw new Error(`Server error: ${response.status} ${response.statusText}. ${text || 'Response tidak valid'}`);
-      }
-
+      const result = await response.json().catch(() => null);
       if (!response.ok) {
-        let errorMessage = 'Upload dokumen gagal';
-        try {
-          const error = await response.json();
-          errorMessage = error.error || error.message || errorMessage;
-        } catch (e) {
-          // Jika response bukan JSON valid
-          errorMessage = `Server error: ${response.status} ${response.statusText}`;
-        }
-        throw new Error(errorMessage);
-      }
-
-      let result;
-      try {
-        result = await response.json();
-      } catch (e) {
-        throw new Error('Response tidak valid dari server. Silakan coba lagi.');
+        throw new Error(result?.error || result?.message || 'Upload dokumen gagal');
       }
       
       // Update user data dengan data terbaru dari backend (termasuk isOnboarded: true)

@@ -12,6 +12,7 @@ import { toast } from 'sonner';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../ui/select';
 import { api } from '../../../config/api';
 import { useAuth } from '../../../contexts/AuthContext';
+import { uploadFileToBlob, validateUploadFile } from '../../../utils/upload';
 
 interface Product {
   id: string;
@@ -102,14 +103,10 @@ export function ManajemenProduk() {
     const file = e.target.files?.[0];
     if (file) {
       // Validate file type
-      if (!file.type.startsWith('image/')) {
-        toast.error('File harus berupa gambar');
-        return;
-      }
-      
-      // Validate file size (max 5MB)
-      if (file.size > 5 * 1024 * 1024) {
-        toast.error('Ukuran file maksimal 5MB');
+      try {
+        validateUploadFile(file, ['image/']);
+      } catch (error: any) {
+        toast.error(error.message || 'File tidak valid');
         return;
       }
 
@@ -135,22 +132,9 @@ export function ManajemenProduk() {
 
     try {
       setIsUploadingImage(true);
-      const formData = new FormData();
-      formData.append('productImage', selectedImage);
-      formData.append('userId', user.id);
-
-      const response = await fetch(api.upload.productImage, {
-        method: 'POST',
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error('Gagal mengupload gambar');
-      }
-
-      const data = await response.json();
+      const imageUrl = await uploadFileToBlob(selectedImage, 'products');
       toast.success('Gambar berhasil diupload');
-      return data.imageUrl;
+      return imageUrl;
     } catch (error) {
       console.error('Error uploading image:', error);
       toast.error('Gagal mengupload gambar');
@@ -530,7 +514,7 @@ export function ManajemenProduk() {
                         <span className="font-semibold">Klik untuk upload</span> atau drag & drop
                       </p>
                       <p className="text-xs" style={{ color: '#858585' }}>
-                        PNG, JPG, GIF (MAX. 5MB)
+                        PNG, JPG, GIF (MAX. 4MB)
                       </p>
                     </div>
                     <input

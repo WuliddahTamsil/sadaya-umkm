@@ -131,8 +131,17 @@ export const updateUserProfile = async (req, res) => {
       storeName,
       storeAddress,
       storeDescription,
+      ktpFile,
+      storePhotoFile,
+      businessPermitFile,
       vehicleType,
-      vehiclePlate
+      vehiclePlate,
+      simFile,
+      stnkFile,
+      selfieFile,
+      vehiclePhotoFile,
+      profilePhoto,
+      isOnboarded
     } = req.body;
 
     const user = await getUserByIdModel(id);
@@ -154,10 +163,21 @@ export const updateUserProfile = async (req, res) => {
     if (storeName !== undefined) updateData.storeName = storeName;
     if (storeAddress !== undefined) updateData.storeAddress = storeAddress;
     if (storeDescription !== undefined) updateData.storeDescription = storeDescription;
+    if (ktpFile !== undefined) updateData.ktpFile = ktpFile;
+    if (storePhotoFile !== undefined) updateData.storePhotoFile = storePhotoFile;
+    if (businessPermitFile !== undefined) updateData.businessPermitFile = businessPermitFile;
     
     // Driver specific fields
     if (vehicleType !== undefined) updateData.vehicleType = vehicleType;
     if (vehiclePlate !== undefined) updateData.vehiclePlate = vehiclePlate;
+    if (simFile !== undefined) updateData.simFile = simFile;
+    if (stnkFile !== undefined) updateData.stnkFile = stnkFile;
+    if (selfieFile !== undefined) updateData.selfieFile = selfieFile;
+    if (vehiclePhotoFile !== undefined) updateData.vehiclePhotoFile = vehiclePhotoFile;
+
+    // Shared upload fields
+    if (profilePhoto !== undefined) updateData.profilePhoto = profilePhoto;
+    if (isOnboarded !== undefined) updateData.isOnboarded = isOnboarded;
 
     const updatedUser = await updateUser(id, updateData);
 

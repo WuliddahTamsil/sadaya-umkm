@@ -54,6 +54,16 @@ function getMissingBlobTokenResponse() {
   };
 }
 
+function normalizeUploadFolder(folder) {
+  const allowedFolders = new Set(['driver', 'umkm', 'products', 'profiles', 'general']);
+  if (!folder || typeof folder !== 'string') {
+    return 'general';
+  }
+
+  const normalizedFolder = folder.trim().toLowerCase();
+  return allowedFolders.has(normalizedFolder) ? normalizedFolder : 'general';
+}
+
 export const uploadDriverDocuments = async (req, res) => {
   try {
     const { userId, phoneNumber, vehicleType, vehiclePlate } = req.body;
@@ -694,6 +704,60 @@ export const uploadProfilePhotoController = async (req, res) => {
     if (!res.headersSent) {
       const errorMessage = error.message || 'Terjadi kesalahan saat upload foto profil';
       res.status(500).json({ 
+        error: errorMessage,
+        details: process.env.NODE_ENV === 'development' ? error.stack : undefined
+      });
+    }
+  }
+};
+
+export const uploadGenericFileController = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ error: 'File diperlukan' });
+    }
+
+    const isVercel = process.env.VERCEL || process.env.VERCEL_ENV;
+    const hasBlobToken = !!process.env.BLOB_READ_WRITE_TOKEN;
+    const folder = normalizeUploadFolder(req.body.folder);
+
+    let fileUrl;
+    let filePath;
+
+    if (isVercel && hasBlobToken) {
+      const fileData = prepareFileForBlob(req.file);
+      if (!fileData) {
+        return res.status(400).json({ error: 'File tidak valid atau tidak dapat diproses' });
+      }
+
+      fileUrl = await uploadToBlob(
+        fileData.buffer,
+        fileData.filename,
+        fileData.mimetype,
+        folder
+      );
+      filePath = fileUrl;
+    } else if (!isVercel) {
+      filePath = getRelativePath(req.file.path);
+      const baseUrl = 'http://localhost:3000';
+      fileUrl = `${baseUrl}/${filePath}`;
+    } else {
+      return res.status(500).json(getMissingBlobTokenResponse());
+    }
+
+    res.json({
+      success: true,
+      message: 'File berhasil diupload',
+      fileUrl,
+      filePath,
+      folder
+    });
+  } catch (error) {
+    console.error('Upload generic file error:', error);
+
+    if (!res.headersSent) {
+      const errorMessage = error.message || 'Terjadi kesalahan saat upload file';
+      res.status(500).json({
         error: errorMessage,
         details: process.env.NODE_ENV === 'development' ? error.stack : undefined
       });

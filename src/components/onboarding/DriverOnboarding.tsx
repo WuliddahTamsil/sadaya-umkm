@@ -9,6 +9,7 @@ import { Upload, Bike, AlertCircle } from 'lucide-react';
 import { Alert, AlertDescription } from '../ui/alert';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { api } from '../../config/api';
+import { uploadFileToBlob, validateUploadFile } from '../../utils/upload';
 
 export function DriverOnboarding() {
   const { user, completeOnboarding, refreshUser } = useAuth();
@@ -25,6 +26,15 @@ export function DriverOnboarding() {
   });
 
   const handleFileChange = (field: string, file: File | null) => {
+    if (file) {
+      try {
+        validateUploadFile(file, ['image/']);
+      } catch (error: any) {
+        toast.error(error.message || 'File tidak valid');
+        return;
+      }
+    }
+
     setFormData(prev => ({ ...prev, [field]: file }));
   };
 
@@ -39,49 +49,39 @@ export function DriverOnboarding() {
     setIsLoading(true);
 
     try {
-      // Buat FormData untuk mengirim file
-      const uploadFormData = new FormData();
-      uploadFormData.append('userId', user.id);
-      uploadFormData.append('phoneNumber', formData.phoneNumber);
-      uploadFormData.append('vehicleType', formData.vehicleType);
-      uploadFormData.append('vehiclePlate', formData.vehiclePlate);
-      
-      // Append files
-      if (formData.ktpFile) uploadFormData.append('ktpFile', formData.ktpFile);
-      if (formData.simFile) uploadFormData.append('simFile', formData.simFile);
-      if (formData.stnkFile) uploadFormData.append('stnkFile', formData.stnkFile);
-      if (formData.selfieFile) uploadFormData.append('selfieFile', formData.selfieFile);
-      if (formData.vehiclePhotoFile) uploadFormData.append('vehiclePhotoFile', formData.vehiclePhotoFile);
+      if (!formData.ktpFile || !formData.simFile || !formData.stnkFile || !formData.selfieFile || !formData.vehiclePhotoFile) {
+        throw new Error('Semua dokumen driver wajib diunggah');
+      }
 
-      const response = await fetch(api.upload.driver, {
-        method: 'POST',
-        body: uploadFormData, // Jangan set Content-Type, browser akan set otomatis dengan boundary
+      const [ktpFile, simFile, stnkFile, selfieFile, vehiclePhotoFile] = await Promise.all([
+        uploadFileToBlob(formData.ktpFile, 'driver'),
+        uploadFileToBlob(formData.simFile, 'driver'),
+        uploadFileToBlob(formData.stnkFile, 'driver'),
+        uploadFileToBlob(formData.selfieFile, 'driver'),
+        uploadFileToBlob(formData.vehiclePhotoFile, 'driver'),
+      ]);
+
+      const response = await fetch(api.users.updateProfile(user.id), {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          phone: formData.phoneNumber,
+          vehicleType: formData.vehicleType,
+          vehiclePlate: formData.vehiclePlate,
+          ktpFile,
+          simFile,
+          stnkFile,
+          selfieFile,
+          vehiclePhotoFile,
+          isOnboarded: true,
+        }),
       });
 
-      // Cek content type sebelum parse JSON
-      const contentType = response.headers.get('content-type');
-      if (!contentType || !contentType.includes('application/json')) {
-        const text = await response.text();
-        throw new Error(`Server error: ${response.status} ${response.statusText}. ${text || 'Response tidak valid'}`);
-      }
-
+      const result = await response.json().catch(() => null);
       if (!response.ok) {
-        let errorMessage = 'Upload dokumen gagal';
-        try {
-          const error = await response.json();
-          errorMessage = error.error || error.message || errorMessage;
-        } catch (e) {
-          // Jika response bukan JSON valid
-          errorMessage = `Server error: ${response.status} ${response.statusText}`;
-        }
-        throw new Error(errorMessage);
-      }
-
-      let result;
-      try {
-        result = await response.json();
-      } catch (e) {
-        throw new Error('Response tidak valid dari server. Silakan coba lagi.');
+        throw new Error(result?.error || result?.message || 'Upload dokumen gagal');
       }
       
       // Update user data dengan data terbaru dari backend (termasuk isOnboarded: true)
