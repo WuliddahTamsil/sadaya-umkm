@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import authRoutes from './routes/auth.js';
@@ -15,6 +16,8 @@ import commentRoutes from './routes/comments.js';
 import setupRoutes from './routes/setup.js';
 import adminRoutes from './routes/admin.js';
 import chatRoutes from './routes/chat.js';
+
+dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -61,7 +64,6 @@ app.use('/api/content', contentRoutes);
 app.use('/api/comments', commentRoutes);
 app.use('/api/setup', setupRoutes);
 app.use('/api/admin', adminRoutes);
-app.use('/api/workshops', workshopRoutes);
 app.use('/api/chat', chatRoutes);
 
 // Serve uploaded files

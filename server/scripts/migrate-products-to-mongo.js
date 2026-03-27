@@ -8,10 +8,13 @@
  */
 
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
 import { readFile } from 'fs/promises';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { getAllProducts as getMongoProducts, saveProduct as saveMongoProduct } from '../models/productModelMongo.js';
+
+dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

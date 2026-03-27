@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import authRoutes from './server/routes/auth.js';
@@ -11,6 +12,8 @@ import productsRoutes from './server/routes/products.js';
 import cartRoutes from './server/routes/cart.js';
 import walletRoutes from './server/routes/wallet.js';
 import contentRoutes from './server/routes/content.js';
+
+dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
