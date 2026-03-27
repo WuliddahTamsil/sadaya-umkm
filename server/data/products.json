@@ -318,5 +318,21 @@
     "status": "active",
     "createdAt": "2025-11-16T18:10:24.295Z",
     "updatedAt": "2025-11-16T18:10:24.295Z"
+  },
+  {
+    "id": "53070d7a-917e-4108-9e64-faec82dc631b",
+    "name": "example",
+    "price": 1000000000,
+    "stock": 1,
+    "category": "Makanan",
+    "description": "INI ENAK",
+    "image": "https://www.rumahmesin.com/wp-content/uploads/2019/07/makanan-khas-betawi.jpg",
+    "umkmId": "4fb06afa-fd54-4d28-aace-d40af516f40a",
+    "umkmName": "Lapis Bogor Sangkuriang",
+    "sold": 0,
+    "rating": 0,
+    "status": "active",
+    "createdAt": "2026-03-27T12:44:47.297Z",
+    "updatedAt": "2026-03-27T12:44:47.297Z"
   }
 ]

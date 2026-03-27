@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import { NotificationProvider } from "./contexts/NotificationContext";
 import { WeatherProvider } from "./contexts/WeatherContext";
@@ -81,6 +81,15 @@ function AppContent() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
+
+  // Reset landing page to home saat logout
+  useEffect(() => {
+    if (!user) {
+      setCurrentPage('beranda');
+      setSelectedUMKM(null);
+      setShopUMKM(null);
+    }
+  }, [user]);
 
   const handleCheckout = (items: any[]) => {
     // In real app, this would navigate to checkout page

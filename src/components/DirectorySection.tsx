@@ -320,7 +320,7 @@ export function DirectorySection({ onSelectUMKM }: DirectorySectionProps) {
       <div 
         className="absolute inset-0"
         style={{ 
-          background: 'linear-gradient(135deg, #FFFFFF 0%, #9370DB 30%, #9ACD32 100%)'
+          background: 'linear-gradient(135deg, #FFFFFF 0%, #FEF5E7 100%)'
         }}
       />
       
