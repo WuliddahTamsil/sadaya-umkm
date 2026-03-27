@@ -9,45 +9,40 @@ const upload = multer({ storage });
 const uploadToBlob = async (file, folder) => {
   if (!file || !file.buffer) return null;
   
-  // Membersihkan nama file agar tidak ada karakter aneh
   const cleanName = file.originalname.replace(/[^a-zA-Z0-9.]/g, '_');
   const filename = `${folder}/${Date.now()}-${cleanName}`;
   
   const blob = await put(filename, file.buffer, {
-    access: 'public', // Tetap gunakan public
-    addRandomSuffix: true, // WAJIB: Agar Vercel memberikan ID unik
+    // UBAH INI JADI PRIVATE agar Vercel tidak menolak upload
+    access: 'private', 
+    addRandomSuffix: true,
     token: process.env.BLOB_READ_WRITE_TOKEN
   });
   
   return blob.url;
 };
 
-// Route Universal untuk semua upload
+// Route untuk semua jenis upload
 router.post(['/products', '/profile', '/umkm', '/driver'], upload.any(), async (req, res) => {
   try {
     const results = {};
     const files = req.files || (req.file ? [req.file] : []);
 
-    if (files.length === 0) {
-      return res.status(400).json({ error: 'File tidak terdeteksi' });
-    }
+    if (files.length === 0) return res.status(400).json({ error: 'File tidak ditemukan' });
 
     for (const file of files) {
-      // Menentukan folder berdasarkan fieldname atau path
-      const folder = file.fieldname || 'general';
+      const folder = file.fieldname || 'uploads';
       const url = await uploadToBlob(file, folder);
       results[file.fieldname] = url;
-      results.url = url; // Fallback untuk upload tunggal
+      results.url = url; 
     }
 
-    res.status(200).json({ 
-      message: 'Upload sukses',
-      ...results 
-    });
+    console.log('✅ Berhasil upload ke Private Store:', results);
+    res.status(200).json({ message: 'Upload sukses', ...results });
 
   } catch (err) {
     console.error('❌ Blob Error:', err.message);
-    res.status(500).json({ error: 'Gagal upload ke storage', detail: err.message });
+    res.status(500).json({ error: 'Gagal upload', detail: err.message });
   }
 });
 
