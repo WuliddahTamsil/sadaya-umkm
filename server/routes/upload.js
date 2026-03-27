@@ -4,38 +4,40 @@ import multer from 'multer';
 
 const router = express.Router();
 const storage = multer.memoryStorage();
-const upload = multer({ 
-  storage,
-  limits: { fileSize: 10 * 1024 * 1024 } 
-});
+const upload = multer({ storage });
 
 const uploadToBlob = async (file, folder) => {
   if (!file || !file.buffer) return null;
+  
+  // Membersihkan nama file agar tidak ada karakter aneh
   const cleanName = file.originalname.replace(/[^a-zA-Z0-9.]/g, '_');
   const filename = `${folder}/${Date.now()}-${cleanName}`;
   
   const blob = await put(filename, file.buffer, {
-    access: 'private',
+    access: 'public', // Tetap gunakan public
+    addRandomSuffix: true, // WAJIB: Agar Vercel memberikan ID unik
     token: process.env.BLOB_READ_WRITE_TOKEN
   });
+  
   return blob.url;
 };
 
-// Satu handler untuk semua jenis upload (Produk, UMKM, Profile, dll)
+// Route Universal untuk semua upload
 router.post(['/products', '/profile', '/umkm', '/driver'], upload.any(), async (req, res) => {
   try {
     const results = {};
-    // Gabungkan file single (upload.single) atau multiple (upload.any)
     const files = req.files || (req.file ? [req.file] : []);
 
     if (files.length === 0) {
-      return res.status(400).json({ error: 'Tidak ada file yang dipilih' });
+      return res.status(400).json({ error: 'File tidak terdeteksi' });
     }
 
     for (const file of files) {
-      const url = await uploadToBlob(file, 'sadaya-uploads');
+      // Menentukan folder berdasarkan fieldname atau path
+      const folder = file.fieldname || 'general';
+      const url = await uploadToBlob(file, folder);
       results[file.fieldname] = url;
-      results.url = url; // Fallback untuk request satu file
+      results.url = url; // Fallback untuk upload tunggal
     }
 
     res.status(200).json({ 
@@ -44,8 +46,8 @@ router.post(['/products', '/profile', '/umkm', '/driver'], upload.any(), async (
     });
 
   } catch (err) {
-    console.error('❌ Vercel Blob Error:', err.message);
-    res.status(500).json({ error: 'Gagal upload ke cloud storage', detail: err.message });
+    console.error('❌ Blob Error:', err.message);
+    res.status(500).json({ error: 'Gagal upload ke storage', detail: err.message });
   }
 });
 
