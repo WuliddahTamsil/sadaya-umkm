@@ -26,19 +26,19 @@ export function KeuanganToko() {
           <div 
             className="absolute inset-0 opacity-10"
             style={{
-              background: 'linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%)'
+              background: 'linear-gradient(135deg, #9ACD32 0%, #9370DB 100%)'
             }}
           />
           <CardContent className="p-6 relative">
             <div className="flex items-center justify-between mb-4">
               <div 
                 className="w-14 h-14 rounded-full flex items-center justify-center"
-                style={{ backgroundColor: '#4CAF5020' }}
+                style={{ backgroundColor: '#9ACD3220' }}
               >
-                <DollarSign size={28} style={{ color: '#4CAF50' }} />
+                <DollarSign size={28} style={{ color: '#9ACD32' }} />
               </div>
               <Button
-                style={{ backgroundColor: '#4CAF50', color: '#FFFFFF' }}
+                style={{ backgroundColor: '#9ACD32', color: '#FFFFFF' }}
               >
                 Tarik Dana
               </Button>
@@ -60,16 +60,16 @@ export function KeuanganToko() {
           <div 
             className="absolute inset-0 opacity-10"
             style={{
-              background: 'linear-gradient(135deg, #FFB84D 0%, #FF8D28 100%)'
+              background: 'linear-gradient(135deg, #F99912 0%, #F99912 100%)'
             }}
           />
           <CardContent className="p-6 relative">
             <div className="flex items-center justify-between mb-4">
               <div 
                 className="w-14 h-14 rounded-full flex items-center justify-center"
-                style={{ backgroundColor: '#FFB84D20' }}
+                style={{ backgroundColor: '#F9991220' }}
               >
-                <TrendingUp size={28} style={{ color: '#FFB84D' }} />
+                <TrendingUp size={28} style={{ color: '#F99912' }} />
               </div>
             </div>
             <p className="body-3 mb-2" style={{ color: '#858585' }}>
@@ -96,9 +96,9 @@ export function KeuanganToko() {
             <div className="flex items-center gap-3 mb-3">
               <div 
                 className="w-10 h-10 rounded-full flex items-center justify-center"
-                style={{ backgroundColor: '#4CAF5020' }}
+                style={{ backgroundColor: '#9ACD3220' }}
               >
-                <TrendingUp size={20} style={{ color: '#4CAF50' }} />
+                <TrendingUp size={20} style={{ color: '#9ACD32' }} />
               </div>
               <p className="body-3" style={{ color: '#858585' }}>Bulan Ini</p>
             </div>
@@ -107,7 +107,7 @@ export function KeuanganToko() {
             </h3>
             <span 
               className="body-3 px-2 py-1 rounded inline-block mt-2"
-              style={{ backgroundColor: '#C8E6C9', color: '#2E7D32' }}
+              style={{ backgroundColor: '#C8E6C9', color: '#9ACD32' }}
             >
               +{growth}%
             </span>
@@ -183,9 +183,9 @@ export function KeuanganToko() {
                     }`}
                   >
                     {transaction.type === 'income' ? (
-                      <TrendingUp size={20} style={{ color: '#4CAF50' }} />
+                      <TrendingUp size={20} style={{ color: '#9ACD32' }} />
                     ) : transaction.type === 'withdrawal' ? (
-                      <Download size={20} style={{ color: '#2196F3' }} />
+                      <Download size={20} style={{ color: '#9370DB' }} />
                     ) : (
                       <TrendingDown size={20} style={{ color: '#FF6B6B' }} />
                     )}
@@ -203,8 +203,8 @@ export function KeuanganToko() {
                   <div className="text-right">
                     <p 
                       style={{ 
-                        color: transaction.type === 'income' ? '#4CAF50' : 
-                               transaction.type === 'withdrawal' ? '#2196F3' : '#FF6B6B',
+                        color: transaction.type === 'income' ? '#9ACD32' : 
+                               transaction.type === 'withdrawal' ? '#9370DB' : '#FF6B6B',
                         fontWeight: 700
                       }}
                     >
@@ -213,7 +213,7 @@ export function KeuanganToko() {
                     <span
                       className="body-3"
                       style={{
-                        color: transaction.status === 'completed' ? '#4CAF50' : '#FFB84D',
+                        color: transaction.status === 'completed' ? '#9ACD32' : '#F99912',
                         fontSize: '11px'
                       }}
                     >
@@ -234,9 +234,9 @@ export function KeuanganToko() {
             <div className="flex items-start gap-4">
               <div 
                 className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0"
-                style={{ backgroundColor: '#2196F320' }}
+                style={{ backgroundColor: '#9370DB20' }}
               >
-                <Calendar size={24} style={{ color: '#2196F3' }} />
+                <Calendar size={24} style={{ color: '#9370DB' }} />
               </div>
               <div>
                 <h4 style={{ color: '#2F4858' }}>Jadwal Pencairan</h4>
@@ -253,9 +253,9 @@ export function KeuanganToko() {
             <div className="flex items-start gap-4">
               <div 
                 className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0"
-                style={{ backgroundColor: '#FF8D2820' }}
+                style={{ backgroundColor: '#F9991220' }}
               >
-                <DollarSign size={24} style={{ color: '#FF8D28' }} />
+                <DollarSign size={24} style={{ color: '#F99912' }} />
               </div>
               <div>
                 <h4 style={{ color: '#2F4858' }}>Biaya Platform</h4>

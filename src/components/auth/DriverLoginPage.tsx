@@ -24,7 +24,7 @@ export function DriverLoginPage({ onSwitchToRegister, onBack }: DriverLoginPageP
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    
+
     try {
       await login(email, password);
       toast.success('Login berhasil! Selamat datang Driver.');
@@ -38,51 +38,43 @@ export function DriverLoginPage({ onSwitchToRegister, onBack }: DriverLoginPageP
   };
 
   return (
-    <div 
-      className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden"
-      style={{
-        background: 'linear-gradient(135deg, #E8F5E9 0%, #4CAF50 100%)',
-      }}
+    <div
+      className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-slate-50"
     >
+      {/* Dynamic Bright Background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-[10%] -left-[10%] w-[50%] h-[50%] rounded-full bg-gradient-to-br from-[#9ACD32] to-transparent opacity-15 blur-3xl animate-pulse" />
+        <div className="absolute bottom-[10%] -right-[10%] w-[40%] h-[60%] rounded-full bg-gradient-to-bl from-[#9370DB] to-transparent opacity-15 blur-3xl" style={{ animation: 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite' }} />
+      </div>
+
       {/* Background Pattern */}
       <div className="absolute inset-0 bg-pattern-leaves opacity-20" />
 
-      {/* Decorative Elements */}
+      {/* Decorative Vibrant Elements */}
       <motion.div
-        className="absolute top-20 left-10 text-green-700 opacity-20"
-        animate={{
-          y: [0, -20, 0],
-          rotate: [0, 10, 0],
-        }}
-        transition={{
-          duration: 4,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
+        className="absolute lg:top-[15%] top-10 left-[5%] lg:left-[10%] w-20 h-20 rounded-2xl shadow-[0_10px_35px_rgba(154,205,50,0.4)] flex items-center justify-center pointer-events-none z-0"
+        style={{ background: 'linear-gradient(135deg, #aee34b 0%, #9ACD32 100%)', transform: 'rotate(-15deg)' }}
+        animate={{ y: [0, -20, 0], rotate: [-15, 5, -15] }}
+        transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
       >
-        <Truck size={80} />
+        <Truck className="text-white w-9 h-9" />
       </motion.div>
 
       <motion.div
-        className="absolute bottom-20 right-20 text-green-600 opacity-20"
-        animate={{
-          y: [0, 20, 0],
-          rotate: [0, -10, 0],
-        }}
-        transition={{
-          duration: 5,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
+        className="absolute lg:bottom-[20%] bottom-10 left-[8%] lg:left-[15%] w-16 h-16 rounded-[1.5rem] shadow-[0_10px_35px_rgba(154,205,50,0.4)] flex items-center justify-center pointer-events-none z-0"
+        style={{ background: 'linear-gradient(135deg, #9ACD32 0%, #aee34b 100%)', transform: 'rotate(25deg)' }}
+        animate={{ y: [0, -15, 0], rotate: [25, 5, 25] }}
+        transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
       >
-        <MapPin size={70} />
+        <Package className="text-white w-7 h-7" />
       </motion.div>
+
 
       <div className="container mx-auto max-w-md relative z-10">
         {/* Back Button */}
         <motion.button
           onClick={onBack}
-          className="mb-6 flex items-center space-x-2 text-green-800 hover:text-green-900 transition-colors"
+          className="mb-6 flex items-center space-x-2 text-gray-700 hover:text-gray-900 transition-colors"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           whileHover={{ x: -5 }}
@@ -105,12 +97,13 @@ export function DriverLoginPage({ onSwitchToRegister, onBack }: DriverLoginPageP
                   className="h-12 w-auto mb-4"
                 />
                 <motion.div
-                  className="w-20 h-20 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center mb-4"
+                  className="w-20 h-20 rounded-full flex items-center justify-center mb-4 shadow-[0_10px_35px_rgba(154,205,50,0.4)]"
+                  style={{ background: 'linear-gradient(135deg, #aee34b 0%, #9ACD32 100%)' }}
                   whileHover={{ scale: 1.1, rotate: 5 }}
                 >
                   <Truck size={40} className="text-white" />
                 </motion.div>
-                <h2 style={{ color: '#4CAF50' }}>Driver Login</h2>
+                <h2 style={{ color: '#9ACD32' }} className="font-bold text-2xl">Driver Login</h2>
                 <p className="text-gray-600 text-center mt-2">
                   Masuk sebagai mitra pengiriman
                 </p>
@@ -119,20 +112,20 @@ export function DriverLoginPage({ onSwitchToRegister, onBack }: DriverLoginPageP
               {/* Illustrations */}
               <div className="flex justify-center space-x-4 mb-6">
                 <div className="text-center">
-                  <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mb-2">
-                    <Package size={24} className="text-green-600" />
+                  <div className="w-12 h-12 bg-lime-50 rounded-full flex items-center justify-center mb-2 border border-lime-100">
+                    <Package size={24} className="text-[#9ACD32]" />
                   </div>
                   <p className="body-3 text-gray-600">Ambil Order</p>
                 </div>
                 <div className="text-center">
-                  <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mb-2">
-                    <MapPin size={24} className="text-green-600" />
+                  <div className="w-12 h-12 bg-lime-50 rounded-full flex items-center justify-center mb-2 border border-lime-100">
+                    <MapPin size={24} className="text-[#9ACD32]" />
                   </div>
                   <p className="body-3 text-gray-600">Navigasi</p>
                 </div>
                 <div className="text-center">
-                  <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mb-2">
-                    <Truck size={24} className="text-green-600" />
+                  <div className="w-12 h-12 bg-lime-50 rounded-full flex items-center justify-center mb-2 border border-lime-100">
+                    <Truck size={24} className="text-[#9ACD32]" />
                   </div>
                   <p className="body-3 text-gray-600">Antar</p>
                 </div>
@@ -153,7 +146,7 @@ export function DriverLoginPage({ onSwitchToRegister, onBack }: DriverLoginPageP
                     className="border-green-200 focus:border-green-400"
                   />
                 </div>
-                
+
                 <div className="space-y-2">
                   <Label htmlFor="password" style={{ color: '#2F4858' }}>
                     Password
@@ -171,10 +164,10 @@ export function DriverLoginPage({ onSwitchToRegister, onBack }: DriverLoginPageP
 
                 <Button
                   type="submit"
-                  className="w-full py-6 hover-lift"
-                  style={{ 
-                    background: 'linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%)',
-                    color: '#FFFFFF' 
+                  className="w-full py-6 hover-lift font-bold shadow-lg shadow-lime-500/20 text-lg"
+                  style={{
+                    background: 'linear-gradient(135deg, #9ACD32 0%, #9370DB 100%)',
+                    color: '#FFFFFF'
                   }}
                   disabled={isLoading}
                 >
@@ -193,8 +186,8 @@ export function DriverLoginPage({ onSwitchToRegister, onBack }: DriverLoginPageP
                   Belum punya akun?{' '}
                   <button
                     onClick={onSwitchToRegister}
-                    className="body-3"
-                    style={{ color: '#4CAF50', fontWeight: 600 }}
+                    className="body-3 hover:underline"
+                    style={{ color: '#9ACD32', fontWeight: 600 }}
                   >
                     Daftar Driver Baru
                   </button>

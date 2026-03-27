@@ -6,7 +6,7 @@ export const BogorToast = {
   // Order notifications
   newOrder: (orderNumber: string) => {
     toast.success(`Pesanan baru #${orderNumber}! Langsung gaskeun! 🚀`, {
-      icon: <Package size={20} style={{ color: '#4CAF50' }} />,
+      icon: <Package size={20} style={{ color: '#9ACD32' }} />,
       description: 'Ada yang menunggu nih, buruan diproses ya!',
       duration: 5000,
     });
@@ -14,7 +14,7 @@ export const BogorToast = {
 
   orderProcessed: (orderNumber: string) => {
     toast.success(`Pesanan #${orderNumber} lagi diproses! 📦`, {
-      icon: <CheckCircle size={20} style={{ color: '#2196F3' }} />,
+      icon: <CheckCircle size={20} style={{ color: '#9370DB' }} />,
       description: 'Pelanggan pasti seneng nih!',
       duration: 5000,
     });
@@ -22,7 +22,7 @@ export const BogorToast = {
 
   orderCompleted: (orderNumber: string) => {
     toast.success(`Yeay! Pesanan #${orderNumber} selesai! 🎉`, {
-      icon: <CheckCircle size={20} style={{ color: '#4CAF50' }} />,
+      icon: <CheckCircle size={20} style={{ color: '#9ACD32' }} />,
       description: 'Mantap! Jangan lupa minta review ya!',
       duration: 5000,
     });
@@ -31,7 +31,7 @@ export const BogorToast = {
   // Sales notifications
   salesBoom: () => {
     toast.success('Wah, UMKM kamu lagi rame nih! 🔥', {
-      icon: <TrendingUp size={20} style={{ color: '#FF8D28' }} />,
+      icon: <TrendingUp size={20} style={{ color: '#F99912' }} />,
       description: '5 pesanan dalam 10 menit terakhir!',
       duration: 5000,
     });
@@ -39,7 +39,7 @@ export const BogorToast = {
 
   dailyTarget: (percentage: number) => {
     toast.info(`Target harian ${percentage}% tercapai! Keep going! 💪`, {
-      icon: <TrendingUp size={20} style={{ color: '#FF8D28' }} />,
+      icon: <TrendingUp size={20} style={{ color: '#F99912' }} />,
       description: 'Tinggal sedikit lagi nih!',
       duration: 5000,
     });
@@ -48,7 +48,7 @@ export const BogorToast = {
   // Weather-themed
   rainyDay: () => {
     toast.info('Hujan turun ~ tetap semangat kirim pesanan ya! ☔', {
-      icon: <CloudRain size={20} style={{ color: '#2196F3' }} />,
+      icon: <CloudRain size={20} style={{ color: '#9370DB' }} />,
       description: 'Hati-hati di jalan, safety first!',
       duration: 5000,
     });
@@ -74,7 +74,7 @@ export const BogorToast = {
   // Driver notifications
   newDelivery: (distance: string) => {
     toast.success(`Order baru! Jarak ${distance} km 🏍️`, {
-      icon: <Zap size={20} style={{ color: '#FFB800' }} />,
+      icon: <Zap size={20} style={{ color: '#F99912' }} />,
       description: 'Gas poll, jangan lupa helm!',
       duration: 5000,
     });
@@ -82,7 +82,7 @@ export const BogorToast = {
 
   bonusAlert: (remaining: number) => {
     toast.success(`Semangat! Tinggal ${remaining} order lagi bonus harian! 🎁`, {
-      icon: <Gift size={20} style={{ color: '#9C27B0' }} />,
+      icon: <Gift size={20} style={{ color: '#9370DB' }} />,
       description: 'Udah deket nih, pasti bisa!',
       duration: 5000,
     });
@@ -90,7 +90,7 @@ export const BogorToast = {
 
   deliveryCompleted: () => {
     toast.success('Pengiriman selesai! Good job! 👍', {
-      icon: <CheckCircle size={20} style={{ color: '#4CAF50' }} />,
+      icon: <CheckCircle size={20} style={{ color: '#9ACD32' }} />,
       description: 'Customer pasti seneng nih!',
       duration: 5000,
     });
@@ -99,7 +99,7 @@ export const BogorToast = {
   // Customer notifications
   customerNew: (name: string) => {
     toast.info(`Pelanggan baru: ${name}! 👋`, {
-      icon: <Info size={20} style={{ color: '#2196F3' }} />,
+      icon: <Info size={20} style={{ color: '#9370DB' }} />,
       description: 'Berikan pelayanan terbaik ya!',
       duration: 5000,
     });
@@ -107,7 +107,7 @@ export const BogorToast = {
 
   customerLoyal: (name: string, orders: number) => {
     toast.success(`${name} udah ${orders}x order! Pelanggan setia nih! 💚`, {
-      icon: <TrendingUp size={20} style={{ color: '#4CAF50' }} />,
+      icon: <TrendingUp size={20} style={{ color: '#9ACD32' }} />,
       description: 'Jangan lupa kasih special treatment!',
       duration: 5000,
     });
@@ -132,7 +132,7 @@ export const BogorToast = {
   // Achievement unlocked
   achievement: (badgeName: string) => {
     toast.success(`🏆 Achievement Unlocked: ${badgeName}!`, {
-      icon: <Gift size={20} style={{ color: '#FFB800' }} />,
+      icon: <Gift size={20} style={{ color: '#F99912' }} />,
       description: 'Mantap jiwa! Keep up the good work!',
       duration: 5000,
     });

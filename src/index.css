@@ -417,22 +417,22 @@
   }
 
   :root {
-    --primary-orange: #ff8d28;
-    --primary-yellow: #ffb84d;
-    --primary-cream: #fff4e6;
-    --accent-green: #4caf50;
-    --accent-dark-green: #2e7d32;
+    --primary-orange: #F99912;
+    --primary-lime: #9ACD32;
+    --primary-purple: #9370DB;
     --white: #fff;
-    --white-faded: #f9f9f9;
-    --gray-dark: #4a4a4a;
-    --gray-medium: #858585;
-    --gray-light: #e0e0e0;
-    --success-green: #4caf50;
-    --warning-yellow: #fde08e;
-    --info-blue: #2196f3;
-    --black: #1a1a1a;
-    --gradient-primary: linear-gradient(135deg, #ff8d28 0%, #ffb84d 50%, #fff4e6 100%);
-    --gradient-green: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
+    --white-faded: #fcfcfc;
+    --gray-dark: #333333;
+    --gray-medium: #777777;
+    --gray-light: #e5e5e5;
+    --success-green: #2ecc71;
+    --warning-yellow: #f1c40f;
+    --info-blue: #3498db;
+    --black: #0f172a;
+    --gradient-primary: linear-gradient(135deg, #F99912 0%, #9ACD32 50%, #9370DB 100%);
+    --gradient-orange-lime: linear-gradient(135deg, #F99912 0%, #9ACD32 100%);
+    --gradient-lime-purple: linear-gradient(135deg, #9ACD32 0%, #9370DB 100%);
+    --gradient-purple-orange: linear-gradient(135deg, #9370DB 0%, #F99912 100%);
   }
 
   
@@ -459,18 +459,18 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #ff8d284d;
+    background: #F9991280;
     border-radius: 10px;
     transition: background .3s;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #ff8d2899;
+    background: #F99912;
   }
 
   * {
     scrollbar-width: thin;
-    scrollbar-color: #ff8d284d transparent;
+    scrollbar-color: #F9991280 transparent;
   }
 
   h1 {
@@ -1624,8 +1624,8 @@
     background-color: #f5f5f5;
   }
 
-  .bg-\[\#FF8D28\] {
-    background-color: #ff8d28;
+  .bg-\[\#F99912\] {
+    background-color: #f99912;
   }
 
   .bg-background {
@@ -2482,8 +2482,8 @@
   }
 
   @media (hover: hover) {
-    .hover\:border-\[\#FF8D28\]:hover {
-      border-color: #ff8d28;
+    .hover\:border-\[\#F99912\]:hover {
+      border-color: #f99912;
     }
   }
 
@@ -2566,8 +2566,8 @@
   }
 
   @media (hover: hover) {
-    .hover\:text-\[\#FFB84D\]:hover {
-      color: #ffb84d;
+    .hover\:text-\[\#F99912\]:hover {
+      color: #f99912;
     }
   }
 
@@ -3387,7 +3387,7 @@
 
   .hover-lift:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 30px #ff8d2833;
+    box-shadow: 0 10px 30px #f9991233;
   }
 
   .bg-pattern-leaves {
@@ -3416,7 +3416,7 @@
 
   .hover-scale:hover {
     transform: scale(1.03);
-    box-shadow: 0 8px 24px #ff8d2826;
+    box-shadow: 0 8px 24px #f9991226;
   }
 
   .hover-glow {
@@ -3424,7 +3424,7 @@
   }
 
   .hover-glow:hover {
-    box-shadow: 0 0 20px #ff8d284d;
+    box-shadow: 0 0 20px #f999124d;
   }
 
   @keyframes pulse-soft {
@@ -3504,12 +3504,12 @@
   }
 
   .animate-gradient-border {
-    background: linear-gradient(90deg, #ff8d28, #4caf50, #2196f3, #ff8d28) 0 0 / 200% 200%;
+    background: linear-gradient(90deg, #f99912, #9acd32, #9370db, #f99912) 0 0 / 200% 200%;
     animation: 3s infinite gradient-border;
   }
 
   .text-gradient-animated {
-    background: linear-gradient(90deg, #ff8d28, #ffb84d, #4caf50, #2196f3) 0 0 / 200%;
+    background: linear-gradient(90deg, #f99912, #9acd32, #9370db, #f99912) 0 0 / 200%;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     animation: 3s linear infinite gradient-text;
@@ -3538,7 +3538,7 @@
   .cursor-trail {
     pointer-events: none;
     z-index: 9999;
-    background: radial-gradient(circle, #ff8d2866 0%, #0000 70%);
+    background: radial-gradient(circle, #f9991266 0%, #0000 70%);
     border-radius: 50%;
     width: 20px;
     height: 20px;

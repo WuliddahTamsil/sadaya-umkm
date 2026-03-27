@@ -48,7 +48,7 @@ export function LayananLaporan() {
       value: 456800000,
       change: '+18.5%',
       icon: DollarSign,
-      color: '#4CAF50',
+      color: '#9ACD32',
       trend: 'up'
     },
     {
@@ -64,7 +64,7 @@ export function LayananLaporan() {
       value: 367600000,
       change: '+22.3%',
       icon: TrendingUp,
-      color: '#FFB800',
+      color: '#F99912',
       trend: 'up'
     },
     {
@@ -72,7 +72,7 @@ export function LayananLaporan() {
       value: 80.5,
       change: '+3.8%',
       icon: PieChartIcon,
-      color: '#2196F3',
+      color: '#9370DB',
       trend: 'up',
       suffix: '%'
     }
@@ -90,15 +90,15 @@ export function LayananLaporan() {
   };
 
   const categoryRevenue = [
-    { name: 'Komisi UMKM', value: 278400000, percentage: 61, color: '#FF8D28' },
-    { name: 'Biaya Pengiriman', value: 114200000, percentage: 25, color: '#2196F3' },
-    { name: 'Iklan & Promosi', value: 45680000, percentage: 10, color: '#4CAF50' },
-    { name: 'Layanan Premium', value: 18320000, percentage: 4, color: '#9C27B0' },
+    { name: 'Komisi UMKM', value: 278400000, percentage: 61, color: '#F99912' },
+    { name: 'Biaya Pengiriman', value: 114200000, percentage: 25, color: '#9370DB' },
+    { name: 'Iklan & Promosi', value: 45680000, percentage: 10, color: '#9ACD32' },
+    { name: 'Layanan Premium', value: 18320000, percentage: 4, color: '#9370DB' },
   ];
 
   const transactionStats = [
-    { label: 'Total Transaksi', value: 45623, icon: BarChart3, color: '#2196F3' },
-    { label: 'Transaksi Berhasil', value: 44189, icon: CheckCircle, color: '#4CAF50' },
+    { label: 'Total Transaksi', value: 45623, icon: BarChart3, color: '#9370DB' },
+    { label: 'Transaksi Berhasil', value: 44189, icon: CheckCircle, color: '#9ACD32' },
     { label: 'Transaksi Pending', value: 892, icon: Clock, color: '#FF9800' },
     { label: 'Transaksi Gagal', value: 542, icon: AlertCircle, color: '#FF6B6B' },
   ];
@@ -146,7 +146,7 @@ export function LayananLaporan() {
     const styles = {
       high: { bg: '#FF6B6B', text: 'High' },
       medium: { bg: '#FF9800', text: 'Medium' },
-      low: { bg: '#4CAF50', text: 'Low' }
+      low: { bg: '#9ACD32', text: 'Low' }
     };
     const style = styles[priority as keyof typeof styles];
     return (
@@ -158,9 +158,9 @@ export function LayananLaporan() {
 
   const getStatusBadge = (status: string) => {
     const styles = {
-      resolved: { bg: '#4CAF50', text: 'Resolved', icon: CheckCircle },
+      resolved: { bg: '#9ACD32', text: 'Resolved', icon: CheckCircle },
       investigating: { bg: '#FF9800', text: 'Investigating', icon: AlertCircle },
-      ongoing: { bg: '#2196F3', text: 'Ongoing', icon: Clock }
+      ongoing: { bg: '#9370DB', text: 'Ongoing', icon: Clock }
     };
     const style = styles[status as keyof typeof styles];
     const Icon = style.icon;
@@ -241,8 +241,8 @@ export function LayananLaporan() {
                           style={{
                             fontSize: '10px',
                             backgroundColor: stat.trend === 'up' ? '#C8E6C920' : '#FFE0B220',
-                            color: stat.trend === 'up' ? '#4CAF50' : '#FF9800',
-                            borderColor: stat.trend === 'up' ? '#4CAF50' : '#FF9800'
+                            color: stat.trend === 'up' ? '#9ACD32' : '#FF9800',
+                            borderColor: stat.trend === 'up' ? '#9ACD32' : '#FF9800'
                           }}
                         >
                           {stat.change}
@@ -291,18 +291,18 @@ export function LayananLaporan() {
                   <Line 
                     type="monotone" 
                     dataKey="revenue" 
-                    stroke="#2196F3" 
+                    stroke="#9370DB" 
                     strokeWidth={3}
                     name="Pendapatan"
-                    dot={{ fill: '#2196F3', r: 5 }}
+                    dot={{ fill: '#9370DB', r: 5 }}
                   />
                   <Line 
                     type="monotone" 
                     dataKey="profit" 
-                    stroke="#4CAF50" 
+                    stroke="#9ACD32" 
                     strokeWidth={3}
                     name="Profit"
-                    dot={{ fill: '#4CAF50', r: 5 }}
+                    dot={{ fill: '#9ACD32', r: 5 }}
                   />
                   <Line 
                     type="monotone" 
@@ -473,7 +473,7 @@ export function LayananLaporan() {
                         </h4>
                       </div>
                       <div className="text-right">
-                        <p className="body-3" style={{ color: '#FF8D28', fontWeight: 600, fontSize: '18px' }}>
+                        <p className="body-3" style={{ color: '#F99912', fontWeight: 600, fontSize: '18px' }}>
                           {issue.count}
                         </p>
                         <p className="body-3" style={{ color: '#858585', fontSize: '10px' }}>

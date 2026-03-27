@@ -142,24 +142,24 @@ export function AdminDashboard() {
   }, []);
 
   const statsCards = [
-    { label: 'Total User', value: stats.totalUsers.toLocaleString('id-ID'), icon: Users, color: '#2196F3' },
-    { label: 'Total UMKM', value: stats.totalUMKM.toLocaleString('id-ID'), icon: Store, color: '#FF8D28' },
-    { label: 'Total Driver', value: stats.totalDriver.toLocaleString('id-ID'), icon: Bike, color: '#4CAF50' },
-    { label: 'Pesanan Hari Ini', value: stats.ordersToday.toLocaleString('id-ID'), icon: Package, color: '#9C27B0' },
+    { label: 'Total User', value: stats.totalUsers.toLocaleString('id-ID'), icon: Users, color: '#9370DB' },
+    { label: 'Total UMKM', value: stats.totalUMKM.toLocaleString('id-ID'), icon: Store, color: '#F99912' },
+    { label: 'Total Driver', value: stats.totalDriver.toLocaleString('id-ID'), icon: Bike, color: '#9ACD32' },
+    { label: 'Pesanan Hari Ini', value: stats.ordersToday.toLocaleString('id-ID'), icon: Package, color: '#9370DB' },
     { 
       label: 'Transaksi Bulan Ini', 
       value: `Rp ${(stats.revenueThisMonth / 1000000).toFixed(1)}M`, 
       icon: DollarSign, 
       color: '#FF6B6B' 
     },
-    { label: 'Pertumbuhan', value: stats.growth, icon: TrendingUp, color: '#4CAF50' }
+    { label: 'Pertumbuhan', value: stats.growth, icon: TrendingUp, color: '#9ACD32' }
   ];
 
   const getStatusBadge = (status: string) => {
     const styles: Record<string, { bg: string; text: string; label: string }> = {
-      pending: { bg: '#FDE08E', text: '#F57C00', label: 'Pending' },
-      approved: { bg: '#C8E6C9', text: '#2E7D32', label: 'Disetujui' },
-      completed: { bg: '#E3F2FD', text: '#1976D2', label: 'Selesai' }
+      pending: { bg: '#FDE08E', text: '#F99912', label: 'Pending' },
+      approved: { bg: '#C8E6C9', text: '#9ACD32', label: 'Disetujui' },
+      completed: { bg: '#E3F2FD', text: '#9370DB', label: 'Selesai' }
     };
     const style = styles[status] || styles.pending;
     return (
@@ -237,9 +237,9 @@ export function AdminDashboard() {
                   <YAxis 
                     yAxisId="right"
                     orientation="right"
-                    stroke="#4CAF50"
+                    stroke="#9ACD32"
                     style={{ fontSize: '12px' }}
-                    label={{ value: 'Revenue (Rp)', angle: 90, position: 'insideRight', style: { fontSize: '11px', fill: '#4CAF50' } }}
+                    label={{ value: 'Revenue (Rp)', angle: 90, position: 'insideRight', style: { fontSize: '11px', fill: '#9ACD32' } }}
                     tickFormatter={(value) => {
                       if (value >= 1000000) {
                         return `${(value / 1000000).toFixed(1)}M`;
@@ -268,9 +268,9 @@ export function AdminDashboard() {
                     yAxisId="left"
                     type="monotone" 
                     dataKey="transaksi" 
-                    stroke="#FF8D28" 
+                    stroke="#F99912" 
                     strokeWidth={3}
-                    dot={{ fill: '#FF8D28', r: 5 }}
+                    dot={{ fill: '#F99912', r: 5 }}
                     name="Jumlah Transaksi"
                     activeDot={{ r: 7 }}
                   />
@@ -278,9 +278,9 @@ export function AdminDashboard() {
                     yAxisId="right"
                     type="monotone" 
                     dataKey="revenue" 
-                    stroke="#4CAF50" 
+                    stroke="#9ACD32" 
                     strokeWidth={3}
-                    dot={{ fill: '#4CAF50', r: 5 }}
+                    dot={{ fill: '#9ACD32', r: 5 }}
                     name="Revenue (Rp)"
                     activeDot={{ r: 7 }}
                   />
@@ -302,7 +302,7 @@ export function AdminDashboard() {
                   <span className="body-3" style={{ color: '#858585' }}>45%</span>
                 </div>
                 <div className="w-full h-2 rounded-full" style={{ backgroundColor: '#E0E0E0' }}>
-                  <div className="h-2 rounded-full" style={{ width: '45%', backgroundColor: '#FF8D28' }} />
+                  <div className="h-2 rounded-full" style={{ width: '45%', backgroundColor: '#F99912' }} />
                 </div>
               </div>
               <div>
@@ -311,7 +311,7 @@ export function AdminDashboard() {
                   <span className="body-3" style={{ color: '#858585' }}>30%</span>
                 </div>
                 <div className="w-full h-2 rounded-full" style={{ backgroundColor: '#E0E0E0' }}>
-                  <div className="h-2 rounded-full" style={{ width: '30%', backgroundColor: '#4CAF50' }} />
+                  <div className="h-2 rounded-full" style={{ width: '30%', backgroundColor: '#9ACD32' }} />
                 </div>
               </div>
               <div>
@@ -320,7 +320,7 @@ export function AdminDashboard() {
                   <span className="body-3" style={{ color: '#858585' }}>25%</span>
                 </div>
                 <div className="w-full h-2 rounded-full" style={{ backgroundColor: '#E0E0E0' }}>
-                  <div className="h-2 rounded-full" style={{ width: '25%', backgroundColor: '#2196F3' }} />
+                  <div className="h-2 rounded-full" style={{ width: '25%', backgroundColor: '#9370DB' }} />
                 </div>
               </div>
             </div>
@@ -350,7 +350,7 @@ export function AdminDashboard() {
         <CardContent>
           {isLoadingActivities ? (
             <div className="flex items-center justify-center py-12">
-              <Loader2 className="animate-spin" size={32} style={{ color: '#FF8D28' }} />
+              <Loader2 className="animate-spin" size={32} style={{ color: '#F99912' }} />
             </div>
           ) : activities.length === 0 ? (
             <div className="text-center py-12">

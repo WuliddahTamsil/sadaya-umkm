@@ -6,7 +6,7 @@ import { Label } from '../ui/label';
 import { Card, CardContent } from '../ui/card';
 import { useAuth } from '../../contexts/AuthContext';
 import { toast } from 'sonner';
-import { User, ArrowLeft } from 'lucide-react';
+import { User, ArrowLeft, Star, Heart, ShoppingCart } from 'lucide-react';
 
 import { AsliBogorLogo } from '../ui/asli-bogor-logo';
 
@@ -25,14 +25,14 @@ export function UserRegisterPage({ onSwitchToLogin, onBack }: UserRegisterPagePr
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (password !== confirmPassword) {
       toast.error('Password tidak cocok!');
       return;
     }
 
     setIsLoading(true);
-    
+
     try {
       await register({
         name,
@@ -50,13 +50,17 @@ export function UserRegisterPage({ onSwitchToLogin, onBack }: UserRegisterPagePr
   };
 
   return (
-    <div 
-      className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden"
-      style={{
-        background: 'linear-gradient(135deg, #FFFBF0 0%, #FFF4E6 50%, #FFE5CC 100%)',
-      }}
+    <div
+      className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-slate-50"
     >
+      {/* Dynamic Bright Background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-[10%] -left-[10%] w-[50%] h-[50%] rounded-full bg-gradient-to-br from-[#F99912] to-transparent opacity-15 blur-3xl animate-pulse" />
+        <div className="absolute bottom-[10%] -right-[10%] w-[40%] h-[60%] rounded-full bg-gradient-to-bl from-[#9ACD32] to-transparent opacity-15 blur-3xl" style={{ animation: 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite' }} />
+      </div>
+
       <div className="absolute inset-0 bg-pattern-leaves opacity-20" />
+
 
       <div className="container mx-auto max-w-md relative z-10 py-8">
         <motion.button
@@ -83,12 +87,13 @@ export function UserRegisterPage({ onSwitchToLogin, onBack }: UserRegisterPagePr
                   className="h-12 w-auto mb-4"
                 />
                 <motion.div
-                  className="w-20 h-20 bg-gradient-to-br from-yellow-300 to-orange-400 rounded-full flex items-center justify-center mb-4"
+                  className="w-20 h-20 rounded-full flex items-center justify-center mb-4 shadow-[0_10px_35px_rgba(249,152,18,0.4)]"
+                  style={{ background: 'linear-gradient(135deg, #FFB84D 0%, #F99812 100%)' }}
                   whileHover={{ scale: 1.1, rotate: 5 }}
                 >
                   <User size={40} className="text-white" />
                 </motion.div>
-                <h2 style={{ color: '#FFB84D' }}>Daftar Sekarang</h2>
+                <h2 style={{ color: '#F99912' }} className="font-bold text-2xl">Daftar Sekarang</h2>
                 <p className="text-gray-600 text-center mt-2">
                   Buat akun untuk mulai berbelanja
                 </p>
@@ -124,7 +129,7 @@ export function UserRegisterPage({ onSwitchToLogin, onBack }: UserRegisterPagePr
                     className="border-yellow-200 focus:border-yellow-400"
                   />
                 </div>
-                
+
                 <div className="space-y-2">
                   <Label htmlFor="password" style={{ color: '#2F4858' }}>
                     Password
@@ -157,10 +162,10 @@ export function UserRegisterPage({ onSwitchToLogin, onBack }: UserRegisterPagePr
 
                 <Button
                   type="submit"
-                  className="w-full py-6 hover-lift"
-                  style={{ 
-                    background: 'linear-gradient(135deg, #FFB84D 0%, #FF8D28 100%)',
-                    color: '#FFFFFF' 
+                  className="w-full py-6 hover-lift font-bold shadow-lg shadow-orange-500/20 text-lg"
+                  style={{
+                    background: 'linear-gradient(135deg, #F99912 0%, #9ACD32 100%)',
+                    color: '#FFFFFF'
                   }}
                   disabled={isLoading}
                 >
@@ -173,8 +178,8 @@ export function UserRegisterPage({ onSwitchToLogin, onBack }: UserRegisterPagePr
                   Sudah punya akun?{' '}
                   <button
                     onClick={onSwitchToLogin}
-                    className="body-3"
-                    style={{ color: '#FFB84D', fontWeight: 600 }}
+                    className="body-3 hover:underline"
+                    style={{ color: '#F99912', fontWeight: 600 }}
                   >
                     Masuk di sini
                   </button>

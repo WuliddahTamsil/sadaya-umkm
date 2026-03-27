@@ -24,7 +24,7 @@ export function UserLoginPage({ onSwitchToRegister, onBack }: UserLoginPageProps
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    
+
     try {
       await login(email, password);
       toast.success('Login berhasil! Selamat berbelanja.');
@@ -38,45 +38,17 @@ export function UserLoginPage({ onSwitchToRegister, onBack }: UserLoginPageProps
   };
 
   return (
-    <div 
-      className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden"
-      style={{
-        background: 'linear-gradient(135deg, #FFFBF0 0%, #FFF4E6 50%, #FFE5CC 100%)',
-      }}
+    <div
+      className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-slate-50"
     >
+      {/* Dynamic Bright Background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-[10%] -left-[10%] w-[50%] h-[50%] rounded-full bg-gradient-to-br from-[#F99912] to-transparent opacity-15 blur-3xl animate-pulse" />
+        <div className="absolute bottom-[10%] -right-[10%] w-[40%] h-[60%] rounded-full bg-gradient-to-bl from-[#9ACD32] to-transparent opacity-15 blur-3xl" style={{ animation: 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite' }} />
+      </div>
+
       {/* Background Pattern */}
       <div className="absolute inset-0 bg-pattern-leaves opacity-20" />
-
-      {/* Decorative Elements */}
-      <motion.div
-        className="absolute top-20 right-10 text-yellow-300 opacity-40"
-        animate={{
-          y: [0, -20, 0],
-          rotate: [0, 10, 0],
-        }}
-        transition={{
-          duration: 4,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-      >
-        <User size={80} />
-      </motion.div>
-
-      <motion.div
-        className="absolute bottom-20 left-20 text-orange-300 opacity-40"
-        animate={{
-          y: [0, 20, 0],
-          rotate: [0, -10, 0],
-        }}
-        transition={{
-          duration: 5,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-      >
-        <ShoppingCart size={70} />
-      </motion.div>
 
       <div className="container mx-auto max-w-md relative z-10">
         {/* Back Button */}
@@ -105,12 +77,13 @@ export function UserLoginPage({ onSwitchToRegister, onBack }: UserLoginPageProps
                   className="h-12 w-auto mb-4"
                 />
                 <motion.div
-                  className="w-20 h-20 bg-gradient-to-br from-yellow-300 to-orange-400 rounded-full flex items-center justify-center mb-4"
+                  className="w-20 h-20 rounded-full flex items-center justify-center mb-4 shadow-[0_10px_35px_rgba(249,152,18,0.4)]"
+                  style={{ background: 'linear-gradient(135deg, #FFB84D 0%, #F99812 100%)' }}
                   whileHover={{ scale: 1.1, rotate: 5 }}
                 >
                   <User size={40} className="text-white" />
                 </motion.div>
-                <h2 style={{ color: '#FFB84D' }}>Masyarakat Login</h2>
+                <h2 style={{ color: '#F99912' }} className="font-bold text-2xl">Masyarakat Login</h2>
                 <p className="text-gray-600 text-center mt-2">
                   Masuk sebagai pembeli
                 </p>
@@ -119,20 +92,20 @@ export function UserLoginPage({ onSwitchToRegister, onBack }: UserLoginPageProps
               {/* Illustrations */}
               <div className="flex justify-center space-x-4 mb-6">
                 <div className="text-center">
-                  <div className="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mb-2">
-                    <ShoppingCart size={24} className="text-yellow-600" />
+                  <div className="w-12 h-12 bg-orange-50 rounded-full flex items-center justify-center mb-2 border border-orange-100">
+                    <ShoppingCart size={24} className="text-[#F99912]" />
                   </div>
                   <p className="body-3 text-gray-600">Belanja</p>
                 </div>
                 <div className="text-center">
-                  <div className="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mb-2">
-                    <Heart size={24} className="text-yellow-600" />
+                  <div className="w-12 h-12 bg-orange-50 rounded-full flex items-center justify-center mb-2 border border-orange-100">
+                    <Heart size={24} className="text-[#F99912]" />
                   </div>
                   <p className="body-3 text-gray-600">Favorit</p>
                 </div>
                 <div className="text-center">
-                  <div className="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mb-2">
-                    <Star size={24} className="text-yellow-600" />
+                  <div className="w-12 h-12 bg-orange-50 rounded-full flex items-center justify-center mb-2 border border-orange-100">
+                    <Star size={24} className="text-[#F99912]" />
                   </div>
                   <p className="body-3 text-gray-600">Review</p>
                 </div>
@@ -153,7 +126,7 @@ export function UserLoginPage({ onSwitchToRegister, onBack }: UserLoginPageProps
                     className="border-yellow-200 focus:border-yellow-400"
                   />
                 </div>
-                
+
                 <div className="space-y-2">
                   <Label htmlFor="password" style={{ color: '#2F4858' }}>
                     Password
@@ -171,10 +144,10 @@ export function UserLoginPage({ onSwitchToRegister, onBack }: UserLoginPageProps
 
                 <Button
                   type="submit"
-                  className="w-full py-6 hover-lift"
-                  style={{ 
-                    background: 'linear-gradient(135deg, #FFB84D 0%, #FF8D28 100%)',
-                    color: '#FFFFFF' 
+                  className="w-full py-6 hover-lift font-bold shadow-lg shadow-orange-500/20 text-lg"
+                  style={{
+                    background: 'linear-gradient(135deg, #F99912 0%, #9ACD32 100%)',
+                    color: '#FFFFFF'
                   }}
                   disabled={isLoading}
                 >
@@ -193,8 +166,8 @@ export function UserLoginPage({ onSwitchToRegister, onBack }: UserLoginPageProps
                   Belum punya akun?{' '}
                   <button
                     onClick={onSwitchToRegister}
-                    className="body-3"
-                    style={{ color: '#FFB84D', fontWeight: 600 }}
+                    className="body-3 hover:underline"
+                    style={{ color: '#F99912', fontWeight: 600 }}
                   >
                     Daftar Sekarang
                   </button>

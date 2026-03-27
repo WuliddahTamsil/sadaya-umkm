@@ -298,7 +298,7 @@ export function ManajemenProduk() {
         </div>
         <Button
           onClick={() => handleOpenDialog()}
-          style={{ backgroundColor: '#FF8D28', color: '#FFFFFF' }}
+          style={{ backgroundColor: '#F99912', color: '#FFFFFF' }}
         >
           <Plus size={20} className="mr-2" />
           Tambah Produk
@@ -309,7 +309,7 @@ export function ManajemenProduk() {
       {isLoading ? (
         <Card>
           <CardContent className="p-12 text-center">
-            <Loader2 className="animate-spin mx-auto mb-4" style={{ color: '#FF8D28' }} size={48} />
+            <Loader2 className="animate-spin mx-auto mb-4" style={{ color: '#F99912' }} size={48} />
             <p style={{ color: '#858585' }}>Memuat produk...</p>
           </CardContent>
         </Card>
@@ -327,7 +327,7 @@ export function ManajemenProduk() {
                 className="absolute top-3 right-3"
                 style={{
                   backgroundColor: product.status === 'active' ? '#C8E6C9' : '#FFCDD2',
-                  color: product.status === 'active' ? '#2E7D32' : '#C62828'
+                  color: product.status === 'active' ? '#9ACD32' : '#C62828'
                 }}
               >
                 {product.status === 'active' ? 'Aktif' : 'Nonaktif'}
@@ -342,7 +342,7 @@ export function ManajemenProduk() {
                   {product.category}
                 </Badge>
                 <div className="flex items-center gap-1">
-                  <Star size={14} style={{ color: '#FFB800', fill: '#FFB800' }} />
+                  <Star size={14} style={{ color: '#F99912', fill: '#F99912' }} />
                   <span className="body-3" style={{ color: '#858585' }}>{product.rating}</span>
                 </div>
               </div>
@@ -364,7 +364,7 @@ export function ManajemenProduk() {
                 </div>
                 <div className="flex justify-between">
                   <span className="body-3" style={{ color: '#858585' }}>Terjual</span>
-                  <span className="body-3" style={{ color: '#4CAF50', fontWeight: 600 }}>
+                  <span className="body-3" style={{ color: '#9ACD32', fontWeight: 600 }}>
                     {product.sold} unit
                   </span>
                 </div>
@@ -382,8 +382,8 @@ export function ManajemenProduk() {
                   variant="outline"
                   onClick={() => toggleStatus(product.id)}
                   style={{
-                    borderColor: product.status === 'active' ? '#F44336' : '#4CAF50',
-                    color: product.status === 'active' ? '#F44336' : '#4CAF50'
+                    borderColor: product.status === 'active' ? '#F44336' : '#9ACD32',
+                    color: product.status === 'active' ? '#F44336' : '#9ACD32'
                   }}
                 >
                   {product.status === 'active' ? 'Nonaktifkan' : 'Aktifkan'}
@@ -570,7 +570,7 @@ export function ManajemenProduk() {
               </Button>
               <Button
                 className="flex-1"
-                style={{ backgroundColor: '#FF8D28', color: '#FFFFFF' }}
+                style={{ backgroundColor: '#F99912', color: '#FFFFFF' }}
                 onClick={handleSave}
                 disabled={isUploadingImage}
               >

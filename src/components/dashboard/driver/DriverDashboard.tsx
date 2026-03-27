@@ -11,12 +11,12 @@ export function DriverDashboard() {
   const [isOnline, setIsOnline] = useState(true);
 
   const stats = [
-    { label: 'Penghasilan Hari Ini', value: 'Rp 175.000', icon: DollarSign, color: '#4CAF50', change: '+12%' },
-    { label: 'Total Pengiriman', value: '12', icon: Package, color: '#2196F3', change: '+3' },
-    { label: 'Rating Driver', value: '4.9', icon: Star, color: '#FFB800', change: '+0.1' },
-    { label: 'Jarak Tempuh', value: '45 km', icon: Bike, color: '#FF8D28', change: '+8 km' },
-    { label: 'Penghasilan Bulan Ini', value: 'Rp 4.2M', icon: TrendingUp, color: '#9C27B0', change: '+18%' },
-    { label: 'Order Selesai', value: '234', icon: Package, color: '#4CAF50', change: '+45' }
+    { label: 'Penghasilan Hari Ini', value: 'Rp 175.000', icon: DollarSign, color: '#9ACD32', change: '+12%' },
+    { label: 'Total Pengiriman', value: '12', icon: Package, color: '#9370DB', change: '+3' },
+    { label: 'Rating Driver', value: '4.9', icon: Star, color: '#F99912', change: '+0.1' },
+    { label: 'Jarak Tempuh', value: '45 km', icon: Bike, color: '#F99912', change: '+8 km' },
+    { label: 'Penghasilan Bulan Ini', value: 'Rp 4.2M', icon: TrendingUp, color: '#9370DB', change: '+18%' },
+    { label: 'Order Selesai', value: '234', icon: Package, color: '#9ACD32', change: '+45' }
   ];
 
   const recentDeliveries = [
@@ -49,7 +49,7 @@ export function DriverDashboard() {
                   isOnline ? 'bg-green-100' : 'bg-gray-100'
                 }`}
               >
-                <Bike size={32} style={{ color: isOnline ? '#4CAF50' : '#CCCCCC' }} />
+                <Bike size={32} style={{ color: isOnline ? '#9ACD32' : '#CCCCCC' }} />
               </div>
               <div>
                 <h3 style={{ color: '#2F4858' }}>
@@ -97,7 +97,7 @@ export function DriverDashboard() {
                       className="body-3 px-2 py-1 rounded"
                       style={{
                         backgroundColor: stat.change.includes('+') ? '#C8E6C9' : '#E3F2FD',
-                        color: stat.change.includes('+') ? '#2E7D32' : '#1976D2'
+                        color: stat.change.includes('+') ? '#9ACD32' : '#9370DB'
                       }}
                     >
                       {stat.change}
@@ -126,14 +126,14 @@ export function DriverDashboard() {
                 className="p-4 rounded-lg border-2"
                 style={{ 
                   backgroundColor: '#FFF4E6',
-                  borderColor: '#FF8D28'
+                  borderColor: '#F99912'
                 }}
               >
                 <div className="flex items-start justify-between mb-3">
                   <div>
                     <h4 style={{ color: '#2F4858' }}>{order.id}</h4>
                     <div className="flex items-center gap-2 mt-2">
-                      <MapPin size={14} style={{ color: '#4CAF50' }} />
+                      <MapPin size={14} style={{ color: '#9ACD32' }} />
                       <p className="body-3" style={{ color: '#2F4858' }}>
                         {order.pickup}
                       </p>
@@ -146,7 +146,7 @@ export function DriverDashboard() {
                     </div>
                   </div>
                   <div className="text-right">
-                    <p style={{ color: '#FF8D28', fontWeight: 700, fontSize: '18px' }}>
+                    <p style={{ color: '#F99912', fontWeight: 700, fontSize: '18px' }}>
                       Rp {order.fee.toLocaleString('id-ID')}
                     </p>
                     <p className="body-3" style={{ color: '#858585' }}>
@@ -156,7 +156,7 @@ export function DriverDashboard() {
                 </div>
                 <Button
                   className="w-full"
-                  style={{ backgroundColor: '#4CAF50', color: '#FFFFFF' }}
+                  style={{ backgroundColor: '#9ACD32', color: '#FFFFFF' }}
                 >
                   Ambil Order
                 </Button>
@@ -191,14 +191,14 @@ export function DriverDashboard() {
                   </p>
                 </div>
                 <div className="text-right">
-                  <p style={{ color: '#4CAF50', fontWeight: 700 }}>
+                  <p style={{ color: '#9ACD32', fontWeight: 700 }}>
                     Rp {delivery.amount.toLocaleString('id-ID')}
                   </p>
                   <span
                     className="body-3 px-2 py-1 rounded"
                     style={{ 
                       backgroundColor: '#C8E6C9',
-                      color: '#2E7D32',
+                      color: '#9ACD32',
                       fontSize: '11px'
                     }}
                   >

@@ -75,9 +75,9 @@ export function InfoDetailPage({ contentId, onBack }: InfoDetailPageProps) {
       promotion: <Tag size={16} />
     };
     const colors = {
-      article: '#2196F3',
-      announcement: '#FF8D28',
-      promotion: '#4CAF50'
+      article: '#9370DB',
+      announcement: '#F99912',
+      promotion: '#9ACD32'
     };
     const labels = {
       article: 'Artikel',
@@ -115,7 +115,7 @@ export function InfoDetailPage({ contentId, onBack }: InfoDetailPageProps) {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <Loader2 className="animate-spin" size={32} style={{ color: '#FF8D28' }} />
+        <Loader2 className="animate-spin" size={32} style={{ color: '#F99912' }} />
       </div>
     );
   }
@@ -129,7 +129,7 @@ export function InfoDetailPage({ contentId, onBack }: InfoDetailPageProps) {
           onClick={() => {
             if (onBack) onBack();
           }}
-          style={{ backgroundColor: '#FF8D28', color: '#FFFFFF' }}
+          style={{ backgroundColor: '#F99912', color: '#FFFFFF' }}
         >
           Kembali ke Info
         </Button>

@@ -126,7 +126,7 @@ export function DompetPage() {
       <div className="space-y-6">
         <Card>
           <CardContent className="p-12 text-center">
-            <Loader2 className="animate-spin mx-auto mb-4" style={{ color: '#FF8D28' }} size={48} />
+            <Loader2 className="animate-spin mx-auto mb-4" style={{ color: '#F99912' }} size={48} />
             <p style={{ color: '#858585' }}>Memuat data dompet...</p>
           </CardContent>
         </Card>
@@ -141,7 +141,7 @@ export function DompetPage() {
         <div 
           className="absolute inset-0 opacity-10"
           style={{
-            background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)'
+            background: 'linear-gradient(135deg, #F99912 0%, #9ACD32 100%)'
           }}
         />
         <CardContent className="p-8 relative">
@@ -150,9 +150,9 @@ export function DompetPage() {
               <div className="flex items-center gap-2 mb-2">
                 <div 
                   className="w-12 h-12 rounded-full flex items-center justify-center"
-                  style={{ backgroundColor: '#FF8D2820' }}
+                  style={{ backgroundColor: '#F9991220' }}
                 >
-                  <Wallet size={24} style={{ color: '#FF8D28' }} />
+                  <Wallet size={24} style={{ color: '#F99912' }} />
                 </div>
                 <p className="body-3" style={{ color: '#858585' }}>Saldo Dompet</p>
               </div>
@@ -166,7 +166,7 @@ export function DompetPage() {
               </motion.h1>
             </div>
             <Button
-              style={{ backgroundColor: '#FF8D28', color: '#FFFFFF' }}
+              style={{ backgroundColor: '#F99912', color: '#FFFFFF' }}
             >
               <Plus size={18} className="mr-2" />
               Top Up
@@ -182,13 +182,13 @@ export function DompetPage() {
             <div className="flex items-center gap-4">
               <div 
                 className="w-14 h-14 rounded-full flex items-center justify-center"
-                style={{ backgroundColor: '#4CAF5020' }}
+                style={{ backgroundColor: '#9ACD3220' }}
               >
-                <TrendingUp size={28} style={{ color: '#4CAF50' }} />
+                <TrendingUp size={28} style={{ color: '#9ACD32' }} />
               </div>
               <div className="flex-1">
                 <p className="body-3" style={{ color: '#858585' }}>Total Pemasukan</p>
-                <h3 style={{ color: '#4CAF50' }}>
+                <h3 style={{ color: '#9ACD32' }}>
                   Rp {totalIn.toLocaleString('id-ID')}
                 </h3>
               </div>
@@ -230,7 +230,7 @@ export function DompetPage() {
                   key={amount}
                   variant="outline"
                   onClick={() => setTopUpAmount(amount.toString())}
-                  className="hover:border-[#FF8D28] hover:bg-[#FFF4E6] transition-all"
+                  className="hover:border-[#F99912] hover:bg-[#FFF4E6] transition-all"
                 >
                   Rp {(amount / 1000).toLocaleString('id-ID')}K
                 </Button>
@@ -249,7 +249,7 @@ export function DompetPage() {
               />
               <Button
                 onClick={handleTopUp}
-                style={{ backgroundColor: '#4CAF50', color: '#FFFFFF' }}
+                style={{ backgroundColor: '#9ACD32', color: '#FFFFFF' }}
                 disabled={isTopUpLoading}
               >
                 {isTopUpLoading ? (
@@ -268,8 +268,8 @@ export function DompetPage() {
           </div>
 
           <div className="flex items-center gap-2 p-3 rounded-lg" style={{ backgroundColor: '#E3F2FD' }}>
-            <CreditCard size={18} style={{ color: '#2196F3' }} />
-            <p className="body-3" style={{ color: '#2196F3' }}>
+            <CreditCard size={18} style={{ color: '#9370DB' }} />
+            <p className="body-3" style={{ color: '#9370DB' }}>
               Metode Pembayaran: Transfer Bank, E-wallet, Credit Card
             </p>
           </div>
@@ -305,7 +305,7 @@ export function DompetPage() {
                     }`}
                   >
                     {transaction.type === 'in' ? (
-                      <ArrowDownRight size={20} style={{ color: '#4CAF50' }} />
+                      <ArrowDownRight size={20} style={{ color: '#9ACD32' }} />
                     ) : (
                       <ArrowUpRight size={20} style={{ color: '#FF6B6B' }} />
                     )}
@@ -323,7 +323,7 @@ export function DompetPage() {
                   <div className="text-right">
                     <p 
                       style={{ 
-                        color: transaction.type === 'in' ? '#4CAF50' : '#FF6B6B',
+                        color: transaction.type === 'in' ? '#9ACD32' : '#FF6B6B',
                         fontWeight: 700
                       }}
                     >
@@ -332,7 +332,7 @@ export function DompetPage() {
                     <span
                       className="body-3"
                       style={{
-                        color: transaction.status === 'completed' ? '#4CAF50' : '#FFB84D',
+                        color: transaction.status === 'completed' ? '#9ACD32' : '#F99912',
                         fontSize: '11px'
                       }}
                     >

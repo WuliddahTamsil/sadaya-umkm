@@ -10,14 +10,14 @@ export function CustomerAnalysis() {
       label: 'Total Pelanggan',
       value: 892,
       icon: Users,
-      color: '#2196F3',
+      color: '#9370DB',
       change: '+15.2%'
     },
     {
       label: 'Pelanggan Baru',
       value: 127,
       icon: UserPlus,
-      color: '#4CAF50',
+      color: '#9ACD32',
       change: '+8.3%',
       period: 'bulan ini'
     },
@@ -32,7 +32,7 @@ export function CustomerAnalysis() {
       label: 'Rata-rata Rating',
       value: 4.8,
       icon: Star,
-      color: '#FFB800',
+      color: '#F99912',
       change: '+0.2',
       decimals: 1
     }
@@ -45,7 +45,7 @@ export function CustomerAnalysis() {
       spent: 2100000, 
       lastOrder: '2 hari lalu',
       avatar: 'B',
-      color: '#FF8D28'
+      color: '#F99912'
     },
     { 
       name: 'Siti Nurhaliza', 
@@ -53,7 +53,7 @@ export function CustomerAnalysis() {
       spent: 1800000, 
       lastOrder: '1 hari lalu',
       avatar: 'S',
-      color: '#4CAF50'
+      color: '#9ACD32'
     },
     { 
       name: 'Ahmad Fauzi', 
@@ -61,7 +61,7 @@ export function CustomerAnalysis() {
       spent: 1600000, 
       lastOrder: '3 hari lalu',
       avatar: 'A',
-      color: '#2196F3'
+      color: '#9370DB'
     },
     { 
       name: 'Rina Wijaya', 
@@ -69,7 +69,7 @@ export function CustomerAnalysis() {
       spent: 1400000, 
       lastOrder: 'Hari ini',
       avatar: 'R',
-      color: '#9C27B0'
+      color: '#9370DB'
     },
     { 
       name: 'Dedi Hermawan', 
@@ -143,7 +143,7 @@ export function CustomerAnalysis() {
                       className="body-3 px-2 py-1 rounded-full"
                       style={{
                         backgroundColor: '#C8E6C9',
-                        color: '#2E7D32',
+                        color: '#9ACD32',
                         fontSize: '12px'
                       }}
                     >
@@ -225,7 +225,7 @@ export function CustomerAnalysis() {
           <CardHeader>
             <CardTitle style={{ color: '#2F4858' }}>
               <div className="flex items-center gap-2">
-                <MessageSquare size={20} style={{ color: '#2196F3' }} />
+                <MessageSquare size={20} style={{ color: '#9370DB' }} />
                 Ulasan Terbaru
               </div>
             </CardTitle>
@@ -247,7 +247,7 @@ export function CustomerAnalysis() {
                     </p>
                     <div className="flex items-center gap-1">
                       {Array.from({ length: review.rating }).map((_, i) => (
-                        <Star key={i} size={14} fill="#FFB800" style={{ color: '#FFB800' }} />
+                        <Star key={i} size={14} fill="#F99912" style={{ color: '#F99912' }} />
                       ))}
                     </div>
                   </div>
@@ -293,7 +293,7 @@ export function CustomerAnalysis() {
                     <span
                       className="body-3 px-2 py-1 rounded-full"
                       style={{
-                        backgroundColor: complaint.status === 'resolved' ? '#4CAF50' : '#FF9800',
+                        backgroundColor: complaint.status === 'resolved' ? '#9ACD32' : '#FF9800',
                         color: '#FFFFFF',
                         fontSize: '10px'
                       }}
@@ -318,7 +318,7 @@ export function CustomerAnalysis() {
           <CardHeader>
             <CardTitle style={{ color: '#2F4858' }}>
               <div className="flex items-center gap-2">
-                <TrendingUp size={20} style={{ color: '#4CAF50' }} />
+                <TrendingUp size={20} style={{ color: '#9ACD32' }} />
                 Pertumbuhan Pelanggan
               </div>
             </CardTitle>
@@ -328,7 +328,7 @@ export function CustomerAnalysis() {
               <div>
                 <div className="flex justify-between mb-2">
                   <span className="body-3" style={{ color: '#2F4858' }}>Pelanggan Baru</span>
-                  <span className="body-3" style={{ color: '#4CAF50', fontWeight: 600 }}>
+                  <span className="body-3" style={{ color: '#9ACD32', fontWeight: 600 }}>
                     <AnimatedCounter value={127} /> / 150
                   </span>
                 </div>
@@ -341,7 +341,7 @@ export function CustomerAnalysis() {
               <div>
                 <div className="flex justify-between mb-2">
                   <span className="body-3" style={{ color: '#2F4858' }}>Retention Rate</span>
-                  <span className="body-3" style={{ color: '#2196F3', fontWeight: 600 }}>78%</span>
+                  <span className="body-3" style={{ color: '#9370DB', fontWeight: 600 }}>78%</span>
                 </div>
                 <Progress value={78} className="h-2" />
                 <p className="body-3 mt-1" style={{ color: '#858585', fontSize: '11px' }}>
@@ -352,7 +352,7 @@ export function CustomerAnalysis() {
               <div>
                 <div className="flex justify-between mb-2">
                   <span className="body-3" style={{ color: '#2F4858' }}>Customer Satisfaction</span>
-                  <span className="body-3" style={{ color: '#FFB800', fontWeight: 600 }}>92%</span>
+                  <span className="body-3" style={{ color: '#F99912', fontWeight: 600 }}>92%</span>
                 </div>
                 <Progress value={92} className="h-2" />
                 <p className="body-3 mt-1" style={{ color: '#858585', fontSize: '11px' }}>

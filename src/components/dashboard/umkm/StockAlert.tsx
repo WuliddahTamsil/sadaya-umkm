@@ -72,7 +72,7 @@ export function StockAlert() {
       case 'warning':
         return { bg: '#FF980020', border: '#FF9800', text: '#FF9800' };
       default:
-        return { bg: '#2196F320', border: '#2196F3', text: '#2196F3' };
+        return { bg: '#9370DB20', border: '#9370DB', text: '#9370DB' };
     }
   };
 

@@ -23,7 +23,7 @@ export function AdminAnalyticsPage() {
       value: 342,
       active: 289,
       icon: Store,
-      color: '#FF8D28',
+      color: '#F99912',
       change: '+18'
     },
     {
@@ -31,7 +31,7 @@ export function AdminAnalyticsPage() {
       value: 156,
       active: 98,
       icon: Bike,
-      color: '#2196F3',
+      color: '#9370DB',
       change: '+12'
     },
     {
@@ -39,21 +39,21 @@ export function AdminAnalyticsPage() {
       value: 12847,
       active: 8932,
       icon: Users,
-      color: '#4CAF50',
+      color: '#9ACD32',
       change: '+342'
     },
     {
       label: 'Transaksi Hari Ini',
       value: 1243,
       icon: Package,
-      color: '#9C27B0',
+      color: '#9370DB',
       change: '+89'
     },
     {
       label: 'Total GMV',
       value: 45250000,
       icon: DollarSign,
-      color: '#FFB800',
+      color: '#F99912',
       change: '+12.5%',
       prefix: 'Rp ',
       info: 'hari ini'
@@ -62,7 +62,7 @@ export function AdminAnalyticsPage() {
       label: 'Pertumbuhan',
       value: 18.5,
       icon: TrendingUp,
-      color: '#4CAF50',
+      color: '#9ACD32',
       change: '+2.3%',
       suffix: '%'
     }
@@ -105,11 +105,11 @@ export function AdminAnalyticsPage() {
   };
 
   const categoryData = [
-    { name: 'Makanan', value: 45, color: '#FF8D28', gmv: 20362500 },
-    { name: 'Minuman', value: 30, color: '#4CAF50', gmv: 13575000 },
-    { name: 'Kerajinan', value: 15, color: '#2196F3', gmv: 6787500 },
-    { name: 'Fashion', value: 7, color: '#9C27B0', gmv: 3167500 },
-    { name: 'Jasa', value: 3, color: '#FF6B6B', gmv: 1357500 }
+    { name: 'Makanan', value: 45, color: '#F99912', gmv: 20362500 },
+    { name: 'Minuman', value: 30, color: '#9ACD32', gmv: 13575000 },
+    { name: 'Kerajinan', value: 15, color: '#9370DB', gmv: 6787500 },
+    { name: 'Fashion', value: 7, color: '#F99912', gmv: 3167500 },
+    { name: 'Jasa', value: 3, color: '#9ACD32', gmv: 1357500 }
   ];
 
   const topUMKM = [
@@ -120,7 +120,7 @@ export function AdminAnalyticsPage() {
       gmv: 6840000,
       growth: '+25%',
       rating: 4.9,
-      color: '#FFB800'
+      color: '#F99912'
     },
     { 
       name: 'Kopi Bogor Asli', 
@@ -129,7 +129,7 @@ export function AdminAnalyticsPage() {
       gmv: 5835000,
       growth: '+18%',
       rating: 4.8,
-      color: '#4CAF50'
+      color: '#9ACD32'
     },
     { 
       name: 'Kerajinan Bambu', 
@@ -138,7 +138,7 @@ export function AdminAnalyticsPage() {
       gmv: 4680000,
       growth: '+22%',
       rating: 4.7,
-      color: '#2196F3'
+      color: '#9370DB'
     },
     { 
       name: 'Batik Bogor', 
@@ -147,7 +147,7 @@ export function AdminAnalyticsPage() {
       gmv: 4170000,
       growth: '+15%',
       rating: 4.9,
-      color: '#9C27B0'
+      color: '#9370DB'
     },
     { 
       name: 'Roti Unyil Venus', 
@@ -156,7 +156,7 @@ export function AdminAnalyticsPage() {
       gmv: 3510000,
       growth: '+12%',
       rating: 4.8,
-      color: '#FF8D28'
+      color: '#F99912'
     }
   ];
 
@@ -170,15 +170,15 @@ export function AdminAnalyticsPage() {
 
   const areaDistribution = [
     { area: 'Bogor Tengah', orders: 342, umkm: 89, drivers: 45, color: '#FF6B6B' },
-    { area: 'Bogor Utara', orders: 298, umkm: 76, drivers: 38, color: '#FF8D28' },
-    { area: 'Bogor Selatan', orders: 389, umkm: 98, drivers: 52, color: '#FFB800' },
-    { area: 'Bogor Timur', orders: 234, umkm: 54, drivers: 31, color: '#4CAF50' },
-    { area: 'Bogor Barat', orders: 198, umkm: 45, drivers: 28, color: '#2196F3' }
+    { area: 'Bogor Utara', orders: 298, umkm: 76, drivers: 38, color: '#F99912' },
+    { area: 'Bogor Selatan', orders: 389, umkm: 98, drivers: 52, color: '#F99912' },
+    { area: 'Bogor Timur', orders: 234, umkm: 54, drivers: 31, color: '#9ACD32' },
+    { area: 'Bogor Barat', orders: 198, umkm: 45, drivers: 28, color: '#9370DB' }
   ];
 
   const pendingApprovals = [
-    { type: 'UMKM', count: 12, icon: Store, color: '#FF8D28' },
-    { type: 'Driver', count: 8, icon: Bike, color: '#2196F3' },
+    { type: 'UMKM', count: 12, icon: Store, color: '#F99912' },
+    { type: 'Driver', count: 8, icon: Bike, color: '#9370DB' },
     { type: 'Komplain', count: 3, icon: Activity, color: '#FF6B6B' }
   ];
 
@@ -214,7 +214,7 @@ export function AdminAnalyticsPage() {
                       className="body-3 px-2 py-1 rounded-full"
                       style={{
                         backgroundColor: '#C8E6C9',
-                        color: '#2E7D32',
+                        color: '#9ACD32',
                         fontSize: '12px'
                       }}
                     >
@@ -232,7 +232,7 @@ export function AdminAnalyticsPage() {
                     />
                   </h2>
                   {stat.active !== undefined && (
-                    <p className="body-3 mt-1" style={{ color: '#4CAF50', fontSize: '11px' }}>
+                    <p className="body-3 mt-1" style={{ color: '#9ACD32', fontSize: '11px' }}>
                       {stat.active} aktif sekarang
                     </p>
                   )}
@@ -285,17 +285,17 @@ export function AdminAnalyticsPage() {
               <Line 
                 type="monotone" 
                 dataKey="orders" 
-                stroke="#2196F3" 
+                stroke="#9370DB" 
                 strokeWidth={3}
-                dot={{ fill: '#2196F3', r: 5 }}
+                dot={{ fill: '#9370DB', r: 5 }}
                 name="Pesanan"
               />
               <Line 
                 type="monotone" 
                 dataKey="gmv" 
-                stroke="#4CAF50" 
+                stroke="#9ACD32" 
                 strokeWidth={3}
-                dot={{ fill: '#4CAF50', r: 5 }}
+                dot={{ fill: '#9ACD32', r: 5 }}
                 name="GMV"
               />
             </LineChart>
@@ -353,7 +353,7 @@ export function AdminAnalyticsPage() {
           <CardHeader>
             <CardTitle style={{ color: '#2F4858' }}>
               <div className="flex items-center gap-2">
-                <MapPin size={20} style={{ color: '#FF8D28' }} />
+                <MapPin size={20} style={{ color: '#F99912' }} />
                 Distribusi Wilayah Bogor
               </div>
             </CardTitle>
@@ -406,7 +406,7 @@ export function AdminAnalyticsPage() {
           <CardHeader>
             <CardTitle style={{ color: '#2F4858' }}>
               <div className="flex items-center gap-2">
-                <Award size={20} style={{ color: '#FFB800' }} />
+                <Award size={20} style={{ color: '#F99912' }} />
                 Top Performing UMKM
               </div>
             </CardTitle>
@@ -441,7 +441,7 @@ export function AdminAnalyticsPage() {
                     </p>
                   </div>
                   <div className="text-right">
-                    <Badge style={{ backgroundColor: '#C8E6C9', color: '#2E7D32' }}>
+                    <Badge style={{ backgroundColor: '#C8E6C9', color: '#9ACD32' }}>
                       {umkm.growth}
                     </Badge>
                   </div>
@@ -456,7 +456,7 @@ export function AdminAnalyticsPage() {
           <CardHeader>
             <CardTitle style={{ color: '#2F4858' }}>
               <div className="flex items-center gap-2">
-                <Award size={20} style={{ color: '#2196F3' }} />
+                <Award size={20} style={{ color: '#9370DB' }} />
                 Top Performing Drivers
               </div>
             </CardTitle>
@@ -475,8 +475,8 @@ export function AdminAnalyticsPage() {
                   <div
                     className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0"
                     style={{
-                      backgroundColor: '#2196F320',
-                      color: '#2196F3',
+                      backgroundColor: '#9370DB20',
+                      color: '#9370DB',
                       fontWeight: 700
                     }}
                   >
@@ -491,10 +491,10 @@ export function AdminAnalyticsPage() {
                     </p>
                   </div>
                   <div className="flex items-center gap-1">
-                    <span className="body-3" style={{ color: '#FFB800', fontWeight: 600 }}>
+                    <span className="body-3" style={{ color: '#F99912', fontWeight: 600 }}>
                       {driver.rating.toFixed(1)}
                     </span>
-                    <Award size={14} style={{ color: '#FFB800' }} />
+                    <Award size={14} style={{ color: '#F99912' }} />
                   </div>
                 </motion.div>
               ))}

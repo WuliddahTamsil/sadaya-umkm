@@ -96,7 +96,7 @@ export function ContactSection() {
 
             <Button 
               type="submit"
-              style={{ backgroundColor: '#FF8D28', color: '#FFFFFF' }}
+              style={{ backgroundColor: '#9370DB', color: '#FFFFFF' }}
               className="w-full"
             >
               Hubungi Kami Disini

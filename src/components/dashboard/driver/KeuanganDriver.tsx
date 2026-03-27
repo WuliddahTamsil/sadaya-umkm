@@ -72,19 +72,19 @@ export function KeuanganDriver() {
           <div 
             className="absolute inset-0 opacity-10"
             style={{
-              background: 'linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%)'
+              background: 'linear-gradient(135deg, #9ACD32 0%, #9370DB 100%)'
             }}
           />
           <CardContent className="p-6 relative">
             <div className="flex items-center justify-between mb-4">
               <div 
                 className="w-14 h-14 rounded-full flex items-center justify-center"
-                style={{ backgroundColor: '#4CAF5020' }}
+                style={{ backgroundColor: '#9ACD3220' }}
               >
-                <Wallet size={28} style={{ color: '#4CAF50' }} />
+                <Wallet size={28} style={{ color: '#9ACD32' }} />
               </div>
               <Button
-                style={{ backgroundColor: '#4CAF50', color: '#FFFFFF' }}
+                style={{ backgroundColor: '#9ACD32', color: '#FFFFFF' }}
               >
                 Tarik Saldo
               </Button>
@@ -106,16 +106,16 @@ export function KeuanganDriver() {
           <div 
             className="absolute inset-0 opacity-10"
             style={{
-              background: 'linear-gradient(135deg, #FFB84D 0%, #FF8D28 100%)'
+              background: 'linear-gradient(135deg, #F99912 0%, #F99912 100%)'
             }}
           />
           <CardContent className="p-6 relative">
             <div className="flex items-center justify-between mb-4">
               <div 
                 className="w-14 h-14 rounded-full flex items-center justify-center"
-                style={{ backgroundColor: '#FFB84D20' }}
+                style={{ backgroundColor: '#F9991220' }}
               >
-                <TrendingUp size={28} style={{ color: '#FFB84D' }} />
+                <TrendingUp size={28} style={{ color: '#F99912' }} />
               </div>
             </div>
             <p className="body-3 mb-2" style={{ color: '#858585' }}>
@@ -142,9 +142,9 @@ export function KeuanganDriver() {
             <div className="flex items-center gap-3 mb-3">
               <div 
                 className="w-10 h-10 rounded-full flex items-center justify-center"
-                style={{ backgroundColor: '#2196F320' }}
+                style={{ backgroundColor: '#9370DB20' }}
               >
-                <TrendingUp size={20} style={{ color: '#2196F3' }} />
+                <TrendingUp size={20} style={{ color: '#9370DB' }} />
               </div>
               <p className="body-3" style={{ color: '#858585' }}>Minggu Ini</p>
             </div>
@@ -159,9 +159,9 @@ export function KeuanganDriver() {
             <div className="flex items-center gap-3 mb-3">
               <div 
                 className="w-10 h-10 rounded-full flex items-center justify-center"
-                style={{ backgroundColor: '#4CAF5020' }}
+                style={{ backgroundColor: '#9ACD3220' }}
               >
-                <TrendingUp size={20} style={{ color: '#4CAF50' }} />
+                <TrendingUp size={20} style={{ color: '#9ACD32' }} />
               </div>
               <p className="body-3" style={{ color: '#858585' }}>Bulan Ini</p>
             </div>
@@ -170,7 +170,7 @@ export function KeuanganDriver() {
             </h3>
             <span 
               className="body-3 px-2 py-1 rounded inline-block mt-2"
-              style={{ backgroundColor: '#C8E6C9', color: '#2E7D32' }}
+              style={{ backgroundColor: '#C8E6C9', color: '#9ACD32' }}
             >
               +{growth}%
             </span>
@@ -225,9 +225,9 @@ export function KeuanganDriver() {
                     }`}
                   >
                     {transaction.type === 'earning' ? (
-                      <ArrowUpRight size={20} style={{ color: '#4CAF50' }} />
+                      <ArrowUpRight size={20} style={{ color: '#9ACD32' }} />
                     ) : (
-                      <Download size={20} style={{ color: '#2196F3' }} />
+                      <Download size={20} style={{ color: '#9370DB' }} />
                     )}
                   </div>
 
@@ -243,7 +243,7 @@ export function KeuanganDriver() {
                   <div className="text-right">
                     <p 
                       style={{ 
-                        color: transaction.type === 'earning' ? '#4CAF50' : '#2196F3',
+                        color: transaction.type === 'earning' ? '#9ACD32' : '#9370DB',
                         fontWeight: 700
                       }}
                     >
@@ -252,7 +252,7 @@ export function KeuanganDriver() {
                     <span
                       className="body-3"
                       style={{
-                        color: transaction.status === 'completed' ? '#4CAF50' : '#FFB84D',
+                        color: transaction.status === 'completed' ? '#9ACD32' : '#F99912',
                         fontSize: '11px'
                       }}
                     >
@@ -272,9 +272,9 @@ export function KeuanganDriver() {
           <div className="flex items-start gap-4">
             <div 
               className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0"
-              style={{ backgroundColor: '#2196F320' }}
+              style={{ backgroundColor: '#9370DB20' }}
             >
-              <TrendingUp size={24} style={{ color: '#2196F3' }} />
+              <TrendingUp size={24} style={{ color: '#9370DB' }} />
             </div>
             <div>
               <h4 style={{ color: '#2F4858' }}>Pencairan Otomatis</h4>

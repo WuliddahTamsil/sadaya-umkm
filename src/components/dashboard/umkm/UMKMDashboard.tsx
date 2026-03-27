@@ -151,42 +151,42 @@ export function UMKMDashboard() {
       label: 'Total Penjualan', 
       value: `Rp ${totalRevenue.toLocaleString('id-ID')}`, 
       icon: DollarSign, 
-      color: '#4CAF50', 
+      color: '#9ACD32', // lime
       change: '+15%' 
     },
     { 
       label: 'Pesanan Bulan Ini', 
       value: ordersThisMonth.toString(), 
       icon: ShoppingCart, 
-      color: '#2196F3', 
+      color: '#F99912', // orange
       change: '+8%' 
     },
     { 
       label: 'Produk Aktif', 
       value: products.filter(p => p.status === 'active').length.toString(), 
       icon: Package, 
-      color: '#FF8D28', 
+      color: '#9370DB', // purple
       change: '+2' 
     },
     { 
       label: 'Rating Toko', 
       value: '4.8', 
       icon: Star, 
-      color: '#FFB800', 
+      color: '#F99912', 
       change: '+0.2' 
     },
     { 
       label: 'Total Pelanggan', 
       value: uniqueCustomers.toString(), 
       icon: Users, 
-      color: '#9C27B0', 
+      color: '#9370DB', 
       change: '+23%' 
     },
     { 
       label: 'Pertumbuhan', 
       value: '+18.5%', 
       icon: TrendingUp, 
-      color: '#4CAF50', 
+      color: '#9ACD32', 
       change: 'vs bulan lalu' 
     }
   ];
@@ -263,7 +263,7 @@ export function UMKMDashboard() {
                     className="body-3 px-2 py-1 rounded"
                     style={{
                       backgroundColor: stat.change.includes('+') ? '#C8E6C9' : '#E3F2FD',
-                      color: stat.change.includes('+') ? '#2E7D32' : '#1976D2'
+                      color: stat.change.includes('+') ? '#9ACD32' : '#9370DB'
                     }}
                   >
                     {stat.change}
@@ -322,7 +322,7 @@ export function UMKMDashboard() {
                         borderRadius: '8px',
                         padding: '8px 12px'
                       }}
-                      formatter={(value: any, name: string) => {
+                      formatter={(value: any, name: any) => {
                         if (name === 'revenue') {
                           return [`Rp ${value.toLocaleString('id-ID')}`, 'Revenue'];
                         }
@@ -345,9 +345,9 @@ export function UMKMDashboard() {
                       yAxisId="left"
                       type="monotone"
                       dataKey="revenue"
-                      stroke="#4CAF50"
-                      strokeWidth={2}
-                      dot={{ fill: '#4CAF50', r: 4 }}
+                      stroke="#9ACD32"
+                      strokeWidth={3}
+                      dot={{ fill: '#9ACD32', r: 4 }}
                       activeDot={{ r: 6 }}
                       name="revenue"
                     />
@@ -355,9 +355,9 @@ export function UMKMDashboard() {
                       yAxisId="right"
                       type="monotone"
                       dataKey="orders"
-                      stroke="#2196F3"
-                      strokeWidth={2}
-                      dot={{ fill: '#2196F3', r: 4 }}
+                      stroke="#F99912"
+                      strokeWidth={3}
+                      dot={{ fill: '#F99912', r: 4 }}
                       activeDot={{ r: 6 }}
                       name="orders"
                     />
@@ -376,7 +376,7 @@ export function UMKMDashboard() {
           <CardContent>
             {isLoading ? (
               <div className="flex items-center justify-center py-8">
-                <Loader2 className="animate-spin" size={24} style={{ color: '#FF8D28' }} />
+                <Loader2 className="animate-spin" size={24} style={{ color: '#F99912' }} />
               </div>
             ) : topProducts.length === 0 ? (
               <div className="text-center py-8">
@@ -393,7 +393,7 @@ export function UMKMDashboard() {
                       <p className="body-3" style={{ color: '#2F4858', fontWeight: 600 }}>{product.name}</p>
                       <p className="body-3" style={{ color: '#858585', fontSize: '12px' }}>{product.sold} terjual</p>
                     </div>
-                    <p className="body-3" style={{ color: '#4CAF50', fontWeight: 600 }}>
+                    <p className="body-3" style={{ color: '#9ACD32', fontWeight: 600 }}>
                       Rp {product.revenue.toLocaleString('id-ID')}
                     </p>
                   </div>
@@ -426,7 +426,7 @@ export function UMKMDashboard() {
                       className="body-3 px-2 py-1 rounded"
                       style={{
                         backgroundColor: order.status === 'Selesai' ? '#C8E6C9' : order.status === 'Dikirim' ? '#B3E5FC' : '#FDE08E',
-                        color: order.status === 'Selesai' ? '#2E7D32' : order.status === 'Dikirim' ? '#1976D2' : '#F57C00',
+                        color: order.status === 'Selesai' ? '#9ACD32' : order.status === 'Dikirim' ? '#9370DB' : '#F99912',
                         fontSize: '12px'
                       }}
                     >
@@ -452,7 +452,7 @@ export function UMKMDashboard() {
                     <p className="body-3" style={{ color: '#2F4858', fontWeight: 600 }}>{review.customer}</p>
                     <div className="flex items-center gap-1">
                       {[...Array(review.rating)].map((_, i) => (
-                        <Star key={i} size={14} style={{ color: '#FFB800', fill: '#FFB800' }} />
+                        <Star key={i} size={14} style={{ color: '#F99912', fill: '#F99912' }} />
                       ))}
                     </div>
                   </div>

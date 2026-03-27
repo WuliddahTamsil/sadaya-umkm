@@ -100,7 +100,7 @@ export function ProductUploadForm({ onClose }: { onClose?: () => void }) {
           {formData.description || 'Deskripsi produk akan muncul di sini...'}
         </p>
         <div className="flex items-center justify-between mt-4">
-          <h3 style={{ color: '#FF8D28' }}>
+          <h3 style={{ color: '#F99912' }}>
             {formData.price ? `Rp ${parseInt(formData.price).toLocaleString('id-ID')}` : 'Rp 0'}
           </h3>
           <div className="flex items-center gap-2">
@@ -130,7 +130,7 @@ export function ProductUploadForm({ onClose }: { onClose?: () => void }) {
               </span>
             </motion.div>
             {s < 3 && (
-              <div className="flex-1 h-1 mx-2" style={{ backgroundColor: step > s ? '#FF8D28' : '#E0E0E0' }} />
+              <div className="flex-1 h-1 mx-2" style={{ backgroundColor: step > s ? '#F99912' : '#E0E0E0' }} />
             )}
           </div>
         ))}
@@ -147,7 +147,7 @@ export function ProductUploadForm({ onClose }: { onClose?: () => void }) {
             className="space-y-4"
           >
             <div className="flex items-center gap-2 mb-4">
-              <FileText size={20} style={{ color: '#FF8D28' }} />
+              <FileText size={20} style={{ color: '#F99912' }} />
               <h4 style={{ color: '#2F4858' }}>Informasi Dasar</h4>
             </div>
 
@@ -222,7 +222,7 @@ export function ProductUploadForm({ onClose }: { onClose?: () => void }) {
             className="space-y-4"
           >
             <div className="flex items-center gap-2 mb-4">
-              <ImagePlus size={20} style={{ color: '#FF8D28' }} />
+              <ImagePlus size={20} style={{ color: '#F99912' }} />
               <h4 style={{ color: '#2F4858' }}>Foto Produk</h4>
             </div>
 
@@ -278,7 +278,7 @@ export function ProductUploadForm({ onClose }: { onClose?: () => void }) {
           >
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <Package size={20} style={{ color: '#FF8D28' }} />
+                <Package size={20} style={{ color: '#F99912' }} />
                 <h4 style={{ color: '#2F4858' }}>Variasi Produk (Opsional)</h4>
               </div>
 
@@ -326,7 +326,7 @@ export function ProductUploadForm({ onClose }: { onClose?: () => void }) {
 
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <MapPin size={20} style={{ color: '#FF8D28' }} />
+                <MapPin size={20} style={{ color: '#F99912' }} />
                 <h4 style={{ color: '#2F4858' }}>Lokasi Toko</h4>
               </div>
 
@@ -399,14 +399,14 @@ export function ProductUploadForm({ onClose }: { onClose?: () => void }) {
           {step < 3 ? (
             <Button
               onClick={() => setStep(step + 1)}
-              style={{ backgroundColor: '#FF8D28', color: '#FFFFFF' }}
+              style={{ backgroundColor: '#F99912', color: '#FFFFFF' }}
             >
               Lanjut
             </Button>
           ) : (
             <Button
               onClick={handlePublish}
-              style={{ backgroundColor: '#4CAF50', color: '#FFFFFF' }}
+              style={{ backgroundColor: '#9ACD32', color: '#FFFFFF' }}
             >
               <Save size={16} className="mr-2" />
               Publikasikan

@@ -43,7 +43,7 @@ export function PetaNavigasi() {
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardTitle style={{ color: '#2F4858' }}>Pengantaran Aktif</CardTitle>
-            <Badge style={{ backgroundColor: '#C8E6C9', color: '#2E7D32' }}>
+            <Badge style={{ backgroundColor: '#C8E6C9', color: '#9ACD32' }}>
               Dalam Perjalanan
             </Badge>
           </div>
@@ -64,7 +64,7 @@ export function PetaNavigasi() {
             </div>
             <div className="p-3 rounded-lg" style={{ backgroundColor: '#F5F5F5' }}>
               <p className="body-3" style={{ color: '#858585', marginBottom: '4px' }}>Upah</p>
-              <p className="body-3" style={{ color: '#4CAF50', fontWeight: 600 }}>
+              <p className="body-3" style={{ color: '#9ACD32', fontWeight: 600 }}>
                 Rp {activeOrder.deliveryFee.toLocaleString('id-ID')}
               </p>
             </div>
@@ -72,9 +72,9 @@ export function PetaNavigasi() {
 
           <div className="p-4 rounded-lg mb-4" style={{ backgroundColor: '#E3F2FD' }}>
             <div className="flex items-start gap-3">
-              <MapPin size={20} style={{ color: '#1976D2' }} />
+              <MapPin size={20} style={{ color: '#9370DB' }} />
               <div>
-                <p className="body-3" style={{ color: '#1976D2', fontWeight: 600, marginBottom: '4px' }}>
+                <p className="body-3" style={{ color: '#9370DB', fontWeight: 600, marginBottom: '4px' }}>
                   Tujuan Pengantaran
                 </p>
                 <p className="body-3" style={{ color: '#2F4858' }}>{activeOrder.userName}</p>
@@ -87,7 +87,7 @@ export function PetaNavigasi() {
 
           <Button 
             className="w-full" 
-            style={{ backgroundColor: '#2196F3', color: '#FFFFFF' }}
+            style={{ backgroundColor: '#9370DB', color: '#FFFFFF' }}
             onClick={() => {
               const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(activeOrder.deliveryAddress)}`;
               window.open(mapsUrl, '_blank');
@@ -119,19 +119,19 @@ export function PetaNavigasi() {
       <div className="grid md:grid-cols-3 gap-4">
         <Button variant="outline" className="h-auto p-4">
           <div className="text-center w-full">
-            <User size={24} style={{ color: '#2196F3', margin: '0 auto 8px' }} />
+            <User size={24} style={{ color: '#9370DB', margin: '0 auto 8px' }} />
             <p className="body-3" style={{ color: '#2F4858' }}>Hubungi Pelanggan</p>
           </div>
         </Button>
         <Button variant="outline" className="h-auto p-4">
           <div className="text-center w-full">
-            <Package size={24} style={{ color: '#FF8D28', margin: '0 auto 8px' }} />
+            <Package size={24} style={{ color: '#F99912', margin: '0 auto 8px' }} />
             <p className="body-3" style={{ color: '#2F4858' }}>Detail Pesanan</p>
           </div>
         </Button>
         <Button variant="outline" className="h-auto p-4">
           <div className="text-center w-full">
-            <Navigation size={24} style={{ color: '#4CAF50', margin: '0 auto 8px' }} />
+            <Navigation size={24} style={{ color: '#9ACD32', margin: '0 auto 8px' }} />
             <p className="body-3" style={{ color: '#2F4858' }}>Update Lokasi</p>
           </div>
         </Button>
@@ -145,7 +145,7 @@ export function PetaNavigasi() {
         <CardContent>
           <div className="space-y-3">
             <div className="flex items-start gap-3 p-3 rounded-lg" style={{ backgroundColor: '#F5F5F5' }}>
-              <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#4CAF50' }}>
+              <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#9ACD32' }}>
                 <span className="body-3" style={{ color: '#FFFFFF', fontSize: '12px' }}>✓</span>
               </div>
               <p className="body-3" style={{ color: '#4A4A4A' }}>
@@ -153,7 +153,7 @@ export function PetaNavigasi() {
               </p>
             </div>
             <div className="flex items-start gap-3 p-3 rounded-lg" style={{ backgroundColor: '#F5F5F5' }}>
-              <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#4CAF50' }}>
+              <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#9ACD32' }}>
                 <span className="body-3" style={{ color: '#FFFFFF', fontSize: '12px' }}>✓</span>
               </div>
               <p className="body-3" style={{ color: '#4A4A4A' }}>
@@ -161,7 +161,7 @@ export function PetaNavigasi() {
               </p>
             </div>
             <div className="flex items-start gap-3 p-3 rounded-lg" style={{ backgroundColor: '#F5F5F5' }}>
-              <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#4CAF50' }}>
+              <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#9ACD32' }}>
                 <span className="body-3" style={{ color: '#FFFFFF', fontSize: '12px' }}>✓</span>
               </div>
               <p className="body-3" style={{ color: '#4A4A4A' }}>

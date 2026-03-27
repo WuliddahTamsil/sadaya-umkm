@@ -743,13 +743,13 @@ export function UMKMDetailPage({ umkm, onBack, onStartOrder }: UMKMDetailPagePro
                 className="w-10 h-10 rounded-full flex items-center justify-center shadow-md hover:shadow-lg transition-all"
                 style={{ backgroundColor: '#FFF4E6' }}
               >
-                <Heart size={20} style={{ color: '#FF8D28' }} />
+                <Heart size={20} style={{ color: '#F99912' }} />
               </button>
               <button
                 className="w-10 h-10 rounded-full flex items-center justify-center shadow-md hover:shadow-lg transition-all"
                 style={{ backgroundColor: '#FFF4E6' }}
               >
-                <Share2 size={20} style={{ color: '#FF8D28' }} />
+                <Share2 size={20} style={{ color: '#F99912' }} />
               </button>
             </div>
           </div>
@@ -783,7 +783,7 @@ export function UMKMDetailPage({ umkm, onBack, onStartOrder }: UMKMDetailPagePro
             <div 
               className="sticky top-[57px] z-10 border-b shadow-lg -mx-4 lg:-mx-6 px-4 lg:px-6 mb-6 relative overflow-hidden"
               style={{
-                background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 50%, #FF8D28 100%)',
+                background: 'linear-gradient(135deg, #F99912 0%, #9ACD32 50%, #9370DB 100%)',
                 backgroundSize: '200% 200%',
                 animation: 'gradientShift 3s ease infinite'
               }}
@@ -932,7 +932,7 @@ export function UMKMDetailPage({ umkm, onBack, onStartOrder }: UMKMDetailPagePro
               <div className="flex items-center gap-3 mb-2">
                 <div 
                   className="w-10 h-10 rounded-xl flex items-center justify-center"
-                  style={{ background: 'linear-gradient(135deg, #2196F3 0%, #1976D2 100%)' }}
+                  style={{ background: 'linear-gradient(135deg, #9370DB 0%, #F99912 100%)' }}
                 >
                   <Images size={20} className="text-white" />
                 </div>
@@ -985,7 +985,7 @@ export function UMKMDetailPage({ umkm, onBack, onStartOrder }: UMKMDetailPagePro
               <div className="flex items-center gap-3 mb-2">
                 <div 
                   className="w-10 h-10 rounded-xl flex items-center justify-center"
-                  style={{ background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)' }}
+                  style={{ background: 'linear-gradient(135deg, #F99912 0%, #9ACD32 100%)' }}
                 >
                   <Tag size={20} className="text-white" />
                 </div>
@@ -1004,7 +1004,7 @@ export function UMKMDetailPage({ umkm, onBack, onStartOrder }: UMKMDetailPagePro
                 <CardContent className="p-12 text-center">
                   <div 
                     className="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center"
-                    style={{ background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)' }}
+                    style={{ background: 'linear-gradient(135deg, #F99912 0%, #9ACD32 100%)' }}
                   >
                     <Tag size={32} className="text-white" />
                   </div>
@@ -1050,7 +1050,7 @@ export function UMKMDetailPage({ umkm, onBack, onStartOrder }: UMKMDetailPagePro
                             <div 
                               className="px-4 py-2 rounded-full font-bold text-white shadow-lg text-sm"
                               style={{ 
-                                background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)'
+                                background: 'linear-gradient(135deg, #F99912 0%, #9ACD32 100%)'
                               }}
                             >
                               {promo.discount}
@@ -1074,7 +1074,7 @@ export function UMKMDetailPage({ umkm, onBack, onStartOrder }: UMKMDetailPagePro
                             <Button
                               className="px-6 py-2.5 rounded-xl text-sm font-semibold shadow-md hover:shadow-lg transition-all"
                               style={{ 
-                                background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)',
+                                background: 'linear-gradient(135deg, #F99912 0%, #9ACD32 100%)',
                                 color: '#FFFFFF'
                               }}
                               onClick={onStartOrder}
@@ -1100,20 +1100,20 @@ export function UMKMDetailPage({ umkm, onBack, onStartOrder }: UMKMDetailPagePro
                 const colorThemes = [
                   { // Orange
                     bgGradient: "from-orange-50 to-orange-100",
-                    iconBg: "linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)",
-                    accentColor: "#FF8D28",
+                    iconBg: "linear-gradient(135deg, #F99912 0%, #9ACD32 100%)",
+                    accentColor: "#F99912",
                     borderColor: "rgba(255, 141, 40, 0.3)",
                   },
                   { // Green
                     bgGradient: "from-green-50 to-green-100",
-                    iconBg: "linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%)",
-                    accentColor: "#4CAF50",
+                    iconBg: "linear-gradient(135deg, #9ACD32 0%, #9370DB 100%)",
+                    accentColor: "#9ACD32",
                     borderColor: "rgba(76, 175, 80, 0.3)",
                   },
                   { // Blue
                     bgGradient: "from-blue-50 to-blue-100",
-                    iconBg: "linear-gradient(135deg, #2196F3 0%, #1976D2 100%)",
-                    accentColor: "#2196F3",
+                    iconBg: "linear-gradient(135deg, #9370DB 0%, #F99912 100%)",
+                    accentColor: "#9370DB",
                     borderColor: "rgba(33, 150, 243, 0.3)",
                   },
                 ];
@@ -1257,7 +1257,7 @@ export function UMKMDetailPage({ umkm, onBack, onStartOrder }: UMKMDetailPagePro
                 <Button
                   className="w-full py-6 text-base font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all"
                   style={{ 
-                    background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)',
+                    background: 'linear-gradient(135deg, #F99912 0%, #9ACD32 100%)',
                     color: '#FFFFFF'
                   }}
                   onClick={onStartOrder}
@@ -1278,7 +1278,7 @@ export function UMKMDetailPage({ umkm, onBack, onStartOrder }: UMKMDetailPagePro
                 <div className="flex items-center gap-3 mb-4">
                   <div 
                     className="w-10 h-10 rounded-xl flex items-center justify-center"
-                    style={{ background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)' }}
+                    style={{ background: 'linear-gradient(135deg, #F99912 0%, #9ACD32 100%)' }}
                   >
                     <span className="text-white font-bold text-lg">T</span>
                   </div>
@@ -1298,7 +1298,7 @@ export function UMKMDetailPage({ umkm, onBack, onStartOrder }: UMKMDetailPagePro
                 <div className="flex items-center gap-3 mb-4">
                   <div 
                     className="w-10 h-10 rounded-xl flex items-center justify-center"
-                    style={{ background: 'linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%)' }}
+                    style={{ background: 'linear-gradient(135deg, #9ACD32 0%, #9370DB 100%)' }}
                   >
                     <Phone size={20} className="text-white" />
                   </div>
@@ -1311,7 +1311,7 @@ export function UMKMDetailPage({ umkm, onBack, onStartOrder }: UMKMDetailPagePro
                     <div className="flex items-center gap-4 p-3 rounded-xl" style={{ backgroundColor: '#FFF4E6' }}>
                       <div 
                         className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-                        style={{ backgroundColor: '#FF8D28' }}
+                        style={{ backgroundColor: '#F99912' }}
                       >
                         <Phone size={18} className="text-white" />
                       </div>
@@ -1323,7 +1323,7 @@ export function UMKMDetailPage({ umkm, onBack, onStartOrder }: UMKMDetailPagePro
                   <div className="flex items-start gap-4 p-3 rounded-xl" style={{ backgroundColor: '#FFF4E6' }}>
                     <div 
                       className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"
-                      style={{ backgroundColor: '#FF8D28' }}
+                      style={{ backgroundColor: '#F99912' }}
                     >
                       <MapPin size={18} className="text-white" />
                     </div>
@@ -1335,7 +1335,7 @@ export function UMKMDetailPage({ umkm, onBack, onStartOrder }: UMKMDetailPagePro
                     <div className="flex items-center gap-4 p-3 rounded-xl" style={{ backgroundColor: '#FFF4E6' }}>
                       <div 
                         className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-                        style={{ backgroundColor: '#FF8D28' }}
+                        style={{ backgroundColor: '#F99912' }}
                       >
                         <Clock size={18} className="text-white" />
                       </div>
@@ -1354,7 +1354,7 @@ export function UMKMDetailPage({ umkm, onBack, onStartOrder }: UMKMDetailPagePro
                 <div className="flex items-center gap-3 mb-4">
                   <div 
                     className="w-10 h-10 rounded-xl flex items-center justify-center"
-                    style={{ background: 'linear-gradient(135deg, #2196F3 0%, #1976D2 100%)' }}
+                    style={{ background: 'linear-gradient(135deg, #9370DB 0%, #F99912 100%)' }}
                   >
                     <MapPin size={20} className="text-white" />
                   </div>
@@ -1381,7 +1381,7 @@ export function UMKMDetailPage({ umkm, onBack, onStartOrder }: UMKMDetailPagePro
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 px-4 py-2 rounded-xl font-semibold transition-all hover:shadow-lg"
                     style={{ 
-                      background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)',
+                      background: 'linear-gradient(135deg, #F99912 0%, #9ACD32 100%)',
                       color: '#FFFFFF'
                     }}
                   >
@@ -1411,7 +1411,7 @@ export function UMKMDetailPage({ umkm, onBack, onStartOrder }: UMKMDetailPagePro
                 onClick={handleOpenNewReview}
                 className="rounded-xl shadow-lg h-12 px-6 flex items-center gap-2"
                 style={{ 
-                  background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)',
+                  background: 'linear-gradient(135deg, #F99912 0%, #9ACD32 100%)',
                   color: '#FFFFFF'
                 }}
               >
@@ -1425,7 +1425,7 @@ export function UMKMDetailPage({ umkm, onBack, onStartOrder }: UMKMDetailPagePro
                 <CardContent className="p-12 text-center">
                   <div 
                     className="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center"
-                    style={{ background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)' }}
+                    style={{ background: 'linear-gradient(135deg, #F99912 0%, #9ACD32 100%)' }}
                   >
                     <Star size={32} className="text-white" />
                   </div>
@@ -1455,7 +1455,7 @@ export function UMKMDetailPage({ umkm, onBack, onStartOrder }: UMKMDetailPagePro
                         <div
                           className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 text-white font-bold text-lg shadow-md"
                           style={{ 
-                            background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)'
+                            background: 'linear-gradient(135deg, #F99912 0%, #9ACD32 100%)'
                           }}
                         >
                           {review.userAvatar}
@@ -1490,7 +1490,7 @@ export function UMKMDetailPage({ umkm, onBack, onStartOrder }: UMKMDetailPagePro
                                   <button
                                     onClick={() => handleEditReview(review)}
                                     className="p-2 hover:bg-orange-50 rounded-lg transition-colors border border-transparent hover:border-orange-200"
-                                    style={{ color: '#FF8D28' }}
+                                    style={{ color: '#F99912' }}
                                     title="Edit ulasan"
                                   >
                                     <Edit size={18} />
@@ -1563,7 +1563,7 @@ export function UMKMDetailPage({ umkm, onBack, onStartOrder }: UMKMDetailPagePro
                     <div className="flex items-center gap-3">
                       <div 
                         className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-                        style={{ backgroundColor: '#FF8D28' }}
+                        style={{ backgroundColor: '#F99912' }}
                       >
                         <Phone size={18} className="text-white" />
                       </div>
@@ -1578,7 +1578,7 @@ export function UMKMDetailPage({ umkm, onBack, onStartOrder }: UMKMDetailPagePro
                   <div className="flex items-start gap-3">
                     <div 
                       className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"
-                      style={{ backgroundColor: '#FF8D28' }}
+                      style={{ backgroundColor: '#F99912' }}
                     >
                       <MapPin size={18} className="text-white" />
                     </div>
@@ -1593,7 +1593,7 @@ export function UMKMDetailPage({ umkm, onBack, onStartOrder }: UMKMDetailPagePro
                     <div className="flex items-center gap-3">
                       <div 
                         className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-                        style={{ backgroundColor: '#FF8D28' }}
+                        style={{ backgroundColor: '#F99912' }}
                       >
                         <Clock size={18} className="text-white" />
                       </div>
@@ -1609,7 +1609,7 @@ export function UMKMDetailPage({ umkm, onBack, onStartOrder }: UMKMDetailPagePro
                 <Button
                   className="w-full py-6 text-base font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2"
                   style={{ 
-                    background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)',
+                    background: 'linear-gradient(135deg, #F99912 0%, #9ACD32 100%)',
                     color: '#FFFFFF'
                   }}
                   onClick={() => {
@@ -1641,8 +1641,8 @@ export function UMKMDetailPage({ umkm, onBack, onStartOrder }: UMKMDetailPagePro
                 {cart.length === 0 ? (
                   <div className="text-center py-8">
                     <div className="relative w-24 h-24 mx-auto mb-4">
-                      <ShoppingCart size={64} style={{ color: '#FF8D28' }} className="mx-auto opacity-20" />
-                      <div className="absolute top-0 right-0 w-6 h-6 rounded-full flex items-center justify-center" style={{ backgroundColor: '#FF8D28' }}>
+                      <ShoppingCart size={64} style={{ color: '#F99912' }} className="mx-auto opacity-20" />
+                      <div className="absolute top-0 right-0 w-6 h-6 rounded-full flex items-center justify-center" style={{ backgroundColor: '#F99912' }}>
                         <span className="text-white text-xs font-bold">0</span>
                       </div>
                     </div>
@@ -1670,7 +1670,7 @@ export function UMKMDetailPage({ umkm, onBack, onStartOrder }: UMKMDetailPagePro
                           <p className="text-sm font-semibold truncate" style={{ color: '#2F4858' }}>
                             {item.name}
                           </p>
-                          <p className="text-xs font-bold" style={{ color: '#FF8D28' }}>
+                          <p className="text-xs font-bold" style={{ color: '#F99912' }}>
                             Rp {item.price.toLocaleString('id-ID')} × {item.quantity}
                           </p>
                         </div>
@@ -1681,14 +1681,14 @@ export function UMKMDetailPage({ umkm, onBack, onStartOrder }: UMKMDetailPagePro
                         <span className="text-sm font-semibold" style={{ color: '#2F4858' }}>
                           Total
                         </span>
-                        <span className="text-lg font-bold" style={{ color: '#FF8D28' }}>
+                        <span className="text-lg font-bold" style={{ color: '#F99912' }}>
                           Rp {cart.reduce((sum, item) => sum + (item.price * item.quantity), 0).toLocaleString('id-ID')}
                         </span>
                       </div>
                       <Button
                         className="w-full py-3 text-sm font-semibold rounded-xl"
                         style={{ 
-                          background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)',
+                          background: 'linear-gradient(135deg, #F99912 0%, #9ACD32 100%)',
                           color: '#FFFFFF'
                         }}
                         onClick={onStartOrder}
@@ -1712,7 +1712,7 @@ export function UMKMDetailPage({ umkm, onBack, onStartOrder }: UMKMDetailPagePro
             onClick={handleOpenNewReview}
             className="rounded-full shadow-2xl h-14 w-14 p-0 flex items-center justify-center"
             style={{ 
-              background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)',
+              background: 'linear-gradient(135deg, #F99912 0%, #9ACD32 100%)',
               color: '#FFFFFF',
               boxShadow: '0 10px 25px rgba(255, 141, 40, 0.4)'
             }}
@@ -1797,11 +1797,11 @@ export function UMKMDetailPage({ umkm, onBack, onStartOrder }: UMKMDetailPagePro
               {reviewForm.photoPreviews.length < 5 && (
                 <label className="block">
                   <div 
-                    className="border-2 border-dashed rounded-xl p-6 text-center mb-3 cursor-pointer hover:border-[#FF8D28] transition-all hover:bg-[#FFF4E6]"
+                    className="border-2 border-dashed rounded-xl p-6 text-center mb-3 cursor-pointer hover:border-[#F99912] transition-all hover:bg-[#FFF4E6]"
                     style={{ borderColor: '#FFE5CC' }}
                   >
                     <div className="w-12 h-12 rounded-full mx-auto mb-3 flex items-center justify-center" style={{ backgroundColor: '#FFE5CC' }}>
-                      <Upload size={24} style={{ color: '#FF8D28' }} />
+                      <Upload size={24} style={{ color: '#F99912' }} />
                     </div>
                     <p className="text-sm font-semibold mb-1" style={{ color: '#2F4858' }}>
                       Klik untuk upload foto

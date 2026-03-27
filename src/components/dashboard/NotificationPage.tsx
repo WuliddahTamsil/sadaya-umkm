@@ -22,13 +22,13 @@ export function NotificationPage() {
   const getColor = (status?: string) => {
     switch (status) {
       case 'pending':
-        return '#FFB84D';
+        return '#F99912';
       case 'processing':
-        return '#2196F3';
+        return '#9370DB';
       case 'completed':
-        return '#4CAF50';
+        return '#9ACD32';
       default:
-        return '#FF8D28';
+        return '#F99912';
     }
   };
 
@@ -125,7 +125,7 @@ export function NotificationPage() {
                             {!notification.read && (
                               <Badge 
                                 style={{ 
-                                  backgroundColor: '#FF8D28', 
+                                  backgroundColor: '#F99912', 
                                   color: '#FFFFFF',
                                   fontSize: '10px'
                                 }}

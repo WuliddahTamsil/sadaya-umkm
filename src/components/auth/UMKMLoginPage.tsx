@@ -24,7 +24,7 @@ export function UMKMLoginPage({ onSwitchToRegister, onBack }: UMKMLoginPageProps
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    
+
     try {
       await login(email, password);
       toast.success('Login berhasil! Selamat datang UMKM.');
@@ -38,51 +38,25 @@ export function UMKMLoginPage({ onSwitchToRegister, onBack }: UMKMLoginPageProps
   };
 
   return (
-    <div 
-      className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden"
-      style={{
-        background: 'linear-gradient(135deg, #FFF4E6 0%, #FFB84D 50%, #FF8D28 100%)',
-      }}
+    <div
+      className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-slate-50"
     >
+      {/* Dynamic Bright Background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-[10%] -left-[10%] w-[50%] h-[50%] rounded-full bg-gradient-to-br from-[#9370DB] to-transparent opacity-15 blur-3xl animate-pulse" />
+        <div className="absolute bottom-[10%] -right-[10%] w-[40%] h-[60%] rounded-full bg-gradient-to-bl from-[#9ACD32] to-transparent opacity-15 blur-3xl" style={{ animation: 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite' }} />
+      </div>
+
       {/* Background Pattern */}
       <div className="absolute inset-0 bg-pattern-leaves opacity-20" />
 
-      {/* Decorative Elements */}
-      <motion.div
-        className="absolute top-20 right-10 text-orange-300 opacity-30"
-        animate={{
-          y: [0, -20, 0],
-          rotate: [0, 10, 0],
-        }}
-        transition={{
-          duration: 4,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-      >
-        <Store size={80} />
-      </motion.div>
 
-      <motion.div
-        className="absolute bottom-20 left-20 text-yellow-400 opacity-30"
-        animate={{
-          y: [0, 20, 0],
-          rotate: [0, -10, 0],
-        }}
-        transition={{
-          duration: 5,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-      >
-        <ShoppingBag size={70} />
-      </motion.div>
 
       <div className="container mx-auto max-w-md relative z-10">
         {/* Back Button */}
         <motion.button
           onClick={onBack}
-          className="mb-6 flex items-center space-x-2 text-orange-800 hover:text-orange-900 transition-colors"
+          className="mb-6 flex items-center space-x-2 text-gray-700 hover:text-gray-900 transition-colors"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           whileHover={{ x: -5 }}
@@ -105,12 +79,13 @@ export function UMKMLoginPage({ onSwitchToRegister, onBack }: UMKMLoginPageProps
                   className="h-12 w-auto mb-4"
                 />
                 <motion.div
-                  className="w-20 h-20 bg-gradient-to-br from-orange-400 to-red-500 rounded-full flex items-center justify-center mb-4"
+                  className="w-20 h-20 rounded-full flex items-center justify-center mb-4 shadow-[0_10px_35px_rgba(147,112,219,0.4)]"
+                  style={{ background: 'linear-gradient(135deg, #b39ddb 0%, #9370DB 100%)' }}
                   whileHover={{ scale: 1.1, rotate: 5 }}
                 >
                   <Store size={40} className="text-white" />
                 </motion.div>
-                <h2 style={{ color: '#FF8D28' }}>UMKM Login</h2>
+                <h2 style={{ color: '#9370DB' }} className="font-bold text-2xl">UMKM Login</h2>
                 <p className="text-gray-600 text-center mt-2">
                   Masuk sebagai pelaku usaha
                 </p>
@@ -119,20 +94,20 @@ export function UMKMLoginPage({ onSwitchToRegister, onBack }: UMKMLoginPageProps
               {/* Illustrations */}
               <div className="flex justify-center space-x-4 mb-6">
                 <div className="text-center">
-                  <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mb-2">
-                    <ShoppingBag size={24} className="text-orange-600" />
+                  <div className="w-12 h-12 bg-purple-50 rounded-full flex items-center justify-center mb-2 border border-purple-100">
+                    <ShoppingBag size={24} className="text-[#9370DB]" />
                   </div>
                   <p className="body-3 text-gray-600">Produk</p>
                 </div>
                 <div className="text-center">
-                  <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mb-2">
-                    <TrendingUp size={24} className="text-orange-600" />
+                  <div className="w-12 h-12 bg-purple-50 rounded-full flex items-center justify-center mb-2 border border-purple-100">
+                    <TrendingUp size={24} className="text-[#9370DB]" />
                   </div>
                   <p className="body-3 text-gray-600">Transaksi</p>
                 </div>
                 <div className="text-center">
-                  <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mb-2">
-                    <Users size={24} className="text-orange-600" />
+                  <div className="w-12 h-12 bg-purple-50 rounded-full flex items-center justify-center mb-2 border border-purple-100">
+                    <Users size={24} className="text-[#9370DB]" />
                   </div>
                   <p className="body-3 text-gray-600">Pelanggan</p>
                 </div>
@@ -150,10 +125,10 @@ export function UMKMLoginPage({ onSwitchToRegister, onBack }: UMKMLoginPageProps
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
-                    className="border-orange-200 focus:border-orange-400"
+                    className="border-purple-200 focus:border-purple-400"
                   />
                 </div>
-                
+
                 <div className="space-y-2">
                   <Label htmlFor="password" style={{ color: '#2F4858' }}>
                     Password
@@ -165,16 +140,16 @@ export function UMKMLoginPage({ onSwitchToRegister, onBack }: UMKMLoginPageProps
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
-                    className="border-orange-200 focus:border-orange-400"
+                    className="border-purple-200 focus:border-purple-400"
                   />
                 </div>
 
                 <Button
                   type="submit"
-                  className="w-full py-6 hover-lift"
-                  style={{ 
-                    background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)',
-                    color: '#FFFFFF' 
+                  className="w-full py-6 hover-lift font-bold shadow-lg shadow-purple-500/20 text-lg"
+                  style={{
+                    background: 'linear-gradient(135deg, #9370DB 0%, #9ACD32 100%)',
+                    color: '#FFFFFF'
                   }}
                   disabled={isLoading}
                 >
@@ -193,8 +168,8 @@ export function UMKMLoginPage({ onSwitchToRegister, onBack }: UMKMLoginPageProps
                   Belum punya akun?{' '}
                   <button
                     onClick={onSwitchToRegister}
-                    className="body-3"
-                    style={{ color: '#FF8D28', fontWeight: 600 }}
+                    className="body-3 hover:underline"
+                    style={{ color: '#9370DB', fontWeight: 600 }}
                   >
                     Daftar UMKM Baru
                   </button>

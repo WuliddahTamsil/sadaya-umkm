@@ -191,7 +191,7 @@ export function ProfilePage() {
                     ) : null}
                     <AvatarFallback 
                       className="text-4xl font-bold"
-                      style={{ backgroundColor: '#FF8D28', color: '#FFFFFF' }}
+                      style={{ backgroundColor: '#F99912', color: '#FFFFFF' }}
                     >
                       {initials}
                     </AvatarFallback>
@@ -201,7 +201,7 @@ export function ProfilePage() {
                   onClick={handlePhotoClick}
                   disabled={uploadingPhoto}
                   className="absolute bottom-0 right-0 w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition-all hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed"
-                  style={{ backgroundColor: '#4CAF50', color: '#FFFFFF' }}
+                  style={{ backgroundColor: '#9ACD32', color: '#FFFFFF' }}
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -316,7 +316,7 @@ export function ProfilePage() {
                 {!editing ? (
                   <Button
                     onClick={() => setEditing(true)}
-                    style={{ backgroundColor: '#FF8D28', color: '#FFFFFF' }}
+                    style={{ backgroundColor: '#F99912', color: '#FFFFFF' }}
                   >
                     Edit Profil
                   </Button>
@@ -324,7 +324,7 @@ export function ProfilePage() {
                   <>
                     <Button
                       onClick={handleSave}
-                      style={{ backgroundColor: '#4CAF50', color: '#FFFFFF' }}
+                      style={{ backgroundColor: '#9ACD32', color: '#FFFFFF' }}
                     >
                       <Save size={18} className="mr-2" />
                       Simpan
@@ -357,9 +357,9 @@ export function ProfilePage() {
           <CardContent className="p-6 text-center">
             <div 
               className="w-12 h-12 rounded-full mx-auto mb-3 flex items-center justify-center"
-              style={{ backgroundColor: '#FF8D2820' }}
+              style={{ backgroundColor: '#F9991220' }}
             >
-              <User size={24} style={{ color: '#FF8D28' }} />
+              <User size={24} style={{ color: '#F99912' }} />
             </div>
             <h4 style={{ color: '#2F4858' }}>Member Sejak</h4>
             <p className="body-3" style={{ color: '#858585' }}>
@@ -375,12 +375,12 @@ export function ProfilePage() {
           <CardContent className="p-6 text-center">
             <div 
               className="w-12 h-12 rounded-full mx-auto mb-3 flex items-center justify-center"
-              style={{ backgroundColor: user?.isVerified ? '#4CAF5020' : '#FF980020' }}
+              style={{ backgroundColor: user?.isVerified ? '#9ACD3220' : '#FF980020' }}
             >
-              <Mail size={24} style={{ color: user?.isVerified ? '#4CAF50' : '#FF9800' }} />
+              <Mail size={24} style={{ color: user?.isVerified ? '#9ACD32' : '#FF9800' }} />
             </div>
             <h4 style={{ color: '#2F4858' }}>Status Verifikasi</h4>
-            <p className="body-3" style={{ color: user?.isVerified ? '#4CAF50' : '#FF9800' }}>
+            <p className="body-3" style={{ color: user?.isVerified ? '#9ACD32' : '#FF9800' }}>
               {user?.isVerified ? '✓ Terverifikasi' : '⏳ Menunggu Verifikasi'}
             </p>
           </CardContent>
@@ -390,9 +390,9 @@ export function ProfilePage() {
           <CardContent className="p-6 text-center">
             <div 
               className="w-12 h-12 rounded-full mx-auto mb-3 flex items-center justify-center"
-              style={{ backgroundColor: '#2196F320' }}
+              style={{ backgroundColor: '#9370DB20' }}
             >
-              <MapPin size={24} style={{ color: '#2196F3' }} />
+              <MapPin size={24} style={{ color: '#9370DB' }} />
             </div>
             <h4 style={{ color: '#2F4858' }}>Lokasi</h4>
             <p className="body-3" style={{ color: '#858585' }}>

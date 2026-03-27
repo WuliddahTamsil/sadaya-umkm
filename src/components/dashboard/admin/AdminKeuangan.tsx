@@ -66,7 +66,7 @@ export function AdminKeuangan() {
       value: 456800000,
       change: '+18.5%',
       icon: DollarSign,
-      color: '#4CAF50',
+      color: '#9ACD32',
       trend: 'up',
       prefix: 'Rp '
     },
@@ -84,7 +84,7 @@ export function AdminKeuangan() {
       value: 367600000,
       change: '+22.3%',
       icon: TrendingUp,
-      color: '#FFB800',
+      color: '#F99912',
       trend: 'up',
       prefix: 'Rp '
     },
@@ -93,7 +93,7 @@ export function AdminKeuangan() {
       value: 80.5,
       change: '+3.8%',
       icon: PieChartIcon,
-      color: '#2196F3',
+      color: '#9370DB',
       trend: 'up',
       suffix: '%'
     },
@@ -102,7 +102,7 @@ export function AdminKeuangan() {
       value: 245000000,
       change: '+15.2%',
       icon: Wallet,
-      color: '#9C27B0',
+      color: '#9370DB',
       trend: 'up',
       prefix: 'Rp '
     },
@@ -111,7 +111,7 @@ export function AdminKeuangan() {
       value: 500000000,
       progress: 91.4,
       icon: Target,
-      color: '#FF8D28',
+      color: '#F99912',
       prefix: 'Rp '
     }
   ];
@@ -152,18 +152,18 @@ export function AdminKeuangan() {
 
   // Revenue Breakdown
   const revenueBreakdown = [
-    { name: 'Komisi UMKM', value: 278400000, percentage: 61, color: '#FF8D28' },
-    { name: 'Biaya Pengiriman', value: 114200000, percentage: 25, color: '#2196F3' },
-    { name: 'Iklan & Promosi', value: 45680000, percentage: 10, color: '#4CAF50' },
-    { name: 'Layanan Premium', value: 18320000, percentage: 4, color: '#9C27B0' }
+    { name: 'Komisi UMKM', value: 278400000, percentage: 61, color: '#F99912' },
+    { name: 'Biaya Pengiriman', value: 114200000, percentage: 25, color: '#9370DB' },
+    { name: 'Iklan & Promosi', value: 45680000, percentage: 10, color: '#9ACD32' },
+    { name: 'Layanan Premium', value: 18320000, percentage: 4, color: '#9370DB' }
   ];
 
   // Expense Breakdown
   const expenseBreakdown = [
     { name: 'Infrastruktur', value: 35600000, percentage: 40, color: '#FF6B6B' },
     { name: 'Operasional', value: 26700000, percentage: 30, color: '#FF9800' },
-    { name: 'Marketing', value: 17800000, percentage: 20, color: '#2196F3' },
-    { name: 'Lainnya', value: 8910000, percentage: 10, color: '#9C27B0' }
+    { name: 'Marketing', value: 17800000, percentage: 20, color: '#9370DB' },
+    { name: 'Lainnya', value: 8910000, percentage: 10, color: '#9370DB' }
   ];
 
   // Recent Transactions
@@ -269,7 +269,7 @@ export function AdminKeuangan() {
                       <Badge
                         style={{
                           backgroundColor: stat.trend === 'up' ? '#C8E6C920' : '#FFCDD220',
-                          color: stat.trend === 'up' ? '#2E7D32' : '#C62828',
+                          color: stat.trend === 'up' ? '#9ACD32' : '#C62828',
                           fontSize: '11px'
                         }}
                       >
@@ -350,8 +350,8 @@ export function AdminKeuangan() {
                   <AreaChart data={currentData}>
                     <defs>
                       <linearGradient id="colorIncome" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#4CAF50" stopOpacity={0.3} />
-                        <stop offset="95%" stopColor="#4CAF50" stopOpacity={0} />
+                        <stop offset="5%" stopColor="#9ACD32" stopOpacity={0.3} />
+                        <stop offset="95%" stopColor="#9ACD32" stopOpacity={0} />
                       </linearGradient>
                       <linearGradient id="colorExpense" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="5%" stopColor="#FF6B6B" stopOpacity={0.3} />
@@ -381,7 +381,7 @@ export function AdminKeuangan() {
                     <Area 
                       type="monotone" 
                       dataKey="income" 
-                      stroke="#4CAF50" 
+                      stroke="#9ACD32" 
                       fillOpacity={1} 
                       fill="url(#colorIncome)"
                       name="Pendapatan"
@@ -468,18 +468,18 @@ export function AdminKeuangan() {
                   <Line 
                     type="monotone" 
                     dataKey="actual" 
-                    stroke="#4CAF50" 
+                    stroke="#9ACD32" 
                     strokeWidth={3}
-                    dot={{ fill: '#4CAF50', r: 5 }}
+                    dot={{ fill: '#9ACD32', r: 5 }}
                     name="Aktual"
                     strokeDasharray="0"
                   />
                   <Line 
                     type="monotone" 
                     dataKey="projected" 
-                    stroke="#2196F3" 
+                    stroke="#9370DB" 
                     strokeWidth={3}
-                    dot={{ fill: '#2196F3', r: 5 }}
+                    dot={{ fill: '#9370DB', r: 5 }}
                     strokeDasharray="5 5"
                     name="Proyeksi"
                   />
@@ -531,9 +531,9 @@ export function AdminKeuangan() {
                     formatter={(value: number) => formatCurrency(value)}
                   />
                   <Legend />
-                  <Bar dataKey="income" fill="#4CAF50" name="Pendapatan" radius={[8, 8, 0, 0]} />
+                  <Bar dataKey="income" fill="#9ACD32" name="Pendapatan" radius={[8, 8, 0, 0]} />
                   <Bar dataKey="expense" fill="#FF6B6B" name="Pengeluaran" radius={[8, 8, 0, 0]} />
-                  <Bar dataKey="net" fill="#FFB800" name="Net Cash Flow" radius={[8, 8, 0, 0]} />
+                  <Bar dataKey="net" fill="#F99912" name="Net Cash Flow" radius={[8, 8, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </CardContent>
@@ -713,11 +713,11 @@ export function AdminKeuangan() {
                   <div
                     className="w-12 h-12 rounded-xl flex items-center justify-center"
                     style={{
-                      backgroundColor: transaction.type === 'income' ? '#4CAF5020' : '#FF6B6B20'
+                      backgroundColor: transaction.type === 'income' ? '#9ACD3220' : '#FF6B6B20'
                     }}
                   >
                     {transaction.type === 'income' ? (
-                      <ArrowUpRight size={24} style={{ color: '#4CAF50' }} />
+                      <ArrowUpRight size={24} style={{ color: '#9ACD32' }} />
                     ) : (
                       <ArrowDownRight size={24} style={{ color: '#FF6B6B' }} />
                     )}
@@ -744,7 +744,7 @@ export function AdminKeuangan() {
                   <p
                     className="body-3"
                     style={{
-                      color: transaction.type === 'income' ? '#4CAF50' : '#FF6B6B',
+                      color: transaction.type === 'income' ? '#9ACD32' : '#FF6B6B',
                       fontWeight: 600
                     }}
                   >
@@ -754,7 +754,7 @@ export function AdminKeuangan() {
                   <Badge
                     style={{
                       backgroundColor: transaction.status === 'completed' ? '#C8E6C920' : '#FFCDD220',
-                      color: transaction.status === 'completed' ? '#2E7D32' : '#C62828',
+                      color: transaction.status === 'completed' ? '#9ACD32' : '#C62828',
                       fontSize: '10px',
                       marginTop: '4px'
                     }}

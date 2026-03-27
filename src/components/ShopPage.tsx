@@ -145,7 +145,7 @@ export function ShopPage({ umkm, onBack, onCheckout }: ShopPageProps) {
               Kembali
             </Button>
             <div className="flex items-center gap-2">
-              <ShoppingCart size={24} style={{ color: '#FF8D28' }} />
+              <ShoppingCart size={24} style={{ color: '#F99912' }} />
               {cart.length > 0 && (
                 <span className="bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">
                   {cart.reduce((sum, item) => sum + item.quantity, 0)}
@@ -232,7 +232,7 @@ export function ShopPage({ umkm, onBack, onCheckout }: ShopPageProps) {
                         {product.description}
                       </p>
                       <div className="flex items-center justify-between mb-3">
-                        <p style={{ color: '#FF8D28', fontWeight: 600, fontSize: '18px' }}>
+                        <p style={{ color: '#F99912', fontWeight: 600, fontSize: '18px' }}>
                           Rp {product.price.toLocaleString('id-ID')}
                         </p>
                         <span className="body-3" style={{ color: '#858585' }}>
@@ -266,7 +266,7 @@ export function ShopPage({ umkm, onBack, onCheckout }: ShopPageProps) {
                       ) : (
                         <Button
                           className="w-full"
-                          style={{ backgroundColor: '#FF8D28', color: '#FFFFFF' }}
+                          style={{ backgroundColor: '#F99912', color: '#FFFFFF' }}
                           onClick={() => addToCart(product)}
                           disabled={product.stock === 0}
                         >
@@ -322,7 +322,7 @@ export function ShopPage({ umkm, onBack, onCheckout }: ShopPageProps) {
                               <p className="body-3 font-semibold" style={{ color: '#2F4858' }}>
                                 {item.name}
                               </p>
-                              <p className="body-3 mb-2" style={{ color: '#FF8D28' }}>
+                              <p className="body-3 mb-2" style={{ color: '#F99912' }}>
                                 Rp {item.price.toLocaleString('id-ID')}
                               </p>
                               <div className="flex items-center gap-2">
@@ -384,14 +384,14 @@ export function ShopPage({ umkm, onBack, onCheckout }: ShopPageProps) {
                       <span style={{ color: '#2F4858', fontWeight: 600 }}>
                         Total
                       </span>
-                      <h4 style={{ color: '#FF8D28' }}>
+                      <h4 style={{ color: '#F99912' }}>
                         Rp {total.toLocaleString('id-ID')}
                       </h4>
                     </div>
 
                     <Button
                       className="w-full"
-                      style={{ backgroundColor: '#FF8D28', color: '#FFFFFF' }}
+                      style={{ backgroundColor: '#F99912', color: '#FFFFFF' }}
                       onClick={handleCheckout}
                     >
                       Checkout Sekarang

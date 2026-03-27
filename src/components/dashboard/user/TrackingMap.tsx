@@ -255,7 +255,7 @@ export function TrackingMap({ orderId, storeAddress, deliveryAddress, driverLoca
                 y1={`${100 - storePos.latPercent}%`}
                 x2={`${deliveryPos.lngPercent}%`}
                 y2={`${100 - deliveryPos.latPercent}%`}
-                stroke="#2196F3"
+                stroke="#9370DB"
                 strokeWidth="3"
                 strokeDasharray="5,5"
                 opacity="0.6"
@@ -267,7 +267,7 @@ export function TrackingMap({ orderId, storeAddress, deliveryAddress, driverLoca
                   y1={`${100 - storePos.latPercent}%`}
                   x2={`${driverPos.lngPercent}%`}
                   y2={`${100 - driverPos.latPercent}%`}
-                  stroke="#FF8D28"
+                  stroke="#F99912"
                   strokeWidth="4"
                   opacity="0.8"
                 />
@@ -284,11 +284,11 @@ export function TrackingMap({ orderId, storeAddress, deliveryAddress, driverLoca
             }}
           >
             <div className="relative">
-              <div className="w-10 h-10 rounded-full flex items-center justify-center shadow-lg" style={{ backgroundColor: '#4CAF50' }}>
+              <div className="w-10 h-10 rounded-full flex items-center justify-center shadow-lg" style={{ backgroundColor: '#9ACD32' }}>
                 <Store size={20} style={{ color: '#FFFFFF' }} />
               </div>
               <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-1 px-2 py-1 rounded shadow-sm" style={{ backgroundColor: '#FFFFFF', whiteSpace: 'nowrap' }}>
-                <p className="text-xs font-semibold" style={{ color: '#4CAF50' }}>Toko</p>
+                <p className="text-xs font-semibold" style={{ color: '#9ACD32' }}>Toko</p>
               </div>
             </div>
           </div>
@@ -302,11 +302,11 @@ export function TrackingMap({ orderId, storeAddress, deliveryAddress, driverLoca
             }}
           >
             <div className="relative">
-              <div className="w-10 h-10 rounded-full flex items-center justify-center shadow-lg" style={{ backgroundColor: '#2196F3' }}>
+              <div className="w-10 h-10 rounded-full flex items-center justify-center shadow-lg" style={{ backgroundColor: '#9370DB' }}>
                 <MapPin size={20} style={{ color: '#FFFFFF' }} />
               </div>
               <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-1 px-2 py-1 rounded shadow-sm" style={{ backgroundColor: '#FFFFFF', whiteSpace: 'nowrap' }}>
-                <p className="text-xs font-semibold" style={{ color: '#2196F3' }}>Tujuan</p>
+                <p className="text-xs font-semibold" style={{ color: '#9370DB' }}>Tujuan</p>
               </div>
             </div>
           </div>
@@ -322,14 +322,14 @@ export function TrackingMap({ orderId, storeAddress, deliveryAddress, driverLoca
             >
               <div className="relative">
                 {/* Motor Icon with Animation */}
-                <div className="w-16 h-16 rounded-full flex items-center justify-center shadow-2xl animate-bounce" style={{ backgroundColor: '#FF8D28' }}>
+                <div className="w-16 h-16 rounded-full flex items-center justify-center shadow-2xl animate-bounce" style={{ backgroundColor: '#F99912' }}>
                   <Bike size={32} style={{ color: '#FFFFFF' }} />
                 </div>
                 {/* Pulsing Ring */}
-                <div className="absolute inset-0 rounded-full animate-ping" style={{ backgroundColor: '#FF8D28', opacity: 0.3 }}></div>
+                <div className="absolute inset-0 rounded-full animate-ping" style={{ backgroundColor: '#F99912', opacity: 0.3 }}></div>
                 {/* Driver Label */}
-                <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-3 py-1.5 rounded-full shadow-lg" style={{ backgroundColor: '#FFFFFF', whiteSpace: 'nowrap', border: '2px solid #FF8D28' }}>
-                  <p className="text-xs font-bold" style={{ color: '#FF8D28' }}>🏍️ Driver</p>
+                <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-3 py-1.5 rounded-full shadow-lg" style={{ backgroundColor: '#FFFFFF', whiteSpace: 'nowrap', border: '2px solid #F99912' }}>
+                  <p className="text-xs font-bold" style={{ color: '#F99912' }}>🏍️ Driver</p>
                 </div>
               </div>
             </div>
@@ -340,15 +340,15 @@ export function TrackingMap({ orderId, storeAddress, deliveryAddress, driverLoca
       {/* Legend */}
       <div className="flex items-center justify-center gap-6 p-3 rounded-lg" style={{ backgroundColor: '#F5F5F5' }}>
         <div className="flex items-center gap-2">
-          <div className="w-4 h-4 rounded-full" style={{ backgroundColor: '#FF8D28' }}></div>
+          <div className="w-4 h-4 rounded-full" style={{ backgroundColor: '#F99912' }}></div>
           <span className="body-3" style={{ color: '#858585' }}>Lokasi Driver</span>
         </div>
         <div className="flex items-center gap-2">
-          <Store size={16} style={{ color: '#4CAF50' }} />
+          <Store size={16} style={{ color: '#9ACD32' }} />
           <span className="body-3" style={{ color: '#858585' }}>Toko UMKM</span>
         </div>
         <div className="flex items-center gap-2">
-          <MapPin size={16} style={{ color: '#2196F3' }} />
+          <MapPin size={16} style={{ color: '#9370DB' }} />
           <span className="body-3" style={{ color: '#858585' }}>Tujuan</span>
         </div>
       </div>
@@ -358,14 +358,14 @@ export function TrackingMap({ orderId, storeAddress, deliveryAddress, driverLoca
         <div className="space-y-2">
           <div className="flex justify-between text-sm">
             <span style={{ color: '#858585' }}>Progress Pengiriman</span>
-            <span style={{ color: '#FF8D28', fontWeight: 600 }}>{Math.round(progress * 100)}%</span>
+            <span style={{ color: '#F99912', fontWeight: 600 }}>{Math.round(progress * 100)}%</span>
           </div>
           <div className="w-full h-2 rounded-full overflow-hidden" style={{ backgroundColor: '#E0E0E0' }}>
             <div
               className="h-full transition-all duration-500"
               style={{
                 width: `${progress * 100}%`,
-                backgroundColor: '#FF8D28',
+                backgroundColor: '#F99912',
               }}
             />
           </div>

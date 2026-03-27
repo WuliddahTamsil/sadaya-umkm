@@ -12,19 +12,19 @@ export function TentangPage() {
       icon: Heart,
       title: "Cinta Lokal",
       description: "Mendukung produk asli Bogor dengan sepenuh hati",
-      color: "#FF8D28"
+      color: "#F99912"
     },
     {
       icon: Target,
       title: "Naik Kelas",
       description: "Memberdayakan UMKM dengan teknologi modern",
-      color: "#4CAF50"
+      color: "#9ACD32"
     },
     {
       icon: Users,
       title: "Bersama",
       description: "Membangun ekosistem yang berkelanjutan",
-      color: "#2196F3"
+      color: "#9370DB"
     }
   ];
 
@@ -51,7 +51,7 @@ export function TentangPage() {
         {/* Animated Background Elements */}
         <motion.div
           className="absolute top-20 left-10 w-64 h-64 rounded-full opacity-10 blur-3xl"
-          style={{ background: '#FF8D28' }}
+          style={{ background: '#F99912' }}
           animate={{
             scale: [1, 1.3, 1],
             x: [0, 50, 0],
@@ -66,7 +66,7 @@ export function TentangPage() {
         />
         <motion.div
           className="absolute bottom-20 right-10 w-96 h-96 rounded-full opacity-10 blur-3xl"
-          style={{ background: '#4CAF50' }}
+          style={{ background: '#9ACD32' }}
           animate={{
             scale: [1, 1.2, 1],
             x: [0, -50, 0],
@@ -81,7 +81,7 @@ export function TentangPage() {
         />
         <motion.div
           className="absolute top-1/2 left-1/2 w-80 h-80 rounded-full opacity-5 blur-3xl"
-          style={{ background: '#2196F3' }}
+          style={{ background: '#9370DB' }}
           animate={{
             scale: [1, 1.4, 1],
             rotate: [0, 90, 0],
@@ -113,7 +113,7 @@ export function TentangPage() {
               delay: Math.random() * 2,
             }}
           >
-            <Sparkles size={20} style={{ color: '#FF8D28', opacity: 0.6 }} />
+            <Sparkles size={20} style={{ color: '#F99912', opacity: 0.6 }} />
           </motion.div>
         ))}
 
@@ -138,7 +138,7 @@ export function TentangPage() {
             >
               <div 
                 className="w-24 h-24 mx-auto rounded-3xl flex items-center justify-center shadow-2xl"
-                style={{ background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)' }}
+                style={{ background: 'linear-gradient(135deg, #F99912 0%, #9ACD32 100%)' }}
               >
                 <Zap size={48} className="text-white" />
               </div>
@@ -194,7 +194,7 @@ export function TentangPage() {
                 transition={{ type: "spring", stiffness: 300 }}
                 className="relative"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-[#FF8D28] to-[#FFB84D] rounded-3xl opacity-20 blur-2xl transform rotate-6"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-[#F99912] to-[#F99912] rounded-3xl opacity-20 blur-2xl transform rotate-6"></div>
                 <ImageWithFallback
                   src="https://shopee.co.id/inspirasi-shopee/wp-content/uploads/2025/03/umkm-adalah.webp"
                   alt="UMKM Kota Bogor - Tugu Kujang dan Pasar Tradisional Bogor"
@@ -205,7 +205,7 @@ export function TentangPage() {
               {/* Animated decorative elements */}
               <motion.div 
                 className="absolute -bottom-6 -right-6 w-32 h-32 rounded-full opacity-30 blur-2xl"
-                style={{ background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)' }}
+                style={{ background: 'linear-gradient(135deg, #F99912 0%, #9ACD32 100%)' }}
                 animate={{
                   scale: [1, 1.2, 1],
                   rotate: [0, 90, 0],
@@ -218,7 +218,7 @@ export function TentangPage() {
               />
               <motion.div 
                 className="absolute -top-6 -left-6 w-32 h-32 rounded-full opacity-30 blur-2xl"
-                style={{ background: 'linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%)' }}
+                style={{ background: 'linear-gradient(135deg, #9ACD32 0%, #9370DB 100%)' }}
                 animate={{
                   scale: [1, 1.3, 1],
                   rotate: [0, -90, 0],
@@ -245,7 +245,7 @@ export function TentangPage() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
               >
-                <div className="inline-flex items-center gap-2 mb-4 px-4 py-2 rounded-full" style={{ background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)' }}>
+                <div className="inline-flex items-center gap-2 mb-4 px-4 py-2 rounded-full" style={{ background: 'linear-gradient(135deg, #F99912 0%, #9ACD32 100%)' }}>
                   <Sparkles size={20} className="text-white" />
                   <span className="text-white font-semibold text-sm">Cerita Kami</span>
                 </div>
@@ -285,7 +285,7 @@ export function TentangPage() {
         <motion.div
           className="absolute top-0 left-0 w-full h-full opacity-5"
           style={{
-            background: 'radial-gradient(circle at 20% 50%, #FF8D28 0%, transparent 50%), radial-gradient(circle at 80% 50%, #4CAF50 0%, transparent 50%)'
+            background: 'radial-gradient(circle at 20% 50%, #F99912 0%, transparent 50%), radial-gradient(circle at 80% 50%, #9ACD32 0%, transparent 50%)'
           }}
         />
         
@@ -308,7 +308,7 @@ export function TentangPage() {
                 ease: "easeInOut"
               }}
             >
-              <Award size={48} style={{ color: '#FF8D28' }} />
+              <Award size={48} style={{ color: '#F99912' }} />
             </motion.div>
             <h2 className="text-3xl lg:text-4xl font-bold mb-4" style={{ color: '#2F4858' }}>
               Nilai-Nilai Kami
@@ -364,7 +364,7 @@ export function TentangPage() {
         {/* Animated Background Elements - Lighter */}
         <motion.div
           className="absolute top-10 left-10 w-72 h-72 rounded-full opacity-3 blur-3xl"
-          style={{ background: '#FF8D28' }}
+          style={{ background: '#F99912' }}
           animate={{
             scale: [1, 1.3, 1],
             x: [0, 50, 0],
@@ -378,7 +378,7 @@ export function TentangPage() {
         />
         <motion.div
           className="absolute bottom-10 right-10 w-96 h-96 rounded-full opacity-3 blur-3xl"
-          style={{ background: '#4CAF50' }}
+          style={{ background: '#9ACD32' }}
           animate={{
             scale: [1, 1.2, 1],
             x: [0, -50, 0],
@@ -411,7 +411,7 @@ export function TentangPage() {
                 ease: "easeInOut"
               }}
             >
-              <Users size={48} style={{ color: '#FF8D28' }} />
+              <Users size={48} style={{ color: '#F99912' }} />
             </motion.div>
             <h2 className="text-3xl lg:text-4xl font-bold mb-4" style={{ color: '#2F4858' }}>
               Tim Pengembang
@@ -569,7 +569,7 @@ export function TentangPage() {
         {/* Decorative elements */}
         <motion.div
           className="absolute top-20 right-20 w-64 h-64 rounded-full opacity-5 blur-3xl"
-          style={{ background: '#FF8D28' }}
+          style={{ background: '#F99912' }}
           animate={{
             scale: [1, 1.3, 1],
             rotate: [0, 90, 0],
@@ -600,7 +600,7 @@ export function TentangPage() {
                 ease: "linear"
               }}
             >
-              <Rocket size={48} style={{ color: '#FF8D28' }} />
+              <Rocket size={48} style={{ color: '#F99912' }} />
             </motion.div>
             <h2 className="text-3xl lg:text-4xl font-bold mb-4" style={{ color: '#2F4858' }}>
               Perjalanan Kami
@@ -612,7 +612,7 @@ export function TentangPage() {
 
           <div className="max-w-4xl mx-auto relative">
             {/* Timeline line */}
-            <div className="absolute left-8 top-0 bottom-0 w-1 hidden lg:block" style={{ background: 'linear-gradient(to bottom, #FF8D28, #FFB84D, #4CAF50)' }} />
+            <div className="absolute left-8 top-0 bottom-0 w-1 hidden lg:block" style={{ background: 'linear-gradient(to bottom, #F99912, #9ACD32, #9ACD32)' }} />
             
             <div className="space-y-12">
               {milestones.map((milestone, index) => (
@@ -628,7 +628,7 @@ export function TentangPage() {
                   <div className="flex-shrink-0 relative z-10">
                     <motion.div 
                       className="w-16 h-16 rounded-full flex items-center justify-center font-bold text-white text-lg shadow-xl"
-                      style={{ background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)' }}
+                      style={{ background: 'linear-gradient(135deg, #F99912 0%, #9ACD32 100%)' }}
                       whileHover={{ scale: 1.2, rotate: 360 }}
                       transition={{ duration: 0.6, type: "spring" }}
                     >
@@ -637,7 +637,7 @@ export function TentangPage() {
                     {index < milestones.length - 1 && (
                       <motion.div 
                         className="w-0.5 h-24 mx-auto mt-2 hidden lg:block"
-                        style={{ background: 'linear-gradient(to bottom, #FF8D28, #FFB84D)' }}
+                        style={{ background: 'linear-gradient(to bottom, #F99912, #9ACD32)' }}
                         initial={{ scaleY: 0 }}
                         whileInView={{ scaleY: 1 }}
                         viewport={{ once: true }}
@@ -646,7 +646,7 @@ export function TentangPage() {
                     )}
                   </div>
                   <motion.div 
-                    className="flex-1 pb-8 bg-white p-6 rounded-2xl shadow-lg border-2 border-orange-100 hover:border-[#FF8D28] transition-all"
+                    className="flex-1 pb-8 bg-white p-6 rounded-2xl shadow-lg border-2 border-orange-100 hover:border-[#F99912] transition-all"
                     whileHover={{ scale: 1.02, y: -5 }}
                   >
                     <h3 className="text-xl font-bold mb-2" style={{ color: '#2F4858' }}>
@@ -693,7 +693,7 @@ export function TentangPage() {
                 >
                   <div 
                     className="w-14 h-14 mx-auto mb-4 rounded-xl flex items-center justify-center"
-                    style={{ background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)' }}
+                    style={{ background: 'linear-gradient(135deg, #F99912 0%, #9ACD32 100%)' }}
                   >
                     <Icon size={28} className="text-white" />
                   </div>

@@ -7,7 +7,7 @@ import { Textarea } from '../ui/textarea';
 import { Card, CardContent } from '../ui/card';
 import { useAuth } from '../../contexts/AuthContext';
 import { toast } from 'sonner';
-import { Store, ArrowLeft } from 'lucide-react';
+import { Store, ArrowLeft, Users, ShoppingBag } from 'lucide-react';
 
 import { AsliBogorLogo } from '../ui/asli-bogor-logo';
 
@@ -28,14 +28,14 @@ export function UMKMRegisterPage({ onSwitchToLogin, onBack }: UMKMRegisterPagePr
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (password !== confirmPassword) {
       toast.error('Password tidak cocok!');
       return;
     }
 
     setIsLoading(true);
-    
+
     try {
       await register({
         businessName,
@@ -55,18 +55,22 @@ export function UMKMRegisterPage({ onSwitchToLogin, onBack }: UMKMRegisterPagePr
   };
 
   return (
-    <div 
-      className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden"
-      style={{
-        background: 'linear-gradient(135deg, #FFF4E6 0%, #FFB84D 50%, #FF8D28 100%)',
-      }}
+    <div
+      className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-slate-50"
     >
+      {/* Dynamic Bright Background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-[10%] -left-[10%] w-[50%] h-[50%] rounded-full bg-gradient-to-br from-[#9370DB] to-transparent opacity-15 blur-3xl animate-pulse" />
+        <div className="absolute bottom-[10%] -right-[10%] w-[40%] h-[60%] rounded-full bg-gradient-to-bl from-[#9ACD32] to-transparent opacity-15 blur-3xl" style={{ animation: 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite' }} />
+      </div>
+
       <div className="absolute inset-0 bg-pattern-leaves opacity-20" />
+
 
       <div className="container mx-auto max-w-md relative z-10 py-8">
         <motion.button
           onClick={onBack}
-          className="mb-6 flex items-center space-x-2 text-orange-800 hover:text-orange-900 transition-colors"
+          className="mb-6 flex items-center space-x-2 text-gray-700 hover:text-gray-900 transition-colors"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           whileHover={{ x: -5 }}
@@ -88,12 +92,13 @@ export function UMKMRegisterPage({ onSwitchToLogin, onBack }: UMKMRegisterPagePr
                   className="h-12 w-auto mb-4"
                 />
                 <motion.div
-                  className="w-20 h-20 bg-gradient-to-br from-orange-400 to-red-500 rounded-full flex items-center justify-center mb-4"
+                  className="w-20 h-20 rounded-full flex items-center justify-center mb-4 shadow-[0_10px_35px_rgba(147,112,219,0.4)]"
+                  style={{ background: 'linear-gradient(135deg, #b39ddb 0%, #9370DB 100%)' }}
                   whileHover={{ scale: 1.1, rotate: 5 }}
                 >
                   <Store size={40} className="text-white" />
                 </motion.div>
-                <h2 style={{ color: '#FF8D28' }}>Daftar UMKM Baru</h2>
+                <h2 style={{ color: '#9370DB' }} className="font-bold text-2xl">Daftar UMKM Baru</h2>
                 <p className="text-gray-600 text-center mt-2">
                   Daftarkan usaha Anda
                 </p>
@@ -111,7 +116,7 @@ export function UMKMRegisterPage({ onSwitchToLogin, onBack }: UMKMRegisterPagePr
                     value={businessName}
                     onChange={(e) => setBusinessName(e.target.value)}
                     required
-                    className="border-orange-200 focus:border-orange-400"
+                    className="border-purple-200 focus:border-purple-400"
                   />
                 </div>
 
@@ -126,7 +131,7 @@ export function UMKMRegisterPage({ onSwitchToLogin, onBack }: UMKMRegisterPagePr
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
-                    className="border-orange-200 focus:border-orange-400"
+                    className="border-purple-200 focus:border-purple-400"
                   />
                 </div>
 
@@ -141,7 +146,7 @@ export function UMKMRegisterPage({ onSwitchToLogin, onBack }: UMKMRegisterPagePr
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
                     required
-                    className="border-orange-200 focus:border-orange-400"
+                    className="border-purple-200 focus:border-purple-400"
                   />
                 </div>
 
@@ -155,10 +160,10 @@ export function UMKMRegisterPage({ onSwitchToLogin, onBack }: UMKMRegisterPagePr
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     required
-                    className="border-orange-200 focus:border-orange-400 min-h-[80px]"
+                    className="border-purple-200 focus:border-purple-400 min-h-[80px]"
                   />
                 </div>
-                
+
                 <div className="space-y-2">
                   <Label htmlFor="password" style={{ color: '#2F4858' }}>
                     Password
@@ -170,7 +175,7 @@ export function UMKMRegisterPage({ onSwitchToLogin, onBack }: UMKMRegisterPagePr
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
-                    className="border-orange-200 focus:border-orange-400"
+                    className="border-purple-200 focus:border-purple-400"
                   />
                 </div>
 
@@ -185,16 +190,16 @@ export function UMKMRegisterPage({ onSwitchToLogin, onBack }: UMKMRegisterPagePr
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     required
-                    className="border-orange-200 focus:border-orange-400"
+                    className="border-purple-200 focus:border-purple-400"
                   />
                 </div>
 
                 <Button
                   type="submit"
-                  className="w-full py-6 hover-lift"
-                  style={{ 
-                    background: 'linear-gradient(135deg, #FF8D28 0%, #FFB84D 100%)',
-                    color: '#FFFFFF' 
+                  className="w-full py-6 hover-lift font-bold shadow-lg shadow-purple-500/20 text-lg"
+                  style={{
+                    background: 'linear-gradient(135deg, #9370DB 0%, #9ACD32 100%)',
+                    color: '#FFFFFF'
                   }}
                   disabled={isLoading}
                 >
@@ -207,8 +212,8 @@ export function UMKMRegisterPage({ onSwitchToLogin, onBack }: UMKMRegisterPagePr
                   Sudah punya akun?{' '}
                   <button
                     onClick={onSwitchToLogin}
-                    className="body-3"
-                    style={{ color: '#FF8D28', fontWeight: 600 }}
+                    className="body-3 hover:underline"
+                    style={{ color: '#9370DB', fontWeight: 600 }}
                   >
                     Masuk di sini
                   </button>

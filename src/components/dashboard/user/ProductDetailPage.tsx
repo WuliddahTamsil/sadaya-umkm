@@ -159,7 +159,7 @@ export function ProductDetailPage({ productId, onBack, onProductSelect }: Produc
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <Loader2 className="animate-spin" size={48} style={{ color: '#FF8D28' }} />
+        <Loader2 className="animate-spin" size={48} style={{ color: '#F99912' }} />
       </div>
     );
   }
@@ -170,7 +170,7 @@ export function ProductDetailPage({ productId, onBack, onProductSelect }: Produc
         <Card>
           <CardContent className="p-12 text-center">
             <p style={{ color: '#858585' }}>Produk tidak ditemukan</p>
-            <Button onClick={onBack} className="mt-4" style={{ backgroundColor: '#FF8D28', color: '#FFFFFF' }}>
+            <Button onClick={onBack} className="mt-4" style={{ backgroundColor: '#F99912', color: '#FFFFFF' }}>
               Kembali
             </Button>
           </CardContent>
@@ -244,13 +244,13 @@ export function ProductDetailPage({ productId, onBack, onProductSelect }: Produc
                 </h2>
                 <div className="flex items-center gap-4 mb-4">
                   <div className="flex items-center gap-1">
-                    <Star size={20} style={{ color: '#FFB800', fill: '#FFB800' }} />
+                    <Star size={20} style={{ color: '#F99912', fill: '#F99912' }} />
                     <span style={{ color: '#2F4858', fontWeight: 600 }}>{product.rating}</span>
                   </div>
                   <span style={{ color: '#CCCCCC' }}>•</span>
                   <span style={{ color: '#858585' }}>{product.sold} terjual</span>
                   <span style={{ color: '#CCCCCC' }}>•</span>
-                  <span style={{ color: product.stock > 10 ? '#4CAF50' : '#F44336', fontWeight: 600 }}>
+                  <span style={{ color: product.stock > 10 ? '#9ACD32' : '#F44336', fontWeight: 600 }}>
                     Stok: {product.stock}
                   </span>
                 </div>
@@ -260,7 +260,7 @@ export function ProductDetailPage({ productId, onBack, onProductSelect }: Produc
                 <div className="flex items-center justify-between pt-4 border-t">
                   <div>
                     <p className="body-3" style={{ color: '#858585' }}>Harga</p>
-                    <h3 style={{ color: '#FF8D28' }}>
+                    <h3 style={{ color: '#F99912' }}>
                       Rp {product.price.toLocaleString('id-ID')}
                     </h3>
                   </div>
@@ -290,7 +290,7 @@ export function ProductDetailPage({ productId, onBack, onProductSelect }: Produc
                 <div className="space-y-4 mb-6">
                   {(umkmInfo?.storeAddress || umkmInfo?.address) && (
                     <div className="flex items-start gap-3">
-                      <MapPin size={20} style={{ color: '#FF8D28' }} className="mt-1 flex-shrink-0" />
+                      <MapPin size={20} style={{ color: '#F99912' }} className="mt-1 flex-shrink-0" />
                       <div>
                         <p className="body-3" style={{ color: '#858585' }}>Alamat</p>
                         <p style={{ color: '#2F4858' }}>
@@ -301,7 +301,7 @@ export function ProductDetailPage({ productId, onBack, onProductSelect }: Produc
                   )}
                   {umkmInfo?.phone && (
                     <div className="flex items-start gap-3">
-                      <Phone size={20} style={{ color: '#FF8D28' }} className="mt-1 flex-shrink-0" />
+                      <Phone size={20} style={{ color: '#F99912' }} className="mt-1 flex-shrink-0" />
                       <div>
                         <p className="body-3" style={{ color: '#858585' }}>Telepon</p>
                         <p style={{ color: '#2F4858' }}>{umkmInfo.phone}</p>
@@ -334,7 +334,7 @@ export function ProductDetailPage({ productId, onBack, onProductSelect }: Produc
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 text-sm"
-                    style={{ color: '#FF8D28' }}
+                    style={{ color: '#F99912' }}
                   >
                     <ExternalLink size={16} />
                     <span>Klik di sini untuk Peta dan Galeri Foto Lengkap (Google Maps)</span>
@@ -381,7 +381,7 @@ export function ProductDetailPage({ productId, onBack, onProductSelect }: Produc
                 {/* Total Price */}
                 <div className="flex justify-between items-center mb-6 pb-6 border-b">
                   <span style={{ color: '#858585' }}>Total Harga</span>
-                  <h3 style={{ color: '#FF8D28' }}>
+                  <h3 style={{ color: '#F99912' }}>
                     Rp {(product.price * quantity).toLocaleString('id-ID')}
                   </h3>
                 </div>
@@ -389,7 +389,7 @@ export function ProductDetailPage({ productId, onBack, onProductSelect }: Produc
                 {/* Add to Cart Button */}
                 <Button
                   className="w-full"
-                  style={{ backgroundColor: '#FF8D28', color: '#FFFFFF' }}
+                  style={{ backgroundColor: '#F99912', color: '#FFFFFF' }}
                   onClick={handleAddToCart}
                   disabled={addingToCart || product.stock === 0 || quantity > product.stock}
                 >
@@ -437,7 +437,7 @@ export function ProductDetailPage({ productId, onBack, onProductSelect }: Produc
                           <h5 style={{ color: '#2F4858' }} className="mb-1">
                             {relatedProduct.name}
                           </h5>
-                          <p style={{ color: '#FF8D28', fontWeight: 600 }}>
+                          <p style={{ color: '#F99912', fontWeight: 600 }}>
                             Rp {relatedProduct.price.toLocaleString('id-ID')}
                           </p>
                         </div>

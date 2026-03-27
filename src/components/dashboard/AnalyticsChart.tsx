@@ -47,10 +47,10 @@ export function AnalyticsChart({ type }: AnalyticsChartProps) {
   };
 
   const categoryData = [
-    { name: 'Makanan', value: 45, color: '#FF8D28' },
-    { name: 'Minuman', value: 30, color: '#4CAF50' },
-    { name: 'Kerajinan', value: 15, color: '#2196F3' },
-    { name: 'Jasa', value: 10, color: '#9C27B0' }
+    { name: 'Makanan', value: 45, color: '#F99912' },
+    { name: 'Minuman', value: 30, color: '#9ACD32' },
+    { name: 'Kerajinan', value: 15, color: '#9370DB' },
+    { name: 'Jasa', value: 10, color: '#9370DB' }
   ];
 
   const deliveryData = [
@@ -76,7 +76,7 @@ export function AnalyticsChart({ type }: AnalyticsChartProps) {
       {/* Period Selector */}
       <div className="flex items-center justify-between flex-wrap gap-4">
         <div className="flex items-center gap-2">
-          <Calendar size={20} style={{ color: '#FF8D28' }} />
+          <Calendar size={20} style={{ color: '#F99912' }} />
           <h3 style={{ color: '#2F4858' }}>
             {type === 'umkm' ? 'Analytics Penjualan' : 
              type === 'driver' ? 'Analytics Pengiriman' : 
@@ -160,9 +160,9 @@ export function AnalyticsChart({ type }: AnalyticsChartProps) {
                   <Line 
                     type="monotone" 
                     dataKey="value" 
-                    stroke="#FF8D28" 
+                    stroke="#F99912" 
                     strokeWidth={3}
-                    dot={{ fill: '#FF8D28', r: 5 }}
+                    dot={{ fill: '#F99912', r: 5 }}
                     activeDot={{ r: 8 }}
                   />
                 </LineChart>
@@ -211,7 +211,7 @@ export function AnalyticsChart({ type }: AnalyticsChartProps) {
                   />
                   <Bar 
                     dataKey="orders" 
-                    fill="#4CAF50"
+                    fill="#9ACD32"
                     radius={[8, 8, 0, 0]}
                   />
                 </BarChart>
@@ -281,7 +281,7 @@ export function AnalyticsChart({ type }: AnalyticsChartProps) {
                         borderRadius: '8px'
                       }}
                     />
-                    <Bar dataKey="count" fill="#2196F3" radius={[0, 8, 8, 0]} />
+                    <Bar dataKey="count" fill="#9370DB" radius={[0, 8, 8, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
               </CardContent>
@@ -307,13 +307,13 @@ export function AnalyticsChart({ type }: AnalyticsChartProps) {
                   <div className="flex items-center gap-3">
                     <div 
                       className="w-12 h-12 rounded-full flex items-center justify-center"
-                      style={{ backgroundColor: '#4CAF5020' }}
+                      style={{ backgroundColor: '#9ACD3220' }}
                     >
-                      <TrendingUp size={24} style={{ color: '#4CAF50' }} />
+                      <TrendingUp size={24} style={{ color: '#9ACD32' }} />
                     </div>
                     <div>
                       <p className="body-3" style={{ color: '#858585' }}>Pertumbuhan</p>
-                      <h3 style={{ color: '#4CAF50' }}>+18.5%</h3>
+                      <h3 style={{ color: '#9ACD32' }}>+18.5%</h3>
                     </div>
                   </div>
                   <div className="text-right">
@@ -325,12 +325,12 @@ export function AnalyticsChart({ type }: AnalyticsChartProps) {
                   <div>
                     <div className="flex justify-between mb-2">
                       <span className="body-3" style={{ color: '#2F4858' }}>Target Bulan Ini</span>
-                      <span className="body-3" style={{ color: '#4CAF50', fontWeight: 600 }}>85%</span>
+                      <span className="body-3" style={{ color: '#9ACD32', fontWeight: 600 }}>85%</span>
                     </div>
                     <div className="w-full h-3 rounded-full bg-gray-200 overflow-hidden">
                       <motion.div
                         className="h-full rounded-full"
-                        style={{ background: 'linear-gradient(90deg, #FF8D28 0%, #4CAF50 100%)' }}
+                        style={{ background: 'linear-gradient(90deg, #F99912 0%, #9ACD32 100%)' }}
                         initial={{ width: 0 }}
                         animate={{ width: '85%' }}
                         transition={{ duration: 1.5, delay: 0.5 }}
@@ -341,11 +341,11 @@ export function AnalyticsChart({ type }: AnalyticsChartProps) {
                   <div className="grid grid-cols-2 gap-3">
                     <div className="p-3 rounded-lg" style={{ backgroundColor: '#FFF4E6' }}>
                       <p className="body-3" style={{ color: '#858585', fontSize: '11px' }}>Rata-rata Harian</p>
-                      <p style={{ color: '#FF8D28', fontWeight: 700 }}>Rp 785k</p>
+                      <p style={{ color: '#F99912', fontWeight: 700 }}>Rp 785k</p>
                     </div>
                     <div className="p-3 rounded-lg" style={{ backgroundColor: '#E8F5E9' }}>
                       <p className="body-3" style={{ color: '#858585', fontSize: '11px' }}>Total Bulan Ini</p>
-                      <p style={{ color: '#4CAF50', fontWeight: 700 }}>Rp 12.5M</p>
+                      <p style={{ color: '#9ACD32', fontWeight: 700 }}>Rp 12.5M</p>
                     </div>
                   </div>
                 </div>

@@ -127,9 +127,9 @@ export function InfoPage({ onViewDetail, onViewWorkshopDetail }: InfoPageProps) 
       promotion: <Tag size={14} />
     };
     const colors = {
-      article: '#2196F3',
-      announcement: '#FF8D28',
-      promotion: '#4CAF50'
+      article: '#9370DB',
+      announcement: '#F99912',
+      promotion: '#9ACD32'
     };
     const labels = {
       article: 'Artikel',
@@ -198,7 +198,7 @@ export function InfoPage({ onViewDetail, onViewWorkshopDetail }: InfoPageProps) 
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <Loader2 className="animate-spin" size={32} style={{ color: '#FF8D28' }} />
+        <Loader2 className="animate-spin" size={32} style={{ color: '#F99912' }} />
       </div>
     );
   }
@@ -233,7 +233,7 @@ export function InfoPage({ onViewDetail, onViewWorkshopDetail }: InfoPageProps) 
                   onClick={() => setActiveTab('all')}
                   style={
                     activeTab === 'all'
-                      ? { backgroundColor: '#FF8D28', color: '#FFFFFF' }
+                      ? { backgroundColor: '#F99912', color: '#FFFFFF' }
                       : {}
                   }
                 >
@@ -245,7 +245,7 @@ export function InfoPage({ onViewDetail, onViewWorkshopDetail }: InfoPageProps) 
                   onClick={() => setActiveTab('article')}
                   style={
                     activeTab === 'article'
-                      ? { backgroundColor: '#2196F3', color: '#FFFFFF' }
+                      ? { backgroundColor: '#9370DB', color: '#FFFFFF' }
                       : {}
                   }
                 >
@@ -257,7 +257,7 @@ export function InfoPage({ onViewDetail, onViewWorkshopDetail }: InfoPageProps) 
                   onClick={() => setActiveTab('announcement')}
                   style={
                     activeTab === 'announcement'
-                      ? { backgroundColor: '#FF8D28', color: '#FFFFFF' }
+                      ? { backgroundColor: '#F99912', color: '#FFFFFF' }
                       : {}
                   }
                 >
@@ -269,7 +269,7 @@ export function InfoPage({ onViewDetail, onViewWorkshopDetail }: InfoPageProps) 
                   onClick={() => setActiveTab('promotion')}
                   style={
                     activeTab === 'promotion'
-                      ? { backgroundColor: '#4CAF50', color: '#FFFFFF' }
+                      ? { backgroundColor: '#9ACD32', color: '#FFFFFF' }
                       : {}
                   }
                 >
@@ -480,7 +480,7 @@ export function InfoPage({ onViewDetail, onViewWorkshopDetail }: InfoPageProps) 
                   <Button
                     variant="ghost"
                     className="mt-3 w-full"
-                    style={{ color: '#FF8D28' }}
+                    style={{ color: '#F99912' }}
                     onClick={(e) => {
                       e.stopPropagation();
                       handleViewDetail(content.id);

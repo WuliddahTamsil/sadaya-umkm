@@ -471,7 +471,7 @@ export function Keranjang() {
       {isLoading ? (
         <Card>
           <CardContent className="p-12 text-center">
-            <Loader2 className="animate-spin mx-auto mb-4" style={{ color: '#FF8D28' }} size={48} />
+            <Loader2 className="animate-spin mx-auto mb-4" style={{ color: '#F99912' }} size={48} />
             <p style={{ color: '#858585' }}>Memuat keranjang...</p>
           </CardContent>
         </Card>
@@ -522,7 +522,7 @@ export function Keranjang() {
                         <p className="body-3 mb-2" style={{ color: '#858585' }}>
                           {item.product?.umkmName || 'Unknown Store'}
                         </p>
-                        <p style={{ color: '#FF8D28', fontWeight: 600 }}>
+                        <p style={{ color: '#F99912', fontWeight: 600 }}>
                           Rp {item.harga_saat_ini.toLocaleString('id-ID')}
                         </p>
                       </div>
@@ -547,7 +547,7 @@ export function Keranjang() {
                           <button
                             onClick={() => updateQuantity(item.id, 1)}
                             className="w-8 h-8 rounded flex items-center justify-center"
-                            style={{ backgroundColor: '#FF8D28' }}
+                            style={{ backgroundColor: '#F99912' }}
                             disabled={updatingItem === item.id || (item.product && item.jumlah >= item.product.stock)}
                           >
                             {updatingItem === item.id ? (
@@ -594,13 +594,13 @@ export function Keranjang() {
                   <span style={{ color: '#2F4858', fontWeight: 600 }}>
                     Total
                   </span>
-                  <h4 style={{ color: '#FF8D28' }}>
+                  <h4 style={{ color: '#F99912' }}>
                     Rp {total.toLocaleString('id-ID')}
                   </h4>
                 </div>
                 <Button
                   className="w-full"
-                  style={{ backgroundColor: '#FF8D28', color: '#FFFFFF' }}
+                  style={{ backgroundColor: '#F99912', color: '#FFFFFF' }}
                   onClick={handleCheckout}
                   disabled={selectedItems.length === 0}
                 >
@@ -632,14 +632,14 @@ export function Keranjang() {
                     </div>
                     <div className="flex justify-between font-semibold">
                       <span>Total</span>
-                      <span style={{ color: '#FF8D28' }}>Rp {total.toLocaleString('id-ID')}</span>
+                      <span style={{ color: '#F99912' }}>Rp {total.toLocaleString('id-ID')}</span>
                     </div>
                   </div>
 
                   <div className="space-y-2">
                     <p className="font-medium" style={{ color: '#2F4858' }}>Metode Pembayaran</p>
                     <div className="grid gap-2">
-                      <label className="flex items-center gap-2 p-3 rounded-lg border-2 cursor-pointer hover:bg-gray-50 transition-colors" style={{ borderColor: paymentMethod === 'wallet' ? '#FF8D28' : '#E0E0E0' }}>
+                      <label className="flex items-center gap-2 p-3 rounded-lg border-2 cursor-pointer hover:bg-gray-50 transition-colors" style={{ borderColor: paymentMethod === 'wallet' ? '#F99912' : '#E0E0E0' }}>
                         <input
                           type="radio"
                           name="pay"
@@ -653,7 +653,7 @@ export function Keranjang() {
                             {isLoadingWallet ? (
                               <Loader2 className="animate-spin" size={16} />
                             ) : (
-                              <span className="text-sm" style={{ color: '#FF8D28' }}>
+                              <span className="text-sm" style={{ color: '#F99912' }}>
                                 Rp {walletBalance.toLocaleString('id-ID')}
                               </span>
                             )}
@@ -665,7 +665,7 @@ export function Keranjang() {
                           )}
                         </div>
                       </label>
-                      <label className="flex items-center gap-2 p-3 rounded-lg border-2 cursor-pointer hover:bg-gray-50 transition-colors" style={{ borderColor: paymentMethod === 'dana' ? '#FF8D28' : '#E0E0E0' }}>
+                      <label className="flex items-center gap-2 p-3 rounded-lg border-2 cursor-pointer hover:bg-gray-50 transition-colors" style={{ borderColor: paymentMethod === 'dana' ? '#F99912' : '#E0E0E0' }}>
                         <input
                           type="radio"
                           name="pay"
@@ -675,7 +675,7 @@ export function Keranjang() {
                         />
                         <span>DANA</span>
                       </label>
-                      <label className="flex items-center gap-2 p-3 rounded-lg border-2 cursor-pointer hover:bg-gray-50 transition-colors" style={{ borderColor: paymentMethod === 'gopay' ? '#FF8D28' : '#E0E0E0' }}>
+                      <label className="flex items-center gap-2 p-3 rounded-lg border-2 cursor-pointer hover:bg-gray-50 transition-colors" style={{ borderColor: paymentMethod === 'gopay' ? '#F99912' : '#E0E0E0' }}>
                         <input
                           type="radio"
                           name="pay"
@@ -685,7 +685,7 @@ export function Keranjang() {
                         />
                         <span>GoPay</span>
                       </label>
-                      <label className="flex items-center gap-2 p-3 rounded-lg border-2 cursor-pointer hover:bg-gray-50 transition-colors" style={{ borderColor: paymentMethod === 'ovo' ? '#FF8D28' : '#E0E0E0' }}>
+                      <label className="flex items-center gap-2 p-3 rounded-lg border-2 cursor-pointer hover:bg-gray-50 transition-colors" style={{ borderColor: paymentMethod === 'ovo' ? '#F99912' : '#E0E0E0' }}>
                         <input
                           type="radio"
                           name="pay"
@@ -695,7 +695,7 @@ export function Keranjang() {
                         />
                         <span>OVO</span>
                       </label>
-                      <label className="flex items-center gap-2 p-3 rounded-lg border-2 cursor-pointer hover:bg-gray-50 transition-colors" style={{ borderColor: paymentMethod === 'qris' ? '#FF8D28' : '#E0E0E0' }}>
+                      <label className="flex items-center gap-2 p-3 rounded-lg border-2 cursor-pointer hover:bg-gray-50 transition-colors" style={{ borderColor: paymentMethod === 'qris' ? '#F99912' : '#E0E0E0' }}>
                         <input
                           type="radio"
                           name="pay"
@@ -719,7 +719,7 @@ export function Keranjang() {
                       <div className="relative w-full h-2 rounded-full overflow-hidden" style={{ backgroundColor: '#E9EEF1' }}>
                         <div
                           className="absolute h-full transition-all duration-500"
-                          style={{ width: `${deliveryProgress}%`, backgroundColor: '#FF8D28' }}
+                          style={{ width: `${deliveryProgress}%`, backgroundColor: '#F99912' }}
                         />
                         <div
                           className="absolute -top-3 h-6 w-6 rounded-full flex items-center justify-center transition-all duration-500"
@@ -728,19 +728,19 @@ export function Keranjang() {
                             transform: 'translateX(-50%)',
                             backgroundColor: '#FFFFFF',
                             boxShadow: '0 1px 4px rgba(0,0,0,0.12)',
-                            border: '1px solid #FF8D28',
+                            border: '1px solid #F99912',
                           }}
                           aria-label={deliveryStages[deliveryStep]}
                           title={deliveryStages[deliveryStep]}
                         >
                           {deliveryStep < 3 ? (
                             deliveryStep === 0 ? (
-                              <ShoppingBag size={14} style={{ color: '#FF8D28' }} />
+                              <ShoppingBag size={14} style={{ color: '#F99912' }} />
                             ) : (
-                              <Bike size={14} style={{ color: '#FF8D28' }} />
+                              <Bike size={14} style={{ color: '#F99912' }} />
                             )
                           ) : (
-                            <CheckCircle2 size={14} style={{ color: '#4CAF50' }} />
+                            <CheckCircle2 size={14} style={{ color: '#9ACD32' }} />
                           )}
                         </div>
                       </div>
@@ -749,7 +749,7 @@ export function Keranjang() {
                           <div
                             key={stage}
                             style={{
-                              color: deliveryStep >= index ? '#FF8D28' : '#9AA6AF',
+                              color: deliveryStep >= index ? '#F99912' : '#9AA6AF',
                               fontWeight: deliveryStep === index ? 600 : 500,
                             }}
                           >
@@ -772,7 +772,7 @@ export function Keranjang() {
                 <AlertDialogAction
                   onClick={proceedToPayment}
                   disabled={isProcessingPayment}
-                  style={{ backgroundColor: '#FF8D28', color: '#FFFFFF' }}
+                  style={{ backgroundColor: '#F99912', color: '#FFFFFF' }}
                 >
                   {isProcessingPayment ? 'Memproses...' : 'Lanjut ke Pembayaran'}
                 </AlertDialogAction>

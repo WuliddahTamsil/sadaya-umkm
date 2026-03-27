@@ -25,7 +25,7 @@ export function GamificationBadge({ role }: { role: 'umkm' | 'driver' | 'user' |
             title: 'Top Seller Bulan Ini',
             description: 'Penjualan tertinggi di kategori Anda!',
             icon: Trophy,
-            color: '#FFB800',
+            color: '#F99912',
             earned: true
           },
           {
@@ -41,7 +41,7 @@ export function GamificationBadge({ role }: { role: 'umkm' | 'driver' | 'user' |
             title: 'Bintang Baru',
             description: '50 pesanan pertama selesai!',
             icon: Star,
-            color: '#4CAF50',
+            color: '#9ACD32',
             earned: true
           },
           {
@@ -49,7 +49,7 @@ export function GamificationBadge({ role }: { role: 'umkm' | 'driver' | 'user' |
             title: 'Favorit Pelanggan',
             description: 'Rating 4.8+ dari 100 review',
             icon: Award,
-            color: '#2196F3',
+            color: '#9370DB',
             earned: false,
             progress: 85
           }
@@ -61,7 +61,7 @@ export function GamificationBadge({ role }: { role: 'umkm' | 'driver' | 'user' |
             title: 'Raja Kecepatan',
             description: '100 pengiriman tepat waktu!',
             icon: Zap,
-            color: '#FF8D28',
+            color: '#F99912',
             earned: true
           },
           {
@@ -69,7 +69,7 @@ export function GamificationBadge({ role }: { role: 'umkm' | 'driver' | 'user' |
             title: 'Driver Marathon',
             description: '500km perjalanan selesai',
             icon: Trophy,
-            color: '#4CAF50',
+            color: '#9ACD32',
             earned: true
           },
           {
@@ -77,7 +77,7 @@ export function GamificationBadge({ role }: { role: 'umkm' | 'driver' | 'user' |
             title: 'Kurir Ramah',
             description: 'Rating 5.0 dari pelanggan',
             icon: Star,
-            color: '#FFB800',
+            color: '#F99912',
             earned: false,
             progress: 92
           }
@@ -89,7 +89,7 @@ export function GamificationBadge({ role }: { role: 'umkm' | 'driver' | 'user' |
             title: 'Pahlawan UMKM Lokal',
             description: 'Belanja dari 10 UMKM berbeda',
             icon: Crown,
-            color: '#9C27B0',
+            color: '#9370DB',
             earned: true
           },
           {
@@ -97,7 +97,7 @@ export function GamificationBadge({ role }: { role: 'umkm' | 'driver' | 'user' |
             title: 'Pelanggan Setia',
             description: '50 transaksi berhasil',
             icon: Award,
-            color: '#FF8D28',
+            color: '#F99912',
             earned: false,
             progress: 70
           }
@@ -112,7 +112,7 @@ export function GamificationBadge({ role }: { role: 'umkm' | 'driver' | 'user' |
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-2">
-        <Trophy size={20} style={{ color: '#FFB800' }} />
+        <Trophy size={20} style={{ color: '#F99912' }} />
         <h4 style={{ color: '#2F4858' }}>Pencapaian Anda</h4>
       </div>
       
