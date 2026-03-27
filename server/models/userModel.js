@@ -2,20 +2,27 @@ import { readFile, writeFile } from 'fs/promises';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 
-// Jika MONGODB_URI ada, gunakan MongoDB, jika tidak gunakan file JSON
+// Jika MONGODB_URI ada, gunakan MongoDB, jika tidak, di production harus error.
+// Untuk development lokal gunakan JSON_FALLBACK=true jika memang ingin fallback file.
 const useMongoDB = !!process.env.MONGODB_URI;
+const allowJsonFallback = process.env.JSON_FALLBACK === 'true';
 
-// Lazy load MongoDB model
 let mongoUserModelPromise = null;
 async function getMongoModel() {
-  if (!useMongoDB) return null;
+  if (!useMongoDB) {
+    if (allowJsonFallback) {
+      console.warn('⚠️ MONGODB_URI not set; using JSON file fallback (JSON_FALLBACK=true)');
+      return null;
+    }
+    throw new Error('MONGODB_URI not set. In production, MongoDB is required. Set MONGODB_URI env variable.');
+  }
   if (!mongoUserModelPromise) {
     mongoUserModelPromise = import('./userModelMongo.js').then(module => {
       console.log('✅ Using MongoDB for user storage');
       return module;
     }).catch(error => {
-      console.warn('⚠️ MongoDB import failed, falling back to JSON file:', error.message);
-      return null;
+      console.error('❌ Could not load MongoDB user model:', error);
+      throw new Error('MongoDB model load failed: ' + error.message);
     });
   }
   return await mongoUserModelPromise;
