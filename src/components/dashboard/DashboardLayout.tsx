@@ -63,7 +63,8 @@ export function DashboardLayout({ children, activeMenu, onMenuChange }: Dashboar
           { id: 'profil', label: 'Profil', icon: User },
           { id: 'notifikasi', label: 'Notifikasi', icon: Bell, badge: unreadCount },
           { id: 'bantuan', label: 'Bantuan', icon: HelpCircle },
-          { id: 'pengaturan', label: 'Pengaturan Akun', icon: Settings }
+          { id: 'pengaturan', label: 'Pengaturan Akun', icon: Settings },
+          { id: 'logout', label: 'Keluar', icon: LogOut }
         ];
       case 'user':
         return [
@@ -79,7 +80,8 @@ export function DashboardLayout({ children, activeMenu, onMenuChange }: Dashboar
           { id: 'profil', label: 'Profil', icon: User },
           { id: 'notifikasi', label: 'Notifikasi', icon: Bell, badge: unreadCount },
           { id: 'bantuan', label: 'Bantuan', icon: HelpCircle },
-          { id: 'pengaturan', label: 'Pengaturan Akun', icon: Settings }
+          { id: 'pengaturan', label: 'Pengaturan Akun', icon: Settings },
+          { id: 'logout', label: 'Keluar', icon: LogOut }
         ];
       case 'umkm':
         return [
@@ -92,7 +94,8 @@ export function DashboardLayout({ children, activeMenu, onMenuChange }: Dashboar
           { id: 'konten', label: 'Konten', icon: FileText },
           { id: 'notifikasi', label: 'Notifikasi', icon: Bell, badge: unreadCount },
           { id: 'bantuan', label: 'Bantuan', icon: HelpCircle },
-          { id: 'pengaturan', label: 'Pengaturan Akun', icon: Settings }
+          { id: 'pengaturan', label: 'Pengaturan Akun', icon: Settings },
+          { id: 'logout', label: 'Keluar', icon: LogOut }
         ];
       case 'driver':
         return [
@@ -106,7 +109,8 @@ export function DashboardLayout({ children, activeMenu, onMenuChange }: Dashboar
           { id: 'profil', label: 'Profil', icon: User },
           { id: 'notifikasi', label: 'Notifikasi', icon: Bell, badge: unreadCount },
           { id: 'bantuan', label: 'Bantuan', icon: HelpCircle },
-          { id: 'pengaturan', label: 'Pengaturan Akun', icon: Settings }
+          { id: 'pengaturan', label: 'Pengaturan Akun', icon: Settings },
+          { id: 'logout', label: 'Keluar', icon: LogOut }
         ];
       default:
         return [];
@@ -114,11 +118,8 @@ export function DashboardLayout({ children, activeMenu, onMenuChange }: Dashboar
   };
 
   const getRoleGradient = (role?: string) => {
-    switch (role) {
-      case 'umkm': return 'bg-gradient-to-r from-[#9370DB] to-[#F99912]';
-      case 'driver': return 'bg-gradient-to-r from-[#9ACD32] to-[#9370DB]';
-      default: return 'bg-gradient-to-r from-[#F99912] to-[#9ACD32]';
-    }
+    // Semua role menggunakan gradasi ungu ke orange
+    return 'bg-gradient-to-r from-[#9370DB] to-[#F99912]';
   };
 
   const activeGradient = getRoleGradient(user.role);
@@ -163,7 +164,7 @@ export function DashboardLayout({ children, activeMenu, onMenuChange }: Dashboar
       </div>
 
       {/* Menu Items */}
-      <nav className="p-4 flex-1 overflow-y-auto">
+      <nav className="p-4 flex-1 overflow-y-auto bg-gradient-to-b from-[#9370DB] via-[#F99912] to-[#9370DB] shadow-inner" style={{ minHeight: 'calc(100vh - 190px)' }}>
         <div className="space-y-1">
           {menuItems.map((item, index) => {
             const Icon = item.icon;
@@ -172,6 +173,11 @@ export function DashboardLayout({ children, activeMenu, onMenuChange }: Dashboar
               <motion.button
                 key={item.id}
                 onClick={() => {
+                  if (item.id === 'logout') {
+                    logout();
+                    setSidebarOpen(false);
+                    return;
+                  }
                   onMenuChange(item.id);
                   setSidebarOpen(false);
                 }}
@@ -240,7 +246,14 @@ export function DashboardLayout({ children, activeMenu, onMenuChange }: Dashboar
       <MountainSilhouette />
       
       {/* Desktop Sidebar */}
-      <aside className="hidden lg:flex lg:flex-col w-64 flex-shrink-0 relative z-10 bg-slate-900 border-r border-slate-800">
+      <aside
+        className="hidden lg:flex lg:flex-col w-64 flex-shrink-0 relative z-10 border-r border-slate-800"
+        style={{
+          background: 'linear-gradient(135deg, #9370DB 0%, #F99912 50%, #9370DB 100%)',
+          minHeight: '100vh',
+          boxShadow: 'inset 0 0 30px rgba(0, 0, 0, 0.25)'
+        }}
+      >
         <SidebarContent />
       </aside>
 
@@ -248,7 +261,14 @@ export function DashboardLayout({ children, activeMenu, onMenuChange }: Dashboar
       {sidebarOpen && (
         <div className="fixed inset-0 z-50 lg:hidden">
           <div className="absolute inset-0 bg-slate-900/80 backdrop-blur-sm" onClick={() => setSidebarOpen(false)} />
-          <aside className="absolute left-0 top-0 bottom-0 w-64 flex flex-col bg-slate-900 border-r border-slate-800 shadow-2xl">
+          <aside
+            className="absolute left-0 top-0 bottom-0 w-64 flex flex-col border-r border-slate-800 shadow-2xl"
+            style={{
+              background: 'linear-gradient(135deg, #9370DB 0%, #F99912 50%, #9370DB 100%)',
+              minHeight: '100vh',
+              boxShadow: 'inset 0 0 30px rgba(0, 0, 0, 0.25)'
+            }}
+          >
             <div className="flex justify-end p-4">
               <button onClick={() => setSidebarOpen(false)}>
                 <X size={24} style={{ color: '#FFFFFF' }} />

@@ -8,5 +8,15 @@
     "tanggal_ditambahkan": "2025-11-14T12:16:40.814Z",
     "createdAt": "2025-11-14T12:16:40.814Z",
     "updatedAt": "2025-11-14T12:16:40.814Z"
+  },
+  {
+    "id": "cart-1774611129616-o9xxgo8au",
+    "id_user": "2f6a24de-1861-437e-ac15-7f7c14680e5f",
+    "id_produk": "bika-talas-original-001",
+    "jumlah": 1,
+    "harga_saat_ini": 40000,
+    "tanggal_ditambahkan": "2026-03-27T11:32:09.616Z",
+    "createdAt": "2026-03-27T11:32:09.617Z",
+    "updatedAt": "2026-03-27T11:32:09.617Z"
   }
 ]

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../components/ui/dialog";
 
 import {
   Leaf,
@@ -107,6 +108,9 @@ export function BerandaPage({
   const [directoryCategory, setDirectoryCategory] = useState<
     "Semua" | "Makanan" | "Minuman" | "Jasa" | "Kerajinan"
   >("Semua");
+
+  const [selectedTip, setSelectedTip] = useState<any>(null);
+  const [isTipModalOpen, setIsTipModalOpen] = useState(false);
 
   const directoryPreview = [
     {
@@ -322,7 +326,7 @@ export function BerandaPage({
       <section
         ref={heroRef}
         id="hero"
-        className="relative min-h-screen flex flex-col justify-center overflow-hidden"
+        className="relative min-h-[92vh] flex flex-col justify-center overflow-hidden"
         style={{ background: 'linear-gradient(135deg, rgba(249, 153, 18, 0.05) 0%, rgba(147, 112, 219, 0.08) 50%, rgba(154, 205, 50, 0.05) 100%)' }}
       >
 
@@ -388,6 +392,17 @@ export function BerandaPage({
           <Star className="text-white w-6 h-6" />
         </motion.div>
 
+        {/* Blush gradient overlay */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: 'radial-gradient(circle at 18% 30%, rgba(147,112,219,0.32) 0%, rgba(147,112,219,0.10) 25%, transparent 50%), radial-gradient(circle at 78% 70%, rgba(249,153,18,0.32) 0%, rgba(249,153,18,0.08) 30%, transparent 60%)',
+            mixBlendMode: 'screen',
+            filter: 'blur(84px)',
+            opacity: 0.85,
+          }}
+        />
+
         {/* Vibrant ambient sparkling dots */}
         <motion.div className="absolute w-4 h-4 rounded-full bg-[#F99812] shadow-[0_0_15px_#F99812] z-20 pointer-events-none" style={{ top: '30%', left: '35%' }} animate={{ y: [0, 15, 0], opacity: [0.4, 0.9, 0.4] }} transition={{ duration: 3, repeat: Infinity }} />
         <motion.div className="absolute w-5 h-5 rounded-full bg-[#9070D0] shadow-[0_0_15px_#9070D0] z-20 pointer-events-none" style={{ bottom: '25%', right: '28%' }} animate={{ y: [0, -20, 0], opacity: [0.4, 1, 0.4] }} transition={{ duration: 4, repeat: Infinity }} />
@@ -425,11 +440,14 @@ export function BerandaPage({
                 {/* Headline with Gradient Text */}
                 <motion.h1
                   style={{
-                    color: "#2B323B",
-                    fontSize: "clamp(2.5rem, 4.5vw, 4.5rem)",
+                    background: 'linear-gradient(90deg, #9370DB 0%, #F99912 65%, #F99912 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    color: 'transparent',
+                    fontSize: 'clamp(2.5rem, 4.5vw, 4.5rem)',
                     fontWeight: 900,
                     lineHeight: 1.15,
-                    letterSpacing: "-0.02em"
+                    letterSpacing: '-0.02em'
                   }}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -442,15 +460,17 @@ export function BerandaPage({
                 </motion.h1>
 
                 {/* Subtitle */}
-                <motion.p
-                  style={{ color: "#4D4D4D", fontSize: "1.125rem", lineHeight: 1.6 }}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3, duration: 0.6 }}
-                  className="max-w-xl font-medium"
-                >
+                <motion.div className="max-w-xl p-5 rounded-2xl bg-gradient-to-r from-[#FDF1E9] via-[#F9DAB2] to-[#EEC4FF] border border-white/20 shadow-lg">
+                  <motion.p
+                    style={{ color: "#6F2DBD", fontSize: "1.125rem", lineHeight: 1.6 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3, duration: 0.6 }}
+                    className="font-medium"
+                  >
                   Platform modern yang menghubungkan Customer, Driver, dan UMKM di seluruh Indonesia dalam satu ekosistem interaktif yang adil, kreatif, dan penuh semangat.
                 </motion.p>
+                </motion.div>
 
                 {/* CTA Buttons */}
                 <motion.div
@@ -459,18 +479,23 @@ export function BerandaPage({
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5, duration: 0.6 }}
                 >
-                  <Button
-                    onClick={onNavigateToDirectory}
-                    className="px-8 py-6 text-base shadow-xl font-bold bg-[#9070D0] hover:bg-[#7b5bc0] text-white rounded-xl transition-all hover:translate-y-[-2px]"
-                  >
-                    Jelajahi Direktori
-                  </Button>
-                  <Button
-                    onClick={scrollToAuth}
-                    className="px-8 py-6 text-base shadow-xl font-bold bg-[#F99812] hover:bg-[#e08910] text-white rounded-xl transition-all hover:translate-y-[-2px]"
-                  >
-                    Masuk / Daftar Sekarang
-                  </Button>
+                  <div className="flex-1 p-4 rounded-2xl bg-white/20 border border-white/40 shadow-lg backdrop-blur-sm">
+                    <Button
+                      onClick={onNavigateToDirectory}
+                      className="w-full px-6 py-4 text-base font-bold bg-transparent text-[#4F2C9A] hover:bg-white hover:text-[#3B1F71] border border-white/60 rounded-xl transition-all"
+                    >
+                      Jelajahi Direktori
+                    </Button>
+                  </div>
+
+                  <div className="flex-1 p-4 rounded-2xl bg-white/20 border border-white/40 shadow-lg backdrop-blur-sm">
+                    <Button
+                      onClick={scrollToAuth}
+                      className="w-full px-6 py-4 text-base font-bold bg-transparent text-[#BF6200] hover:bg-white hover:text-[#a84f00] border border-white/60 rounded-xl transition-all"
+                    >
+                      Masuk / Daftar Sekarang
+                    </Button>
+                  </div>
                 </motion.div>
               </motion.div>
 
@@ -482,6 +507,29 @@ export function BerandaPage({
                 transition={{ duration: 1, delay: 0.4 }}
                 style={{ maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)' }}
               >
+                {/* Gradient splash shapes for decorative accent */}
+                <div className="pointer-events-none absolute inset-0">
+                  <div
+                    className="absolute -top-8 -left-10 w-44 h-44 rounded-full opacity-60 blur-3xl"
+                    style={{
+                      background: 'radial-gradient(circle at 30% 30%, rgba(147, 112, 219, 0.35) 0%, rgba(249, 153, 18, 0.1) 60%, transparent 100%)',
+                      transform: 'rotate(15deg)',
+                    }}
+                  />
+                  <div
+                    className="absolute bottom-0 -right-6 w-48 h-48 rounded-full opacity-50 blur-3xl"
+                    style={{
+                      background: 'radial-gradient(circle at 40% 40%, rgba(249, 153, 18, 0.35) 0%, rgba(147, 112, 219, 0.12) 55%, transparent 100%)',
+                      transform: 'rotate(-20deg)',
+                    }}
+                  />
+                  <div
+                    className="absolute top-14 right-10 w-28 h-28 rounded-full opacity-25 blur-2xl"
+                    style={{
+                      background: 'linear-gradient(135deg, rgba(147, 112, 219, 0.6), rgba(249, 153, 18, 0.6))',
+                    }}
+                  />
+                </div>
                 <div className="flex flex-col gap-6">
                   {/* Row 1 (Top) - Right to Left */}
                   <div className="flex overflow-hidden">
@@ -495,9 +543,11 @@ export function BerandaPage({
                         <div
                           key={`row1-${i}`}
                           className="relative rounded-2xl overflow-hidden shadow-md flex-none border border-slate-100/50 group bg-slate-100"
-                          style={{ minWidth: '240px', width: '240px', height: '160px' }}
+                          style={{ minWidth: 'min(240px, 85vw)', width: 'min(240px, 85vw)', height: '160px' }}
                         >
                           <img src={umkm.image} alt={umkm.name} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                          <div className="absolute -top-6 -left-6 w-28 h-28 rounded-full opacity-55 blur-3xl" style={{ background: 'radial-gradient(circle, rgba(147, 112, 219, 0.35), rgba(249, 153, 18, 0.12) 65%, transparent 100%)' }} />
+                          <div className="absolute -bottom-5 -right-5 w-32 h-32 rounded-full opacity-45 blur-3xl" style={{ background: 'radial-gradient(circle, rgba(249, 153, 18, 0.35), rgba(147, 112, 219, 0.14) 62%, transparent 100%)' }} />
                           <div className="absolute inset-0 bg-gradient-to-t from-[#1E293B]/90 via-[#1E293B]/20 to-transparent opacity-90" />
                           <div className="absolute bottom-4 left-4 right-4 text-left">
                             <p className="text-white/90 text-[10px] font-bold uppercase tracking-wider mb-1">{umkm.category}</p>
@@ -520,9 +570,11 @@ export function BerandaPage({
                         <div
                           key={`row2-${i}`}
                           className="relative rounded-2xl overflow-hidden shadow-md flex-none border border-slate-100/50 group bg-slate-100"
-                          style={{ minWidth: '240px', width: '240px', height: '160px' }}
+                          style={{ minWidth: 'min(240px, 85vw)', width: 'min(240px, 85vw)', height: '160px' }}
                         >
                           <img src={umkm.image} alt={umkm.name} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                          <div className="absolute -top-6 -left-6 w-28 h-28 rounded-full opacity-55 blur-3xl" style={{ background: 'radial-gradient(circle, rgba(147, 112, 219, 0.35), rgba(249, 153, 18, 0.12) 65%, transparent 100%)' }} />
+                          <div className="absolute -bottom-5 -right-5 w-32 h-32 rounded-full opacity-45 blur-3xl" style={{ background: 'radial-gradient(circle, rgba(249, 153, 18, 0.35), rgba(147, 112, 219, 0.14) 62%, transparent 100%)' }} />
                           <div className="absolute inset-0 bg-gradient-to-t from-[#1E293B]/90 via-[#1E293B]/20 to-transparent opacity-90" />
                           <div className="absolute bottom-4 left-4 right-4 text-left">
                             <p className="text-white/90 text-[10px] font-bold uppercase tracking-wider mb-1">{umkm.category}</p>
@@ -1411,6 +1463,23 @@ export function BerandaPage({
                 time: "5 menit",
                 image:
                   "https://image.idntimes.com/post/20250825/2148896942_6ba49f76-ca2b-441f-ab69-b57627b8c6ca.jpg",
+                description: "Dukung UMKM lokal bukan hanya tentang belanja, tapi juga tentang membangun komunitas. Berikut 5 tips mudah yang bisa kamu lakukan sehari-hari untuk mendukung pengusaha kecil di sekitarmu.",
+                fullContent: `
+                  <h2>1. Belanja Langsung di Toko Fisik</h2>
+                  <p>Kunjungi langsung toko UMKM di daerahmu. Ini memberikan dukungan langsung dan membantu membangun hubungan dengan pemilik usaha.</p>
+                  
+                  <h2>2. Bagikan di Media Sosial</h2>
+                  <p>Share postingan UMKM favoritmu di Instagram atau Facebook. Tag teman-temanmu dan gunakan hashtag seperti #SupportLocal atau #UMKMLokal.</p>
+                  
+                  <h2>3. Berikan Ulasan Positif</h2>
+                  <p>Tinggalkan review baik di Google Maps atau aplikasi pesan antar. Ulasan positif membantu UMKM mendapatkan lebih banyak pelanggan.</p>
+                  
+                  <h2>4. Promosikan ke Teman dan Keluarga</h2>
+                  <p>Ceritakan tentang produk UMKM yang kamu sukai kepada orang-orang terdekat. Rekomendasi dari mulut ke mulut sangat efektif.</p>
+                  
+                  <h2>5. Beli Produk Musiman atau Khas</h2>
+                  <p>Cari tahu produk khas daerahmu dan beli sebagai oleh-oleh atau hadiah. Ini membantu UMKM mempertahankan tradisi lokal.</p>
+                `,
               },
               {
                 title: "10 Kuliner Khas Nusantara yang Wajib Kamu Coba!",
@@ -1418,6 +1487,38 @@ export function BerandaPage({
                 time: "7 menit",
                 image:
                   "https://d1vbn70lmn1nqe.cloudfront.net/prod/wp-content/uploads/2024/07/16062938/Ragam-Makanan-Khas-Indonesia-yang-Lezat-dan-Kaya-Nutrisi.jpg",
+                description: "Indonesia kaya akan kuliner tradisional yang menggugah selera. Dari Sabang sampai Merauke, setiap daerah punya hidangan khas yang patut dicoba.",
+                fullContent: `
+                  <h2>1. Rendang (Sumatera Barat)</h2>
+                  <p>Daging sapi yang dimasak dengan santan dan rempah-rempah hingga empuk. Hidangan ini sudah diakui UNESCO sebagai warisan budaya takbenda.</p>
+                  
+                  <h2>2. Nasi Gudeg (Yogyakarta)</h2>
+                  <p>Nasi dengan gudeg nangka muda, ayam, telur, dan sambal krecek. Kombinasi manis dan gurih yang sempurna.</p>
+                  
+                  <h2>3. Ayam Taliwang (Lombok)</h2>
+                  <p>Ayam bakar khas Lombok dengan bumbu pedas yang terkenal. Cocok untuk pecinta makanan pedas.</p>
+                  
+                  <h2>4. Babi Guling (Bali)</h2>
+                  <p>Babi utuh yang dipanggang dengan bumbu tradisional Bali. Hidangan istimewa untuk acara spesial.</p>
+                  
+                  <h2>5. Soto Betawi (Jakarta)</h2>
+                  <p>Soto dengan kuah santan dan campuran daging sapi, jeroan, dan emping. Lebih kaya rasa dibanding soto lainnya.</p>
+                  
+                  <h2>6. Rawon (Jawa Timur)</h2>
+                  <p>Soto dengan kuah hitam dari buah keluak. Rasanya gurih dengan aroma khas yang unik.</p>
+                  
+                  <h2>7. Coto Makassar (Sulawesi Selatan)</h2>
+                  <p>Konro atau iga sapi yang dimasak lama dengan rempah-rempah. Hidangan yang sangat bergizi.</p>
+                  
+                  <h2>8. Mie Aceh (Aceh)</h2>
+                  <p>Mie dengan daging kambing atau sapi, ditambah timun dan bawang goreng. Pedas dan lezat.</p>
+                  
+                  <h2>9. Pempek (Palembang)</h2>
+                  <p>Ikan tenggiri yang digiling dan dibentuk, disajikan dengan cuko (saus asam pedas). Camilan favorit.</p>
+                  
+                  <h2>10. Es Cendol (Jakarta)</h2>
+                  <p>Minuman dingin dengan cendol hijau, santan, dan gula merah. Penyegar di cuaca panas.</p>
+                `,
               },
               {
                 title: "Panduan Lengkap Memulai Usaha Kecil dari Nol",
@@ -1425,6 +1526,38 @@ export function BerandaPage({
                 time: "10 menit",
                 image:
                   "https://img.freepik.com/free-photo/business-objects-with-executives-discussing-blueprint-meeting_1098-4066.jpg?semt=ais_hybrid&w=740&q=80",
+                description: "Mimpi memiliki usaha sendiri? Panduan ini akan membantumu memulai dari nol dengan langkah-langkah praktis dan realistis.",
+                fullContent: `
+                  <h2>1. Temukan Ide Bisnis yang Kamu Sukai</h2>
+                  <p>Mulai dari passion kamu. Apa yang kamu sukai dan bisa dijadikan peluang bisnis? Jangan pilih bisnis hanya karena untung besar tapi kamu tidak suka.</p>
+                  
+                  <h2>2. Lakukan Riset Pasar</h2>
+                  <p>Cek apakah ada permintaan untuk produk/jasa kamu. Siapa target pasarnya? Apa keunggulan kompetitor? Gunakan survei atau observasi.</p>
+                  
+                  <h2>3. Buat Rencana Bisnis Sederhana</h2>
+                  <p>Tuliskan tujuan, target pasar, strategi pemasaran, dan proyeksi keuangan. Mulai dari yang sederhana dulu.</p>
+                  
+                  <h2>4. Hitung Modal Awal</h2>
+                  <p>Berapa uang yang kamu butuhkan untuk memulai? Jangan terlalu ambisius. Mulai dengan skala kecil dan kembangkan bertahap.</p>
+                  
+                  <h2>5. Pilih Lokasi yang Strategis</h2>
+                  <p>Untuk bisnis offline, lokasi sangat penting. Pastikan mudah diakses dan dekat dengan target pasar.</p>
+                  
+                  <h2>6. Persiapkan Legalitas</h2>
+                  <p>Daftarkan usaha ke Kemenkumham, dapatkan NIB dari OSS, dan siapkan izin lainnya sesuai jenis usaha.</p>
+                  
+                  <h2>7. Siapkan Branding</h2>
+                  <p>Nama usaha, logo, kemasan, dan identitas visual. Ini penting untuk membuat usaha kamu mudah dikenali.</p>
+                  
+                  <h2>8. Mulai Pemasaran</h2>
+                  <p>Gunakan media sosial gratis, mulut ke mulut, dan jaringan kamu. Buat konten menarik tentang produk/jasa kamu.</p>
+                  
+                  <h2>9. Kelola Keuangan dengan Baik</h2>
+                  <p>Pisahkan uang pribadi dan bisnis. Catat semua pemasukan dan pengeluaran. Gunakan aplikasi keuangan sederhana.</p>
+                  
+                  <h2>10. Belajar dari Kesalahan</h2>
+                  <p>Jangan takut gagal. Setiap kesalahan adalah pembelajaran. Evaluasi secara berkala dan perbaiki strategi kamu.</p>
+                `,
               },
               {
                 title: "Kenapa UMKM Harus Go Digital? Ini Manfaatnya!",
@@ -1432,6 +1565,40 @@ export function BerandaPage({
                 time: "15 menit",
                 image:
                   "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80",
+                description: "Era digital telah mengubah cara bisnis beroperasi. UMKM yang tidak go digital akan tertinggal. Simak manfaat dan cara memulainya.",
+                fullContent: `
+                  <h2>1. Jangkauan Pasar yang Lebih Luas</h2>
+                  <p>Dengan online, kamu bisa menjangkau pelanggan di seluruh Indonesia bahkan dunia. Tidak lagi terbatas lokasi fisik.</p>
+                  
+                  <h2>2. Biaya Operasional Lebih Rendah</h2>
+                  <p>Toko online tidak butuh sewa tempat mahal. Kamu bisa menjalankan bisnis dari rumah dengan biaya lebih efisien.</p>
+                  
+                  <h2>3. Jam Operasional 24/7</h2>
+                  <p>Pelanggan bisa belanja kapan saja. Kamu tidak perlu buka toko fisik setiap hari.</p>
+                  
+                  <h2>4. Data dan Analitik Bisnis</h2>
+                  <p>Dapatkan insight tentang pelanggan, produk terlaris, dan tren pasar melalui data penjualan online.</p>
+                  
+                  <h2>5. Meningkatkan Brand Awareness</h2>
+                  <p>Media sosial dan website membantu membangun citra merek yang profesional dan mudah ditemukan.</p>
+                  
+                  <h2>6. Kompetitif di Pasar Modern</h2>
+                  <p>Pelanggan sekarang mencari informasi produk online dulu sebelum membeli. Hadir secara digital adalah keharusan.</p>
+                  
+                  <h2>7. Kemudahan Transaksi</h2>
+                  <p>Pembayaran digital lebih cepat dan aman. Transfer bank, e-wallet, dan COD tersedia untuk memudahkan pelanggan.</p>
+                  
+                  <h2>8. Skalabilitas Bisnis</h2>
+                  <p>Mudah menambah produk baru, variasi, atau bahkan cabang virtual tanpa biaya tinggi.</p>
+                  
+                  <h2>Cara Memulai Go Digital</h2>
+                  <p>1. Buat akun media sosial (Instagram, Facebook, TikTok)<br>
+                  2. Buat website sederhana atau toko online di marketplace<br>
+                  3. Gunakan foto produk yang menarik<br>
+                  4. Berikan deskripsi produk yang detail<br>
+                  5. Responsif terhadap pesan pelanggan<br>
+                  6. Lakukan promosi secara konsisten</p>
+                `,
               },
             ].map((tip, idx) => (
               <motion.div
@@ -1492,7 +1659,10 @@ export function BerandaPage({
                   {tip.title}
                 </h3>
                 <motion.button
-                  onClick={onNavigateToDirectory}
+                  onClick={() => {
+                    setSelectedTip(tip);
+                    setIsTipModalOpen(true);
+                  }}
                   className="mt-5 inline-flex items-center gap-2 font-bold"
                   style={{ color: "#F99912" }}
                   whileHover={{ x: 3 }}
@@ -1506,6 +1676,77 @@ export function BerandaPage({
           </div>
         </div>
       </section>
+
+      {/* Tip Modal */}
+      <Dialog open={isTipModalOpen} onOpenChange={setIsTipModalOpen}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold" style={{ color: "#2F4858" }}>
+              {selectedTip?.title}
+            </DialogTitle>
+          </DialogHeader>
+          
+          {selectedTip && (
+            <div className="space-y-6">
+              {/* Article Image */}
+              <div className="w-full h-64 rounded-xl overflow-hidden">
+                <img
+                  src={selectedTip.image}
+                  alt={selectedTip.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              
+              {/* Article Meta */}
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2">
+                  <Clock size={16} style={{ color: "#F99912" }} />
+                  <span className="text-sm" style={{ color: "#858585" }}>
+                    {selectedTip.time}
+                  </span>
+                </div>
+                <div
+                  className="px-3 py-1 rounded-full text-xs font-bold"
+                  style={{
+                    background: "linear-gradient(135deg, #F99912 0%, #9ACD32 100%)",
+                    color: "#FFFFFF",
+                  }}
+                >
+                  {selectedTip.tag}
+                </div>
+              </div>
+              
+              {/* Article Description */}
+              <p className="text-lg" style={{ color: "#4A4A4A", lineHeight: 1.6 }}>
+                {selectedTip.description}
+              </p>
+              
+              {/* Article Content */}
+              <div 
+                className="prose prose-lg max-w-none"
+                style={{ color: "#2F4858" }}
+                dangerouslySetInnerHTML={{ __html: selectedTip.fullContent }}
+              />
+              
+              {/* Back Button */}
+              <div className="flex justify-end pt-4 border-t">
+                <Button
+                  onClick={() => setIsTipModalOpen(false)}
+                  className="px-6 py-2"
+                  style={{
+                    background: "linear-gradient(135deg, #9370DB 0%, #B4A7D6 100%)",
+                    color: "#FFFFFF",
+                    border: "none",
+                    borderRadius: "12px",
+                  }}
+                >
+                  Kembali
+                </Button>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
