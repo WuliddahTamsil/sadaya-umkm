@@ -9,10 +9,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { toast } from 'sonner';
 import { api } from '../../config/api';
 import { motion } from 'framer-motion';
-<<<<<<< HEAD
 import { uploadFileToBlob, validateUploadFile } from '../../utils/upload';
-=======
->>>>>>> vercelrepo/main
 
 export function ProfilePage() {
   const { user, refreshUser } = useAuth();
@@ -46,32 +43,16 @@ export function ProfilePage() {
     const file = e.target.files?.[0];
     if (!file) return;
 
-<<<<<<< HEAD
     try {
       validateUploadFile(file, ['image/']);
     } catch (error: any) {
       toast.error(error.message || 'File tidak valid');
-=======
-    // Validate file type - allow PNG, JPG, JPEG, GIF, WEBP
-    const allowedTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif', 'image/webp'];
-    const fileType = file.type.toLowerCase();
-    
-    if (!allowedTypes.includes(fileType) && !file.type.startsWith('image/')) {
-      toast.error('Hanya file gambar (PNG, JPG, JPEG, GIF, WEBP) yang diizinkan');
-      return;
-    }
-
-    // Validate file size (max 5MB)
-    if (file.size > 5 * 1024 * 1024) {
-      toast.error('Ukuran file maksimal 5MB');
->>>>>>> vercelrepo/main
       return;
     }
 
     try {
       setUploadingPhoto(true);
       
-<<<<<<< HEAD
       const profilePhotoUrl = await uploadFileToBlob(file, 'profiles');
 
       const response = await fetch(api.users.updateProfile(user?.id || ''), {
@@ -82,15 +63,6 @@ export function ProfilePage() {
         body: JSON.stringify({
           profilePhoto: profilePhotoUrl,
         }),
-=======
-      const formData = new FormData();
-      formData.append('profilePhoto', file);
-      formData.append('userId', user?.id || '');
-
-      const response = await fetch(api.upload.profilePhoto, {
-        method: 'POST',
-        body: formData,
->>>>>>> vercelrepo/main
       });
 
       if (!response.ok) {
@@ -405,7 +377,7 @@ export function ProfilePage() {
             </div>
             <h4 style={{ color: '#2F4858' }}>Status Verifikasi</h4>
             <p className="body-3" style={{ color: user?.isVerified ? '#9ACD32' : '#FF9800' }}>
-              {user?.isVerified ? '✓ Terverifikasi' : '⏳ Menunggu Verifikasi'}
+              {user?.isVerified ? 'âœ“ Terverifikasi' : 'â³ Menunggu Verifikasi'}
             </p>
           </CardContent>
         </Card>

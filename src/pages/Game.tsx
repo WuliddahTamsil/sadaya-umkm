@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
-/* ═══════════════════════════════════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    TYPES
-═══════════════════════════════════════════════════════════════════════════ */
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 interface PlantDef {
   id: string;
   name: string;
@@ -61,14 +61,14 @@ interface GameState {
   gems: number;
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    CONSTANTS
-═══════════════════════════════════════════════════════════════════════════ */
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 const PLANT_DEFS: PlantDef[] = [
   {
     id: "talas",
     name: "Talas Bogor",
-    emoji: "🌿",
+    emoji: "ðŸŒ¿",
     days: 7,
     points: 50,
     color: "#22c55e",
@@ -78,7 +78,7 @@ const PLANT_DEFS: PlantDef[] = [
   {
     id: "pala",
     name: "Pala Premium",
-    emoji: "🌰",
+    emoji: "ðŸŒ°",
     days: 14,
     points: 120,
     color: "#f97316",
@@ -88,7 +88,7 @@ const PLANT_DEFS: PlantDef[] = [
   {
     id: "jambu",
     name: "Jambu Kristal",
-    emoji: "🍐",
+    emoji: "ðŸ",
     days: 10,
     points: 80,
     color: "#eab308",
@@ -102,7 +102,7 @@ const MISSIONS: MissionDef[] = [
     id: "m1",
     label: "Panen Pertama",
     desc: "Panen tanaman pertamamu",
-    emoji: "🌾",
+    emoji: "ðŸŒ¾",
     target: 1,
     reward: "+30 Poin",
     rewardType: "points",
@@ -112,7 +112,7 @@ const MISSIONS: MissionDef[] = [
     id: "m2",
     label: "Petani Rajin",
     desc: "Panen 3x berturut-turut",
-    emoji: "🔥",
+    emoji: "ðŸ”¥",
     target: 3,
     reward: "+5 Air",
     rewardType: "water",
@@ -122,7 +122,7 @@ const MISSIONS: MissionDef[] = [
     id: "m3",
     label: "Master Talas",
     desc: "Panen Talas Bogor 5x",
-    emoji: "🌿",
+    emoji: "ðŸŒ¿",
     target: 5,
     reward: "+100 Poin",
     rewardType: "points",
@@ -132,7 +132,7 @@ const MISSIONS: MissionDef[] = [
     id: "m4",
     label: "Pala Hunter",
     desc: "Panen Pala Premium 3x",
-    emoji: "🌰",
+    emoji: "ðŸŒ°",
     target: 3,
     reward: "+80 Poin",
     rewardType: "points",
@@ -142,7 +142,7 @@ const MISSIONS: MissionDef[] = [
     id: "m5",
     label: "Jambu Lover",
     desc: "Panen Jambu Kristal 4x",
-    emoji: "🍐",
+    emoji: "ðŸ",
     target: 4,
     reward: "+60 Poin",
     rewardType: "points",
@@ -152,7 +152,7 @@ const MISSIONS: MissionDef[] = [
     id: "m6",
     label: "Panen 10x",
     desc: "Capai total 10 kali panen",
-    emoji: "🏆",
+    emoji: "ðŸ†",
     target: 10,
     reward: "+200 Poin",
     rewardType: "points",
@@ -162,7 +162,7 @@ const MISSIONS: MissionDef[] = [
     id: "m7",
     label: "Kolektor Poin",
     desc: "Kumpulkan total 500 Daya Poin",
-    emoji: "💰",
+    emoji: "ðŸ’°",
     target: 500,
     reward: "+10 Air",
     rewardType: "water",
@@ -173,56 +173,56 @@ const MISSIONS: MissionDef[] = [
 const REWARDS: RewardDef[] = [
   {
     id: "r1",
-    emoji: "🎁",
+    emoji: "ðŸŽ",
     title: "Cashback 10%",
     desc: "Cashback 10% untuk pembelian pertama",
     trigger: (s) => s.totalHarvests >= 1,
   },
   {
     id: "r2",
-    emoji: "🚚",
+    emoji: "ðŸšš",
     title: "Gratis Ongkir",
     desc: "Gratis ongkos kirim seluruh Indonesia",
     trigger: (s) => s.totalHarvests >= 3,
   },
   {
     id: "r3",
-    emoji: "💸",
+    emoji: "ðŸ’¸",
     title: "Diskon 20%",
     desc: "Diskon 20% untuk semua produk Bogor",
     trigger: (s) => (s.byPlant.talas || 0) >= 3,
   },
   {
     id: "r4",
-    emoji: "🔥",
+    emoji: "ðŸ”¥",
     title: "Flash Sale Akses",
     desc: "Akses eksklusif flash sale 1 jam lebih awal",
     trigger: (s) => s.streak >= 3,
   },
   {
     id: "r5",
-    emoji: "💎",
+    emoji: "ðŸ’Ž",
     title: "Cashback 50%",
     desc: "Cashback 50% khusus produk lokal Bogor",
     trigger: (s) => (s.byPlant.talas || 0) >= 5,
   },
   {
     id: "r6",
-    emoji: "🛍️",
+    emoji: "ðŸ›ï¸",
     title: "Diskon 35%",
     desc: "Diskon 35% min. belanja Rp150.000",
     trigger: (s) => s.totalPoints >= 500,
   },
   {
     id: "r7",
-    emoji: "🎀",
+    emoji: "ðŸŽ€",
     title: "Member Premium",
     desc: "Upgrade ke member Premium 30 hari GRATIS",
     trigger: (s) => s.totalHarvests >= 10,
   },
   {
     id: "r8",
-    emoji: "🏅",
+    emoji: "ðŸ…",
     title: "Voucher Rp25.000",
     desc: "Voucher belanja senilai Rp25.000",
     trigger: (s) => (s.byPlant.pala || 0) >= 3,
@@ -295,9 +295,9 @@ function getLevelProgress(xp: number) {
   return Math.min(100, Math.round(((xp - lo) / (hi - lo)) * 100));
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    SOUNDS
-═══════════════════════════════════════════════════════════════════════════ */
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 const mkCtx = () =>
   new (window.AudioContext || (window as any).webkitAudioContext)();
 function playWater() {
@@ -370,9 +370,9 @@ function playUnlock() {
   } catch {}
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    CONFETTI
-═══════════════════════════════════════════════════════════════════════════ */
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 function ConfettiBlast({ onDone }: { onDone: () => void }) {
   const ref = useRef<HTMLCanvasElement>(null);
   useEffect(() => {
@@ -436,9 +436,9 @@ function ConfettiBlast({ onDone }: { onDone: () => void }) {
   );
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    PLANT SVG
-═══════════════════════════════════════════════════════════════════════════ */
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 function PlantSVG({
   progress,
   defId,
@@ -819,7 +819,7 @@ function PlantSVG({
                 animation: `sparkle ${0.7 + i * 0.3}s ease-in-out infinite alternate`,
               }}
             >
-              ✦
+              âœ¦
             </text>
           ))}
         </>
@@ -828,9 +828,9 @@ function PlantSVG({
   );
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   HARVEST MODAL (NEW — replaces instant popup)
-═══════════════════════════════════════════════════════════════════════════ */
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   HARVEST MODAL (NEW â€” replaces instant popup)
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 interface HarvestResult {
   def: PlantDef;
   points: number;
@@ -949,13 +949,13 @@ function HarvestModal({
                   <div
                     style={{ fontSize: 28, fontWeight: 900, color: "#14532d" }}
                   >
-                    +{result.points} 🪙
+                    +{result.points} ðŸª™
                   </div>
                   <div style={{ fontSize: 11, color: "#4ade80" }}>
                     = Rp{result.points} diskon belanja
                   </div>
                 </div>
-                <div style={{ fontSize: 40 }}>💰</div>
+                <div style={{ fontSize: 40 }}>ðŸ’°</div>
               </div>
 
               {/* Streak bonus */}
@@ -972,7 +972,7 @@ function HarvestModal({
                     marginBottom: 12,
                   }}
                 >
-                  <span style={{ fontSize: 28 }}>🔥</span>
+                  <span style={{ fontSize: 28 }}>ðŸ”¥</span>
                   <div>
                     <div
                       style={{
@@ -981,7 +981,7 @@ function HarvestModal({
                         color: "#c2410c",
                       }}
                     >
-                      Streak Bonus ×{result.streakBonus}
+                      Streak Bonus Ã—{result.streakBonus}
                     </div>
                     <div style={{ fontSize: 11, color: "#ea580c" }}>
                       Panen {result.streakBonus} hari berturut-turut!
@@ -1003,7 +1003,7 @@ function HarvestModal({
                   marginBottom: hasExtras ? 12 : 0,
                 }}
               >
-                <span style={{ fontSize: 24 }}>⭐</span>
+                <span style={{ fontSize: 24 }}>â­</span>
                 <div>
                   <div
                     style={{ fontSize: 12, fontWeight: 700, color: "#6d28d9" }}
@@ -1032,11 +1032,11 @@ function HarvestModal({
                   }}
                   onClick={() => setStep(1)}
                 >
-                  ✨ Ada{" "}
+                  âœ¨ Ada{" "}
                   {result.newRewards.length +
                     result.completedMissions.length +
                     (result.levelUp ? 1 : 0)}{" "}
-                  hadiah menunggumu! Lihat →
+                  hadiah menunggumu! Lihat â†’
                 </div>
               )}
             </div>
@@ -1052,7 +1052,7 @@ function HarvestModal({
                   marginBottom: 14,
                 }}
               >
-                🎁 Kamu Mendapatkan:
+                ðŸŽ Kamu Mendapatkan:
               </div>
 
               {result.levelUp && (
@@ -1067,7 +1067,7 @@ function HarvestModal({
                     gap: 12,
                   }}
                 >
-                  <span style={{ fontSize: 32 }}>🏅</span>
+                  <span style={{ fontSize: 32 }}>ðŸ…</span>
                   <div>
                     <div
                       style={{ fontSize: 13, fontWeight: 700, color: "#fff" }}
@@ -1075,7 +1075,7 @@ function HarvestModal({
                       Level Up!
                     </div>
                     <div style={{ fontSize: 12, color: "#ddd6fe" }}>
-                      {LEVEL_NAMES[result.levelUp.from]} →{" "}
+                      {LEVEL_NAMES[result.levelUp.from]} â†’{" "}
                       <strong style={{ color: "#fde047" }}>
                         {LEVEL_NAMES[result.levelUp.to]}
                       </strong>
@@ -1113,7 +1113,7 @@ function HarvestModal({
                       {m.reward}
                     </div>
                   </div>
-                  <span style={{ fontSize: 18 }}>✅</span>
+                  <span style={{ fontSize: 18 }}>âœ…</span>
                 </div>
               ))}
 
@@ -1181,7 +1181,7 @@ function HarvestModal({
                   fontFamily: "inherit",
                 }}
               >
-                Lihat Hadiah 🎁
+                Lihat Hadiah ðŸŽ
               </button>
             )}
             {step === 1 && (
@@ -1200,7 +1200,7 @@ function HarvestModal({
                   fontFamily: "inherit",
                 }}
               >
-                ← Kembali
+                â† Kembali
               </button>
             )}
             <button
@@ -1220,7 +1220,7 @@ function HarvestModal({
                 transition: "all 0.2s ease",
               }}
             >
-              OK, Lanjut Bertani! 🌾
+              OK, Lanjut Bertani! ðŸŒ¾
             </button>
           </div>
         </div>
@@ -1229,9 +1229,9 @@ function HarvestModal({
   );
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    SAWAH PLOT CARD
-═══════════════════════════════════════════════════════════════════════════ */
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 function SawahPlot({
   index,
   plant,
@@ -1267,14 +1267,14 @@ function SawahPlot({
   const stageLabel = !plant
     ? "Belum Ditanam"
     : prog >= 100
-      ? "✨ Siap Panen!"
+      ? "âœ¨ Siap Panen!"
       : prog >= 80
-        ? "🌾 Menguning"
+        ? "ðŸŒ¾ Menguning"
         : prog >= 50
-          ? "🌿 Subur"
+          ? "ðŸŒ¿ Subur"
           : prog >= 20
-            ? "🌱 Tumbuh"
-            : "🌱 Benih";
+            ? "ðŸŒ± Tumbuh"
+            : "ðŸŒ± Benih";
   const stageColor = !plant
     ? "#94a3b8"
     : prog >= 100
@@ -1342,7 +1342,7 @@ function SawahPlot({
                 fontSize: 20,
               }}
             >
-              {def ? def.emoji : "🪴"}
+              {def ? def.emoji : "ðŸª´"}
             </div>
             <div>
               <div style={{ fontSize: 14, fontWeight: 700, color: "#1e293b" }}>
@@ -1365,7 +1365,7 @@ function SawahPlot({
                 color: def.accent,
               }}
             >
-              🪙 {def.points}
+              ðŸª™ {def.points}
             </div>
           )}
         </div>
@@ -1499,7 +1499,7 @@ function SawahPlot({
                   opacity: 0,
                 }}
               >
-                💧
+                ðŸ’§
               </div>
             ))}
           {canHarvest && (
@@ -1529,7 +1529,7 @@ function SawahPlot({
                 gap: 8,
               }}
             >
-              <div style={{ fontSize: 36, opacity: 0.18 }}>🌾</div>
+              <div style={{ fontSize: 36, opacity: 0.18 }}>ðŸŒ¾</div>
               <div
                 style={{ fontSize: 12, color: "#94a3b8", fontStyle: "italic" }}
               >
@@ -1571,14 +1571,14 @@ function SawahPlot({
                 }}
               >
                 {prog >= 100
-                  ? "✨ PANEN!"
+                  ? "âœ¨ PANEN!"
                   : prog >= 80
-                    ? "🌾 Hampir"
+                    ? "ðŸŒ¾ Hampir"
                     : prog >= 50
-                      ? "🌿 Subur"
+                      ? "ðŸŒ¿ Subur"
                       : prog >= 20
-                        ? "🌱 Tumbuh"
-                        : "🌱 Benih"}
+                        ? "ðŸŒ± Tumbuh"
+                        : "ðŸŒ± Benih"}
               </div>
               <div
                 style={{
@@ -1689,7 +1689,7 @@ function SawahPlot({
                 transition: "all 0.2s ease",
               }}
             >
-              {selecting === index ? "✕ Batal" : "🌱 Pilih Bibit"}
+              {selecting === index ? "âœ• Batal" : "ðŸŒ± Pilih Bibit"}
             </button>
           ) : (
             <>
@@ -1721,7 +1721,7 @@ function SawahPlot({
                   transition: "all 0.2s ease",
                 }}
               >
-                💧 Siram
+                ðŸ’§ Siram
               </button>
               <button
                 disabled={!canHarvest}
@@ -1752,7 +1752,7 @@ function SawahPlot({
                   transition: "all 0.18s ease",
                 }}
               >
-                🧺 Panen
+                ðŸ§º Panen
               </button>
             </>
           )}
@@ -1833,7 +1833,7 @@ function SawahPlot({
                   whiteSpace: "nowrap",
                 }}
               >
-                {pd.days}h · 🪙{pd.points}
+                {pd.days}h Â· ðŸª™{pd.points}
               </div>
             </button>
           ))}
@@ -1843,9 +1843,9 @@ function SawahPlot({
   );
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    REWARDS TAB
-═══════════════════════════════════════════════════════════════════════════ */
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 function RewardsTab({
   state,
   onRedeem,
@@ -1878,7 +1878,7 @@ function RewardsTab({
             marginBottom: 4,
           }}
         >
-          🪙 Total Daya Poin
+          ðŸª™ Total Daya Poin
         </div>
         <div style={{ fontSize: 36, fontWeight: 900, color: "#78350f" }}>
           {state.points.toLocaleString()}
@@ -1918,7 +1918,7 @@ function RewardsTab({
           marginBottom: 14,
         }}
       >
-        🎁 Reward Tersedia
+        ðŸŽ Reward Tersedia
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
         {REWARDS.map((r) => {
@@ -2000,7 +2000,7 @@ function RewardsTab({
                 <div
                   style={{ fontSize: 10, color: "#94a3b8", marginBottom: 8 }}
                 >
-                  🔒 Penuhi syarat untuk unlock
+                  ðŸ”’ Penuhi syarat untuk unlock
                 </div>
               )}
               <button
@@ -2034,10 +2034,10 @@ function RewardsTab({
                 }}
               >
                 {redeemed
-                  ? "✅ Sudah Diklaim"
+                  ? "âœ… Sudah Diklaim"
                   : unlocked
                     ? "Klaim Sekarang"
-                    : "🔒 Terkunci"}
+                    : "ðŸ”’ Terkunci"}
               </button>
             </div>
           );
@@ -2047,9 +2047,9 @@ function RewardsTab({
   );
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    MISSIONS TAB
-═══════════════════════════════════════════════════════════════════════════ */
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 function MissionsTab({ state }: { state: GameState }) {
   const getMissionProgress = (m: MissionDef) => {
     if (m.id === "m3") return state.byPlant.talas || 0;
@@ -2073,7 +2073,7 @@ function MissionsTab({ state }: { state: GameState }) {
           gap: 16,
         }}
       >
-        <div style={{ fontSize: 40 }}>🎯</div>
+        <div style={{ fontSize: 40 }}>ðŸŽ¯</div>
         <div>
           <div style={{ fontSize: 14, fontWeight: 700, color: "#4c1d95" }}>
             Misi Aktif
@@ -2148,7 +2148,7 @@ function MissionsTab({ state }: { state: GameState }) {
                         fontWeight: 700,
                       }}
                     >
-                      ✅ Selesai
+                      âœ… Selesai
                     </div>
                   ) : (
                     <div
@@ -2204,7 +2204,7 @@ function MissionsTab({ state }: { state: GameState }) {
                     borderRadius: 99,
                   }}
                 >
-                  <span style={{ fontSize: 11 }}>🎁</span>
+                  <span style={{ fontSize: 11 }}>ðŸŽ</span>
                   <span
                     style={{
                       fontSize: 11,
@@ -2224,9 +2224,9 @@ function MissionsTab({ state }: { state: GameState }) {
   );
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    STATS TAB
-═══════════════════════════════════════════════════════════════════════════ */
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 function StatsTab({ state }: { state: GameState }) {
   const level = getLevel(state.xp);
   const lvlPct = getLevelProgress(state.xp);
@@ -2268,7 +2268,7 @@ function StatsTab({ state }: { state: GameState }) {
               fontSize: 30,
             }}
           >
-            {["🌱", "🌿", "🌾", "🏅", "🥇", "🏆", "👑"][level]}
+            {["ðŸŒ±", "ðŸŒ¿", "ðŸŒ¾", "ðŸ…", "ðŸ¥‡", "ðŸ†", "ðŸ‘‘"][level]}
           </div>
           <div style={{ flex: 1 }}>
             <div style={{ fontSize: 12, color: "#c4b5fd", fontWeight: 600 }}>
@@ -2317,28 +2317,28 @@ function StatsTab({ state }: { state: GameState }) {
       >
         {[
           {
-            icon: "🧺",
+            icon: "ðŸ§º",
             label: "Total Panen",
             val: state.totalHarvests,
             col: "#22c55e",
             bg: "#f0fdf4",
           },
           {
-            icon: "🔥",
+            icon: "ðŸ”¥",
             label: "Hari Beruntun",
             val: `${state.streak} hari`,
             col: "#f97316",
             bg: "#fff7ed",
           },
           {
-            icon: "🪙",
+            icon: "ðŸª™",
             label: "Total Poin",
             val: state.points.toLocaleString(),
             col: "#f59e0b",
             bg: "#fffbeb",
           },
           {
-            icon: "💎",
+            icon: "ðŸ’Ž",
             label: "Gems",
             val: state.gems,
             col: "#8b5cf6",
@@ -2389,7 +2389,7 @@ function StatsTab({ state }: { state: GameState }) {
             marginBottom: 14,
           }}
         >
-          📊 Panen per Tanaman
+          ðŸ“Š Panen per Tanaman
         </div>
         {PLANT_DEFS.map((pd) => {
           const cnt = state.byPlant[pd.id] || 0;
@@ -2455,7 +2455,7 @@ function StatsTab({ state }: { state: GameState }) {
             marginBottom: 14,
           }}
         >
-          🏅 Badge Terkumpul
+          ðŸ… Badge Terkumpul
         </div>
         <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
           {state.completedMissions.map((id) => {
@@ -2494,9 +2494,9 @@ function StatsTab({ state }: { state: GameState }) {
   );
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    MAIN GAME
-═══════════════════════════════════════════════════════════════════════════ */
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 export function GamePage() {
   const [state, setState] = useState<GameState>(loadState);
   const [selecting, setSelecting] = useState<number | null>(null);
@@ -2719,13 +2719,13 @@ export function GamePage() {
       gems: p.gems + 1,
     }));
     setCanClaim(false);
-    showToast(`+${DAILY_WATER_BONUS} Air & +1 Gem diklaim!`, "🎁");
+    showToast(`+${DAILY_WATER_BONUS} Air & +1 Gem diklaim!`, "ðŸŽ");
   };
 
   const handleRedeem = (id: string) => {
     setState((p) => ({ ...p, redeemedRewards: [...p.redeemedRewards, id] }));
     const r = REWARDS.find((x) => x.id === id);
-    showToast(`${r?.title} berhasil diklaim!`, "🎁");
+    showToast(`${r?.title} berhasil diklaim!`, "ðŸŽ");
   };
 
   const fmt = (s: number) =>
@@ -2746,13 +2746,13 @@ export function GamePage() {
   ).length;
 
   const TABS = [
-    { id: "farm", label: "🌾 Kebun", badge: hasReady ? 1 : 0 },
-    { id: "rewards", label: "🎁 Reward", badge: unclaimedRewards },
-    { id: "missions", label: "🎯 Misi", badge: 0 },
-    { id: "stats", label: "📊 Statistik", badge: 0 },
+    { id: "farm", label: "ðŸŒ¾ Kebun", badge: hasReady ? 1 : 0 },
+    { id: "rewards", label: "ðŸŽ Reward", badge: unclaimedRewards },
+    { id: "missions", label: "ðŸŽ¯ Misi", badge: 0 },
+    { id: "stats", label: "ðŸ“Š Statistik", badge: 0 },
   ];
 
-  // ─── Landing ────────────────────────────────────────────────────────────────
+  // â”€â”€â”€ Landing â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   if (!started)
     return (
       <>
@@ -2771,15 +2771,8 @@ export function GamePage() {
           }}
         >
           <div
-<<<<<<< HEAD
             className="landing-grid"
             style={{
-=======
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: 56,
->>>>>>> vercelrepo/main
               maxWidth: 1060,
               width: "100%",
               alignItems: "center",
@@ -2801,7 +2794,7 @@ export function GamePage() {
                   color: "#c2410c",
                 }}
               >
-                ✦ Gamification × Bogor
+                âœ¦ Gamification Ã— Bogor
               </div>
               <h1 style={{ marginBottom: 20 }}>
                 <span
@@ -2866,11 +2859,11 @@ export function GamePage() {
                 }}
               >
                 {[
-                  ["🚚", "Gratis Ongkir"],
-                  ["💸", "Cashback 50%"],
-                  ["🎁", "Diskon 35%"],
-                  ["🏅", "Level Up"],
-                  ["🔥", "Streak Bonus"],
+                  ["ðŸšš", "Gratis Ongkir"],
+                  ["ðŸ’¸", "Cashback 50%"],
+                  ["ðŸŽ", "Diskon 35%"],
+                  ["ðŸ…", "Level Up"],
+                  ["ðŸ”¥", "Streak Bonus"],
                 ].map(([e, t]) => (
                   <div
                     key={t}
@@ -2902,9 +2895,9 @@ export function GamePage() {
                 }}
               >
                 {[
-                  { icon: "☀️", val: SLOTS, label: "Lahan" },
-                  { icon: "🎯", val: MISSIONS.length, label: "Misi" },
-                  { icon: "🎁", val: REWARDS.length, label: "Reward" },
+                  { icon: "â˜€ï¸", val: SLOTS, label: "Lahan" },
+                  { icon: "ðŸŽ¯", val: MISSIONS.length, label: "Misi" },
+                  { icon: "ðŸŽ", val: REWARDS.length, label: "Reward" },
                 ].map((s, i) => (
                   <div
                     key={i}
@@ -2957,7 +2950,7 @@ export function GamePage() {
                   transition: "all 0.2s ease",
                 }}
               >
-                🌿 Mulai Bertani →
+                ðŸŒ¿ Mulai Bertani â†’
               </button>
             </div>
             {/* Preview */}
@@ -2997,7 +2990,7 @@ export function GamePage() {
                       fontSize: 22,
                     }}
                   >
-                    🌿
+                    ðŸŒ¿
                   </div>
                   <div>
                     <div
@@ -3015,14 +3008,8 @@ export function GamePage() {
                   </div>
                 </div>
                 <div
-<<<<<<< HEAD
                   className="plant-grid"
                   style={{
-=======
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(3,1fr)",
->>>>>>> vercelrepo/main
                     gap: 10,
                     marginBottom: 20,
                   }}
@@ -3075,7 +3062,7 @@ export function GamePage() {
                           display: "inline-block",
                         }}
                       >
-                        🪙{pd.points}
+                        ðŸª™{pd.points}
                       </div>
                     </div>
                   ))}
@@ -3097,14 +3084,14 @@ export function GamePage() {
                       marginBottom: 8,
                     }}
                   >
-                    🎁 Reward Yang Bisa Didapat
+                    ðŸŽ Reward Yang Bisa Didapat
                   </div>
                   <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
                     {[
-                      "🚚 Gratis Ongkir",
-                      "💸 Cashback 50%",
-                      "🛍️ Diskon 35%",
-                      "💎 Cashback 10%",
+                      "ðŸšš Gratis Ongkir",
+                      "ðŸ’¸ Cashback 50%",
+                      "ðŸ›ï¸ Diskon 35%",
+                      "ðŸ’Ž Cashback 10%",
                     ].map((r) => (
                       <span
                         key={r}
@@ -3141,7 +3128,7 @@ export function GamePage() {
                     animation: "float 3s ease-in-out infinite",
                   }}
                 >
-                  🪙
+                  ðŸª™
                 </div>
                 <div
                   style={{
@@ -3161,7 +3148,7 @@ export function GamePage() {
                     animation: "float 2.5s ease-in-out infinite",
                   }}
                 >
-                  🌾
+                  ðŸŒ¾
                 </div>
               </div>
             </div>
@@ -3170,7 +3157,7 @@ export function GamePage() {
       </>
     );
 
-  // ─── Game ──────────────────────────────────────────────────────────────────
+  // â”€â”€â”€ Game â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   return (
     <>
       <GlobalStyles />
@@ -3232,29 +3219,19 @@ export function GamePage() {
           }}
         >
           <div
-<<<<<<< HEAD
             className="game-top-bar"
-=======
->>>>>>> vercelrepo/main
             style={{
               maxWidth: 1160,
               margin: "0 auto",
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
-<<<<<<< HEAD
               flexWrap: "wrap",
               gap: 8,
             }}
           >
             {/* Logo + level */}
             <div className="game-top-left" style={{ display: "flex", alignItems: "center", gap: 12 }}>
-=======
-            }}
-          >
-            {/* Logo + level */}
-            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
->>>>>>> vercelrepo/main
               <div
                 style={{
                   width: 38,
@@ -3267,7 +3244,7 @@ export function GamePage() {
                   fontSize: 20,
                 }}
               >
-                🌿
+                ðŸŒ¿
               </div>
               <div>
                 <div
@@ -3298,7 +3275,7 @@ export function GamePage() {
                 }}
               >
                 <span style={{ fontSize: 14 }}>
-                  {["🌱", "🌿", "🌾", "🏅", "🥇", "🏆", "👑"][level]}
+                  {["ðŸŒ±", "ðŸŒ¿", "ðŸŒ¾", "ðŸ…", "ðŸ¥‡", "ðŸ†", "ðŸ‘‘"][level]}
                 </span>
                 <div>
                   <div
@@ -3335,11 +3312,7 @@ export function GamePage() {
             </div>
 
             {/* Resources */}
-<<<<<<< HEAD
             <div className="game-top-right" style={{ display: "flex", alignItems: "center", gap: 8 }}>
-=======
-            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
->>>>>>> vercelrepo/main
               {/* Streak */}
               {state.streak > 0 && (
                 <div
@@ -3353,7 +3326,7 @@ export function GamePage() {
                     padding: "7px 12px",
                   }}
                 >
-                  <span style={{ fontSize: 16 }}>🔥</span>
+                  <span style={{ fontSize: 16 }}>ðŸ”¥</span>
                   <div
                     style={{ fontSize: 13, fontWeight: 800, color: "#c2410c" }}
                   >
@@ -3373,7 +3346,7 @@ export function GamePage() {
                   padding: "7px 12px",
                 }}
               >
-                <span style={{ fontSize: 16 }}>💎</span>
+                <span style={{ fontSize: 16 }}>ðŸ’Ž</span>
                 <div
                   style={{ fontSize: 13, fontWeight: 800, color: "#5b21b6" }}
                 >
@@ -3392,7 +3365,7 @@ export function GamePage() {
                   padding: "7px 14px",
                 }}
               >
-                <span style={{ fontSize: 16 }}>💧</span>
+                <span style={{ fontSize: 16 }}>ðŸ’§</span>
                 <div>
                   <div
                     style={{
@@ -3423,7 +3396,7 @@ export function GamePage() {
                   padding: "7px 14px",
                 }}
               >
-                <span style={{ fontSize: 16 }}>🪙</span>
+                <span style={{ fontSize: 16 }}>ðŸª™</span>
                 <div>
                   <div
                     style={{
@@ -3465,7 +3438,7 @@ export function GamePage() {
                     whiteSpace: "nowrap",
                   }}
                 >
-                  🎁{canClaim ? " Klaim!" : ""}
+                  ðŸŽ{canClaim ? " Klaim!" : ""}
                 </button>
                 {canClaim && (
                   <div
@@ -3500,7 +3473,7 @@ export function GamePage() {
                   whiteSpace: "nowrap",
                 }}
               >
-                ← Keluar
+                â† Keluar
               </button>
             </div>
           </div>
@@ -3570,18 +3543,12 @@ export function GamePage() {
             ))}
           </div>
 
-          {/* ── FARM TAB ── */}
+          {/* â”€â”€ FARM TAB â”€â”€ */}
           {activeTab === "farm" && (
             <div
-<<<<<<< HEAD
               className="farm-grid"
               style={{
                 display: "grid",
-=======
-              style={{
-                display: "grid",
-                gridTemplateColumns: "260px 1fr",
->>>>>>> vercelrepo/main
                 gap: 20,
                 alignItems: "start",
               }}
@@ -3622,25 +3589,25 @@ export function GamePage() {
                   </p>
                   {[
                     {
-                      icon: "🌱",
+                      icon: "ðŸŒ±",
                       label: "Lahan aktif",
                       val: `${activeCnt}/${SLOTS}`,
                       col: "#22c55e",
                     },
                     {
-                      icon: "🪙",
+                      icon: "ðŸª™",
                       label: "Total poin",
                       val: state.points.toLocaleString(),
                       col: "#f59e0b",
                     },
                     {
-                      icon: "🔥",
+                      icon: "ðŸ”¥",
                       label: "Streak",
                       val: `${state.streak} hari`,
                       col: "#f97316",
                     },
                     {
-                      icon: "💧",
+                      icon: "ðŸ’§",
                       label: "Air tersisa",
                       val: `${state.water}/${MAX_WATER}`,
                       col: "#60a5fa",
@@ -3704,7 +3671,7 @@ export function GamePage() {
                         color: "#1e293b",
                       }}
                     >
-                      🎯 Misi Aktif
+                      ðŸŽ¯ Misi Aktif
                     </div>
                     <button
                       onClick={() => setActiveTab("missions")}
@@ -3718,7 +3685,7 @@ export function GamePage() {
                         fontFamily: "inherit",
                       }}
                     >
-                      Lihat semua →
+                      Lihat semua â†’
                     </button>
                   </div>
                   {MISSIONS.filter(
@@ -3784,7 +3751,7 @@ export function GamePage() {
                         fontWeight: 600,
                       }}
                     >
-                      🎉 Semua misi selesai!
+                      ðŸŽ‰ Semua misi selesai!
                     </div>
                   )}
                 </div>
@@ -3810,12 +3777,12 @@ export function GamePage() {
                         color: "#92400e",
                       }}
                     >
-                      🎁 {unclaimedRewards} Reward Menunggu!
+                      ðŸŽ {unclaimedRewards} Reward Menunggu!
                     </div>
                     <div
                       style={{ fontSize: 11, color: "#b45309", marginTop: 3 }}
                     >
-                      Klik untuk klaim hadiah kamu →
+                      Klik untuk klaim hadiah kamu â†’
                     </div>
                   </button>
                 )}
@@ -3841,7 +3808,7 @@ export function GamePage() {
                         marginBottom: 2,
                       }}
                     >
-                      🌾 Lahan Pertanianmu
+                      ðŸŒ¾ Lahan Pertanianmu
                     </h2>
                     <p style={{ fontSize: 12, color: "#94a3b8" }}>
                       {activeCnt}/{SLOTS} lahan aktif
@@ -3860,7 +3827,7 @@ export function GamePage() {
                         animation: "harvestPulse 2s infinite",
                       }}
                     >
-                      ✨ Siap panen!
+                      âœ¨ Siap panen!
                     </div>
                   )}
                 </div>
@@ -3912,12 +3879,12 @@ export function GamePage() {
                   }}
                 >
                   <div style={{ fontSize: 12, color: "#64748b", flex: 1 }}>
-                    <strong style={{ color: "#1e293b" }}>💡 Loop:</strong> Tanam
-                    → Siram ({MAX_WATER_PER_DAY}x/hari +{WATER_BOOST}%) → Panen
-                    → Poin → Reward
+                    <strong style={{ color: "#1e293b" }}>ðŸ’¡ Loop:</strong> Tanam
+                    â†’ Siram ({MAX_WATER_PER_DAY}x/hari +{WATER_BOOST}%) â†’ Panen
+                    â†’ Poin â†’ Reward
                   </div>
                   <div style={{ fontSize: 11, color: "#3b82f6" }}>
-                    💧 Regen:{" "}
+                    ðŸ’§ Regen:{" "}
                     <strong>
                       {state.water < MAX_WATER ? fmt(waterCD) : "Penuh!"}
                     </strong>
@@ -3938,9 +3905,9 @@ export function GamePage() {
   );
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    GLOBAL STYLES
-═══════════════════════════════════════════════════════════════════════════ */
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 function GlobalStyles() {
   return (
     <style>{`
@@ -3949,11 +3916,7 @@ function GlobalStyles() {
       body{font-family:'DM Sans',sans-serif;background:#fff7ed}
       button{font-family:'DM Sans',sans-serif}
       .game-root{
-<<<<<<< HEAD
         background:#FEF5E7;
-=======
-        background:linear-gradient(160deg,#fff7ed 0%,#ffecd1 25%,#ffe4b5 60%,#fffbeb 100%);
->>>>>>> vercelrepo/main
         min-height:100vh;position:relative;
         padding-top:80px;
         padding-bottom:70px;
@@ -3961,13 +3924,10 @@ function GlobalStyles() {
       .game-root::before{content:'';position:fixed;inset:0;pointer-events:none;
         background:radial-gradient(ellipse 80% 40% at 20% 20%,rgba(249,115,22,0.12) 0%,transparent 70%),
                    radial-gradient(ellipse 60% 50% at 80% 80%,rgba(251,191,36,0.10) 0%,transparent 70%);}
-<<<<<<< HEAD
       .landing-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;}
       .plant-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
       @media (max-width: 1024px){.landing-grid{grid-template-columns:1fr;gap:30px;}.plant-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
       @media (max-width: 640px){.game-root{padding-top:70px;padding-bottom:60px;}.landing-grid{grid-template-columns:1fr;gap:18px;}.plant-grid{grid-template-columns:1fr;}}
-=======
->>>>>>> vercelrepo/main
       @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
       @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
       @keyframes glowPulse{0%,100%{opacity:.3}50%{opacity:.75}}
@@ -3979,7 +3939,6 @@ function GlobalStyles() {
       @keyframes modalIn{0%{transform:scale(0.6) translateY(40px);opacity:0}100%{transform:scale(1) translateY(0);opacity:1}}
       @keyframes bounceIn{0%{transform:scale(0.3);opacity:0}60%{transform:scale(1.2)}100%{transform:scale(1);opacity:1}}
       @keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(-12px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
-<<<<<<< HEAD
       .landing-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;}
       .plant-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
       .farm-grid{grid-template-columns:260px 1fr;}
@@ -4012,8 +3971,6 @@ function GlobalStyles() {
           flex-wrap: wrap;
         }
       }
-=======
->>>>>>> vercelrepo/main
     `}</style>
   );
 }

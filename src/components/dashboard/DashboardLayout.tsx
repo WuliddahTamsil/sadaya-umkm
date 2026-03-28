@@ -63,12 +63,8 @@ export function DashboardLayout({ children, activeMenu, onMenuChange }: Dashboar
           { id: 'profil', label: 'Profil', icon: User },
           { id: 'notifikasi', label: 'Notifikasi', icon: Bell, badge: unreadCount },
           { id: 'bantuan', label: 'Bantuan', icon: HelpCircle },
-<<<<<<< HEAD
           { id: 'pengaturan', label: 'Pengaturan Akun', icon: Settings },
           { id: 'logout', label: 'Keluar', icon: LogOut }
-=======
-          { id: 'pengaturan', label: 'Pengaturan Akun', icon: Settings }
->>>>>>> vercelrepo/main
         ];
       case 'user':
         return [
@@ -79,17 +75,13 @@ export function DashboardLayout({ children, activeMenu, onMenuChange }: Dashboar
           { id: 'pesanan', label: 'Pesanan Saya', icon: Package },
           { id: 'tracking', label: 'Tracking Pesanan', icon: TrendingUp },
           { id: 'dompet', label: 'Dompet Saya', icon: Wallet },
-          { id: 'game', label: 'Harvest Bogor 🎮', icon: Gamepad2 },
+          { id: 'game', label: 'Harvest Bogor ðŸŽ®', icon: Gamepad2 },
           { id: 'konten', label: 'Konten', icon: FileText },
           { id: 'profil', label: 'Profil', icon: User },
           { id: 'notifikasi', label: 'Notifikasi', icon: Bell, badge: unreadCount },
           { id: 'bantuan', label: 'Bantuan', icon: HelpCircle },
-<<<<<<< HEAD
           { id: 'pengaturan', label: 'Pengaturan Akun', icon: Settings },
           { id: 'logout', label: 'Keluar', icon: LogOut }
-=======
-          { id: 'pengaturan', label: 'Pengaturan Akun', icon: Settings }
->>>>>>> vercelrepo/main
         ];
       case 'umkm':
         return [
@@ -102,12 +94,8 @@ export function DashboardLayout({ children, activeMenu, onMenuChange }: Dashboar
           { id: 'konten', label: 'Konten', icon: FileText },
           { id: 'notifikasi', label: 'Notifikasi', icon: Bell, badge: unreadCount },
           { id: 'bantuan', label: 'Bantuan', icon: HelpCircle },
-<<<<<<< HEAD
           { id: 'pengaturan', label: 'Pengaturan Akun', icon: Settings },
           { id: 'logout', label: 'Keluar', icon: LogOut }
-=======
-          { id: 'pengaturan', label: 'Pengaturan Akun', icon: Settings }
->>>>>>> vercelrepo/main
         ];
       case 'driver':
         return [
@@ -121,12 +109,8 @@ export function DashboardLayout({ children, activeMenu, onMenuChange }: Dashboar
           { id: 'profil', label: 'Profil', icon: User },
           { id: 'notifikasi', label: 'Notifikasi', icon: Bell, badge: unreadCount },
           { id: 'bantuan', label: 'Bantuan', icon: HelpCircle },
-<<<<<<< HEAD
           { id: 'pengaturan', label: 'Pengaturan Akun', icon: Settings },
           { id: 'logout', label: 'Keluar', icon: LogOut }
-=======
-          { id: 'pengaturan', label: 'Pengaturan Akun', icon: Settings }
->>>>>>> vercelrepo/main
         ];
       default:
         return [];
@@ -134,16 +118,8 @@ export function DashboardLayout({ children, activeMenu, onMenuChange }: Dashboar
   };
 
   const getRoleGradient = (role?: string) => {
-<<<<<<< HEAD
     // Semua role menggunakan gradasi ungu ke orange
     return 'bg-gradient-to-r from-[#9370DB] to-[#F99912]';
-=======
-    switch (role) {
-      case 'umkm': return 'bg-gradient-to-r from-[#9370DB] to-[#F99912]';
-      case 'driver': return 'bg-gradient-to-r from-[#9ACD32] to-[#9370DB]';
-      default: return 'bg-gradient-to-r from-[#F99912] to-[#9ACD32]';
-    }
->>>>>>> vercelrepo/main
   };
 
   const activeGradient = getRoleGradient(user.role);
@@ -181,18 +157,14 @@ export function DashboardLayout({ children, activeMenu, onMenuChange }: Dashboar
         {!user.isVerified && (
           <div className="mt-3 p-2 rounded" style={{ backgroundColor: '#FDE08E' }}>
             <p className="body-3" style={{ color: '#2F4858', fontSize: '11px' }}>
-              ⏳ Menunggu Verifikasi Admin
+              â³ Menunggu Verifikasi Admin
             </p>
           </div>
         )}
       </div>
 
       {/* Menu Items */}
-<<<<<<< HEAD
       <nav className="p-4 flex-1 overflow-y-auto bg-gradient-to-b from-[#9370DB] via-[#F99912] to-[#9370DB] shadow-inner" style={{ minHeight: 'calc(100vh - 190px)' }}>
-=======
-      <nav className="p-4 flex-1 overflow-y-auto">
->>>>>>> vercelrepo/main
         <div className="space-y-1">
           {menuItems.map((item, index) => {
             const Icon = item.icon;
@@ -201,14 +173,11 @@ export function DashboardLayout({ children, activeMenu, onMenuChange }: Dashboar
               <motion.button
                 key={item.id}
                 onClick={() => {
-<<<<<<< HEAD
                   if (item.id === 'logout') {
                     logout();
                     setSidebarOpen(false);
                     return;
                   }
-=======
->>>>>>> vercelrepo/main
                   onMenuChange(item.id);
                   setSidebarOpen(false);
                 }}
@@ -277,7 +246,6 @@ export function DashboardLayout({ children, activeMenu, onMenuChange }: Dashboar
       <MountainSilhouette />
       
       {/* Desktop Sidebar */}
-<<<<<<< HEAD
       <aside
         className="hidden lg:flex lg:flex-col w-64 flex-shrink-0 relative z-10 border-r border-slate-800"
         style={{
@@ -286,9 +254,6 @@ export function DashboardLayout({ children, activeMenu, onMenuChange }: Dashboar
           boxShadow: 'inset 0 0 30px rgba(0, 0, 0, 0.25)'
         }}
       >
-=======
-      <aside className="hidden lg:flex lg:flex-col w-64 flex-shrink-0 relative z-10 bg-slate-900 border-r border-slate-800">
->>>>>>> vercelrepo/main
         <SidebarContent />
       </aside>
 
@@ -296,7 +261,6 @@ export function DashboardLayout({ children, activeMenu, onMenuChange }: Dashboar
       {sidebarOpen && (
         <div className="fixed inset-0 z-50 lg:hidden">
           <div className="absolute inset-0 bg-slate-900/80 backdrop-blur-sm" onClick={() => setSidebarOpen(false)} />
-<<<<<<< HEAD
           <aside
             className="absolute left-0 top-0 bottom-0 w-64 flex flex-col border-r border-slate-800 shadow-2xl"
             style={{
@@ -305,9 +269,6 @@ export function DashboardLayout({ children, activeMenu, onMenuChange }: Dashboar
               boxShadow: 'inset 0 0 30px rgba(0, 0, 0, 0.25)'
             }}
           >
-=======
-          <aside className="absolute left-0 top-0 bottom-0 w-64 flex flex-col bg-slate-900 border-r border-slate-800 shadow-2xl">
->>>>>>> vercelrepo/main
             <div className="flex justify-end p-4">
               <button onClick={() => setSidebarOpen(false)}>
                 <X size={24} style={{ color: '#FFFFFF' }} />

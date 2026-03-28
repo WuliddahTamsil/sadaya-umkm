@@ -22,10 +22,7 @@ export const api = {
     umkm: `${API_BASE_URL}/upload/umkm`,
     productImage: `${API_BASE_URL}/upload/products`,
     profilePhoto: `${API_BASE_URL}/upload/profile`,
-<<<<<<< HEAD
     file: `${API_BASE_URL}/upload/file`,
-=======
->>>>>>> vercelrepo/main
   },
   orders: {
     getAll: `${API_BASE_URL}/orders`,

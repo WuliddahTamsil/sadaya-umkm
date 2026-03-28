@@ -9,10 +9,7 @@ import { toast } from 'sonner';
 import { Upload, FileText, Store, AlertCircle } from 'lucide-react';
 import { Alert, AlertDescription } from '../ui/alert';
 import { api } from '../../config/api';
-<<<<<<< HEAD
 import { uploadFileToBlob, validateUploadFile } from '../../utils/upload';
-=======
->>>>>>> vercelrepo/main
 
 export function UMKMOnboarding() {
   const { user, completeOnboarding, refreshUser } = useAuth();
@@ -28,7 +25,6 @@ export function UMKMOnboarding() {
   });
 
   const handleFileChange = (field: string, file: File | null) => {
-<<<<<<< HEAD
     if (file) {
       try {
         const allowedTypes = field === 'businessPermitFile'
@@ -41,8 +37,6 @@ export function UMKMOnboarding() {
       }
     }
 
-=======
->>>>>>> vercelrepo/main
     setFormData(prev => ({ ...prev, [field]: file }));
   };
 
@@ -57,7 +51,6 @@ export function UMKMOnboarding() {
     setIsLoading(true);
 
     try {
-<<<<<<< HEAD
       if (!formData.ktpFile || !formData.storePhotoFile) {
         throw new Error('KTP dan foto tempat usaha wajib diunggah');
       }
@@ -88,50 +81,6 @@ export function UMKMOnboarding() {
       const result = await response.json().catch(() => null);
       if (!response.ok) {
         throw new Error(result?.error || result?.message || 'Upload dokumen gagal');
-=======
-      // Buat FormData untuk mengirim file
-      const uploadFormData = new FormData();
-      uploadFormData.append('userId', user.id);
-      uploadFormData.append('storeName', formData.storeName);
-      uploadFormData.append('storeAddress', formData.storeAddress);
-      uploadFormData.append('storeDescription', formData.storeDescription);
-      uploadFormData.append('phoneNumber', formData.phoneNumber);
-      
-      // Append files
-      if (formData.ktpFile) uploadFormData.append('ktpFile', formData.ktpFile);
-      if (formData.storePhotoFile) uploadFormData.append('storePhotoFile', formData.storePhotoFile);
-      if (formData.businessPermitFile) uploadFormData.append('businessPermitFile', formData.businessPermitFile);
-
-      const response = await fetch(api.upload.umkm, {
-        method: 'POST',
-        body: uploadFormData, // Jangan set Content-Type, browser akan set otomatis dengan boundary
-      });
-
-      // Cek content type sebelum parse JSON
-      const contentType = response.headers.get('content-type');
-      if (!contentType || !contentType.includes('application/json')) {
-        const text = await response.text();
-        throw new Error(`Server error: ${response.status} ${response.statusText}. ${text || 'Response tidak valid'}`);
-      }
-
-      if (!response.ok) {
-        let errorMessage = 'Upload dokumen gagal';
-        try {
-          const error = await response.json();
-          errorMessage = error.error || error.message || errorMessage;
-        } catch (e) {
-          // Jika response bukan JSON valid
-          errorMessage = `Server error: ${response.status} ${response.statusText}`;
-        }
-        throw new Error(errorMessage);
-      }
-
-      let result;
-      try {
-        result = await response.json();
-      } catch (e) {
-        throw new Error('Response tidak valid dari server. Silakan coba lagi.');
->>>>>>> vercelrepo/main
       }
       
       // Update user data dengan data terbaru dari backend (termasuk isOnboarded: true)

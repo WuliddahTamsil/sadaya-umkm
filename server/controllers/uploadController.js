@@ -14,11 +14,11 @@ function getRelativePath(fullPath) {
 // Helper untuk convert multer file ke format untuk blob upload
 function prepareFileForBlob(file) {
   if (!file) {
-    console.warn('⚠️ prepareFileForBlob: file is null/undefined');
+    console.warn('âš ï¸ prepareFileForBlob: file is null/undefined');
     return null;
   }
   
-  console.log('🔍 Preparing file for blob:', {
+  console.log('ðŸ” Preparing file for blob:', {
     fieldname: file.fieldname,
     originalname: file.originalname,
     mimetype: file.mimetype,
@@ -29,7 +29,7 @@ function prepareFileForBlob(file) {
   
   // Jika file dari memory storage (Vercel)
   if (file.buffer) {
-    console.log('✅ File has buffer, using memory storage format');
+    console.log('âœ… File has buffer, using memory storage format');
     return {
       buffer: file.buffer,
       filename: file.originalname,
@@ -40,15 +40,14 @@ function prepareFileForBlob(file) {
   
   // Jika file dari disk storage (local)
   if (file.path) {
-    console.log('⚠️ File has path but no buffer - this should not happen in Vercel');
+    console.log('âš ï¸ File has path but no buffer - this should not happen in Vercel');
     // Di Vercel, kita selalu pakai memory storage, jadi ini tidak seharusnya terjadi
   }
   
-  console.warn('⚠️ prepareFileForBlob: file has no buffer or path');
+  console.warn('âš ï¸ prepareFileForBlob: file has no buffer or path');
   return null;
 }
 
-<<<<<<< HEAD
 function getMissingBlobTokenResponse() {
   return {
     error: 'BLOB_READ_WRITE_TOKEN belum dikonfigurasi di Vercel. Tambahkan env ini di Project Settings > Environment Variables lalu redeploy.'
@@ -65,8 +64,6 @@ function normalizeUploadFolder(folder) {
   return allowedFolders.has(normalizedFolder) ? normalizedFolder : 'general';
 }
 
-=======
->>>>>>> vercelrepo/main
 export const uploadDriverDocuments = async (req, res) => {
   try {
     const { userId, phoneNumber, vehicleType, vehiclePlate } = req.body;
@@ -80,8 +77,8 @@ export const uploadDriverDocuments = async (req, res) => {
     }
 
     const files = req.files || {};
-    console.log('📁 Files received:', Object.keys(files));
-    console.log('📁 Files details:', {
+    console.log('ðŸ“ Files received:', Object.keys(files));
+    console.log('ðŸ“ Files details:', {
       ktpFile: files.ktpFile ? `${files.ktpFile.length} file(s)` : 'none',
       simFile: files.simFile ? `${files.simFile.length} file(s)` : 'none',
       stnkFile: files.stnkFile ? `${files.stnkFile.length} file(s)` : 'none',
@@ -95,99 +92,96 @@ export const uploadDriverDocuments = async (req, res) => {
     const isVercel = process.env.VERCEL || process.env.VERCEL_ENV;
     const hasBlobToken = !!process.env.BLOB_READ_WRITE_TOKEN;
 
-    console.log('🔍 Environment check:', {
+    console.log('ðŸ” Environment check:', {
       isVercel,
       hasBlobToken,
       VERCEL: process.env.VERCEL,
       VERCEL_ENV: process.env.VERCEL_ENV
     });
 
-<<<<<<< HEAD
     if (isVercel && !hasBlobToken) {
-      console.error('âŒ BLOB_READ_WRITE_TOKEN tidak tersedia untuk upload driver di Vercel');
+      console.error('Ã¢ÂÅ’ BLOB_READ_WRITE_TOKEN tidak tersedia untuk upload driver di Vercel');
       return res.status(500).json(getMissingBlobTokenResponse());
     }
 
-=======
->>>>>>> vercelrepo/main
     if (isVercel && hasBlobToken) {
       // Upload ke Vercel Blob Storage
-      console.log('📤 Uploading driver documents to Vercel Blob...');
+      console.log('ðŸ“¤ Uploading driver documents to Vercel Blob...');
       
       const filesToUpload = {};
       if (files.ktpFile && files.ktpFile[0]) {
         const prepared = prepareFileForBlob(files.ktpFile[0]);
         if (prepared) {
           filesToUpload.ktpFile = prepared;
-          console.log('✅ Prepared ktpFile for upload');
+          console.log('âœ… Prepared ktpFile for upload');
         } else {
-          console.warn('⚠️ Failed to prepare ktpFile');
+          console.warn('âš ï¸ Failed to prepare ktpFile');
         }
       }
       if (files.simFile && files.simFile[0]) {
         const prepared = prepareFileForBlob(files.simFile[0]);
         if (prepared) {
           filesToUpload.simFile = prepared;
-          console.log('✅ Prepared simFile for upload');
+          console.log('âœ… Prepared simFile for upload');
         }
       }
       if (files.stnkFile && files.stnkFile[0]) {
         const prepared = prepareFileForBlob(files.stnkFile[0]);
         if (prepared) {
           filesToUpload.stnkFile = prepared;
-          console.log('✅ Prepared stnkFile for upload');
+          console.log('âœ… Prepared stnkFile for upload');
         }
       }
       if (files.selfieFile && files.selfieFile[0]) {
         const prepared = prepareFileForBlob(files.selfieFile[0]);
         if (prepared) {
           filesToUpload.selfieFile = prepared;
-          console.log('✅ Prepared selfieFile for upload');
+          console.log('âœ… Prepared selfieFile for upload');
         }
       }
       if (files.vehiclePhotoFile && files.vehiclePhotoFile[0]) {
         const prepared = prepareFileForBlob(files.vehiclePhotoFile[0]);
         if (prepared) {
           filesToUpload.vehiclePhotoFile = prepared;
-          console.log('✅ Prepared vehiclePhotoFile for upload');
+          console.log('âœ… Prepared vehiclePhotoFile for upload');
         }
       }
 
-      console.log('📤 Files to upload:', Object.keys(filesToUpload));
+      console.log('ðŸ“¤ Files to upload:', Object.keys(filesToUpload));
 
       // Upload semua file ke blob
       const blobUrls = await uploadMultipleToBlob(filesToUpload, 'driver');
       
-      console.log('📋 Blob URLs received:', blobUrls);
-      console.log('📋 Blob URLs keys:', Object.keys(blobUrls));
-      console.log('📋 Blob URLs values:', Object.values(blobUrls).map(url => url.substring(0, 50) + '...'));
+      console.log('ðŸ“‹ Blob URLs received:', blobUrls);
+      console.log('ðŸ“‹ Blob URLs keys:', Object.keys(blobUrls));
+      console.log('ðŸ“‹ Blob URLs values:', Object.values(blobUrls).map(url => url.substring(0, 50) + '...'));
       
       // PASTIKAN URL blob disimpan ke documents object
       // Set secara eksplisit untuk setiap field
       if (blobUrls.ktpFile) {
         documents.ktpFile = blobUrls.ktpFile;
-        console.log('✅ Set documents.ktpFile:', documents.ktpFile.substring(0, 50) + '...');
+        console.log('âœ… Set documents.ktpFile:', documents.ktpFile.substring(0, 50) + '...');
       }
       if (blobUrls.simFile) {
         documents.simFile = blobUrls.simFile;
-        console.log('✅ Set documents.simFile:', documents.simFile.substring(0, 50) + '...');
+        console.log('âœ… Set documents.simFile:', documents.simFile.substring(0, 50) + '...');
       }
       if (blobUrls.stnkFile) {
         documents.stnkFile = blobUrls.stnkFile;
-        console.log('✅ Set documents.stnkFile:', documents.stnkFile.substring(0, 50) + '...');
+        console.log('âœ… Set documents.stnkFile:', documents.stnkFile.substring(0, 50) + '...');
       }
       if (blobUrls.selfieFile) {
         documents.selfieFile = blobUrls.selfieFile;
-        console.log('✅ Set documents.selfieFile:', documents.selfieFile.substring(0, 50) + '...');
+        console.log('âœ… Set documents.selfieFile:', documents.selfieFile.substring(0, 50) + '...');
       }
       if (blobUrls.vehiclePhotoFile) {
         documents.vehiclePhotoFile = blobUrls.vehiclePhotoFile;
-        console.log('✅ Set documents.vehiclePhotoFile:', documents.vehiclePhotoFile.substring(0, 50) + '...');
+        console.log('âœ… Set documents.vehiclePhotoFile:', documents.vehiclePhotoFile.substring(0, 50) + '...');
       }
       
-      console.log('✅ Driver documents uploaded to blob:', Object.keys(blobUrls));
-      console.log('📝 Documents object final:', documents);
-      console.log('📝 Documents object keys:', Object.keys(documents));
+      console.log('âœ… Driver documents uploaded to blob:', Object.keys(blobUrls));
+      console.log('ðŸ“ Documents object final:', documents);
+      console.log('ðŸ“ Documents object keys:', Object.keys(documents));
     } else if (!isVercel) {
       // Local development: simpan path file
       if (files.ktpFile && files.ktpFile[0]?.path) documents.ktpFile = getRelativePath(files.ktpFile[0].path);
@@ -196,7 +190,7 @@ export const uploadDriverDocuments = async (req, res) => {
       if (files.selfieFile && files.selfieFile[0]?.path) documents.selfieFile = getRelativePath(files.selfieFile[0].path);
       if (files.vehiclePhotoFile && files.vehiclePhotoFile[0]?.path) documents.vehiclePhotoFile = getRelativePath(files.vehiclePhotoFile[0].path);
     } else {
-      console.warn('⚠️ BLOB_READ_WRITE_TOKEN not set. File uploads will be skipped.');
+      console.warn('âš ï¸ BLOB_READ_WRITE_TOKEN not set. File uploads will be skipped.');
     }
 
     // Update user dengan data tambahan
@@ -210,23 +204,23 @@ export const uploadDriverDocuments = async (req, res) => {
     // Set setiap field secara eksplisit
     if (documents.ktpFile) {
       updateData.ktpFile = documents.ktpFile;
-      console.log('✅ Set updateData.ktpFile from documents');
+      console.log('âœ… Set updateData.ktpFile from documents');
     }
     if (documents.simFile) {
       updateData.simFile = documents.simFile;
-      console.log('✅ Set updateData.simFile from documents');
+      console.log('âœ… Set updateData.simFile from documents');
     }
     if (documents.stnkFile) {
       updateData.stnkFile = documents.stnkFile;
-      console.log('✅ Set updateData.stnkFile from documents');
+      console.log('âœ… Set updateData.stnkFile from documents');
     }
     if (documents.selfieFile) {
       updateData.selfieFile = documents.selfieFile;
-      console.log('✅ Set updateData.selfieFile from documents');
+      console.log('âœ… Set updateData.selfieFile from documents');
     }
     if (documents.vehiclePhotoFile) {
       updateData.vehiclePhotoFile = documents.vehiclePhotoFile;
-      console.log('✅ Set updateData.vehiclePhotoFile from documents');
+      console.log('âœ… Set updateData.vehiclePhotoFile from documents');
     }
     
     // Hanya tambahkan field jika ada nilainya
@@ -234,48 +228,43 @@ export const uploadDriverDocuments = async (req, res) => {
     if (vehicleType) updateData.vehicleType = vehicleType;
     if (vehiclePlate) updateData.vehiclePlate = vehiclePlate;
 
-    console.log('📝 Documents object:', documents);
-    console.log('📝 Documents keys:', Object.keys(documents));
-    console.log('📝 Documents values:', {
-      ktpFile: documents.ktpFile ? `✅ ${documents.ktpFile.substring(0, 50)}...` : '❌ not in documents',
-      simFile: documents.simFile ? `✅ ${documents.simFile.substring(0, 50)}...` : '❌ not in documents',
-      stnkFile: documents.stnkFile ? `✅ ${documents.stnkFile.substring(0, 50)}...` : '❌ not in documents',
-      selfieFile: documents.selfieFile ? `✅ ${documents.selfieFile.substring(0, 50)}...` : '❌ not in documents',
-      vehiclePhotoFile: documents.vehiclePhotoFile ? `✅ ${documents.vehiclePhotoFile.substring(0, 50)}...` : '❌ not in documents'
+    console.log('ðŸ“ Documents object:', documents);
+    console.log('ðŸ“ Documents keys:', Object.keys(documents));
+    console.log('ðŸ“ Documents values:', {
+      ktpFile: documents.ktpFile ? `âœ… ${documents.ktpFile.substring(0, 50)}...` : 'âŒ not in documents',
+      simFile: documents.simFile ? `âœ… ${documents.simFile.substring(0, 50)}...` : 'âŒ not in documents',
+      stnkFile: documents.stnkFile ? `âœ… ${documents.stnkFile.substring(0, 50)}...` : 'âŒ not in documents',
+      selfieFile: documents.selfieFile ? `âœ… ${documents.selfieFile.substring(0, 50)}...` : 'âŒ not in documents',
+      vehiclePhotoFile: documents.vehiclePhotoFile ? `âœ… ${documents.vehiclePhotoFile.substring(0, 50)}...` : 'âŒ not in documents'
     });
     
     // PASTIKAN setidaknya ada satu file field yang berhasil diupload sebelum update
     if (!documents.ktpFile && !documents.simFile && !documents.stnkFile && !documents.selfieFile && !documents.vehiclePhotoFile) {
-      console.error('❌ ERROR: No file fields to save! Documents object is empty or invalid.');
-      console.error('❌ Documents:', documents);
-      console.error('❌ Files received:', files);
-<<<<<<< HEAD
+      console.error('âŒ ERROR: No file fields to save! Documents object is empty or invalid.');
+      console.error('âŒ Documents:', documents);
+      console.error('âŒ Files received:', files);
       return res.status(502).json({
         error: 'Upload ke Vercel Blob gagal. Pastikan token valid, Blob Store terhubung ke project ini, dan file yang dikirim tidak rusak.'
-=======
-      return res.status(400).json({ 
-        error: 'Tidak ada file yang berhasil diupload. Pastikan file valid dan BLOB_READ_WRITE_TOKEN terkonfigurasi dengan benar.' 
->>>>>>> vercelrepo/main
       });
     }
     
     // VERIFIKASI FINAL sebelum update
-    console.log('🔍 FINAL VERIFICATION before update:');
-    console.log('🔍 updateData keys:', Object.keys(updateData));
-    console.log('🔍 updateData file fields:', {
-      ktpFile: updateData.ktpFile ? `✅ EXISTS: ${updateData.ktpFile.substring(0, 50)}...` : '❌ MISSING',
-      simFile: updateData.simFile ? `✅ EXISTS: ${updateData.simFile.substring(0, 50)}...` : '❌ MISSING',
-      stnkFile: updateData.stnkFile ? `✅ EXISTS: ${updateData.stnkFile.substring(0, 50)}...` : '❌ MISSING',
-      selfieFile: updateData.selfieFile ? `✅ EXISTS: ${updateData.selfieFile.substring(0, 50)}...` : '❌ MISSING',
-      vehiclePhotoFile: updateData.vehiclePhotoFile ? `✅ EXISTS: ${updateData.vehiclePhotoFile.substring(0, 50)}...` : '❌ MISSING'
+    console.log('ðŸ” FINAL VERIFICATION before update:');
+    console.log('ðŸ” updateData keys:', Object.keys(updateData));
+    console.log('ðŸ” updateData file fields:', {
+      ktpFile: updateData.ktpFile ? `âœ… EXISTS: ${updateData.ktpFile.substring(0, 50)}...` : 'âŒ MISSING',
+      simFile: updateData.simFile ? `âœ… EXISTS: ${updateData.simFile.substring(0, 50)}...` : 'âŒ MISSING',
+      stnkFile: updateData.stnkFile ? `âœ… EXISTS: ${updateData.stnkFile.substring(0, 50)}...` : 'âŒ MISSING',
+      selfieFile: updateData.selfieFile ? `âœ… EXISTS: ${updateData.selfieFile.substring(0, 50)}...` : 'âŒ MISSING',
+      vehiclePhotoFile: updateData.vehiclePhotoFile ? `âœ… EXISTS: ${updateData.vehiclePhotoFile.substring(0, 50)}...` : 'âŒ MISSING'
     });
-    console.log('📝 Updating user with data:', JSON.stringify(updateData, null, 2));
+    console.log('ðŸ“ Updating user with data:', JSON.stringify(updateData, null, 2));
     
     // DOUBLE CHECK: Pastikan field-file benar-benar ada di updateData
     if (!updateData.ktpFile && !updateData.simFile && !updateData.stnkFile && !updateData.selfieFile && !updateData.vehiclePhotoFile) {
-      console.error('❌ CRITICAL ERROR: updateData tidak memiliki field-file!');
-      console.error('❌ updateData:', updateData);
-      console.error('❌ documents:', documents);
+      console.error('âŒ CRITICAL ERROR: updateData tidak memiliki field-file!');
+      console.error('âŒ updateData:', updateData);
+      console.error('âŒ documents:', documents);
       return res.status(500).json({ 
         error: 'Gagal menyiapkan data untuk update. Field-file tidak terdeteksi.' 
       });
@@ -283,19 +272,19 @@ export const uploadDriverDocuments = async (req, res) => {
 
     const updatedUser = await updateUser(userId, updateData);
     
-    console.log('✅ User updated. File fields:', {
-      ktpFile: updatedUser.ktpFile ? `✅ ${updatedUser.ktpFile.substring(0, 50)}...` : '❌ null/undefined',
-      simFile: updatedUser.simFile ? `✅ ${updatedUser.simFile.substring(0, 50)}...` : '❌ null/undefined',
-      stnkFile: updatedUser.stnkFile ? `✅ ${updatedUser.stnkFile.substring(0, 50)}...` : '❌ null/undefined',
-      selfieFile: updatedUser.selfieFile ? `✅ ${updatedUser.selfieFile.substring(0, 50)}...` : '❌ null/undefined',
-      vehiclePhotoFile: updatedUser.vehiclePhotoFile ? `✅ ${updatedUser.vehiclePhotoFile.substring(0, 50)}...` : '❌ null/undefined'
+    console.log('âœ… User updated. File fields:', {
+      ktpFile: updatedUser.ktpFile ? `âœ… ${updatedUser.ktpFile.substring(0, 50)}...` : 'âŒ null/undefined',
+      simFile: updatedUser.simFile ? `âœ… ${updatedUser.simFile.substring(0, 50)}...` : 'âŒ null/undefined',
+      stnkFile: updatedUser.stnkFile ? `âœ… ${updatedUser.stnkFile.substring(0, 50)}...` : 'âŒ null/undefined',
+      selfieFile: updatedUser.selfieFile ? `âœ… ${updatedUser.selfieFile.substring(0, 50)}...` : 'âŒ null/undefined',
+      vehiclePhotoFile: updatedUser.vehiclePhotoFile ? `âœ… ${updatedUser.vehiclePhotoFile.substring(0, 50)}...` : 'âŒ null/undefined'
     });
     
     // Verifikasi bahwa file benar-benar tersimpan
     if (!updatedUser.ktpFile && !updatedUser.simFile && !updatedUser.stnkFile && !updatedUser.selfieFile && !updatedUser.vehiclePhotoFile) {
-      console.error('❌ WARNING: No file fields saved to user!');
-      console.error('❌ Documents object:', documents);
-      console.error('❌ UpdateData:', updateData);
+      console.error('âŒ WARNING: No file fields saved to user!');
+      console.error('âŒ Documents object:', documents);
+      console.error('âŒ UpdateData:', updateData);
     }
     
     console.log('=== UPLOAD DRIVER DOCUMENTS END ===');
@@ -342,19 +331,16 @@ export const uploadUMKMDocuments = async (req, res) => {
     const isVercel = process.env.VERCEL || process.env.VERCEL_ENV;
     const hasBlobToken = !!process.env.BLOB_READ_WRITE_TOKEN;
 
-<<<<<<< HEAD
     if (isVercel && !hasBlobToken) {
       console.error('BLOB_READ_WRITE_TOKEN tidak tersedia untuk upload UMKM di Vercel');
       return res.status(500).json(getMissingBlobTokenResponse());
     }
 
-=======
->>>>>>> vercelrepo/main
     if (isVercel && hasBlobToken) {
       // Upload ke Vercel Blob Storage
-      console.log('📤 Uploading UMKM documents to Vercel Blob...');
-      console.log('📁 Files received:', Object.keys(files));
-      console.log('📁 Files details:', {
+      console.log('ðŸ“¤ Uploading UMKM documents to Vercel Blob...');
+      console.log('ðŸ“ Files received:', Object.keys(files));
+      console.log('ðŸ“ Files details:', {
         ktpFile: files.ktpFile ? `${files.ktpFile.length} file(s)` : 'none',
         storePhotoFile: files.storePhotoFile ? `${files.storePhotoFile.length} file(s)` : 'none',
         businessPermitFile: files.businessPermitFile ? `${files.businessPermitFile.length} file(s)` : 'none'
@@ -365,64 +351,64 @@ export const uploadUMKMDocuments = async (req, res) => {
         const prepared = prepareFileForBlob(files.ktpFile[0]);
         if (prepared) {
           filesToUpload.ktpFile = prepared;
-          console.log('✅ Prepared ktpFile for upload');
+          console.log('âœ… Prepared ktpFile for upload');
         } else {
-          console.warn('⚠️ Failed to prepare ktpFile');
+          console.warn('âš ï¸ Failed to prepare ktpFile');
         }
       }
       if (files.storePhotoFile && files.storePhotoFile[0]) {
         const prepared = prepareFileForBlob(files.storePhotoFile[0]);
         if (prepared) {
           filesToUpload.storePhotoFile = prepared;
-          console.log('✅ Prepared storePhotoFile for upload');
+          console.log('âœ… Prepared storePhotoFile for upload');
         } else {
-          console.warn('⚠️ Failed to prepare storePhotoFile');
+          console.warn('âš ï¸ Failed to prepare storePhotoFile');
         }
       }
       if (files.businessPermitFile && files.businessPermitFile[0]) {
         const prepared = prepareFileForBlob(files.businessPermitFile[0]);
         if (prepared) {
           filesToUpload.businessPermitFile = prepared;
-          console.log('✅ Prepared businessPermitFile for upload');
+          console.log('âœ… Prepared businessPermitFile for upload');
         } else {
-          console.warn('⚠️ Failed to prepare businessPermitFile');
+          console.warn('âš ï¸ Failed to prepare businessPermitFile');
         }
       }
 
-      console.log('📤 Files to upload:', Object.keys(filesToUpload));
+      console.log('ðŸ“¤ Files to upload:', Object.keys(filesToUpload));
 
       // Upload semua file ke blob
       const blobUrls = await uploadMultipleToBlob(filesToUpload, 'umkm');
       
-      console.log('📋 Blob URLs received:', blobUrls);
-      console.log('📋 Blob URLs keys:', Object.keys(blobUrls));
-      console.log('📋 Blob URLs values:', Object.values(blobUrls).map(url => url.substring(0, 50) + '...'));
+      console.log('ðŸ“‹ Blob URLs received:', blobUrls);
+      console.log('ðŸ“‹ Blob URLs keys:', Object.keys(blobUrls));
+      console.log('ðŸ“‹ Blob URLs values:', Object.values(blobUrls).map(url => url.substring(0, 50) + '...'));
       
       // PASTIKAN URL blob disimpan ke documents object
       // Set secara eksplisit untuk setiap field
       if (blobUrls.ktpFile) {
         documents.ktpFile = blobUrls.ktpFile;
-        console.log('✅ Set documents.ktpFile:', documents.ktpFile.substring(0, 50) + '...');
+        console.log('âœ… Set documents.ktpFile:', documents.ktpFile.substring(0, 50) + '...');
       }
       if (blobUrls.storePhotoFile) {
         documents.storePhotoFile = blobUrls.storePhotoFile;
-        console.log('✅ Set documents.storePhotoFile:', documents.storePhotoFile.substring(0, 50) + '...');
+        console.log('âœ… Set documents.storePhotoFile:', documents.storePhotoFile.substring(0, 50) + '...');
       }
       if (blobUrls.businessPermitFile) {
         documents.businessPermitFile = blobUrls.businessPermitFile;
-        console.log('✅ Set documents.businessPermitFile:', documents.businessPermitFile.substring(0, 50) + '...');
+        console.log('âœ… Set documents.businessPermitFile:', documents.businessPermitFile.substring(0, 50) + '...');
       }
       
-      console.log('✅ UMKM documents uploaded to blob:', Object.keys(blobUrls));
-      console.log('📝 Documents object final:', documents);
-      console.log('📝 Documents object keys:', Object.keys(documents));
+      console.log('âœ… UMKM documents uploaded to blob:', Object.keys(blobUrls));
+      console.log('ðŸ“ Documents object final:', documents);
+      console.log('ðŸ“ Documents object keys:', Object.keys(documents));
     } else if (!isVercel) {
       // Local development: simpan path file
       if (files.ktpFile && files.ktpFile[0]?.path) documents.ktpFile = getRelativePath(files.ktpFile[0].path);
       if (files.storePhotoFile && files.storePhotoFile[0]?.path) documents.storePhotoFile = getRelativePath(files.storePhotoFile[0].path);
       if (files.businessPermitFile && files.businessPermitFile[0]?.path) documents.businessPermitFile = getRelativePath(files.businessPermitFile[0].path);
     } else {
-      console.warn('⚠️ BLOB_READ_WRITE_TOKEN not set. File uploads will be skipped.');
+      console.warn('âš ï¸ BLOB_READ_WRITE_TOKEN not set. File uploads will be skipped.');
     }
 
     // Update user dengan data tambahan
@@ -436,15 +422,15 @@ export const uploadUMKMDocuments = async (req, res) => {
     // Set setiap field secara eksplisit, tidak menggunakan || null
     if (documents.ktpFile) {
       updateData.ktpFile = documents.ktpFile;
-      console.log('✅ Set updateData.ktpFile from documents');
+      console.log('âœ… Set updateData.ktpFile from documents');
     }
     if (documents.storePhotoFile) {
       updateData.storePhotoFile = documents.storePhotoFile;
-      console.log('✅ Set updateData.storePhotoFile from documents');
+      console.log('âœ… Set updateData.storePhotoFile from documents');
     }
     if (documents.businessPermitFile) {
       updateData.businessPermitFile = documents.businessPermitFile;
-      console.log('✅ Set updateData.businessPermitFile from documents');
+      console.log('âœ… Set updateData.businessPermitFile from documents');
     }
     
     // Hanya tambahkan field jika ada nilainya
@@ -453,44 +439,39 @@ export const uploadUMKMDocuments = async (req, res) => {
     if (storeDescription) updateData.storeDescription = storeDescription;
     if (phoneNumber) updateData.phone = phoneNumber;
 
-    console.log('📝 Documents object:', documents);
-    console.log('📝 Documents keys:', Object.keys(documents));
-    console.log('📝 Documents values:', {
-      ktpFile: documents.ktpFile ? `✅ ${documents.ktpFile.substring(0, 50)}...` : '❌ not in documents',
-      storePhotoFile: documents.storePhotoFile ? `✅ ${documents.storePhotoFile.substring(0, 50)}...` : '❌ not in documents',
-      businessPermitFile: documents.businessPermitFile ? `✅ ${documents.businessPermitFile.substring(0, 50)}...` : '❌ not in documents'
+    console.log('ðŸ“ Documents object:', documents);
+    console.log('ðŸ“ Documents keys:', Object.keys(documents));
+    console.log('ðŸ“ Documents values:', {
+      ktpFile: documents.ktpFile ? `âœ… ${documents.ktpFile.substring(0, 50)}...` : 'âŒ not in documents',
+      storePhotoFile: documents.storePhotoFile ? `âœ… ${documents.storePhotoFile.substring(0, 50)}...` : 'âŒ not in documents',
+      businessPermitFile: documents.businessPermitFile ? `âœ… ${documents.businessPermitFile.substring(0, 50)}...` : 'âŒ not in documents'
     });
     
     // PASTIKAN setidaknya ada satu file field yang berhasil diupload sebelum update
     if (!documents.ktpFile && !documents.storePhotoFile && !documents.businessPermitFile) {
-      console.error('❌ ERROR: No file fields to save! Documents object is empty or invalid.');
-      console.error('❌ Documents:', documents);
-      console.error('❌ Files received:', files);
-<<<<<<< HEAD
+      console.error('âŒ ERROR: No file fields to save! Documents object is empty or invalid.');
+      console.error('âŒ Documents:', documents);
+      console.error('âŒ Files received:', files);
       return res.status(502).json({
         error: 'Upload ke Vercel Blob gagal. Pastikan token valid, Blob Store terhubung ke project ini, dan file yang dikirim tidak rusak.'
-=======
-      return res.status(400).json({ 
-        error: 'Tidak ada file yang berhasil diupload. Pastikan file valid dan BLOB_READ_WRITE_TOKEN terkonfigurasi dengan benar.' 
->>>>>>> vercelrepo/main
       });
     }
     
     // VERIFIKASI FINAL sebelum update
-    console.log('🔍 FINAL VERIFICATION before update:');
-    console.log('🔍 updateData keys:', Object.keys(updateData));
-    console.log('🔍 updateData file fields:', {
-      ktpFile: updateData.ktpFile ? `✅ EXISTS: ${updateData.ktpFile.substring(0, 50)}...` : '❌ MISSING',
-      storePhotoFile: updateData.storePhotoFile ? `✅ EXISTS: ${updateData.storePhotoFile.substring(0, 50)}...` : '❌ MISSING',
-      businessPermitFile: updateData.businessPermitFile ? `✅ EXISTS: ${updateData.businessPermitFile.substring(0, 50)}...` : '❌ MISSING'
+    console.log('ðŸ” FINAL VERIFICATION before update:');
+    console.log('ðŸ” updateData keys:', Object.keys(updateData));
+    console.log('ðŸ” updateData file fields:', {
+      ktpFile: updateData.ktpFile ? `âœ… EXISTS: ${updateData.ktpFile.substring(0, 50)}...` : 'âŒ MISSING',
+      storePhotoFile: updateData.storePhotoFile ? `âœ… EXISTS: ${updateData.storePhotoFile.substring(0, 50)}...` : 'âŒ MISSING',
+      businessPermitFile: updateData.businessPermitFile ? `âœ… EXISTS: ${updateData.businessPermitFile.substring(0, 50)}...` : 'âŒ MISSING'
     });
-    console.log('📝 Updating UMKM user with data:', JSON.stringify(updateData, null, 2));
+    console.log('ðŸ“ Updating UMKM user with data:', JSON.stringify(updateData, null, 2));
     
     // DOUBLE CHECK: Pastikan field-file benar-benar ada di updateData
     if (!updateData.ktpFile && !updateData.storePhotoFile && !updateData.businessPermitFile) {
-      console.error('❌ CRITICAL ERROR: updateData tidak memiliki field-file!');
-      console.error('❌ updateData:', updateData);
-      console.error('❌ documents:', documents);
+      console.error('âŒ CRITICAL ERROR: updateData tidak memiliki field-file!');
+      console.error('âŒ updateData:', updateData);
+      console.error('âŒ documents:', documents);
       return res.status(500).json({ 
         error: 'Gagal menyiapkan data untuk update. Field-file tidak terdeteksi.' 
       });
@@ -498,17 +479,17 @@ export const uploadUMKMDocuments = async (req, res) => {
 
     const updatedUser = await updateUser(userId, updateData);
     
-    console.log('✅ UMKM user updated. File fields:', {
-      ktpFile: updatedUser.ktpFile ? `✅ ${updatedUser.ktpFile.substring(0, 50)}...` : '❌ null/undefined',
-      storePhotoFile: updatedUser.storePhotoFile ? `✅ ${updatedUser.storePhotoFile.substring(0, 50)}...` : '❌ null/undefined',
-      businessPermitFile: updatedUser.businessPermitFile ? `✅ ${updatedUser.businessPermitFile.substring(0, 50)}...` : '❌ null/undefined'
+    console.log('âœ… UMKM user updated. File fields:', {
+      ktpFile: updatedUser.ktpFile ? `âœ… ${updatedUser.ktpFile.substring(0, 50)}...` : 'âŒ null/undefined',
+      storePhotoFile: updatedUser.storePhotoFile ? `âœ… ${updatedUser.storePhotoFile.substring(0, 50)}...` : 'âŒ null/undefined',
+      businessPermitFile: updatedUser.businessPermitFile ? `âœ… ${updatedUser.businessPermitFile.substring(0, 50)}...` : 'âŒ null/undefined'
     });
     
     // Verifikasi bahwa file benar-benar tersimpan
     if (!updatedUser.ktpFile && !updatedUser.storePhotoFile && !updatedUser.businessPermitFile) {
-      console.error('❌ WARNING: No file fields saved to user!');
-      console.error('❌ Documents object:', documents);
-      console.error('❌ UpdateData:', updateData);
+      console.error('âŒ WARNING: No file fields saved to user!');
+      console.error('âŒ Documents object:', documents);
+      console.error('âŒ UpdateData:', updateData);
     }
 
     // Hapus password dari response
@@ -565,11 +546,7 @@ export const uploadProductImageController = async (req, res) => {
       const baseUrl = 'http://localhost:3000';
       imageUrl = `${baseUrl}/${imagePath}`;
     } else {
-<<<<<<< HEAD
       return res.status(500).json(getMissingBlobTokenResponse());
-=======
-      return res.status(500).json({ error: 'BLOB_READ_WRITE_TOKEN tidak dikonfigurasi' });
->>>>>>> vercelrepo/main
     }
 
     res.json({
@@ -619,7 +596,7 @@ export const uploadProfilePhotoController = async (req, res) => {
     const isVercel = process.env.VERCEL || process.env.VERCEL_ENV;
     const hasBlobToken = !!process.env.BLOB_READ_WRITE_TOKEN;
 
-    console.log('🔍 Environment check:', {
+    console.log('ðŸ” Environment check:', {
       isVercel,
       hasBlobToken,
       VERCEL: process.env.VERCEL,
@@ -631,14 +608,14 @@ export const uploadProfilePhotoController = async (req, res) => {
 
     if (isVercel && hasBlobToken) {
       // Upload ke Vercel Blob Storage
-      console.log('📤 Uploading to Vercel Blob Storage...');
+      console.log('ðŸ“¤ Uploading to Vercel Blob Storage...');
       const fileData = prepareFileForBlob(req.file);
       if (!fileData) {
-        console.error('❌ Failed to prepare file for blob');
+        console.error('âŒ Failed to prepare file for blob');
         return res.status(400).json({ error: 'File tidak valid atau tidak dapat diproses' });
       }
       
-      console.log('📤 File prepared for blob:', {
+      console.log('ðŸ“¤ File prepared for blob:', {
         filename: fileData.filename,
         mimetype: fileData.mimetype,
         bufferSize: fileData.buffer?.length || 0
@@ -651,14 +628,14 @@ export const uploadProfilePhotoController = async (req, res) => {
           fileData.mimetype,
           'profiles'
         );
-        console.log('✅ Profile photo uploaded to blob:', profilePhotoUrl);
+        console.log('âœ… Profile photo uploaded to blob:', profilePhotoUrl);
         
         // Verifikasi URL valid
         if (!profilePhotoUrl || !profilePhotoUrl.startsWith('http')) {
           throw new Error('URL yang dihasilkan tidak valid');
         }
       } catch (blobError) {
-        console.error('❌ Error uploading to blob:', blobError);
+        console.error('âŒ Error uploading to blob:', blobError);
         console.error('Error details:', {
           message: blobError.message,
           stack: blobError.stack
@@ -667,23 +644,17 @@ export const uploadProfilePhotoController = async (req, res) => {
       }
     } else if (!isVercel) {
       // Local development: gunakan path relatif
-      console.log('📁 Local development mode - using file system');
+      console.log('ðŸ“ Local development mode - using file system');
       if (!req.file.path) {
         return res.status(400).json({ error: 'File path tidak ditemukan' });
       }
       const imagePath = getRelativePath(req.file.path);
       const baseUrl = 'http://localhost:3000';
       profilePhotoUrl = `${baseUrl}/${imagePath}`;
-      console.log('✅ Profile photo path (local):', profilePhotoUrl);
+      console.log('âœ… Profile photo path (local):', profilePhotoUrl);
     } else {
-      console.error('❌ BLOB_READ_WRITE_TOKEN tidak dikonfigurasi');
-<<<<<<< HEAD
+      console.error('âŒ BLOB_READ_WRITE_TOKEN tidak dikonfigurasi');
       return res.status(500).json(getMissingBlobTokenResponse());
-=======
-      return res.status(500).json({ 
-        error: 'BLOB_READ_WRITE_TOKEN tidak dikonfigurasi. Silakan set environment variable ini di Vercel.' 
-      });
->>>>>>> vercelrepo/main
     }
 
     // Pastikan URL valid sebelum menyimpan
@@ -691,7 +662,7 @@ export const uploadProfilePhotoController = async (req, res) => {
       throw new Error('URL foto profil tidak valid');
     }
 
-    console.log('💾 Saving profile photo URL to MongoDB:', profilePhotoUrl);
+    console.log('ðŸ’¾ Saving profile photo URL to MongoDB:', profilePhotoUrl);
 
     // Update user dengan profile photo URL
     const updateData = {
@@ -699,7 +670,7 @@ export const uploadProfilePhotoController = async (req, res) => {
       updatedAt: new Date().toISOString()
     };
 
-    console.log('📝 Update data:', {
+    console.log('ðŸ“ Update data:', {
       profilePhoto: updateData.profilePhoto.substring(0, 100) + '...',
       updatedAt: updateData.updatedAt
     });
@@ -708,12 +679,12 @@ export const uploadProfilePhotoController = async (req, res) => {
     
     // Verifikasi bahwa profilePhoto tersimpan
     if (!updatedUser.profilePhoto) {
-      console.error('❌ CRITICAL: profilePhoto tidak tersimpan di database!');
+      console.error('âŒ CRITICAL: profilePhoto tidak tersimpan di database!');
       throw new Error('Gagal menyimpan URL foto profil ke database');
     }
     
-    console.log('✅ User profile photo updated successfully');
-    console.log('✅ Profile photo URL in database:', updatedUser.profilePhoto.substring(0, 100) + '...');
+    console.log('âœ… User profile photo updated successfully');
+    console.log('âœ… Profile photo URL in database:', updatedUser.profilePhoto.substring(0, 100) + '...');
     console.log('=== UPLOAD PROFILE PHOTO END ===');
 
     // Hapus password dari response
@@ -740,7 +711,6 @@ export const uploadProfilePhotoController = async (req, res) => {
   }
 };
 
-<<<<<<< HEAD
 export const uploadGenericFileController = async (req, res) => {
   try {
     if (!req.file) {
@@ -795,5 +765,3 @@ export const uploadGenericFileController = async (req, res) => {
   }
 };
 
-=======
->>>>>>> vercelrepo/main

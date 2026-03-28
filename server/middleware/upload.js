@@ -34,7 +34,7 @@ const storage = isVercel
           cb(null, uploadPath);
         } catch (error) {
           // Jika error (misalnya read-only file system), gunakan memory storage
-          console.warn('⚠️ Cannot create upload directory, using memory storage:', error.message);
+          console.warn('âš ï¸ Cannot create upload directory, using memory storage:', error.message);
           cb(null, '/tmp'); // Fallback ke /tmp atau memory
         }
       },
@@ -64,10 +64,10 @@ const fileFilter = (req, file, cb) => {
   const isAllowed = allowedMimeTypes.includes(file.mimetype.toLowerCase());
   
   if (isImage || isAllowed) {
-    console.log('✅ File type allowed:', file.mimetype);
+    console.log('âœ… File type allowed:', file.mimetype);
     cb(null, true);
   } else {
-    console.error('❌ File type not allowed:', file.mimetype);
+    console.error('âŒ File type not allowed:', file.mimetype);
     cb(new Error(`Hanya file gambar (PNG, JPG, JPEG, GIF, WEBP) dan PDF yang diizinkan. File yang diupload: ${file.mimetype}`), false);
   }
 };
@@ -77,11 +77,7 @@ export const upload = multer({
   storage: storage,
   fileFilter: fileFilter,
   limits: {
-<<<<<<< HEAD
     fileSize: 4 * 1024 * 1024 // 4MB max file size to stay under Vercel function payload limits
-=======
-    fileSize: 5 * 1024 * 1024 // 5MB max file size
->>>>>>> vercelrepo/main
   }
 });
 
@@ -106,9 +102,6 @@ export const uploadProductImage = upload.single('productImage');
 // Middleware untuk upload foto profil
 export const uploadProfilePhoto = upload.single('profilePhoto');
 
-<<<<<<< HEAD
 // Middleware untuk upload file generik ke Vercel Blob
 export const uploadGenericFile = upload.single('file');
 
-=======
->>>>>>> vercelrepo/main

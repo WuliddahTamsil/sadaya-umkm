@@ -12,10 +12,7 @@ import { toast } from 'sonner';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../ui/select';
 import { api } from '../../../config/api';
 import { useAuth } from '../../../contexts/AuthContext';
-<<<<<<< HEAD
 import { uploadFileToBlob, validateUploadFile } from '../../../utils/upload';
-=======
->>>>>>> vercelrepo/main
 
 interface Product {
   id: string;
@@ -106,21 +103,10 @@ export function ManajemenProduk() {
     const file = e.target.files?.[0];
     if (file) {
       // Validate file type
-<<<<<<< HEAD
       try {
         validateUploadFile(file, ['image/']);
       } catch (error: any) {
         toast.error(error.message || 'File tidak valid');
-=======
-      if (!file.type.startsWith('image/')) {
-        toast.error('File harus berupa gambar');
-        return;
-      }
-      
-      // Validate file size (max 5MB)
-      if (file.size > 5 * 1024 * 1024) {
-        toast.error('Ukuran file maksimal 5MB');
->>>>>>> vercelrepo/main
         return;
       }
 
@@ -146,28 +132,9 @@ export function ManajemenProduk() {
 
     try {
       setIsUploadingImage(true);
-<<<<<<< HEAD
       const imageUrl = await uploadFileToBlob(selectedImage, 'products');
       toast.success('Gambar berhasil diupload');
       return imageUrl;
-=======
-      const formData = new FormData();
-      formData.append('productImage', selectedImage);
-      formData.append('userId', user.id);
-
-      const response = await fetch(api.upload.productImage, {
-        method: 'POST',
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error('Gagal mengupload gambar');
-      }
-
-      const data = await response.json();
-      toast.success('Gambar berhasil diupload');
-      return data.imageUrl;
->>>>>>> vercelrepo/main
     } catch (error) {
       console.error('Error uploading image:', error);
       toast.error('Gagal mengupload gambar');
@@ -547,11 +514,7 @@ export function ManajemenProduk() {
                         <span className="font-semibold">Klik untuk upload</span> atau drag & drop
                       </p>
                       <p className="text-xs" style={{ color: '#858585' }}>
-<<<<<<< HEAD
                         PNG, JPG, GIF (MAX. 4MB)
-=======
-                        PNG, JPG, GIF (MAX. 5MB)
->>>>>>> vercelrepo/main
                       </p>
                     </div>
                     <input
