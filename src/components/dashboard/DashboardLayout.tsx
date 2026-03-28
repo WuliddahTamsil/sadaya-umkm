@@ -75,7 +75,7 @@ export function DashboardLayout({ children, activeMenu, onMenuChange }: Dashboar
           { id: 'pesanan', label: 'Pesanan Saya', icon: Package },
           { id: 'tracking', label: 'Tracking Pesanan', icon: TrendingUp },
           { id: 'dompet', label: 'Dompet Saya', icon: Wallet },
-          { id: 'game', label: 'Harvest Bogor ðŸŽ®', icon: Gamepad2 },
+          { id: 'game', label: 'Harvest Bogor 🎮', icon: Gamepad2 },
           { id: 'konten', label: 'Konten', icon: FileText },
           { id: 'profil', label: 'Profil', icon: User },
           { id: 'notifikasi', label: 'Notifikasi', icon: Bell, badge: unreadCount },
@@ -157,7 +157,7 @@ export function DashboardLayout({ children, activeMenu, onMenuChange }: Dashboar
         {!user.isVerified && (
           <div className="mt-3 p-2 rounded" style={{ backgroundColor: '#FDE08E' }}>
             <p className="body-3" style={{ color: '#2F4858', fontSize: '11px' }}>
-              â³ Menunggu Verifikasi Admin
+              ⏳ Menunggu Verifikasi Admin
             </p>
           </div>
         )}

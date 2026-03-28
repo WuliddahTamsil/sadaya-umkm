@@ -68,7 +68,7 @@ const PLANT_DEFS: PlantDef[] = [
   {
     id: "talas",
     name: "Talas Bogor",
-    emoji: "ðŸŒ¿",
+    emoji: "🌿",
     days: 7,
     points: 50,
     color: "#22c55e",
@@ -78,7 +78,7 @@ const PLANT_DEFS: PlantDef[] = [
   {
     id: "pala",
     name: "Pala Premium",
-    emoji: "ðŸŒ°",
+    emoji: "🌰",
     days: 14,
     points: 120,
     color: "#f97316",
@@ -88,7 +88,7 @@ const PLANT_DEFS: PlantDef[] = [
   {
     id: "jambu",
     name: "Jambu Kristal",
-    emoji: "ðŸ",
+    emoji: "🍐",
     days: 10,
     points: 80,
     color: "#eab308",
@@ -102,7 +102,7 @@ const MISSIONS: MissionDef[] = [
     id: "m1",
     label: "Panen Pertama",
     desc: "Panen tanaman pertamamu",
-    emoji: "ðŸŒ¾",
+    emoji: "🌾",
     target: 1,
     reward: "+30 Poin",
     rewardType: "points",
@@ -112,7 +112,7 @@ const MISSIONS: MissionDef[] = [
     id: "m2",
     label: "Petani Rajin",
     desc: "Panen 3x berturut-turut",
-    emoji: "ðŸ”¥",
+    emoji: "🔥",
     target: 3,
     reward: "+5 Air",
     rewardType: "water",
@@ -122,7 +122,7 @@ const MISSIONS: MissionDef[] = [
     id: "m3",
     label: "Master Talas",
     desc: "Panen Talas Bogor 5x",
-    emoji: "ðŸŒ¿",
+    emoji: "🌿",
     target: 5,
     reward: "+100 Poin",
     rewardType: "points",
@@ -132,7 +132,7 @@ const MISSIONS: MissionDef[] = [
     id: "m4",
     label: "Pala Hunter",
     desc: "Panen Pala Premium 3x",
-    emoji: "ðŸŒ°",
+    emoji: "🌰",
     target: 3,
     reward: "+80 Poin",
     rewardType: "points",
@@ -142,7 +142,7 @@ const MISSIONS: MissionDef[] = [
     id: "m5",
     label: "Jambu Lover",
     desc: "Panen Jambu Kristal 4x",
-    emoji: "ðŸ",
+    emoji: "🍐",
     target: 4,
     reward: "+60 Poin",
     rewardType: "points",
@@ -152,7 +152,7 @@ const MISSIONS: MissionDef[] = [
     id: "m6",
     label: "Panen 10x",
     desc: "Capai total 10 kali panen",
-    emoji: "ðŸ†",
+    emoji: "🏆",
     target: 10,
     reward: "+200 Poin",
     rewardType: "points",
@@ -162,7 +162,7 @@ const MISSIONS: MissionDef[] = [
     id: "m7",
     label: "Kolektor Poin",
     desc: "Kumpulkan total 500 Daya Poin",
-    emoji: "ðŸ’°",
+    emoji: "💰",
     target: 500,
     reward: "+10 Air",
     rewardType: "water",
@@ -173,56 +173,56 @@ const MISSIONS: MissionDef[] = [
 const REWARDS: RewardDef[] = [
   {
     id: "r1",
-    emoji: "ðŸŽ",
+    emoji: "🎁",
     title: "Cashback 10%",
     desc: "Cashback 10% untuk pembelian pertama",
     trigger: (s) => s.totalHarvests >= 1,
   },
   {
     id: "r2",
-    emoji: "ðŸšš",
+    emoji: "🚚",
     title: "Gratis Ongkir",
     desc: "Gratis ongkos kirim seluruh Indonesia",
     trigger: (s) => s.totalHarvests >= 3,
   },
   {
     id: "r3",
-    emoji: "ðŸ’¸",
+    emoji: "💸",
     title: "Diskon 20%",
     desc: "Diskon 20% untuk semua produk Bogor",
     trigger: (s) => (s.byPlant.talas || 0) >= 3,
   },
   {
     id: "r4",
-    emoji: "ðŸ”¥",
+    emoji: "🔥",
     title: "Flash Sale Akses",
     desc: "Akses eksklusif flash sale 1 jam lebih awal",
     trigger: (s) => s.streak >= 3,
   },
   {
     id: "r5",
-    emoji: "ðŸ’Ž",
+    emoji: "💎",
     title: "Cashback 50%",
     desc: "Cashback 50% khusus produk lokal Bogor",
     trigger: (s) => (s.byPlant.talas || 0) >= 5,
   },
   {
     id: "r6",
-    emoji: "ðŸ›ï¸",
+    emoji: "🛍️",
     title: "Diskon 35%",
     desc: "Diskon 35% min. belanja Rp150.000",
     trigger: (s) => s.totalPoints >= 500,
   },
   {
     id: "r7",
-    emoji: "ðŸŽ€",
+    emoji: "🎀",
     title: "Member Premium",
     desc: "Upgrade ke member Premium 30 hari GRATIS",
     trigger: (s) => s.totalHarvests >= 10,
   },
   {
     id: "r8",
-    emoji: "ðŸ…",
+    emoji: "🏅",
     title: "Voucher Rp25.000",
     desc: "Voucher belanja senilai Rp25.000",
     trigger: (s) => (s.byPlant.pala || 0) >= 3,
@@ -819,7 +819,7 @@ function PlantSVG({
                 animation: `sparkle ${0.7 + i * 0.3}s ease-in-out infinite alternate`,
               }}
             >
-              âœ¦
+              ✦
             </text>
           ))}
         </>
@@ -949,13 +949,13 @@ function HarvestModal({
                   <div
                     style={{ fontSize: 28, fontWeight: 900, color: "#14532d" }}
                   >
-                    +{result.points} ðŸª™
+                    +{result.points} 🪙
                   </div>
                   <div style={{ fontSize: 11, color: "#4ade80" }}>
                     = Rp{result.points} diskon belanja
                   </div>
                 </div>
-                <div style={{ fontSize: 40 }}>ðŸ’°</div>
+                <div style={{ fontSize: 40 }}>💰</div>
               </div>
 
               {/* Streak bonus */}
@@ -972,7 +972,7 @@ function HarvestModal({
                     marginBottom: 12,
                   }}
                 >
-                  <span style={{ fontSize: 28 }}>ðŸ”¥</span>
+                  <span style={{ fontSize: 28 }}>🔥</span>
                   <div>
                     <div
                       style={{
@@ -981,7 +981,7 @@ function HarvestModal({
                         color: "#c2410c",
                       }}
                     >
-                      Streak Bonus Ã—{result.streakBonus}
+                      Streak Bonus ×{result.streakBonus}
                     </div>
                     <div style={{ fontSize: 11, color: "#ea580c" }}>
                       Panen {result.streakBonus} hari berturut-turut!
@@ -1003,7 +1003,7 @@ function HarvestModal({
                   marginBottom: hasExtras ? 12 : 0,
                 }}
               >
-                <span style={{ fontSize: 24 }}>â­</span>
+                <span style={{ fontSize: 24 }}>⭐</span>
                 <div>
                   <div
                     style={{ fontSize: 12, fontWeight: 700, color: "#6d28d9" }}
@@ -1032,11 +1032,11 @@ function HarvestModal({
                   }}
                   onClick={() => setStep(1)}
                 >
-                  âœ¨ Ada{" "}
+                  ✨ Ada{" "}
                   {result.newRewards.length +
                     result.completedMissions.length +
                     (result.levelUp ? 1 : 0)}{" "}
-                  hadiah menunggumu! Lihat â†’
+                  hadiah menunggumu! Lihat →
                 </div>
               )}
             </div>
@@ -1052,7 +1052,7 @@ function HarvestModal({
                   marginBottom: 14,
                 }}
               >
-                ðŸŽ Kamu Mendapatkan:
+                🎁 Kamu Mendapatkan:
               </div>
 
               {result.levelUp && (
@@ -1067,7 +1067,7 @@ function HarvestModal({
                     gap: 12,
                   }}
                 >
-                  <span style={{ fontSize: 32 }}>ðŸ…</span>
+                  <span style={{ fontSize: 32 }}>🏅</span>
                   <div>
                     <div
                       style={{ fontSize: 13, fontWeight: 700, color: "#fff" }}
@@ -1075,7 +1075,7 @@ function HarvestModal({
                       Level Up!
                     </div>
                     <div style={{ fontSize: 12, color: "#ddd6fe" }}>
-                      {LEVEL_NAMES[result.levelUp.from]} â†’{" "}
+                      {LEVEL_NAMES[result.levelUp.from]} →{" "}
                       <strong style={{ color: "#fde047" }}>
                         {LEVEL_NAMES[result.levelUp.to]}
                       </strong>
@@ -1113,7 +1113,7 @@ function HarvestModal({
                       {m.reward}
                     </div>
                   </div>
-                  <span style={{ fontSize: 18 }}>âœ…</span>
+                  <span style={{ fontSize: 18 }}>✅</span>
                 </div>
               ))}
 
@@ -1181,7 +1181,7 @@ function HarvestModal({
                   fontFamily: "inherit",
                 }}
               >
-                Lihat Hadiah ðŸŽ
+                Lihat Hadiah 🎁
               </button>
             )}
             {step === 1 && (
@@ -1200,7 +1200,7 @@ function HarvestModal({
                   fontFamily: "inherit",
                 }}
               >
-                â† Kembali
+                ← Kembali
               </button>
             )}
             <button
@@ -1220,7 +1220,7 @@ function HarvestModal({
                 transition: "all 0.2s ease",
               }}
             >
-              OK, Lanjut Bertani! ðŸŒ¾
+              OK, Lanjut Bertani! 🌾
             </button>
           </div>
         </div>
@@ -1267,14 +1267,14 @@ function SawahPlot({
   const stageLabel = !plant
     ? "Belum Ditanam"
     : prog >= 100
-      ? "âœ¨ Siap Panen!"
+      ? "✨ Siap Panen!"
       : prog >= 80
-        ? "ðŸŒ¾ Menguning"
+        ? "🌾 Menguning"
         : prog >= 50
-          ? "ðŸŒ¿ Subur"
+          ? "🌿 Subur"
           : prog >= 20
-            ? "ðŸŒ± Tumbuh"
-            : "ðŸŒ± Benih";
+            ? "🌱 Tumbuh"
+            : "🌱 Benih";
   const stageColor = !plant
     ? "#94a3b8"
     : prog >= 100
@@ -1342,7 +1342,7 @@ function SawahPlot({
                 fontSize: 20,
               }}
             >
-              {def ? def.emoji : "ðŸª´"}
+              {def ? def.emoji : "🪴"}
             </div>
             <div>
               <div style={{ fontSize: 14, fontWeight: 700, color: "#1e293b" }}>
@@ -1365,7 +1365,7 @@ function SawahPlot({
                 color: def.accent,
               }}
             >
-              ðŸª™ {def.points}
+              🪙 {def.points}
             </div>
           )}
         </div>
@@ -1499,7 +1499,7 @@ function SawahPlot({
                   opacity: 0,
                 }}
               >
-                ðŸ’§
+                💧
               </div>
             ))}
           {canHarvest && (
@@ -1529,7 +1529,7 @@ function SawahPlot({
                 gap: 8,
               }}
             >
-              <div style={{ fontSize: 36, opacity: 0.18 }}>ðŸŒ¾</div>
+              <div style={{ fontSize: 36, opacity: 0.18 }}>🌾</div>
               <div
                 style={{ fontSize: 12, color: "#94a3b8", fontStyle: "italic" }}
               >
@@ -1571,14 +1571,14 @@ function SawahPlot({
                 }}
               >
                 {prog >= 100
-                  ? "âœ¨ PANEN!"
+                  ? "✨ PANEN!"
                   : prog >= 80
-                    ? "ðŸŒ¾ Hampir"
+                    ? "🌾 Hampir"
                     : prog >= 50
-                      ? "ðŸŒ¿ Subur"
+                      ? "🌿 Subur"
                       : prog >= 20
-                        ? "ðŸŒ± Tumbuh"
-                        : "ðŸŒ± Benih"}
+                        ? "🌱 Tumbuh"
+                        : "🌱 Benih"}
               </div>
               <div
                 style={{
@@ -1689,7 +1689,7 @@ function SawahPlot({
                 transition: "all 0.2s ease",
               }}
             >
-              {selecting === index ? "âœ• Batal" : "ðŸŒ± Pilih Bibit"}
+              {selecting === index ? "✕ Batal" : "🌱 Pilih Bibit"}
             </button>
           ) : (
             <>
@@ -1721,7 +1721,7 @@ function SawahPlot({
                   transition: "all 0.2s ease",
                 }}
               >
-                ðŸ’§ Siram
+                💧 Siram
               </button>
               <button
                 disabled={!canHarvest}
@@ -1752,7 +1752,7 @@ function SawahPlot({
                   transition: "all 0.18s ease",
                 }}
               >
-                ðŸ§º Panen
+                🧺 Panen
               </button>
             </>
           )}
@@ -1833,7 +1833,7 @@ function SawahPlot({
                   whiteSpace: "nowrap",
                 }}
               >
-                {pd.days}h Â· ðŸª™{pd.points}
+                {pd.days}h · 🪙{pd.points}
               </div>
             </button>
           ))}
@@ -1878,7 +1878,7 @@ function RewardsTab({
             marginBottom: 4,
           }}
         >
-          ðŸª™ Total Daya Poin
+          🪙 Total Daya Poin
         </div>
         <div style={{ fontSize: 36, fontWeight: 900, color: "#78350f" }}>
           {state.points.toLocaleString()}
@@ -1918,7 +1918,7 @@ function RewardsTab({
           marginBottom: 14,
         }}
       >
-        ðŸŽ Reward Tersedia
+        🎁 Reward Tersedia
       </div>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
         {REWARDS.map((r) => {
@@ -2000,7 +2000,7 @@ function RewardsTab({
                 <div
                   style={{ fontSize: 10, color: "#94a3b8", marginBottom: 8 }}
                 >
-                  ðŸ”’ Penuhi syarat untuk unlock
+                  🔒 Penuhi syarat untuk unlock
                 </div>
               )}
               <button
@@ -2034,10 +2034,10 @@ function RewardsTab({
                 }}
               >
                 {redeemed
-                  ? "âœ… Sudah Diklaim"
+                  ? "✅ Sudah Diklaim"
                   : unlocked
                     ? "Klaim Sekarang"
-                    : "ðŸ”’ Terkunci"}
+                    : "🔒 Terkunci"}
               </button>
             </div>
           );
@@ -2073,7 +2073,7 @@ function MissionsTab({ state }: { state: GameState }) {
           gap: 16,
         }}
       >
-        <div style={{ fontSize: 40 }}>ðŸŽ¯</div>
+        <div style={{ fontSize: 40 }}>🎯</div>
         <div>
           <div style={{ fontSize: 14, fontWeight: 700, color: "#4c1d95" }}>
             Misi Aktif
@@ -2148,7 +2148,7 @@ function MissionsTab({ state }: { state: GameState }) {
                         fontWeight: 700,
                       }}
                     >
-                      âœ… Selesai
+                      ✅ Selesai
                     </div>
                   ) : (
                     <div
@@ -2204,7 +2204,7 @@ function MissionsTab({ state }: { state: GameState }) {
                     borderRadius: 99,
                   }}
                 >
-                  <span style={{ fontSize: 11 }}>ðŸŽ</span>
+                  <span style={{ fontSize: 11 }}>🎁</span>
                   <span
                     style={{
                       fontSize: 11,
@@ -2268,7 +2268,7 @@ function StatsTab({ state }: { state: GameState }) {
               fontSize: 30,
             }}
           >
-            {["ðŸŒ±", "ðŸŒ¿", "ðŸŒ¾", "ðŸ…", "ðŸ¥‡", "ðŸ†", "ðŸ‘‘"][level]}
+            {["🌱", "🌿", "🌾", "🏅", "🥇", "🏆", "👑"][level]}
           </div>
           <div style={{ flex: 1 }}>
             <div style={{ fontSize: 12, color: "#c4b5fd", fontWeight: 600 }}>
@@ -2317,28 +2317,28 @@ function StatsTab({ state }: { state: GameState }) {
       >
         {[
           {
-            icon: "ðŸ§º",
+            icon: "🧺",
             label: "Total Panen",
             val: state.totalHarvests,
             col: "#22c55e",
             bg: "#f0fdf4",
           },
           {
-            icon: "ðŸ”¥",
+            icon: "🔥",
             label: "Hari Beruntun",
             val: `${state.streak} hari`,
             col: "#f97316",
             bg: "#fff7ed",
           },
           {
-            icon: "ðŸª™",
+            icon: "🪙",
             label: "Total Poin",
             val: state.points.toLocaleString(),
             col: "#f59e0b",
             bg: "#fffbeb",
           },
           {
-            icon: "ðŸ’Ž",
+            icon: "💎",
             label: "Gems",
             val: state.gems,
             col: "#8b5cf6",
@@ -2389,7 +2389,7 @@ function StatsTab({ state }: { state: GameState }) {
             marginBottom: 14,
           }}
         >
-          ðŸ“Š Panen per Tanaman
+          📊 Panen per Tanaman
         </div>
         {PLANT_DEFS.map((pd) => {
           const cnt = state.byPlant[pd.id] || 0;
@@ -2455,7 +2455,7 @@ function StatsTab({ state }: { state: GameState }) {
             marginBottom: 14,
           }}
         >
-          ðŸ… Badge Terkumpul
+          🏅 Badge Terkumpul
         </div>
         <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
           {state.completedMissions.map((id) => {
@@ -2719,13 +2719,13 @@ export function GamePage() {
       gems: p.gems + 1,
     }));
     setCanClaim(false);
-    showToast(`+${DAILY_WATER_BONUS} Air & +1 Gem diklaim!`, "ðŸŽ");
+    showToast(`+${DAILY_WATER_BONUS} Air & +1 Gem diklaim!`, "🎁");
   };
 
   const handleRedeem = (id: string) => {
     setState((p) => ({ ...p, redeemedRewards: [...p.redeemedRewards, id] }));
     const r = REWARDS.find((x) => x.id === id);
-    showToast(`${r?.title} berhasil diklaim!`, "ðŸŽ");
+    showToast(`${r?.title} berhasil diklaim!`, "🎁");
   };
 
   const fmt = (s: number) =>
@@ -2746,10 +2746,10 @@ export function GamePage() {
   ).length;
 
   const TABS = [
-    { id: "farm", label: "ðŸŒ¾ Kebun", badge: hasReady ? 1 : 0 },
-    { id: "rewards", label: "ðŸŽ Reward", badge: unclaimedRewards },
-    { id: "missions", label: "ðŸŽ¯ Misi", badge: 0 },
-    { id: "stats", label: "ðŸ“Š Statistik", badge: 0 },
+    { id: "farm", label: "🌾 Kebun", badge: hasReady ? 1 : 0 },
+    { id: "rewards", label: "🎁 Reward", badge: unclaimedRewards },
+    { id: "missions", label: "🎯 Misi", badge: 0 },
+    { id: "stats", label: "📊 Statistik", badge: 0 },
   ];
 
   // â”€â”€â”€ Landing â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
@@ -2794,7 +2794,7 @@ export function GamePage() {
                   color: "#c2410c",
                 }}
               >
-                âœ¦ Gamification Ã— Bogor
+                ✦ Gamification × Bogor
               </div>
               <h1 style={{ marginBottom: 20 }}>
                 <span
@@ -2859,11 +2859,11 @@ export function GamePage() {
                 }}
               >
                 {[
-                  ["ðŸšš", "Gratis Ongkir"],
-                  ["ðŸ’¸", "Cashback 50%"],
-                  ["ðŸŽ", "Diskon 35%"],
-                  ["ðŸ…", "Level Up"],
-                  ["ðŸ”¥", "Streak Bonus"],
+                  ["🚚", "Gratis Ongkir"],
+                  ["💸", "Cashback 50%"],
+                  ["🎁", "Diskon 35%"],
+                  ["🏅", "Level Up"],
+                  ["🔥", "Streak Bonus"],
                 ].map(([e, t]) => (
                   <div
                     key={t}
@@ -2895,9 +2895,9 @@ export function GamePage() {
                 }}
               >
                 {[
-                  { icon: "â˜€ï¸", val: SLOTS, label: "Lahan" },
-                  { icon: "ðŸŽ¯", val: MISSIONS.length, label: "Misi" },
-                  { icon: "ðŸŽ", val: REWARDS.length, label: "Reward" },
+                  { icon: "☀️", val: SLOTS, label: "Lahan" },
+                  { icon: "🎯", val: MISSIONS.length, label: "Misi" },
+                  { icon: "🎁", val: REWARDS.length, label: "Reward" },
                 ].map((s, i) => (
                   <div
                     key={i}
@@ -2950,7 +2950,7 @@ export function GamePage() {
                   transition: "all 0.2s ease",
                 }}
               >
-                ðŸŒ¿ Mulai Bertani â†’
+                🌿 Mulai Bertani →
               </button>
             </div>
             {/* Preview */}
@@ -2990,7 +2990,7 @@ export function GamePage() {
                       fontSize: 22,
                     }}
                   >
-                    ðŸŒ¿
+                    🌿
                   </div>
                   <div>
                     <div
@@ -3062,7 +3062,7 @@ export function GamePage() {
                           display: "inline-block",
                         }}
                       >
-                        ðŸª™{pd.points}
+                        🪙{pd.points}
                       </div>
                     </div>
                   ))}
@@ -3084,14 +3084,14 @@ export function GamePage() {
                       marginBottom: 8,
                     }}
                   >
-                    ðŸŽ Reward Yang Bisa Didapat
+                    🎁 Reward Yang Bisa Didapat
                   </div>
                   <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
                     {[
-                      "ðŸšš Gratis Ongkir",
-                      "ðŸ’¸ Cashback 50%",
-                      "ðŸ›ï¸ Diskon 35%",
-                      "ðŸ’Ž Cashback 10%",
+                      "🚚 Gratis Ongkir",
+                      "💸 Cashback 50%",
+                      "🛍️ Diskon 35%",
+                      "💎 Cashback 10%",
                     ].map((r) => (
                       <span
                         key={r}
@@ -3128,7 +3128,7 @@ export function GamePage() {
                     animation: "float 3s ease-in-out infinite",
                   }}
                 >
-                  ðŸª™
+                  🪙
                 </div>
                 <div
                   style={{
@@ -3148,7 +3148,7 @@ export function GamePage() {
                     animation: "float 2.5s ease-in-out infinite",
                   }}
                 >
-                  ðŸŒ¾
+                  🌾
                 </div>
               </div>
             </div>
@@ -3244,7 +3244,7 @@ export function GamePage() {
                   fontSize: 20,
                 }}
               >
-                ðŸŒ¿
+                🌿
               </div>
               <div>
                 <div
@@ -3275,7 +3275,7 @@ export function GamePage() {
                 }}
               >
                 <span style={{ fontSize: 14 }}>
-                  {["ðŸŒ±", "ðŸŒ¿", "ðŸŒ¾", "ðŸ…", "ðŸ¥‡", "ðŸ†", "ðŸ‘‘"][level]}
+                  {["🌱", "🌿", "🌾", "🏅", "🥇", "🏆", "👑"][level]}
                 </span>
                 <div>
                   <div
@@ -3326,7 +3326,7 @@ export function GamePage() {
                     padding: "7px 12px",
                   }}
                 >
-                  <span style={{ fontSize: 16 }}>ðŸ”¥</span>
+                  <span style={{ fontSize: 16 }}>🔥</span>
                   <div
                     style={{ fontSize: 13, fontWeight: 800, color: "#c2410c" }}
                   >
@@ -3346,7 +3346,7 @@ export function GamePage() {
                   padding: "7px 12px",
                 }}
               >
-                <span style={{ fontSize: 16 }}>ðŸ’Ž</span>
+                <span style={{ fontSize: 16 }}>💎</span>
                 <div
                   style={{ fontSize: 13, fontWeight: 800, color: "#5b21b6" }}
                 >
@@ -3365,7 +3365,7 @@ export function GamePage() {
                   padding: "7px 14px",
                 }}
               >
-                <span style={{ fontSize: 16 }}>ðŸ’§</span>
+                <span style={{ fontSize: 16 }}>💧</span>
                 <div>
                   <div
                     style={{
@@ -3396,7 +3396,7 @@ export function GamePage() {
                   padding: "7px 14px",
                 }}
               >
-                <span style={{ fontSize: 16 }}>ðŸª™</span>
+                <span style={{ fontSize: 16 }}>🪙</span>
                 <div>
                   <div
                     style={{
@@ -3438,7 +3438,7 @@ export function GamePage() {
                     whiteSpace: "nowrap",
                   }}
                 >
-                  ðŸŽ{canClaim ? " Klaim!" : ""}
+                  🎁{canClaim ? " Klaim!" : ""}
                 </button>
                 {canClaim && (
                   <div
@@ -3473,7 +3473,7 @@ export function GamePage() {
                   whiteSpace: "nowrap",
                 }}
               >
-                â† Keluar
+                ← Keluar
               </button>
             </div>
           </div>
@@ -3589,25 +3589,25 @@ export function GamePage() {
                   </p>
                   {[
                     {
-                      icon: "ðŸŒ±",
+                      icon: "🌱",
                       label: "Lahan aktif",
                       val: `${activeCnt}/${SLOTS}`,
                       col: "#22c55e",
                     },
                     {
-                      icon: "ðŸª™",
+                      icon: "🪙",
                       label: "Total poin",
                       val: state.points.toLocaleString(),
                       col: "#f59e0b",
                     },
                     {
-                      icon: "ðŸ”¥",
+                      icon: "🔥",
                       label: "Streak",
                       val: `${state.streak} hari`,
                       col: "#f97316",
                     },
                     {
-                      icon: "ðŸ’§",
+                      icon: "💧",
                       label: "Air tersisa",
                       val: `${state.water}/${MAX_WATER}`,
                       col: "#60a5fa",
@@ -3671,7 +3671,7 @@ export function GamePage() {
                         color: "#1e293b",
                       }}
                     >
-                      ðŸŽ¯ Misi Aktif
+                      🎯 Misi Aktif
                     </div>
                     <button
                       onClick={() => setActiveTab("missions")}
@@ -3685,7 +3685,7 @@ export function GamePage() {
                         fontFamily: "inherit",
                       }}
                     >
-                      Lihat semua â†’
+                      Lihat semua →
                     </button>
                   </div>
                   {MISSIONS.filter(
@@ -3751,7 +3751,7 @@ export function GamePage() {
                         fontWeight: 600,
                       }}
                     >
-                      ðŸŽ‰ Semua misi selesai!
+                      🎉 Semua misi selesai!
                     </div>
                   )}
                 </div>
@@ -3777,12 +3777,12 @@ export function GamePage() {
                         color: "#92400e",
                       }}
                     >
-                      ðŸŽ {unclaimedRewards} Reward Menunggu!
+                      🎁 {unclaimedRewards} Reward Menunggu!
                     </div>
                     <div
                       style={{ fontSize: 11, color: "#b45309", marginTop: 3 }}
                     >
-                      Klik untuk klaim hadiah kamu â†’
+                      Klik untuk klaim hadiah kamu →
                     </div>
                   </button>
                 )}
@@ -3808,7 +3808,7 @@ export function GamePage() {
                         marginBottom: 2,
                       }}
                     >
-                      ðŸŒ¾ Lahan Pertanianmu
+                      🌾 Lahan Pertanianmu
                     </h2>
                     <p style={{ fontSize: 12, color: "#94a3b8" }}>
                       {activeCnt}/{SLOTS} lahan aktif
@@ -3827,7 +3827,7 @@ export function GamePage() {
                         animation: "harvestPulse 2s infinite",
                       }}
                     >
-                      âœ¨ Siap panen!
+                      ✨ Siap panen!
                     </div>
                   )}
                 </div>
@@ -3879,12 +3879,12 @@ export function GamePage() {
                   }}
                 >
                   <div style={{ fontSize: 12, color: "#64748b", flex: 1 }}>
-                    <strong style={{ color: "#1e293b" }}>ðŸ’¡ Loop:</strong> Tanam
-                    â†’ Siram ({MAX_WATER_PER_DAY}x/hari +{WATER_BOOST}%) â†’ Panen
-                    â†’ Poin â†’ Reward
+                    <strong style={{ color: "#1e293b" }}>💡 Loop:</strong> Tanam
+                    → Siram ({MAX_WATER_PER_DAY}x/hari +{WATER_BOOST}%) → Panen
+                    → Poin → Reward
                   </div>
                   <div style={{ fontSize: 11, color: "#3b82f6" }}>
-                    ðŸ’§ Regen:{" "}
+                    💧 Regen:{" "}
                     <strong>
                       {state.water < MAX_WATER ? fmt(waterCD) : "Penuh!"}
                     </strong>
