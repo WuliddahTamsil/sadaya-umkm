@@ -344,7 +344,7 @@ export function BerandaPage({
 
         {/* Floating Asset 1 - Top Left (Vibrant Orange Card) */}
         <motion.div
-          className="absolute w-20 h-20 rounded-2xl shadow-[0_10px_35px_rgba(249,152,18,0.4)] flex items-center justify-center pointer-events-none z-20"
+          className="hidden sm:flex absolute w-20 h-20 rounded-2xl shadow-[0_10px_35px_rgba(249,152,18,0.4)] items-center justify-center pointer-events-none z-20"
           style={{ background: 'linear-gradient(135deg, #FFB84D 0%, #F99812 100%)', top: '15%', left: '8%', transform: 'rotate(-12deg)' }}
           animate={{ y: [0, -20, 0], rotate: [-12, 5, -12] }}
           transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
@@ -354,7 +354,7 @@ export function BerandaPage({
 
         {/* Floating Asset 2 - Bottom Left (Lime Pill - below the text block edge) */}
         <motion.div
-          className="absolute w-16 h-16 rounded-[1.5rem] shadow-[0_10px_35px_rgba(154,205,50,0.4)] flex items-center justify-center pointer-events-none z-20"
+          className="hidden md:flex absolute w-16 h-16 rounded-[1.5rem] shadow-[0_10px_35px_rgba(154,205,50,0.4)] items-center justify-center pointer-events-none z-20"
           style={{ background: 'linear-gradient(135deg, #aee34b 0%, #9ACD32 100%)', bottom: '15%', left: '15%', transform: 'rotate(25deg)' }}
           animate={{ y: [0, -15, 0], rotate: [25, 5, 25] }}
           transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
@@ -364,7 +364,7 @@ export function BerandaPage({
 
         {/* Floating Asset 3 - Top Center-Right (Purple Circle - above slider) */}
         <motion.div
-          className="absolute w-16 h-16 rounded-full shadow-[0_10px_35px_rgba(144,112,208,0.4)] flex items-center justify-center pointer-events-none z-20"
+          className="hidden lg:flex absolute w-16 h-16 rounded-full shadow-[0_10px_35px_rgba(144,112,208,0.4)] items-center justify-center pointer-events-none z-20"
           style={{ background: 'linear-gradient(135deg, #b39ddb 0%, #9070D0 100%)', top: '12%', left: '55%' }}
           animate={{ y: [0, 20, 0], scale: [1, 1.05, 1] }}
           transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
@@ -374,7 +374,7 @@ export function BerandaPage({
 
         {/* Floating Asset 4 - Center Bottom (Orange-Purple Badge - completely replacing the stats void) */}
         <motion.div
-          className="absolute w-20 h-20 lg:w-24 lg:h-24 rounded-full shadow-[0_15px_40px_rgba(249,152,18,0.3)] flex items-center justify-center pointer-events-none z-20"
+          className="hidden lg:flex absolute w-20 h-20 lg:w-24 lg:h-24 rounded-full shadow-[0_15px_40px_rgba(249,152,18,0.3)] items-center justify-center pointer-events-none z-20"
           style={{ background: 'linear-gradient(135deg, #F99812 0%, #9070D0 100%)', bottom: '8%', left: '50%', marginLeft: '-3rem' }}
           animate={{ y: [0, 25, 0], rotate: [0, 20, 0] }}
           transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
@@ -384,7 +384,7 @@ export function BerandaPage({
 
         {/* Floating Asset 5 - Bottom Right (Lime Circle - near the slider end/side) */}
         <motion.div
-          className="absolute w-14 h-14 rounded-full shadow-[0_10px_35px_rgba(154,205,50,0.4)] flex items-center justify-center pointer-events-none z-20"
+          className="hidden md:flex absolute w-14 h-14 rounded-full shadow-[0_10px_35px_rgba(154,205,50,0.4)] items-center justify-center pointer-events-none z-20"
           style={{ background: 'linear-gradient(135deg, #aee34b 0%, #9ACD32 100%)', bottom: '18%', right: '6%' }}
           animate={{ y: [0, -20, 0], scale: [1, 1.1, 1] }}
           transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut' }}
@@ -404,9 +404,9 @@ export function BerandaPage({
         />
 
         {/* Vibrant ambient sparkling dots */}
-        <motion.div className="absolute w-4 h-4 rounded-full bg-[#F99812] shadow-[0_0_15px_#F99812] z-20 pointer-events-none" style={{ top: '30%', left: '35%' }} animate={{ y: [0, 15, 0], opacity: [0.4, 0.9, 0.4] }} transition={{ duration: 3, repeat: Infinity }} />
-        <motion.div className="absolute w-5 h-5 rounded-full bg-[#9070D0] shadow-[0_0_15px_#9070D0] z-20 pointer-events-none" style={{ bottom: '25%', right: '28%' }} animate={{ y: [0, -20, 0], opacity: [0.4, 1, 0.4] }} transition={{ duration: 4, repeat: Infinity }} />
-        <motion.div className="absolute w-3 h-3 rounded-full bg-[#9ACD32] shadow-[0_0_15px_#9ACD32] z-20 pointer-events-none" style={{ top: '45%', right: '15%' }} animate={{ y: [0, -10, 0], opacity: [0.3, 0.8, 0.3] }} transition={{ duration: 2.5, repeat: Infinity }} />
+        <motion.div className="hidden md:block absolute w-4 h-4 rounded-full bg-[#F99812] shadow-[0_0_15px_#F99812] z-20 pointer-events-none" style={{ top: '30%', left: '35%' }} animate={{ y: [0, 15, 0], opacity: [0.4, 0.9, 0.4] }} transition={{ duration: 3, repeat: Infinity }} />
+        <motion.div className="hidden md:block absolute w-5 h-5 rounded-full bg-[#9070D0] shadow-[0_0_15px_#9070D0] z-20 pointer-events-none" style={{ bottom: '25%', right: '28%' }} animate={{ y: [0, -20, 0], opacity: [0.4, 1, 0.4] }} transition={{ duration: 4, repeat: Infinity }} />
+        <motion.div className="hidden md:block absolute w-3 h-3 rounded-full bg-[#9ACD32] shadow-[0_0_15px_#9ACD32] z-20 pointer-events-none" style={{ top: '45%', right: '15%' }} animate={{ y: [0, -10, 0], opacity: [0.3, 0.8, 0.3] }} transition={{ duration: 2.5, repeat: Infinity }} />
         <div className="container mx-auto px-4 lg:px-12 pt-28 pb-32 relative z-10 flex-1 flex flex-col justify-center">
           {/* Glassmorphism Wrapping Container */}
           <div
@@ -416,7 +416,7 @@ export function BerandaPage({
               border: '1px solid rgba(255, 255, 255, 0.6)'
             }}
           >
-            <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+            <div className="grid lg:grid-cols-2 gap-8 lg:gap-8 items-center">
               {/* Left: Text Content */}
               <motion.div
                 className="space-y-6 lg:pr-8 relative z-10"
@@ -444,9 +444,9 @@ export function BerandaPage({
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                     color: 'transparent',
-                    fontSize: 'clamp(2.5rem, 4.5vw, 4.5rem)',
+                    fontSize: 'clamp(2rem, 7vw, 4.5rem)',
                     fontWeight: 900,
-                    lineHeight: 1.15,
+                    lineHeight: 1.08,
                     letterSpacing: '-0.02em'
                   }}
                   initial={{ opacity: 0, y: 20 }}
@@ -460,13 +460,13 @@ export function BerandaPage({
                 </motion.h1>
 
                 {/* Subtitle */}
-                <motion.div className="max-w-xl p-5 rounded-2xl bg-gradient-to-r from-[#FDF1E9] via-[#F9DAB2] to-[#EEC4FF] border border-white/20 shadow-lg">
+                <motion.div className="max-w-xl p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-[#FDF1E9] via-[#F9DAB2] to-[#EEC4FF] border border-white/20 shadow-lg">
                   <motion.p
-                    style={{ color: "#6F2DBD", fontSize: "1.125rem", lineHeight: 1.6 }}
+                    style={{ color: "#6F2DBD", lineHeight: 1.6 }}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3, duration: 0.6 }}
-                    className="font-medium"
+                    className="font-medium text-base sm:text-lg"
                   >
                   Platform modern yang menghubungkan Customer, Driver, dan UMKM di seluruh Indonesia dalam satu ekosistem interaktif yang adil, kreatif, dan penuh semangat.
                 </motion.p>
@@ -501,11 +501,16 @@ export function BerandaPage({
 
               {/* Right: Dual-Direction Infinite Slider/Marquee */}
               <motion.div
-                className="relative z-10 w-full py-2 lg:-mr-[20vw]"
+                className="relative z-10 w-full max-w-full overflow-hidden py-2 mt-2 lg:mt-0 lg:-mr-[20vw]"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1, delay: 0.4 }}
-                style={{ maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)' }}
+                style={{
+                  WebkitMaskImage:
+                    "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
+                  maskImage:
+                    "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
+                }}
               >
                 {/* Gradient splash shapes for decorative accent */}
                 <div className="pointer-events-none absolute inset-0">
@@ -530,11 +535,11 @@ export function BerandaPage({
                     }}
                   />
                 </div>
-                <div className="flex flex-col gap-6">
+                <div className="flex flex-col gap-4 sm:gap-5 lg:gap-6">
                   {/* Row 1 (Top) - Right to Left */}
                   <div className="flex overflow-hidden">
                     <motion.div
-                      className="flex gap-6 pr-6"
+                      className="flex gap-3 sm:gap-4 lg:gap-6 pr-3 sm:pr-4 lg:pr-6"
                       animate={{ x: ["0%", "-50%"] }}
                       transition={{ ease: "linear", duration: 35, repeat: Infinity }}
                       style={{ width: "max-content" }}
@@ -543,7 +548,11 @@ export function BerandaPage({
                         <div
                           key={`row1-${i}`}
                           className="relative rounded-2xl overflow-hidden shadow-md flex-none border border-slate-100/50 group bg-slate-100"
-                          style={{ minWidth: 'min(240px, 85vw)', width: 'min(240px, 85vw)', height: '160px' }}
+                          style={{
+                            minWidth: "clamp(170px, 72vw, 240px)",
+                            width: "clamp(170px, 72vw, 240px)",
+                            height: "clamp(130px, 42vw, 160px)",
+                          }}
                         >
                           <img src={umkm.image} alt={umkm.name} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                           <div className="absolute -top-6 -left-6 w-28 h-28 rounded-full opacity-55 blur-3xl" style={{ background: 'radial-gradient(circle, rgba(147, 112, 219, 0.35), rgba(249, 153, 18, 0.12) 65%, transparent 100%)' }} />
@@ -559,9 +568,9 @@ export function BerandaPage({
                   </div>
 
                   {/* Row 2 (Bottom) - Left to Right */}
-                  <div className="flex overflow-hidden">
+                  <div className="hidden sm:flex overflow-hidden">
                     <motion.div
-                      className="flex gap-6 pr-6"
+                      className="flex gap-3 sm:gap-4 lg:gap-6 pr-3 sm:pr-4 lg:pr-6"
                       animate={{ x: ["-50%", "0%"] }}
                       transition={{ ease: "linear", duration: 40, repeat: Infinity }}
                       style={{ width: "max-content" }}
@@ -570,7 +579,11 @@ export function BerandaPage({
                         <div
                           key={`row2-${i}`}
                           className="relative rounded-2xl overflow-hidden shadow-md flex-none border border-slate-100/50 group bg-slate-100"
-                          style={{ minWidth: 'min(240px, 85vw)', width: 'min(240px, 85vw)', height: '160px' }}
+                          style={{
+                            minWidth: "clamp(170px, 72vw, 240px)",
+                            width: "clamp(170px, 72vw, 240px)",
+                            height: "clamp(130px, 42vw, 160px)",
+                          }}
                         >
                           <img src={umkm.image} alt={umkm.name} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                           <div className="absolute -top-6 -left-6 w-28 h-28 rounded-full opacity-55 blur-3xl" style={{ background: 'radial-gradient(circle, rgba(147, 112, 219, 0.35), rgba(249, 153, 18, 0.12) 65%, transparent 100%)' }} />
