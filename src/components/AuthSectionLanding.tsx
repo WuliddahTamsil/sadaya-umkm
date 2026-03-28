@@ -12,7 +12,11 @@ export function AuthSectionLanding({ onRoleSelect }: AuthSectionLandingProps) {
       id="auth-section" 
       className="py-20 lg:py-28 relative overflow-hidden"
       style={{
+<<<<<<< HEAD
         background: 'linear-gradient(135deg, #FFFFFF 0%, #9370DB 50%, #F99912 100%)',
+=======
+        background: 'linear-gradient(135deg, #FFFFFF 0%, #9ACD32 50%, #9370DB 100%)',
+>>>>>>> vercelrepo/main
       }}
     >
       <div className="container mx-auto px-4 lg:px-6">

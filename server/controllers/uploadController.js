@@ -48,6 +48,7 @@ function prepareFileForBlob(file) {
   return null;
 }
 
+<<<<<<< HEAD
 function getMissingBlobTokenResponse() {
   return {
     error: 'BLOB_READ_WRITE_TOKEN belum dikonfigurasi di Vercel. Tambahkan env ini di Project Settings > Environment Variables lalu redeploy.'
@@ -64,6 +65,8 @@ function normalizeUploadFolder(folder) {
   return allowedFolders.has(normalizedFolder) ? normalizedFolder : 'general';
 }
 
+=======
+>>>>>>> vercelrepo/main
 export const uploadDriverDocuments = async (req, res) => {
   try {
     const { userId, phoneNumber, vehicleType, vehiclePlate } = req.body;
@@ -99,11 +102,14 @@ export const uploadDriverDocuments = async (req, res) => {
       VERCEL_ENV: process.env.VERCEL_ENV
     });
 
+<<<<<<< HEAD
     if (isVercel && !hasBlobToken) {
       console.error('âŒ BLOB_READ_WRITE_TOKEN tidak tersedia untuk upload driver di Vercel');
       return res.status(500).json(getMissingBlobTokenResponse());
     }
 
+=======
+>>>>>>> vercelrepo/main
     if (isVercel && hasBlobToken) {
       // Upload ke Vercel Blob Storage
       console.log('📤 Uploading driver documents to Vercel Blob...');
@@ -243,8 +249,13 @@ export const uploadDriverDocuments = async (req, res) => {
       console.error('❌ ERROR: No file fields to save! Documents object is empty or invalid.');
       console.error('❌ Documents:', documents);
       console.error('❌ Files received:', files);
+<<<<<<< HEAD
       return res.status(502).json({
         error: 'Upload ke Vercel Blob gagal. Pastikan token valid, Blob Store terhubung ke project ini, dan file yang dikirim tidak rusak.'
+=======
+      return res.status(400).json({ 
+        error: 'Tidak ada file yang berhasil diupload. Pastikan file valid dan BLOB_READ_WRITE_TOKEN terkonfigurasi dengan benar.' 
+>>>>>>> vercelrepo/main
       });
     }
     
@@ -331,11 +342,14 @@ export const uploadUMKMDocuments = async (req, res) => {
     const isVercel = process.env.VERCEL || process.env.VERCEL_ENV;
     const hasBlobToken = !!process.env.BLOB_READ_WRITE_TOKEN;
 
+<<<<<<< HEAD
     if (isVercel && !hasBlobToken) {
       console.error('BLOB_READ_WRITE_TOKEN tidak tersedia untuk upload UMKM di Vercel');
       return res.status(500).json(getMissingBlobTokenResponse());
     }
 
+=======
+>>>>>>> vercelrepo/main
     if (isVercel && hasBlobToken) {
       // Upload ke Vercel Blob Storage
       console.log('📤 Uploading UMKM documents to Vercel Blob...');
@@ -452,8 +466,13 @@ export const uploadUMKMDocuments = async (req, res) => {
       console.error('❌ ERROR: No file fields to save! Documents object is empty or invalid.');
       console.error('❌ Documents:', documents);
       console.error('❌ Files received:', files);
+<<<<<<< HEAD
       return res.status(502).json({
         error: 'Upload ke Vercel Blob gagal. Pastikan token valid, Blob Store terhubung ke project ini, dan file yang dikirim tidak rusak.'
+=======
+      return res.status(400).json({ 
+        error: 'Tidak ada file yang berhasil diupload. Pastikan file valid dan BLOB_READ_WRITE_TOKEN terkonfigurasi dengan benar.' 
+>>>>>>> vercelrepo/main
       });
     }
     
@@ -546,7 +565,11 @@ export const uploadProductImageController = async (req, res) => {
       const baseUrl = 'http://localhost:3000';
       imageUrl = `${baseUrl}/${imagePath}`;
     } else {
+<<<<<<< HEAD
       return res.status(500).json(getMissingBlobTokenResponse());
+=======
+      return res.status(500).json({ error: 'BLOB_READ_WRITE_TOKEN tidak dikonfigurasi' });
+>>>>>>> vercelrepo/main
     }
 
     res.json({
@@ -654,7 +677,13 @@ export const uploadProfilePhotoController = async (req, res) => {
       console.log('✅ Profile photo path (local):', profilePhotoUrl);
     } else {
       console.error('❌ BLOB_READ_WRITE_TOKEN tidak dikonfigurasi');
+<<<<<<< HEAD
       return res.status(500).json(getMissingBlobTokenResponse());
+=======
+      return res.status(500).json({ 
+        error: 'BLOB_READ_WRITE_TOKEN tidak dikonfigurasi. Silakan set environment variable ini di Vercel.' 
+      });
+>>>>>>> vercelrepo/main
     }
 
     // Pastikan URL valid sebelum menyimpan
@@ -711,6 +740,7 @@ export const uploadProfilePhotoController = async (req, res) => {
   }
 };
 
+<<<<<<< HEAD
 export const uploadGenericFileController = async (req, res) => {
   try {
     if (!req.file) {
@@ -765,3 +795,5 @@ export const uploadGenericFileController = async (req, res) => {
   }
 };
 
+=======
+>>>>>>> vercelrepo/main

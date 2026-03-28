@@ -45,7 +45,11 @@
     "@radix-ui/react-toggle-group": "^1.1.11",
     "@radix-ui/react-tooltip": "^1.2.8",
     "@types/leaflet": "^1.9.21",
+<<<<<<< HEAD
     "@vercel/blob": "^2.3.1",
+=======
+    "@vercel/blob": "^2.0.0",
+>>>>>>> vercelrepo/main
     "bcryptjs": "^2.4.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

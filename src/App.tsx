@@ -90,7 +90,6 @@ function AppContent() {
       setShopUMKM(null);
     }
   }, [user]);
-
   const handleCheckout = (items: any[]) => {
     // In real app, this would navigate to checkout page
     // For now, we'll just log it

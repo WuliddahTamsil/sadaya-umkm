@@ -8,13 +8,21 @@
     "author": "Admin SADAYA",
     "date": "2024-11-08",
     "status": "published",
+<<<<<<< HEAD
     "views": 1251,
+=======
+    "views": 1249,
+>>>>>>> vercelrepo/main
     "likes": 92,
     "comments": 1,
     "thumbnail": "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400",
     "category": "Kuliner",
     "createdAt": "2024-11-08T10:00:00.000Z",
+<<<<<<< HEAD
     "updatedAt": "2026-03-27T15:56:03.359Z"
+=======
+    "updatedAt": "2026-03-26T13:13:23.971Z"
+>>>>>>> vercelrepo/main
   },
   {
     "id": "content-2",

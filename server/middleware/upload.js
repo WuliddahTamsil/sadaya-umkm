@@ -77,7 +77,11 @@ export const upload = multer({
   storage: storage,
   fileFilter: fileFilter,
   limits: {
+<<<<<<< HEAD
     fileSize: 4 * 1024 * 1024 // 4MB max file size to stay under Vercel function payload limits
+=======
+    fileSize: 5 * 1024 * 1024 // 5MB max file size
+>>>>>>> vercelrepo/main
   }
 });
 
@@ -102,6 +106,9 @@ export const uploadProductImage = upload.single('productImage');
 // Middleware untuk upload foto profil
 export const uploadProfilePhoto = upload.single('profilePhoto');
 
+<<<<<<< HEAD
 // Middleware untuk upload file generik ke Vercel Blob
 export const uploadGenericFile = upload.single('file');
 
+=======
+>>>>>>> vercelrepo/main

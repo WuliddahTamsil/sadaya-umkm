@@ -3,7 +3,11 @@
     "id": "admin-001",
     "name": "Admin SADAYA",
     "email": "admin@gmail.com",
+<<<<<<< HEAD
     "password": "$2a$10$ljZ1YqyKfiL3US8Eni4VsuaJdaDX2wCKL0DUkVLVXZR4Oy/JjCcKi",
+=======
+    "password": "$2a$10$EDIZZVOVXPxfoEVTBVnxYOfw4u5IZ5G3BZQJYQDTa93FWN0S9/d8e",
+>>>>>>> vercelrepo/main
     "role": "admin",
     "phone": null,
     "address": null,
@@ -765,6 +769,7 @@
     "rating": 0,
     "createdAt": "2026-03-26T10:57:43.618Z",
     "updatedAt": "2026-03-26T10:57:43.618Z"
+<<<<<<< HEAD
   },
   {
     "id": "957ad596-889a-4943-84fa-a08ab731563f",
@@ -819,5 +824,7 @@
     "rating": 0,
     "createdAt": "2026-03-27T09:36:42.744Z",
     "updatedAt": "2026-03-27T09:36:42.744Z"
+=======
+>>>>>>> vercelrepo/main
   }
 ]

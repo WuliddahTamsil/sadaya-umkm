@@ -2771,8 +2771,15 @@ export function GamePage() {
           }}
         >
           <div
+<<<<<<< HEAD
             className="landing-grid"
             style={{
+=======
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: 56,
+>>>>>>> vercelrepo/main
               maxWidth: 1060,
               width: "100%",
               alignItems: "center",
@@ -3008,8 +3015,14 @@ export function GamePage() {
                   </div>
                 </div>
                 <div
+<<<<<<< HEAD
                   className="plant-grid"
                   style={{
+=======
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(3,1fr)",
+>>>>>>> vercelrepo/main
                     gap: 10,
                     marginBottom: 20,
                   }}
@@ -3219,19 +3232,29 @@ export function GamePage() {
           }}
         >
           <div
+<<<<<<< HEAD
             className="game-top-bar"
+=======
+>>>>>>> vercelrepo/main
             style={{
               maxWidth: 1160,
               margin: "0 auto",
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
+<<<<<<< HEAD
               flexWrap: "wrap",
               gap: 8,
             }}
           >
             {/* Logo + level */}
             <div className="game-top-left" style={{ display: "flex", alignItems: "center", gap: 12 }}>
+=======
+            }}
+          >
+            {/* Logo + level */}
+            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+>>>>>>> vercelrepo/main
               <div
                 style={{
                   width: 38,
@@ -3312,7 +3335,11 @@ export function GamePage() {
             </div>
 
             {/* Resources */}
+<<<<<<< HEAD
             <div className="game-top-right" style={{ display: "flex", alignItems: "center", gap: 8 }}>
+=======
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+>>>>>>> vercelrepo/main
               {/* Streak */}
               {state.streak > 0 && (
                 <div
@@ -3546,9 +3573,15 @@ export function GamePage() {
           {/* ── FARM TAB ── */}
           {activeTab === "farm" && (
             <div
+<<<<<<< HEAD
               className="farm-grid"
               style={{
                 display: "grid",
+=======
+              style={{
+                display: "grid",
+                gridTemplateColumns: "260px 1fr",
+>>>>>>> vercelrepo/main
                 gap: 20,
                 alignItems: "start",
               }}
@@ -3916,7 +3949,11 @@ function GlobalStyles() {
       body{font-family:'DM Sans',sans-serif;background:#fff7ed}
       button{font-family:'DM Sans',sans-serif}
       .game-root{
+<<<<<<< HEAD
         background:#FEF5E7;
+=======
+        background:linear-gradient(160deg,#fff7ed 0%,#ffecd1 25%,#ffe4b5 60%,#fffbeb 100%);
+>>>>>>> vercelrepo/main
         min-height:100vh;position:relative;
         padding-top:80px;
         padding-bottom:70px;
@@ -3924,10 +3961,13 @@ function GlobalStyles() {
       .game-root::before{content:'';position:fixed;inset:0;pointer-events:none;
         background:radial-gradient(ellipse 80% 40% at 20% 20%,rgba(249,115,22,0.12) 0%,transparent 70%),
                    radial-gradient(ellipse 60% 50% at 80% 80%,rgba(251,191,36,0.10) 0%,transparent 70%);}
+<<<<<<< HEAD
       .landing-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;}
       .plant-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
       @media (max-width: 1024px){.landing-grid{grid-template-columns:1fr;gap:30px;}.plant-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
       @media (max-width: 640px){.game-root{padding-top:70px;padding-bottom:60px;}.landing-grid{grid-template-columns:1fr;gap:18px;}.plant-grid{grid-template-columns:1fr;}}
+=======
+>>>>>>> vercelrepo/main
       @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
       @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
       @keyframes glowPulse{0%,100%{opacity:.3}50%{opacity:.75}}
@@ -3939,6 +3979,7 @@ function GlobalStyles() {
       @keyframes modalIn{0%{transform:scale(0.6) translateY(40px);opacity:0}100%{transform:scale(1) translateY(0);opacity:1}}
       @keyframes bounceIn{0%{transform:scale(0.3);opacity:0}60%{transform:scale(1.2)}100%{transform:scale(1);opacity:1}}
       @keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(-12px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+<<<<<<< HEAD
       .landing-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;}
       .plant-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
       .farm-grid{grid-template-columns:260px 1fr;}
@@ -3971,6 +4012,8 @@ function GlobalStyles() {
           flex-wrap: wrap;
         }
       }
+=======
+>>>>>>> vercelrepo/main
     `}</style>
   );
 }

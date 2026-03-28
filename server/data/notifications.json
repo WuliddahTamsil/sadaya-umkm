@@ -475,6 +475,7 @@
     "message": "Pesanan ORD-1774522731989-1I06H9SFE telah diterima. Terima kasih sudah berbelanja!",
     "orderId": "ORD-1774522731989-1I06H9SFE",
     "status": "completed",
+<<<<<<< HEAD
     "read": true,
     "createdAt": "2026-03-26T11:08:48.605Z",
     "readAt": "2026-03-27T15:11:59.282Z"
@@ -610,5 +611,9 @@
     "status": "completed",
     "read": false,
     "createdAt": "2026-03-27T16:09:03.678Z"
+=======
+    "read": false,
+    "createdAt": "2026-03-26T11:08:48.605Z"
+>>>>>>> vercelrepo/main
   }
 ]

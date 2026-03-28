@@ -414,12 +414,21 @@
     "paymentMethod": "gopay",
     "paymentStatus": "paid",
     "notes": null,
+<<<<<<< HEAD
     "status": "ready",
     "driverId": null,
     "driverName": null,
     "trackingNumber": "TRK-1774622712037-ZO65EM",
     "createdAt": "2025-11-27T15:02:33.671Z",
     "updatedAt": "2026-03-27T14:45:12.134Z",
+=======
+    "status": "preparing",
+    "driverId": null,
+    "driverName": null,
+    "trackingNumber": null,
+    "createdAt": "2025-11-27T15:02:33.671Z",
+    "updatedAt": "2025-11-27T15:02:35.230Z",
+>>>>>>> vercelrepo/main
     "paidAt": "2025-11-27T15:02:35.229Z"
   },
   {
@@ -459,6 +468,7 @@
       "updatedAt": "2026-03-26T11:01:34.338Z"
     },
     "deliveredAt": "2026-03-26T11:08:48.599Z"
+<<<<<<< HEAD
   },
   {
     "id": "ORD-1774624042442-Y600UHXEG",
@@ -559,5 +569,7 @@
       "updatedAt": "2026-03-27T16:09:29.360Z"
     },
     "deliveredAt": "2026-03-27T16:09:03.677Z"
+=======
+>>>>>>> vercelrepo/main
   }
 ]

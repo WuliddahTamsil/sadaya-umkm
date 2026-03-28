@@ -131,6 +131,7 @@ export const updateUserProfile = async (req, res) => {
       storeName,
       storeAddress,
       storeDescription,
+<<<<<<< HEAD
       ktpFile,
       storePhotoFile,
       businessPermitFile,
@@ -142,6 +143,10 @@ export const updateUserProfile = async (req, res) => {
       vehiclePhotoFile,
       profilePhoto,
       isOnboarded
+=======
+      vehicleType,
+      vehiclePlate
+>>>>>>> vercelrepo/main
     } = req.body;
 
     const user = await getUserByIdModel(id);
@@ -163,13 +168,17 @@ export const updateUserProfile = async (req, res) => {
     if (storeName !== undefined) updateData.storeName = storeName;
     if (storeAddress !== undefined) updateData.storeAddress = storeAddress;
     if (storeDescription !== undefined) updateData.storeDescription = storeDescription;
+<<<<<<< HEAD
     if (ktpFile !== undefined) updateData.ktpFile = ktpFile;
     if (storePhotoFile !== undefined) updateData.storePhotoFile = storePhotoFile;
     if (businessPermitFile !== undefined) updateData.businessPermitFile = businessPermitFile;
+=======
+>>>>>>> vercelrepo/main
     
     // Driver specific fields
     if (vehicleType !== undefined) updateData.vehicleType = vehicleType;
     if (vehiclePlate !== undefined) updateData.vehiclePlate = vehiclePlate;
+<<<<<<< HEAD
     if (simFile !== undefined) updateData.simFile = simFile;
     if (stnkFile !== undefined) updateData.stnkFile = stnkFile;
     if (selfieFile !== undefined) updateData.selfieFile = selfieFile;
@@ -178,6 +187,8 @@ export const updateUserProfile = async (req, res) => {
     // Shared upload fields
     if (profilePhoto !== undefined) updateData.profilePhoto = profilePhoto;
     if (isOnboarded !== undefined) updateData.isOnboarded = isOnboarded;
+=======
+>>>>>>> vercelrepo/main
 
     const updatedUser = await updateUser(id, updateData);
 

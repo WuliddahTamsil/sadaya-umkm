@@ -2,7 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
+<<<<<<< HEAD
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../components/ui/dialog";
+=======
+>>>>>>> vercelrepo/main
 
 import {
   Leaf,
@@ -109,9 +112,12 @@ export function BerandaPage({
     "Semua" | "Makanan" | "Minuman" | "Jasa" | "Kerajinan"
   >("Semua");
 
+<<<<<<< HEAD
   const [selectedTip, setSelectedTip] = useState<any>(null);
   const [isTipModalOpen, setIsTipModalOpen] = useState(false);
 
+=======
+>>>>>>> vercelrepo/main
   const directoryPreview = [
     {
       name: "Lapis Bogor Sangkuriang",
@@ -326,7 +332,11 @@ export function BerandaPage({
       <section
         ref={heroRef}
         id="hero"
+<<<<<<< HEAD
         className="relative min-h-[92vh] flex flex-col justify-center overflow-hidden"
+=======
+        className="relative min-h-screen flex flex-col justify-center overflow-hidden"
+>>>>>>> vercelrepo/main
         style={{ background: 'linear-gradient(135deg, rgba(249, 153, 18, 0.05) 0%, rgba(147, 112, 219, 0.08) 50%, rgba(154, 205, 50, 0.05) 100%)' }}
       >
 
@@ -392,6 +402,7 @@ export function BerandaPage({
           <Star className="text-white w-6 h-6" />
         </motion.div>
 
+<<<<<<< HEAD
         {/* Blush gradient overlay */}
         <div
           className="absolute inset-0 pointer-events-none"
@@ -403,6 +414,8 @@ export function BerandaPage({
           }}
         />
 
+=======
+>>>>>>> vercelrepo/main
         {/* Vibrant ambient sparkling dots */}
         <motion.div className="absolute w-4 h-4 rounded-full bg-[#F99812] shadow-[0_0_15px_#F99812] z-20 pointer-events-none" style={{ top: '30%', left: '35%' }} animate={{ y: [0, 15, 0], opacity: [0.4, 0.9, 0.4] }} transition={{ duration: 3, repeat: Infinity }} />
         <motion.div className="absolute w-5 h-5 rounded-full bg-[#9070D0] shadow-[0_0_15px_#9070D0] z-20 pointer-events-none" style={{ bottom: '25%', right: '28%' }} animate={{ y: [0, -20, 0], opacity: [0.4, 1, 0.4] }} transition={{ duration: 4, repeat: Infinity }} />
@@ -440,6 +453,7 @@ export function BerandaPage({
                 {/* Headline with Gradient Text */}
                 <motion.h1
                   style={{
+<<<<<<< HEAD
                     background: 'linear-gradient(90deg, #9370DB 0%, #F99912 65%, #F99912 100%)',
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
@@ -448,6 +462,13 @@ export function BerandaPage({
                     fontWeight: 900,
                     lineHeight: 1.15,
                     letterSpacing: '-0.02em'
+=======
+                    color: "#2B323B",
+                    fontSize: "clamp(2.5rem, 4.5vw, 4.5rem)",
+                    fontWeight: 900,
+                    lineHeight: 1.15,
+                    letterSpacing: "-0.02em"
+>>>>>>> vercelrepo/main
                   }}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -460,6 +481,7 @@ export function BerandaPage({
                 </motion.h1>
 
                 {/* Subtitle */}
+<<<<<<< HEAD
                 <motion.div className="max-w-xl p-5 rounded-2xl bg-gradient-to-r from-[#FDF1E9] via-[#F9DAB2] to-[#EEC4FF] border border-white/20 shadow-lg">
                   <motion.p
                     style={{ color: "#6F2DBD", fontSize: "1.125rem", lineHeight: 1.6 }}
@@ -471,6 +493,17 @@ export function BerandaPage({
                   Platform modern yang menghubungkan Customer, Driver, dan UMKM di seluruh Indonesia dalam satu ekosistem interaktif yang adil, kreatif, dan penuh semangat.
                 </motion.p>
                 </motion.div>
+=======
+                <motion.p
+                  style={{ color: "#4D4D4D", fontSize: "1.125rem", lineHeight: 1.6 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3, duration: 0.6 }}
+                  className="max-w-xl font-medium"
+                >
+                  Platform modern yang menghubungkan Customer, Driver, dan UMKM di seluruh Indonesia dalam satu ekosistem interaktif yang adil, kreatif, dan penuh semangat.
+                </motion.p>
+>>>>>>> vercelrepo/main
 
                 {/* CTA Buttons */}
                 <motion.div
@@ -479,6 +512,7 @@ export function BerandaPage({
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5, duration: 0.6 }}
                 >
+<<<<<<< HEAD
                   <div className="flex-1 p-4 rounded-2xl bg-white/20 border border-white/40 shadow-lg backdrop-blur-sm">
                     <Button
                       onClick={onNavigateToDirectory}
@@ -496,6 +530,20 @@ export function BerandaPage({
                       Masuk / Daftar Sekarang
                     </Button>
                   </div>
+=======
+                  <Button
+                    onClick={onNavigateToDirectory}
+                    className="px-8 py-6 text-base shadow-xl font-bold bg-[#9070D0] hover:bg-[#7b5bc0] text-white rounded-xl transition-all hover:translate-y-[-2px]"
+                  >
+                    Jelajahi Direktori
+                  </Button>
+                  <Button
+                    onClick={scrollToAuth}
+                    className="px-8 py-6 text-base shadow-xl font-bold bg-[#F99812] hover:bg-[#e08910] text-white rounded-xl transition-all hover:translate-y-[-2px]"
+                  >
+                    Masuk / Daftar Sekarang
+                  </Button>
+>>>>>>> vercelrepo/main
                 </motion.div>
               </motion.div>
 
@@ -507,6 +555,7 @@ export function BerandaPage({
                 transition={{ duration: 1, delay: 0.4 }}
                 style={{ maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)' }}
               >
+<<<<<<< HEAD
                 {/* Gradient splash shapes for decorative accent */}
                 <div className="pointer-events-none absolute inset-0">
                   <div
@@ -530,6 +579,8 @@ export function BerandaPage({
                     }}
                   />
                 </div>
+=======
+>>>>>>> vercelrepo/main
                 <div className="flex flex-col gap-6">
                   {/* Row 1 (Top) - Right to Left */}
                   <div className="flex overflow-hidden">
@@ -543,11 +594,17 @@ export function BerandaPage({
                         <div
                           key={`row1-${i}`}
                           className="relative rounded-2xl overflow-hidden shadow-md flex-none border border-slate-100/50 group bg-slate-100"
+<<<<<<< HEAD
                           style={{ minWidth: 'min(240px, 85vw)', width: 'min(240px, 85vw)', height: '160px' }}
                         >
                           <img src={umkm.image} alt={umkm.name} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                           <div className="absolute -top-6 -left-6 w-28 h-28 rounded-full opacity-55 blur-3xl" style={{ background: 'radial-gradient(circle, rgba(147, 112, 219, 0.35), rgba(249, 153, 18, 0.12) 65%, transparent 100%)' }} />
                           <div className="absolute -bottom-5 -right-5 w-32 h-32 rounded-full opacity-45 blur-3xl" style={{ background: 'radial-gradient(circle, rgba(249, 153, 18, 0.35), rgba(147, 112, 219, 0.14) 62%, transparent 100%)' }} />
+=======
+                          style={{ minWidth: '240px', width: '240px', height: '160px' }}
+                        >
+                          <img src={umkm.image} alt={umkm.name} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+>>>>>>> vercelrepo/main
                           <div className="absolute inset-0 bg-gradient-to-t from-[#1E293B]/90 via-[#1E293B]/20 to-transparent opacity-90" />
                           <div className="absolute bottom-4 left-4 right-4 text-left">
                             <p className="text-white/90 text-[10px] font-bold uppercase tracking-wider mb-1">{umkm.category}</p>
@@ -570,11 +627,17 @@ export function BerandaPage({
                         <div
                           key={`row2-${i}`}
                           className="relative rounded-2xl overflow-hidden shadow-md flex-none border border-slate-100/50 group bg-slate-100"
+<<<<<<< HEAD
                           style={{ minWidth: 'min(240px, 85vw)', width: 'min(240px, 85vw)', height: '160px' }}
                         >
                           <img src={umkm.image} alt={umkm.name} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                           <div className="absolute -top-6 -left-6 w-28 h-28 rounded-full opacity-55 blur-3xl" style={{ background: 'radial-gradient(circle, rgba(147, 112, 219, 0.35), rgba(249, 153, 18, 0.12) 65%, transparent 100%)' }} />
                           <div className="absolute -bottom-5 -right-5 w-32 h-32 rounded-full opacity-45 blur-3xl" style={{ background: 'radial-gradient(circle, rgba(249, 153, 18, 0.35), rgba(147, 112, 219, 0.14) 62%, transparent 100%)' }} />
+=======
+                          style={{ minWidth: '240px', width: '240px', height: '160px' }}
+                        >
+                          <img src={umkm.image} alt={umkm.name} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+>>>>>>> vercelrepo/main
                           <div className="absolute inset-0 bg-gradient-to-t from-[#1E293B]/90 via-[#1E293B]/20 to-transparent opacity-90" />
                           <div className="absolute bottom-4 left-4 right-4 text-left">
                             <p className="text-white/90 text-[10px] font-bold uppercase tracking-wider mb-1">{umkm.category}</p>
@@ -1463,6 +1526,7 @@ export function BerandaPage({
                 time: "5 menit",
                 image:
                   "https://image.idntimes.com/post/20250825/2148896942_6ba49f76-ca2b-441f-ab69-b57627b8c6ca.jpg",
+<<<<<<< HEAD
                 description: "Dukung UMKM lokal bukan hanya tentang belanja, tapi juga tentang membangun komunitas. Berikut 5 tips mudah yang bisa kamu lakukan sehari-hari untuk mendukung pengusaha kecil di sekitarmu.",
                 fullContent: `
                   <h2>1. Belanja Langsung di Toko Fisik</h2>
@@ -1480,6 +1544,8 @@ export function BerandaPage({
                   <h2>5. Beli Produk Musiman atau Khas</h2>
                   <p>Cari tahu produk khas daerahmu dan beli sebagai oleh-oleh atau hadiah. Ini membantu UMKM mempertahankan tradisi lokal.</p>
                 `,
+=======
+>>>>>>> vercelrepo/main
               },
               {
                 title: "10 Kuliner Khas Nusantara yang Wajib Kamu Coba!",
@@ -1487,6 +1553,7 @@ export function BerandaPage({
                 time: "7 menit",
                 image:
                   "https://d1vbn70lmn1nqe.cloudfront.net/prod/wp-content/uploads/2024/07/16062938/Ragam-Makanan-Khas-Indonesia-yang-Lezat-dan-Kaya-Nutrisi.jpg",
+<<<<<<< HEAD
                 description: "Indonesia kaya akan kuliner tradisional yang menggugah selera. Dari Sabang sampai Merauke, setiap daerah punya hidangan khas yang patut dicoba.",
                 fullContent: `
                   <h2>1. Rendang (Sumatera Barat)</h2>
@@ -1519,6 +1586,8 @@ export function BerandaPage({
                   <h2>10. Es Cendol (Jakarta)</h2>
                   <p>Minuman dingin dengan cendol hijau, santan, dan gula merah. Penyegar di cuaca panas.</p>
                 `,
+=======
+>>>>>>> vercelrepo/main
               },
               {
                 title: "Panduan Lengkap Memulai Usaha Kecil dari Nol",
@@ -1526,6 +1595,7 @@ export function BerandaPage({
                 time: "10 menit",
                 image:
                   "https://img.freepik.com/free-photo/business-objects-with-executives-discussing-blueprint-meeting_1098-4066.jpg?semt=ais_hybrid&w=740&q=80",
+<<<<<<< HEAD
                 description: "Mimpi memiliki usaha sendiri? Panduan ini akan membantumu memulai dari nol dengan langkah-langkah praktis dan realistis.",
                 fullContent: `
                   <h2>1. Temukan Ide Bisnis yang Kamu Sukai</h2>
@@ -1558,6 +1628,8 @@ export function BerandaPage({
                   <h2>10. Belajar dari Kesalahan</h2>
                   <p>Jangan takut gagal. Setiap kesalahan adalah pembelajaran. Evaluasi secara berkala dan perbaiki strategi kamu.</p>
                 `,
+=======
+>>>>>>> vercelrepo/main
               },
               {
                 title: "Kenapa UMKM Harus Go Digital? Ini Manfaatnya!",
@@ -1565,6 +1637,7 @@ export function BerandaPage({
                 time: "15 menit",
                 image:
                   "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80",
+<<<<<<< HEAD
                 description: "Era digital telah mengubah cara bisnis beroperasi. UMKM yang tidak go digital akan tertinggal. Simak manfaat dan cara memulainya.",
                 fullContent: `
                   <h2>1. Jangkauan Pasar yang Lebih Luas</h2>
@@ -1599,6 +1672,8 @@ export function BerandaPage({
                   5. Responsif terhadap pesan pelanggan<br>
                   6. Lakukan promosi secara konsisten</p>
                 `,
+=======
+>>>>>>> vercelrepo/main
               },
             ].map((tip, idx) => (
               <motion.div
@@ -1659,10 +1734,14 @@ export function BerandaPage({
                   {tip.title}
                 </h3>
                 <motion.button
+<<<<<<< HEAD
                   onClick={() => {
                     setSelectedTip(tip);
                     setIsTipModalOpen(true);
                   }}
+=======
+                  onClick={onNavigateToDirectory}
+>>>>>>> vercelrepo/main
                   className="mt-5 inline-flex items-center gap-2 font-bold"
                   style={{ color: "#F99912" }}
                   whileHover={{ x: 3 }}
@@ -1676,6 +1755,7 @@ export function BerandaPage({
           </div>
         </div>
       </section>
+<<<<<<< HEAD
 
       {/* Tip Modal */}
       <Dialog open={isTipModalOpen} onOpenChange={setIsTipModalOpen}>
@@ -1747,6 +1827,8 @@ export function BerandaPage({
           )}
         </DialogContent>
       </Dialog>
+=======
+>>>>>>> vercelrepo/main
     </div>
   );
 }

