@@ -1,71 +1,69 @@
-import mongoose from 'mongoose';
+import {
+  findManyAcrossDatabases,
+  findOneAcrossDatabases,
+  upsertAcrossDatabases,
+  deleteAcrossDatabases,
+  updateAcrossDatabases
+} from './mongoMultiDb.js';
 
-const commentSchema = new mongoose.Schema({
-  id: { type: String, required: true, unique: true },
-  contentId: { type: String, required: true },
-  userId: { type: String, required: true },
-  userName: { type: String, required: true },
-  userEmail: { type: String, required: true },
-  userRole: { type: String, required: true },
-  text: { type: String, required: true },
-  createdAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date, default: Date.now }
-}, { timestamps: false });
+const COLLECTION = 'comments';
+const CONTENT_COLLECTION = 'contents';
 
-const Comment = mongoose.models.Comment || mongoose.model('Comment', commentSchema);
-
-let isConnected = false;
-
-async function connectDB() {
-  if (isConnected && mongoose.connection.readyState === 1) return;
-  try {
-    const mongoUri = process.env.MONGODB_URI?.trim();
-    if (!mongoUri) throw new Error('MONGODB_URI not set');
-    if (!mongoUri.startsWith('mongodb://') && !mongoUri.startsWith('mongodb+srv://')) {
-      throw new Error('Invalid MongoDB URI');
-    }
-    if (mongoose.connection.readyState !== 0) await mongoose.connection.close();
-    await mongoose.connect(mongoUri, { serverSelectionTimeoutMS: 30000, socketTimeoutMS: 45000, maxPoolSize: 10 });
-    isConnected = true;
-  } catch (error) {
-    console.error('❌ MongoDB connection error:', error);
-    isConnected = false;
-    throw error;
-  }
+function stripSourceDatabase(document) {
+  if (!document) return document;
+  const { _sourceDatabase, ...rest } = document;
+  return rest;
 }
 
 export async function getCommentsByContentId(contentId) {
-  await connectDB();
-  return await Comment.find({ contentId }).sort({ createdAt: -1 }).lean();
+  const comments = await findManyAcrossDatabases(COLLECTION, { contentId }, {
+    dedupeKeys: ['id', '_id'],
+    sort: (a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0)
+  });
+  return comments.map(stripSourceDatabase);
 }
 
 export async function createComment(commentData) {
-  await connectDB();
-  const comment = new Comment({
-    id: `comment-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+  const newComment = {
+    id: `comment-${Date.now()}-${Math.random().toString(36).slice(2, 11)}`,
     ...commentData,
     createdAt: new Date(),
     updatedAt: new Date()
-  });
-  await comment.save();
-  return comment.toObject();
+  };
+
+  await upsertAcrossDatabases(COLLECTION, { id: newComment.id }, newComment);
+  await updateCommentCount(commentData.contentId);
+  return newComment;
 }
 
 export async function deleteComment(id) {
-  await connectDB();
-  const result = await Comment.deleteOne({ id });
-  return result.deletedCount > 0;
+  const comment = await findOneAcrossDatabases(COLLECTION, { id }, {
+    dedupeKeys: ['id', '_id']
+  });
+
+  if (!comment) {
+    return false;
+  }
+
+  await deleteAcrossDatabases(COLLECTION, { id });
+  await updateCommentCount(comment.contentId);
+  return true;
 }
 
 export async function updateCommentCount(contentId) {
-  await connectDB();
-  const count = await Comment.countDocuments({ contentId });
-  // Update content comments count
-  const Content = mongoose.models.Content || mongoose.model('Content', mongoose.Schema({}, { strict: false }));
-  await Content.findOneAndUpdate(
-    { id: contentId },
-    { $set: { comments: count, updatedAt: new Date() } }
-  );
-  return count;
-}
+  const comments = await getCommentsByContentId(contentId);
+  const content = await findOneAcrossDatabases(CONTENT_COLLECTION, { id: contentId }, {
+    dedupeKeys: ['id', '_id']
+  });
 
+  if (!content) {
+    return comments.length;
+  }
+
+  await updateAcrossDatabases(CONTENT_COLLECTION, { id: contentId }, {
+    comments: comments.length,
+    updatedAt: new Date()
+  });
+
+  return comments.length;
+}

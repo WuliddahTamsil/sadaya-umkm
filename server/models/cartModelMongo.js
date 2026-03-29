@@ -1,99 +1,93 @@
-import mongoose from 'mongoose';
+import {
+  findManyAcrossDatabases,
+  findOneAcrossDatabases,
+  upsertAcrossDatabases,
+  deleteAcrossDatabases
+} from './mongoMultiDb.js';
 
-const cartSchema = new mongoose.Schema({
-  id: { type: String, required: true, unique: true },
-  id_user: { type: String, required: true },
-  id_produk: { type: String, required: true },
-  jumlah: { type: Number, required: true, default: 1 },
-  harga_saat_ini: { type: Number, required: true },
-  tanggal_ditambahkan: { type: Date, default: Date.now },
-  createdAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date, default: Date.now }
-}, { timestamps: false });
+const COLLECTION = 'carts';
 
-const Cart = mongoose.models.Cart || mongoose.model('Cart', cartSchema);
-
-let isConnected = false;
-
-async function connectDB() {
-  if (isConnected && mongoose.connection.readyState === 1) return;
-  try {
-    const mongoUri = process.env.MONGODB_URI?.trim();
-    if (!mongoUri) throw new Error('MONGODB_URI not set');
-    if (!mongoUri.startsWith('mongodb://') && !mongoUri.startsWith('mongodb+srv://')) {
-      throw new Error('Invalid MongoDB URI');
-    }
-    if (mongoose.connection.readyState !== 0) await mongoose.connection.close();
-    await mongoose.connect(mongoUri, { serverSelectionTimeoutMS: 30000, socketTimeoutMS: 45000, maxPoolSize: 10 });
-    isConnected = true;
-  } catch (error) {
-    console.error('❌ MongoDB connection error:', error);
-    isConnected = false;
-    throw error;
-  }
+function stripSourceDatabase(document) {
+  if (!document) return document;
+  const { _sourceDatabase, ...rest } = document;
+  return rest;
 }
 
 export async function getCartByUserId(userId) {
-  await connectDB();
-  return await Cart.find({ id_user: userId }).lean();
+  const items = await findManyAcrossDatabases(COLLECTION, { id_user: userId }, {
+    dedupeKeys: ['id', '_id']
+  });
+  return items.map(stripSourceDatabase);
 }
 
 export async function getCartItemById(id) {
-  await connectDB();
-  return await Cart.findOne({ id }).lean();
+  const item = await findOneAcrossDatabases(COLLECTION, { id }, {
+    dedupeKeys: ['id', '_id']
+  });
+  return stripSourceDatabase(item);
 }
 
 export async function saveCartItem(newItem) {
-  await connectDB();
-  const item = new Cart(newItem);
-  await item.save();
-  return item.toObject();
+  await upsertAcrossDatabases(COLLECTION, { id: newItem.id }, newItem);
+  return newItem;
 }
 
 export async function updateCartItem(id, updates) {
-  await connectDB();
-  updates.updatedAt = new Date();
-  const item = await Cart.findOneAndUpdate({ id }, updates, { new: true }).lean();
-  if (!item) throw new Error('Cart item tidak ditemukan');
-  return item;
+  const existingItem = await getCartItemById(id);
+  if (!existingItem) {
+    throw new Error('Cart item tidak ditemukan');
+  }
+
+  const updatedItem = {
+    ...existingItem,
+    ...updates,
+    updatedAt: new Date()
+  };
+
+  await upsertAcrossDatabases(COLLECTION, { id: existingItem.id }, updatedItem);
+  return updatedItem;
 }
 
 export async function deleteCartItem(id) {
-  await connectDB();
-  const result = await Cart.deleteOne({ id });
-  return result.deletedCount > 0;
+  const deletedCount = await deleteAcrossDatabases(COLLECTION, { id });
+  return deletedCount > 0;
 }
 
 export async function deleteCartByUserId(userId) {
-  await connectDB();
-  const result = await Cart.deleteMany({ id_user: userId });
-  return result.deletedCount;
+  return await deleteAcrossDatabases(COLLECTION, { id_user: userId });
 }
 
-// Add to cart (jika produk sudah ada, tambah jumlahnya)
 export async function addToCart(userId, productId, quantity, currentPrice) {
-  await connectDB();
-  const existingItem = await Cart.findOne({ id_user: userId, id_produk: productId });
-  
-  if (existingItem) {
-    existingItem.jumlah += quantity;
-    existingItem.harga_saat_ini = currentPrice;
-    existingItem.updatedAt = new Date();
-    await existingItem.save();
-    return existingItem.toObject();
-  } else {
-    const newItem = new Cart({
-      id: `cart-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-      id_user: userId,
-      id_produk: productId,
-      jumlah: quantity,
-      harga_saat_ini: currentPrice,
-      tanggal_ditambahkan: new Date(),
-      createdAt: new Date(),
-      updatedAt: new Date()
-    });
-    await newItem.save();
-    return newItem.toObject();
-  }
-}
+  const existingItem = await findOneAcrossDatabases(COLLECTION, {
+    id_user: userId,
+    id_produk: productId
+  }, {
+    dedupeKeys: ['id', '_id']
+  });
 
+  if (existingItem) {
+    const updatedItem = {
+      ...stripSourceDatabase(existingItem),
+      jumlah: (existingItem.jumlah || 0) + quantity,
+      harga_saat_ini: currentPrice,
+      updatedAt: new Date()
+    };
+
+    await upsertAcrossDatabases(COLLECTION, { id: existingItem.id }, updatedItem);
+    return updatedItem;
+  }
+
+  const newItem = {
+    id: `cart-${Date.now()}-${Math.random().toString(36).slice(2, 11)}`,
+    id_user: userId,
+    id_produk: productId,
+    jumlah: quantity,
+    harga_saat_ini: currentPrice,
+    tanggal_ditambahkan: new Date(),
+    createdAt: new Date(),
+    updatedAt: new Date()
+  };
+
+  await upsertAcrossDatabases(COLLECTION, { id: newItem.id }, newItem);
+  return newItem;
+}

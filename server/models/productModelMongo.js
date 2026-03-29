@@ -1,77 +1,61 @@
-import mongoose from 'mongoose';
+import {
+  findManyAcrossDatabases,
+  findOneAcrossDatabases,
+  upsertAcrossDatabases,
+  deleteAcrossDatabases
+} from './mongoMultiDb.js';
 
-const productSchema = new mongoose.Schema({
-  id: { type: String, required: true, unique: true },
-  name: { type: String, required: true },
-  price: { type: Number, required: true },
-  stock: { type: Number, default: 0 },
-  category: { type: String, default: null },
-  description: { type: String, default: null },
-  image: { type: String, default: null },
-  umkmId: { type: String, required: true },
-  umkmName: { type: String, default: null },
-  sold: { type: Number, default: 0 },
-  rating: { type: Number, default: 0 },
-  status: { type: String, default: 'active', enum: ['active', 'inactive'] },
-  createdAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date, default: Date.now }
-}, { timestamps: false });
+const COLLECTION = 'products';
 
-const Product = mongoose.models.Product || mongoose.model('Product', productSchema);
-
-let isConnected = false;
-
-async function connectDB() {
-  if (isConnected && mongoose.connection.readyState === 1) return;
-  try {
-    const mongoUri = process.env.MONGODB_URI?.trim();
-    if (!mongoUri) throw new Error('MONGODB_URI not set');
-    if (!mongoUri.startsWith('mongodb://') && !mongoUri.startsWith('mongodb+srv://')) {
-      throw new Error('Invalid MongoDB URI');
-    }
-    if (mongoose.connection.readyState !== 0) await mongoose.connection.close();
-    await mongoose.connect(mongoUri, { serverSelectionTimeoutMS: 30000, socketTimeoutMS: 45000, maxPoolSize: 10 });
-    isConnected = true;
-  } catch (error) {
-    console.error('❌ MongoDB connection error:', error);
-    isConnected = false;
-    throw error;
-  }
+function stripSourceDatabase(document) {
+  if (!document) return document;
+  const { _sourceDatabase, ...rest } = document;
+  return rest;
 }
 
 export async function getAllProducts() {
-  await connectDB();
-  return await Product.find({}).lean();
+  const products = await findManyAcrossDatabases(COLLECTION, {}, {
+    dedupeKeys: ['id', '_id']
+  });
+  return products.map(stripSourceDatabase);
 }
 
 export async function getProductById(id) {
-  await connectDB();
-  return await Product.findOne({ id }).lean();
+  const product = await findOneAcrossDatabases(COLLECTION, { id }, {
+    dedupeKeys: ['id', '_id']
+  });
+  return stripSourceDatabase(product);
 }
 
 export async function getProductsByUMKM(umkmId) {
-  await connectDB();
-  return await Product.find({ umkmId }).lean();
+  const products = await findManyAcrossDatabases(COLLECTION, { umkmId }, {
+    dedupeKeys: ['id', '_id']
+  });
+  return products.map(stripSourceDatabase);
 }
 
 export async function saveProduct(newProduct) {
-  await connectDB();
-  const product = new Product(newProduct);
-  await product.save();
-  return product.toObject();
+  await upsertAcrossDatabases(COLLECTION, { id: newProduct.id }, newProduct);
+  return newProduct;
 }
 
 export async function updateProduct(id, updates) {
-  await connectDB();
-  updates.updatedAt = new Date();
-  const product = await Product.findOneAndUpdate({ id }, updates, { new: true }).lean();
-  if (!product) throw new Error('Produk tidak ditemukan');
-  return product;
+  const existingProduct = await getProductById(id);
+  if (!existingProduct) {
+    throw new Error('Produk tidak ditemukan');
+  }
+
+  const updatedProduct = {
+    ...existingProduct,
+    ...updates,
+    updatedAt: new Date()
+  };
+
+  await upsertAcrossDatabases(COLLECTION, { id: existingProduct.id }, updatedProduct);
+  return updatedProduct;
 }
 
 export async function deleteProduct(id) {
-  await connectDB();
-  const result = await Product.deleteOne({ id });
-  return result.deletedCount > 0;
+  const deletedCount = await deleteAcrossDatabases(COLLECTION, { id });
+  return deletedCount > 0;
 }
-
