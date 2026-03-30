@@ -34,7 +34,10 @@ export function getSecondaryDbNames() {
     .map((name) => name.trim())
     .filter(Boolean);
 
-  return [...new Set(configured.filter((name) => name !== primaryDb))];
+  const defaults = ['sadaya', 'test'];
+  const dbNames = configured.length > 0 ? configured : defaults;
+
+  return [...new Set(dbNames.filter((name) => name !== primaryDb))];
 }
 
 export function getAllDbNames() {
