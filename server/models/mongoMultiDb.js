@@ -144,6 +144,8 @@ export async function findOneAcrossDatabases(collectionName, query = {}, options
 export async function upsertAcrossDatabases(collectionName, identityFilter, nextDocument) {
   let savedDocument = null;
 
+  const { _id, createdAt, ...updateFields } = nextDocument;
+
   for (const dbName of getAllDbNames()) {
     const db = await getDb(dbName);
     const collection = db.collection(collectionName);
@@ -151,9 +153,9 @@ export async function upsertAcrossDatabases(collectionName, identityFilter, next
     await collection.updateOne(
       identityFilter,
       {
-        $set: nextDocument,
+        $set: updateFields,
         $setOnInsert: {
-          createdAt: nextDocument.createdAt || new Date()
+          createdAt: createdAt || new Date()
         }
       },
       { upsert: true }
@@ -169,6 +171,7 @@ export async function upsertAcrossDatabases(collectionName, identityFilter, next
 
 export async function updateAcrossDatabases(collectionName, identityFilter, updateDocument) {
   let updatedDocument = null;
+  const { _id, ...safeUpdateDocument } = updateDocument;
 
   for (const dbName of getAllDbNames()) {
     const db = await getDb(dbName);
@@ -179,7 +182,7 @@ export async function updateAcrossDatabases(collectionName, identityFilter, upda
       continue;
     }
 
-    await collection.updateOne(identityFilter, { $set: updateDocument });
+    await collection.updateOne(identityFilter, { $set: safeUpdateDocument });
 
     if (!updatedDocument) {
       updatedDocument = await collection.findOne(identityFilter);
